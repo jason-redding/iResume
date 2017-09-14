@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2017 Jason Redding
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+	<head>
+		<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Interactive Résumé - Jason Redding</title>
+
+		<!--<link type="text/css" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/dark-hive/jquery-ui.min.css"/>-->
+		<link type="text/css" rel="stylesheet" href="/css/jquery-ui.structure.min.css"/>
+		<link type="text/css" rel="stylesheet" href="/css/jquery-ui.theme.min.css"/>
+		<link type="text/css" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.4.5/jquery.mobile.min.css"/>
+
+		<!-- build:css css/all-stylesheets.css -->
+		<link type="text/css" rel="stylesheet" href="/css/resume.css"/>
+		<link type="text/css" rel="stylesheet" href="/css/resume-print.css" media="print"/>
+		<link id="highlight-theme" type="text/css" rel="stylesheet" href="/css/highlight/atom-one-dark.css"/>
+		<!-- endbuild -->
+
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.4.5/jquery.mobile.min.js"></script>
+
+		<!-- build:js js/all-javascripts.js -->
+		<script type="text/javascript" src="/js/format.js"></script>
+		<script type="text/javascript" src="/js/highlight.pack.js"></script>
+		<script type="text/javascript" src="/js/common.js"></script>
+		<script type="text/javascript" src="/js/namespace.js"></script>
+		<script type="text/javascript" src="index.js"></script>
+		<!-- endbuild -->
+	</head>
+	<body>
+		<div data-role="page" data-theme="b">
+			<header data-role="header">
+				<h1>Interactive Résumé</h1>
+			</header>
+			<main data-role="main" class="ui-content">
+				<div class="main-inner">
+					<h2 class="author-name">Jason Redding</h2>
+					<div id="tabs-nav" data-role="controlgroup" data-mini="false" data-type="horizontal">
+						<input type="radio" id="tab-resume" name="tabs" value="resume" data-default-selected="true"/>
+						<label for="tab-resume">Résumé</label>
+						<input type="radio" id="tab-skills" name="tabs" value="skills"/>
+						<label for="tab-skills">Skills</label>
+						<input type="radio" id="tab-code" name="tabs" value="code"/>
+						<label for="tab-code">&lt;Code&gt;</label>
+					</div>
+					<div id="tab-panel-resume" data-panel="resume" class="tab-panel resume-xslt ui-screen-hidden">
+					</div>
+					<div id="tab-panel-skills" data-panel="skills" class="tab-panel ui-screen-hidden">
+						<div id="skill-categories" data-default-category="relevant">
+						</div>
+						<table id="skills-table" class="skills ui-widget">
+							<caption>
+								<div class="text">Full List of Skills</div>
+							</caption>
+							<thead>
+								<tr data-render-title="${level} (${level.percentage#percent(0,3)}) ${level.preposition#default('at')} ${name} with ${experience.duration} ${experience.duration#grammar('year','years')} of experience${experience.until#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}" data-render-tabindex="0">
+									<th class="ui-widget-header"
+											tabindex="0"
+											data-header="Name"
+											data-field="name"
+											title="Skill name"
+											data-sort-order="asc"
+											data-order-by="name, level.originalValue:desc">
+										<span class="data">Name</span>
+									</th>
+									<th class="ui-widget-header"
+											tabindex="0"
+											data-header="Level"
+											data-field="level"
+											title="Skill level"
+											data-render="${level}${experience.until#date('\'<br/><span style=&quot;font-size: 0.75em&quot;>Last used: \'MMMM \'of\' yyyy\'</span>\'')}"
+											data-sort-order="desc"
+											data-order-by="level.originalValue, name">
+										<span class="data">Level</span>
+									</th>
+									<!--<th class="ui-widget-header"
+											tabindex="0"
+											data-header="Experience"
+											data-field="experience"
+											title="Years of experience"
+											data-render="${experience.duration} ${experience.duration#grammar('year','years')}"
+											data-sort-order="desc"
+											data-order-by="experience.duration, experience.since:desc, level.originalValue:desc, name">
+										<span class="data">Experience</span>
+									</th>-->
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+					<div id="tab-panel-code" data-panel="code" class="tab-panel ui-screen-hidden">
+						<p>Select a file below to view its code.</p>
+						<div id="select-code-container">
+							<label for="select-code" class="ui-hidden-accessible">Select file:</label>
+							<select id="select-code">
+								<optgroup label="JavaScript">
+									<option value="/index.js" selected="selected">index.js</option>
+									<option value="/js/namespace.js">namespace.js</option>
+									<option value="/js/libs/format/format.js">format.js</option>
+									<option value="/js/common.js">common.js</option>
+								</optgroup>
+								<optgroup label="HTML">
+									<option value="/index.html">index.html</option>
+								</optgroup>
+								<optgroup label="XML Schema Definition">
+									<option value="/resume.xsd">resume.xsd</option>
+								</optgroup>
+								<optgroup label="XML Data">
+									<option value="/resume.xml">resume.xml</option>
+								</optgroup>
+								<optgroup label="XML Stylesheet">
+									<option value="/resume.xsl">resume.xsl</option>
+								</optgroup>
+								<optgroup label="SASS">
+									<option value="/scss/resume.scss">resume.scss</option>
+									<option value="/scss/_common.scss">_common.scss</option>
+								</optgroup>
+								<optgroup label="CSS">
+									<option value="/css/resume.css">resume.css</option>
+								</optgroup>
+							</select>
+						</div>
+						<pre id="view-code" class="code-container show-when-data-loaded"><code></code></pre>
+					</div>
+				</div>
+			</main>
+		</div>
+	</body>
+</html>

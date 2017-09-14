@@ -1,0 +1,106 @@
+@import "_common";
+
+@media print {
+	thead {
+		> tr {
+			page-break-inside: avoid;
+			break-inside: avoid;
+			page-break-after: auto;
+			break-after: auto;
+		}
+	}
+	.project-title,
+	.section-heading,
+	.employer-title {
+		page-break-after: avoid;
+		break-after: avoid;
+	}
+	.project-description {
+		page-break-before: avoid;
+		break-before: avoid;
+	}
+	li, tr, td, th {
+		page-break-inside: avoid;
+		break-inside: avoid;
+	}
+	table.skills {
+		caption {
+			display: table-caption;
+		}
+		thead > tr > th {
+			&[data-order-by].sort-by > .data {
+				position: static;
+			}
+		}
+	}
+	* {
+		&, &::before, &::after {
+			background: none !important;
+		}
+	}
+	#tabs-nav, #tab-panel-code, .ui-tooltip {
+		display: none !important;
+	}
+	.ui-bar-a, .ui-page-theme-a .ui-bar-inherit, html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit, html body .ui-group-theme-a .ui-bar-inherit,
+	.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper,
+	.ui-bar-b, .ui-page-theme-b .ui-bar-inherit, html .ui-bar-b .ui-bar-inherit, html .ui-body-b .ui-bar-inherit, html body .ui-group-theme-b .ui-bar-inherit,
+	.ui-overlay-b, .ui-page-theme-b, .ui-page-theme-b .ui-panel-wrapper,
+	.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active,
+	.ui-widget-content {
+		text-shadow: none;
+		color: $textColorLightTheme;
+	}
+	.ui-page-theme-a,
+	html .ui-bar-a,
+	html .ui-body-a,
+	html body .ui-group-theme-a,
+	.ui-page-theme-b,
+	html .ui-bar-b,
+	html .ui-body-b,
+	html body .ui-group-theme-b {
+		a:hover {
+			&::before, &::after {
+				color: $textColorLightTheme;
+			}
+		}
+	}
+	body {
+		> .ui-page.ui-page-active {
+			box-shadow: none;
+			> main > .main-inner {
+				display: flex;
+				flex-direction: column;
+				div.skills .skill {
+					color: inherit;
+				}
+				.tab-panel {
+					&:not(#tab-panel-code) {
+						page-break-before: always;
+						break-before: page;
+						page-break-after: always;
+						break-after: page;
+						display: flex !important;
+						max-width: none !important;
+					}
+					&#tab-panel-resume {
+						order: 1;
+					}
+					&#tab-panel-skills {
+						order: 2;
+					}
+					&#tab-panel-code {
+						order: 3;
+					}
+				}
+				#skill-categories {
+					label[for="categories"] {
+						display: none;
+						+ .ui-select {
+							display: none;
+						}
+					}
+				}
+			}
+		}
+	}
+}

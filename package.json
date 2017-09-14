@@ -1,0 +1,33 @@
+{
+  "name": "iresume",
+  "version": "1.0.0",
+  "description": "Interactive Résumé.",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jason-redding/iResume.git"
+  },
+  "author": "Jason Redding",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jason-redding/iResume/issues"
+  },
+  "homepage": "https://github.com/jason-redding/iResume#readme",
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.8.0",
+    "gulp-if": "^2.0.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sequence": "^0.4.6",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-useref": "^3.1.2"
+  }
+}
