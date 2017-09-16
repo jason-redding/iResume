@@ -311,6 +311,16 @@ ul, ol, .project-description, .project-description > *:first-child {
 	}
 }
 
+#page-options {
+	padding: 0;
+	margin: 0;
+	display: inline-block;
+	display: none;
+	li {
+		display: block;
+	}
+}
+
 table.skills {
 	border-spacing: 0;
 	width: 100%;

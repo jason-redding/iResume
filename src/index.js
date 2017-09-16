@@ -139,6 +139,10 @@
 				}
 			}
 		});
+		
+		$('#page-options-button').on('click', function(event) {
+			
+		});
 
 		$('#highlight-theme-picker')
 		.find('option[value="' + $.trim($('#highlight-theme').attr('href'))
