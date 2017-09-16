@@ -589,6 +589,7 @@
 				var defaultSortOrder = $.trim($this.attr('data-default-sort-order'));
 				$this[(defaultSortOrder.length > 0 ? 'attr' : 'removeAttr')]('data-sort-order', defaultSortOrder);
 			})
+			.removeClass('ui-state-default')
 			.removeClass('sort-by');
 			var sortOrder = $.trim($columnHeader.attr('data-sort-order'));
 			var sorting = $.trim($columnHeader.attr('data-order-by'));

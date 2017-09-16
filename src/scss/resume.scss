@@ -156,8 +156,9 @@ div.skills {
 	.skills-group-relevant, .skills-group-others {
 		&::before {
 			display: block;
-			margin-top: 1em;
 			font-weight: bold;
+			margin-top: 1em;
+			margin-bottom: 0.25em;
 		}
 	}
 	.skills-group-relevant {
@@ -416,7 +417,7 @@ table.skills {
 	&[data-order-by="name"] tbody tr td.field-name,
 	&[data-order-by="level"] tbody tr td.field-level,
 	&[data-order-by="experience"] tbody tr td.field-experience {
-		background-color: adjust-color($tableBackgroundColorLighter, $lightness: -4%);
+		background-color: adjust-color($tableBackgroundColorLighter, $lightness: -5%);
 	}
 	/*&[data-order-by="name"] tbody tr {
 		&.even td.field-name {
