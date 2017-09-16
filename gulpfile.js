@@ -10,6 +10,7 @@ var del = require('del');
 
 var SRC = 'src';
 var DEST = 'public_html';
+var DEPLOY_PATH = '/var/www/html.iresume';
 
 gulp.task('default', function(callback) {
 	return gulpSequence(
@@ -26,6 +27,23 @@ gulp.task('build', function(callback) {
 	callback);
 });
 
+gulp.task('deploy', function(callback) {
+	return gulpSequence(
+	'clean',
+	'build',
+	'deploy-live',
+	callback);
+});
+
+gulp.task('deploy-live', function(callback) {
+	return gulp.src([
+		DEST + '/**/*'
+	], {
+		base: DEST
+	})
+	.pipe(gulp.dest(DEPLOY_PATH));
+});
+
 gulp.task('run', function(callback) {
 	return gulpSequence(
 	'clean',
@@ -40,8 +58,6 @@ gulp.task('concat', function(callback) {
 	.pipe(useref({
 		searchPath: DEST
 	}))
-//	.pipe(gulpif('*.js', uglify()))
-//	.pipe(gulpif('*.css', minifyCss()))
 	.pipe(gulp.dest(DEST));
 });
 
