@@ -34,16 +34,25 @@
 				content: none;
 			}
 		}
+		&, th, td {
+			border: 1px solid hsl(0, 0%, 87%) !important;
+		}
 	}
 	* {
 		&, &::before, &::after {
-			background: none !important;
+			background-image: none !important;
+			background-color: initial !important;
+			text-shadow: none !important;
+			color: hsl(0, 0%, 10%) !important;
+		}
+		&.ui-header {
+			border-color: hsl(0, 0%, 87%) !important
 		}
 	}
 	#tabs-nav, #tab-panel-code, .ui-tooltip {
 		display: none !important;
 	}
-	.ui-bar-a, .ui-page-theme-a .ui-bar-inherit, html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit, html body .ui-group-theme-a .ui-bar-inherit,
+	/*.ui-bar-a, .ui-page-theme-a .ui-bar-inherit, html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit, html body .ui-group-theme-a .ui-bar-inherit,
 	.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper,
 	.ui-bar-b, .ui-page-theme-b .ui-bar-inherit, html .ui-bar-b .ui-bar-inherit, html .ui-body-b .ui-bar-inherit, html body .ui-group-theme-b .ui-bar-inherit,
 	.ui-overlay-b, .ui-page-theme-b, .ui-page-theme-b .ui-panel-wrapper,
@@ -52,7 +61,7 @@
 	.ui-widget-content {
 		text-shadow: none;
 		color: $textColorLightTheme;
-	}
+	}*/
 	.ui-page-theme-a,
 	html .ui-bar-a,
 	html .ui-body-a,
@@ -83,13 +92,18 @@
 						page-break-after: always;
 						break-after: page;
 						display: flex !important;
-						max-width: none !important;
+						&:not(#tab-panel-skills) {
+							max-width: none !important;
+						}
 					}
 					&#tab-panel-resume {
 						order: 1;
 					}
 					&#tab-panel-skills {
 						order: 2;
+						margin-left: 0;
+						margin-right: 0;
+						max-width: none;
 					}
 					&#tab-panel-code {
 						order: 3;
