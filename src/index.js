@@ -140,6 +140,44 @@
 			}
 		});
 
+		$('#theme-toggle-button').on('click', function(event) {
+			var $body = $('body');
+			var pageTheme = $body.pagecontainer('option', 'theme');
+			console.log('"' + pageTheme + '"');
+			pageTheme = (pageTheme !== 'a' ? 'a' : 'b');
+			$body
+			.pagecontainer('option', 'theme', pageTheme);
+
+			$('#highlight-theme').attr('href', '/css/highlight/atom-one-' + (pageTheme !== 'a' ? 'dark' : 'light') + '.css');
+			$('#jqueryui-theme').attr('href', '/css/jquery-ui.' + (pageTheme !== 'a' ? 'dark-hive' : 'cupertino') + '.theme.min.css');
+
+			$('*[class], *[data-theme]')
+			.filter(function() {
+				var $this = $(this);
+				var rv;
+				var attrTheme = $.trim($this.attr('data-theme'));
+				if (attrTheme.length > 0) {
+					$this.attr('data-theme', (attrTheme !== 'a' ? 'a' : 'b'));
+				}
+				var classes = $.trim($this.attr('class')).split(/\s+/);
+				var themeSuffix = /^(.+?)((-theme-|-)(a|b))$/;
+				$.each(classes, function(index, className) {
+					var matcher = themeSuffix.exec(className);
+					if (matcher !== null && matcher.length > 0) {
+						if (/^ui-(block|grid)$/.test(matcher[1])) {
+							return true;
+						}
+						rv = true;
+						console.log(matcher);
+						$this.removeClass(matcher[0]);
+						$this.addClass(matcher[1] + matcher[3] + pageTheme);
+						return false;
+					}
+				});
+				return rv;
+			});
+		});
+
 		$('#highlight-theme-picker')
 		.find('option[value="' + $.trim($('#highlight-theme').attr('href'))
 		.replace(/^.*?\/([a-z0-9_-]+\.css)$/, '$1') + '"]')
