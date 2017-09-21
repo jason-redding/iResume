@@ -152,7 +152,7 @@
 			$('#jqueryui-theme').attr('href', '/css/jquery-ui.' + (newPageTheme !== 'a' ? 'dark-hive' : 'cupertino') + '.theme.min.css');
 
 			$('*[class], *[data-theme]')
-			.filter(function() {
+			.each(function() {
 				var $this = $(this);
 				var rv;
 				var attrTheme = $.trim($this.attr('data-theme'));
