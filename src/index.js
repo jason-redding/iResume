@@ -78,14 +78,14 @@
 				}
 			}
 		});
-		$skillsTable.on('mouseenter mouseleave', 'thead > tr > th', function(event) {
-			var $this = $(this);
-			var isEnter = (event.type === 'mouseenter');
-			if ($this.is('.sort-by')) {
-				return;
-			}
-			$this[isEnter ? 'addClass' : 'removeClass']('ui-state-default');
-		});
+		//$skillsTable.on('mouseenter mouseleave', 'thead > tr > th', function(event) {
+		//	var $this = $(this);
+		//	var isEnter = (event.type === 'mouseenter');
+		//	if ($this.is('.sort-by')) {
+		//		return;
+		//	}
+		//	$this[isEnter ? 'addClass' : 'removeClass']('ui-state-default');
+		//});
 		$skillsTable.on('click', 'th[data-order-by]', function(event) {
 			var $this = $(this);
 			var sortOrder = $.trim($this.attr('data-sort-order'));
@@ -144,12 +144,12 @@
 			var $body = $('body');
 			var pageTheme = $body.pagecontainer('option', 'theme');
 			console.log('"' + pageTheme + '"');
-			pageTheme = (pageTheme !== 'a' ? 'a' : 'b');
+			var newPageTheme = (pageTheme !== 'a' ? 'a' : 'b');
 			$body
-			.pagecontainer('option', 'theme', pageTheme);
+			.pagecontainer('option', 'theme', newPageTheme);
 
-			$('#highlight-theme').attr('href', '/css/highlight/atom-one-' + (pageTheme !== 'a' ? 'dark' : 'light') + '.css');
-			$('#jqueryui-theme').attr('href', '/css/jquery-ui.' + (pageTheme !== 'a' ? 'dark-hive' : 'cupertino') + '.theme.min.css');
+			$('#highlight-theme').attr('href', '/css/highlight/atom-one-' + (newPageTheme !== 'a' ? 'dark' : 'light') + '.css');
+			$('#jqueryui-theme').attr('href', '/css/jquery-ui.' + (newPageTheme !== 'a' ? 'dark-hive' : 'cupertino') + '.theme.min.css');
 
 			$('*[class], *[data-theme]')
 			.filter(function() {
@@ -170,7 +170,11 @@
 						rv = true;
 						console.log(matcher);
 						$this.removeClass(matcher[0]);
-						$this.addClass(matcher[1] + matcher[3] + pageTheme);
+						if ($this.is('.ui-loader')) {
+							$this.addClass(matcher[1] + matcher[3] + pageTheme);
+						} else {
+							$this.addClass(matcher[1] + matcher[3] + newPageTheme);
+						}
 						return false;
 					}
 				});
@@ -437,7 +441,8 @@
 		jobs.push($.get('/resume.xml'));
 		jobs.push($.get('/resume.xsl'));
 		$.when.apply($.when, jobs)
-		.fail(function() {
+		.fail(function(xhr, type, ex) {
+			console.error(ex);
 			dfd.reject(jobs);
 		})
 		.done(function() {
@@ -552,8 +557,9 @@
 				}
 			});
 			$table.attr('data-template-properties', JSON.stringify({
-				level: {
-					max: maxLevel
+				levels: {
+					max: maxLevel,
+					preposition: $xml.xpath('r:meta/r:skill/r:levels/@preposition', 'string') || 'at'
 				}
 			}));
 

@@ -133,7 +133,7 @@
 		});
 		return r.toString();
 	};
-	String.parseArgs = function(input) {
+	String.parseArgs = function(input, props) {
 		var args = [];
 		if ($.type(input) !== 'string') {
 			return args;
@@ -247,8 +247,16 @@
 					token = parseFloat(token);
 				} else if (type === 'object' || type === 'array') {
 					token = JSON.parse(token);
+				} else {
+					try {
+						var temp = String.format('${' + token + '}', props);
+						token = temp;
+					} catch (ex) {
+						console.dir(ex);
+					}
 				}
 			} catch (ex) {
+				console.dir(ex);
 			}
 			args.push(token);
 			token = '';
@@ -376,9 +384,9 @@
 					}
 				});
 
-				out += evalTokenMod(tn, tf, rv);
+				out += evalTokenMod(tn, tf, rv, props);
 			};
-			var evalTokenMod = function(token, format, value) {
+			var evalTokenMod = function(token, format, value, props) {
 				if (format === null) {
 					if (value instanceof Date) {
 						format = "date('M/d/yyyy')";
@@ -395,7 +403,7 @@
 				}
 				if ((matcher = pattern.exec(format)) !== null && matcher.length > 0) {
 					var fName = matcher[1];
-					var fArgs = String.parseArgs(matcher[2]);
+					var fArgs = String.parseArgs(matcher[2], props);
 					if (fName === 'raw') {
 					} else if (fName === 'text') {
 						value = ('' + value).removeHTML().decodeHTML();
@@ -433,6 +441,14 @@
 						if (value === null) {
 							value = fArgs[0];
 						}
+//						try {
+//							console.log(value);
+//							var temp = evalToken(value);
+//							console.log(temp);
+//							//value = temp;
+//						} catch (ex) {
+//							console.dir(ex);
+//						}
 					} else if (/^upper(case)?$/.test(fName)) {
 						value = ('' + value).toUpperCase();
 					} else if (/^lower(case)?$/.test(fName)) {

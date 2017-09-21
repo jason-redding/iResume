@@ -1,2 +1,4 @@
 node_modules/
 .npm
+/nbproject/private/
+/public_html/

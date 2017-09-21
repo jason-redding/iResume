@@ -54,6 +54,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 														</xs:complexType>
 													</xs:element>
 												</xs:sequence>
+												<xs:attribute name="preposition" type="xs:string" use="required"/>
 											</xs:complexType>
 										</xs:element>
 										<xs:element name="categories" minOccurs="0">

@@ -7,6 +7,7 @@ var minifyCss = require('gulp-clean-css');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
 var del = require('del');
+var browserSync = require('browser-sync').create();
 
 var SRC = 'src';
 var DEST = 'public_html';
@@ -16,6 +17,33 @@ gulp.task('default', function(callback) {
 	return gulpSequence(
 	'clean',
 	'build',
+	'watch',
+	callback);
+});
+
+gulp.task('browserSync', function() {
+	return browserSync.init({
+		open: false,
+		server: {
+			baseDir: DEST
+		}
+	});
+});
+
+gulp.task('watch', ['browserSync'], function() {
+	gulp.watch(SRC + '/**/*.html', ['clean-build']);
+	gulp.watch(SRC + '/**/*.js', ['clean-build']);
+	gulp.watch(SRC + '/**/*.scss', ['clean-build']);
+	gulp.watch(SRC + '/**/*.xml', ['clean-build']);
+	gulp.watch(SRC + '/**/*.xsl', ['clean-build']);
+	return gulp.watch(SRC + '/**/*.xsd', ['clean-build']);
+});
+
+gulp.task('clean-build', function(callback) {
+	return gulpSequence(
+	'clean',
+	'build',
+	'browser-reload',
 	callback);
 });
 
@@ -25,6 +53,11 @@ gulp.task('build', function(callback) {
 	['sass'],
 //	'concat',
 	callback);
+});
+
+gulp.task('browser-reload', function(callback) {
+	browserSync.reload();
+	callback();
 });
 
 gulp.task('deploy', function(callback) {
@@ -74,7 +107,7 @@ gulp.task('sass', function() {
 	.pipe(gulp.dest(DEST + '/css'));
 });
 
-gulp.task('copy-static', function(callback) {
+gulp.task('copy-static', function() {
 	return gulp.src([
 		SRC + '/**/*'
 	], {
@@ -86,5 +119,5 @@ gulp.task('copy-static', function(callback) {
 gulp.task('clean', function(callback) {
 	return del([
 		DEST + '/**/*'
-	]);
+	], callback);
 });

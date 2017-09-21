@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/jason-redding/iResume#readme",
   "devDependencies": {
+    "browser-sync": "^2.18.13",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^3.8.0",

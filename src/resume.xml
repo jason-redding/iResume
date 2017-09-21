@@ -19,10 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <resume xmlns="http://witcraft.com/xsd/resume"
 				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				xmlns:h="http://www.w3.org/1999/xhtml"
-				xsi:schemaLocation="http://witcraft.com/xsd/resume resume.xsd">
+				xsi:schemaLocation="http://witcraft.com/xsd/resume resume.xsd"
+				last-modified="2017-08-17T10:15:00">
 	<meta>
 		<skill>
-			<levels>
+			<levels preposition="at">
 				<level value="0" preposition="of">None</level>
 				<level value="1" preposition="to">Exposure</level>
 				<level value="2">Beginner</level>
@@ -51,7 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<email>jason.redding@gmail.com</email>
 	</author>
 	<description title="Profile">
-		Over <duration from="2001" unit="years">16 years</duration> professional experience creating solutions ranging from command-line interface for modifying production
+		I have over <duration from="2001" unit="years">16 years</duration> professional experience creating solutions ranging from command-line interface for modifying production
 		enterprise web applications, to HTML5/jQueryMobile web front-end for a Higher Education Student Information System.
 	</description>
 	<skills title="Skills">
@@ -280,6 +281,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="dev-tool"/>
 				<category value="server"/>
+			</categories>
+		</skill>
+		<skill>
+			<name>Google Maps JavaScript API V3</name>
+			<level value="3.5"/>
+			<experience>
+				<since>2013-01</since>
+			</experience>
+			<categories>
+				<category value="api"/>
+				<category value="client"/>
+				<category value="dev-lib"/>
+				<category value="web"/>
+			</categories>
+		</skill>
+		<skill>
+			<name>Gulp</name>
+			<level value="2.75"/>
+			<experience>
+				<since>2017-08</since>
+			</experience>
+			<categories>
+				<category value="api"/>
+				<category value="client"/>
+				<category value="dev-lib"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill>
@@ -815,26 +842,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						</h:ul>
 					</description>
 				</position>
-				<!--<position>
-					<title>IT Computer Technician (Temp Hourly)</title>
-					<department>Support Center</department>
-					<timeline>
-						<start-date truncate-to="year">2001-07-01</start-date>
-						<end-date truncate-to="year">2003-06-31</end-date>
-					</timeline>
-					<description>
-						<h:ul>
-							<h:li>Troubleshot/repaired hardware and software issues over the phone and in the field.</h:li>
-							<h:li>
-								Installed network cables, troubleshot network connectivity, and activated Ethernet wall ports across campus;
-								upgraded hardware and software in computer labs.
-							</h:li>
-							<h:li>
-								Created Microsoft Access Database, Forms, and accompanying VBA code to facilitate technical support by Help Desk personnel.
-							</h:li>
-						</h:ul>
-					</description>
-				</position>-->
 				<position>
 					<title>Programmer</title>
 					<timeline>
@@ -846,18 +853,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>Student Self-Help site</title>
 							<link>https://shwa.ccbcmd.edu</link>
 							<description>
-								<h:p>
-									Used by students to retrieve their account information in addition to resetting their password.
-								</h:p>
+								<h:p>Used by students to retrieve their account information and reset their password.</h:p>
 								<h:ul>
 									<h:li>
-										The site uses jQuery, jQueryUI, jQueryMobile to deliver a responsive experience.
+										The site uses jQuery, jQueryUI, and jQueryMobile to deliver a responsive experience.
 									</h:li>
 									<h:li>
 										Javascript and CSS assets are bundled into a Java EE Web Application.
 									</h:li>
 									<h:li>
-										Java EE Web Application runs on Tomcat and exposes servlets to communicate with Oracle DMBS and Active Directory.
+										Java EE Web Application runs on Tomcat and exposes servlets to communicate with Oracle DBMS and Active Directory.
 									</h:li>
 								</h:ul>
 							</description>
@@ -866,8 +871,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>AcalogExtract</title>
 							<description>
 								<h:p>
-									Java command-line application executed from CRON to automate the importing, processing, and exporting of Academic Catalog information
-									(including embeded HTML) to an XML file for use by SiteCore-powered website.
+									Executed from CRON to automate the importing, processing, and exporting of Academic Catalog information to an XML file.
 								</h:p>
 								<h:ul>
 									<h:li>Interfaces with 3rd-party RESTful API to import XML data</h:li>
@@ -878,18 +882,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							</description>
 						</project>
 						<project>
-							<title>R25/WebViewer/WebServices (a CollegeNet product)</title>
+							<title>R25/WebViewer/WebServices (CollegeNet products)</title>
 							<description>
 								<h:p>
-									R25/WebViewer/WebServices is an Event Scheduling software package (with 700+ users) that matches a
-									collection of locations with a collection of events while adhering to institution-defined rules and
-									preferences. The product is comprised of an Oracle database schema, Win32 client application, and a
-									Java EE Web Application front-end. WebViewer is the web front-end component, allowing visitors to view
-									and search event/location details, and submit requests for events. WebServices is a RESTful Java EE Web
-									Application interface to the R25 Oracle database schema.
+									Event Scheduling software package (with 700+ users) follows institution-defined rules to match a
+									collection of locations with a collection of events. The product is comprised of an
+									Oracle database schema, Win32 client application, and a Java EE Web Application front-end.
+									WebViewer is the web front-end component, allowing visitors to view and search event/location details,
+									and submit requests for events. WebServices is a RESTful Java EE Web Application interface to the
+									R25 Oracle database schema.
 								</h:p>
 								<h:ul>
-									<h:li>Customize, enhance, and maintain the product front- and back-end, with primary focus on web front-end and Event Request Form.</h:li>
+									<h:li>Install, configure, customize, enhance, and maintain the product (front-end and back-end), with primary focus on web front-end and Event Request Form.</h:li>
 									<h:li>With jQuery/jQueryUI/AJAX, completely revamped the WebViewer's set of pages and Request Form and added features unavailable in the original product.</h:li>
 									<h:li>
 										Developed a page using jQuery/jQueryUI/AJAX to search via WebServices for spaces matching
