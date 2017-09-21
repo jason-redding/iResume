@@ -39,19 +39,13 @@ body {
 		border-radius: 1em;
 		.ui-page-theme-a & {
 			@media screen {
-				box-shadow: 0px 0px 2em 0px hsla(0, 0%, 0%, 0.5);
+				box-shadow: 0px 0px 1.2em 0px hsla(0, 0%, 0%, 0.5);
+				border: 1px solid $textColorLightTheme;
 			}
 		}
 		.ui-page-theme-b & {
 			&.final-rendering {
 				background-color: $tableBackgroundColorLighter;
-			}
-		}
-	}
-	&#tab-panel-resume {
-		.ui-page-theme-a & {
-			@media screen {
-				border: 1px solid $textColorLightTheme;
 			}
 		}
 	}
@@ -95,7 +89,9 @@ body {
 pre.code-container {
 	white-space: pre-wrap;
 	word-break: break-word;
-	border: 1px solid hsla(0, 0%, 0%, 0.7);
+	.ui-page-theme-b & {
+		border: 1px solid hsla(0, 0%, 0%, 0.7);
+	}
 	code {
 		> .hljs-comment:nth-child(-n+3) {
 			display: none;
@@ -193,6 +189,7 @@ h1, h2, h3, h4, h5, h6 {
 	}
 	address {
 		display: inline;
+		font-style: normal;
 	}
 	.author-contact-info:not(.author-address) {
 		white-space: nowrap;
@@ -328,7 +325,10 @@ ul, ol, .project-description, .project-description > *:first-child {
 		&.ui-tooltip, & .arrow::after {
 			border: 1px solid hsl(206, 59%, 80%);
 			box-shadow: 0px 0px 7px hsl(0, 0%, 0%);
-			background-color: hsl(0, 0%, 100%);
+			background: hsl(204, 24%, 96%) url(images/ui-bg_highlight-hard_100_f2f5f7_1x100.png) 50% top repeat-x;
+		}
+		& .arrow::after {
+			background-position-y: bottom;
 		}
 	}
 	.arrow {
