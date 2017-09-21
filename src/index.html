@@ -72,7 +72,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<div class="text">Full List of Skills</div>
 							</caption>
 							<thead>
-								<tr data-render-title="${level} (${level.percentage#percent(0,3)}) ${level.preposition#default('at')} ${name} with ${experience.duration} ${experience.duration#grammar('year','years')} of experience${experience.until#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}" data-render-tabindex="0">
+								<tr data-render-title="${level} (${level.percentage#percent(0,3)}) ${level.preposition#default(levels.preposition)} ${name} with ${experience.duration} ${experience.duration#grammar('year','years')} of experience${experience.until#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}" data-render-tabindex="0">
 									<th class="ui-widget-header"
 											tabindex="0"
 											data-header="Name"
@@ -87,12 +87,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 											data-header="Level"
 											data-field="level"
 											title="Skill level"
-											data-render="${level}${experience.until#date('\'<br/><span style=&quot;font-size: 0.75em&quot;>Last used: \'MMMM \'of\' yyyy\'</span>\'')}"
+											data-render="${level}"
 											data-sort-order="desc"
 											data-order-by="level.originalValue, name">
 										<span class="data">Level</span>
 									</th>
-									<!--<th class="ui-widget-header"
+									<th class="ui-widget-header"
 											tabindex="0"
 											data-header="Experience"
 											data-field="experience"
@@ -101,7 +101,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 											data-sort-order="desc"
 											data-order-by="experience.duration, experience.since:desc, level.originalValue:desc, name">
 										<span class="data">Experience</span>
-									</th>-->
+									</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -114,7 +114,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<label for="select-code" class="ui-hidden-accessible">Select file:</label>
 							<select id="select-code">
 								<optgroup label="JavaScript">
-									<option value="/index.js" selected="selected">index.js</option>
+									<option value="/index.js">index.js</option>
 									<option value="/js/namespace.js">namespace.js</option>
 									<option value="/js/libs/format/format.js">format.js</option>
 									<option value="/js/common.js">common.js</option>
@@ -122,11 +122,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<optgroup label="HTML">
 									<option value="/index.html">index.html</option>
 								</optgroup>
+								<optgroup label="XML Data">
+									<option value="/resume.xml" selected="selected">resume.xml</option>
+								</optgroup>
 								<optgroup label="XML Schema Definition">
 									<option value="/resume.xsd">resume.xsd</option>
-								</optgroup>
-								<optgroup label="XML Data">
-									<option value="/resume.xml">resume.xml</option>
 								</optgroup>
 								<optgroup label="XML Stylesheet">
 									<option value="/resume.xsl">resume.xsl</option>
