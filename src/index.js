@@ -143,7 +143,6 @@
 		$('#theme-toggle-button').on('click', function(event) {
 			var $body = $('body');
 			var pageTheme = $body.pagecontainer('option', 'theme');
-			console.log('"' + pageTheme + '"');
 			var newPageTheme = (pageTheme !== 'a' ? 'a' : 'b');
 			$body
 			.pagecontainer('option', 'theme', newPageTheme);
@@ -164,11 +163,10 @@
 				$.each(classes, function(index, className) {
 					var matcher = themeSuffix.exec(className);
 					if (matcher !== null && matcher.length > 0) {
-						if (/^ui-(block|grid)$/.test(matcher[1])) {
+						if (/^ui-(block|grid)-/.test(matcher[1])) {
 							return true;
 						}
 						rv = true;
-						console.log(matcher);
 						$this.removeClass(matcher[0]);
 						if ($this.is('.ui-loader')) {
 							$this.addClass(matcher[1] + matcher[3] + pageTheme);

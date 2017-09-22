@@ -16,6 +16,7 @@ body {
 #tabs-nav {
 	display: flex;
 	justify-content: center;
+	margin: 0.5em 0 2em;
 	label[for="tab-code"] {
 		font-family: 'Courier New', monospace;
 	}
@@ -139,15 +140,46 @@ pre.code-container {
 	font-weight: bold;
 }
 
-.ui-header, .ui-footer {
-	.ui-title {
-		margin-left: 1em;
-		margin-right: 1em;
+.ui-header {
+	&, .ui-footer {
+		.ui-title {
+			margin-left: 1em;
+			margin-right: 1em;
+		}
 	}
-}
+	.ui-title[data-short-text] {
+		> .text {
+			display: none;
+		}
+		&::before {
+			content: attr(data-short-text);
+		}
+		@media (min-width: 28em) {
+			> .text {
+				display: inline;
+			}
+			&::before {
+				content: none;
+			}
+		}
+	}
+	}
 
-div.skills {
-	.skill {
+	@media (min-width: 28em) {
+		main.ui-content {
+			> .main-inner {
+				> .author-name {
+					display: none;
+				}
+				#tabs-nav {
+					margin-top: 1em;
+				}
+			}
+		}
+	}
+
+	div.skills {
+		.skill {
 		cursor: default;
 		&[aria-describedby] {
 			color: hsl(196, 100%, 37%);
@@ -366,6 +398,10 @@ ul, ol, .project-description, .project-description > *:first-child {
 	border-radius: 0.3125em;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
+	height: 100%;
+	top: 0;
+	box-sizing: border-box;
+	width: 2.75em;
 	@media print {
 		display: none;
 	}
