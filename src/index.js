@@ -140,10 +140,20 @@
 			}
 		});
 
-		$('#theme-toggle-button').on('click', function(event) {
+		$('#theme-toggle-button').on('click', function(event, options) {
 			var $body = $('body');
-			var pageTheme = $body.pagecontainer('option', 'theme');
-			var newPageTheme = (pageTheme !== 'a' ? 'a' : 'b');
+			var pageTheme;
+			var newPageTheme;
+			if ($.isPlainObject(options) && ('theme' in options)) {
+				newPageTheme = (options.theme !== 'a' ? 'b' : 'a');
+				pageTheme = (newPageTheme !== 'a' ? 'a' : 'b');
+			} else {
+				pageTheme = $body.pagecontainer('option', 'theme');
+				newPageTheme = (pageTheme !== 'a' ? 'a' : 'b');
+			}
+
+			savePreference('theme', newPageTheme);
+
 			$body
 			.pagecontainer('option', 'theme', newPageTheme);
 
@@ -233,6 +243,8 @@
 			loadOnlyResumeData();
 		});
 
+		enforcePreferences();
+
 		var $navTabRadios = $tabsNav.find(':radio');
 		var $defaultSelected = $();
 		$navTabRadios.each(function() {
@@ -251,6 +263,23 @@
 		}
 
 		loadEverything();
+	}
+
+	function enforcePreferences() {
+		if (('localStorage' in window)) {
+			var theme = window.localStorage.getItem('theme');
+			if (theme !== null) {
+				$('#theme-toggle-button').trigger('click', {
+					theme: theme
+				});
+			}
+		}
+	}
+
+	function savePreference(name, value) {
+		if (('localStorage' in window)) {
+			window.localStorage.setItem(name, value);
+		}
 	}
 
 	function loadCode(path) {
