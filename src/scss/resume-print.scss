@@ -24,6 +24,7 @@
 		break-inside: avoid;
 	}
 	table.skills {
+		border-style: none;
 		caption {
 			display: table-caption;
 		}
@@ -97,6 +98,7 @@
 					}
 					&#tab-panel-resume {
 						order: 1;
+						margin-top: 0;
 					}
 					&#tab-panel-skills {
 						order: 2;
