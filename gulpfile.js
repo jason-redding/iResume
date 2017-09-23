@@ -1,11 +1,8 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
 var useref = require('gulp-useref');
 var gulpSequence = require('gulp-sequence');
-var minifyCss = require('gulp-clean-css');
 var uglify = require('gulp-uglify');
-var gulpif = require('gulp-if');
 var del = require('del');
 var browserSync = require('browser-sync').create();
 
@@ -15,8 +12,7 @@ var DEPLOY_PATH = '/var/www/html.iresume';
 
 gulp.task('default', function(callback) {
 	return gulpSequence(
-	'clean',
-	'build',
+	'clean-build',
 	'watch',
 	callback);
 });
@@ -31,18 +27,24 @@ gulp.task('browserSync', function() {
 });
 
 gulp.task('watch', ['browserSync'], function() {
-	gulp.watch(SRC + '/**/*.html', ['clean-build']);
-	gulp.watch(SRC + '/**/*.js', ['clean-build']);
-	gulp.watch(SRC + '/**/*.scss', ['clean-build']);
-	gulp.watch(SRC + '/**/*.xml', ['clean-build']);
-	gulp.watch(SRC + '/**/*.xsl', ['clean-build']);
-	return gulp.watch(SRC + '/**/*.xsd', ['clean-build']);
+	gulp.watch(SRC + '/**/*.html', ['clean-build-refresh']);
+	gulp.watch(SRC + '/**/*.js', ['clean-build-refresh']);
+	gulp.watch(SRC + '/**/*.scss', ['clean-build-refresh']);
+	gulp.watch(SRC + '/**/*.xml', ['clean-build-refresh']);
+	gulp.watch(SRC + '/**/*.xsl', ['clean-build-refresh']);
+	return gulp.watch(SRC + '/**/*.xsd', ['clean-build-refresh']);
 });
 
 gulp.task('clean-build', function(callback) {
 	return gulpSequence(
 	'clean',
 	'build',
+	callback);
+});
+
+gulp.task('clean-build-refresh', function(callback) {
+	return gulpSequence(
+	'clean-build',
 	'browser-reload',
 	callback);
 });
@@ -50,14 +52,13 @@ gulp.task('clean-build', function(callback) {
 gulp.task('build', function(callback) {
 	return gulpSequence(
 	'copy-static',
-	['sass'],
-//	'concat',
+	//['sass'],
+	'concat',
 	callback);
 });
 
-gulp.task('browser-reload', function(callback) {
+gulp.task('browser-reload', function() {
 	browserSync.reload();
-	callback();
 });
 
 gulp.task('deploy', function(callback) {
@@ -84,12 +85,13 @@ gulp.task('run', function(callback) {
 	callback);
 });
 
-gulp.task('concat', function(callback) {
+gulp.task('concat', ['sass'], function() {
 	return gulp.src(SRC + '/**/*.html', {
 		base: SRC
 	})
 	.pipe(useref({
-		searchPath: DEST
+		searchPath: DEST,
+		base: DEST
 	}))
 	.pipe(gulp.dest(DEST));
 });
@@ -98,12 +100,10 @@ gulp.task('sass', function() {
 	return gulp.src(DEST + '/scss/**/*.scss', {
 		base: DEST + '/scss'
 	})
-	.pipe(sourcemaps.init())
 	.pipe(sass({
-		sourceMap: true,
+		sourceMap: false,
 		outputStyle: 'expanded'
 	}).on('error', sass.logError))
-	.pipe(sourcemaps.write('.'))
 	.pipe(gulp.dest(DEST + '/css'));
 });
 
