@@ -163,23 +163,23 @@ pre.code-container {
 			}
 		}
 	}
-	}
+}
 
-	@media (min-width: 28em) {
-		main.ui-content {
-			> .main-inner {
-				> .author-name {
-					display: none;
-				}
-				#tabs-nav {
-					margin-top: 1em;
-				}
+@media (min-width: 28em) {
+	main.ui-content {
+		> .main-inner {
+			> .author-name {
+				display: none;
+			}
+			#tabs-nav {
+				margin-top: 1em;
 			}
 		}
 	}
+}
 
-	div.skills {
-		.skill {
+div.skills {
+	.skill {
 		cursor: default;
 		&[aria-describedby] {
 			color: hsl(196, 100%, 37%);
@@ -312,32 +312,24 @@ ul, ol, .project-description, .project-description > *:first-child {
 				border-bottom: 1px dashed;
 			}
 			.ui-page-theme-b & {
-				color: hsl(196, 73%, 50%);
+				/*color: hsl(196, 73%, 50%);*/
+				color: $linkColorDark;
 				&:hover {
-					color: hsl(196, 100%, 37%);
+					/*color: hsl(196, 100%, 37%);*/
+					color: $linkColorDarkHover;
 				}
 			}
 			.ui-page-theme-a & {
-				color: hsl(207, 60%, 50%);
+				/*color: hsl(207, 60%, 50%);*/
+				color: $linkColorLight;
 				&:hover {
-					color: hsl(207, 100%, 30%);
+					/*color: hsl(207, 100%, 30%);*/
+					color: $linkColorLightHover;
 				}
 			}
 		}
 	}
 }
-
-/*@media screen {
-	time[title] {
-		border-bottom: 1px dashed;
-		border-bottom-color: hsl(196, 73%, 50%);
-		&:hover {
-			border-bottom-color: hsl(196, 100%, 37%);
-			border-bottom-color: hsl(196, 73%, 50%);
-			cursor: pointer;
-		}
-	}
-}*/
 
 .ui-tooltip {
 	pointer-events: none;
@@ -404,6 +396,34 @@ ul, ol, .project-description, .project-description > *:first-child {
 	width: 2.75em;
 	@media print {
 		display: none;
+	}
+}
+
+.ui-page-theme-a,
+html .ui-bar-a,
+html .ui-body-a,
+html body .ui-group-theme-a {
+	a {
+		&, &:visited {
+			color: $linkColorLight;
+			&:hover {
+				color: $linkColorLightHover;
+			}
+		}
+	}
+}
+
+.ui-page-theme-b,
+html .ui-bar-b,
+html .ui-body-b,
+html body .ui-group-theme-b {
+	a {
+		&, &:visited {
+			color: $linkColorDark;
+			&:hover {
+				color: $linkColorDarkHover;
+			}
+		}
 	}
 }
 
