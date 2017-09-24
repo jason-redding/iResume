@@ -21,6 +21,12 @@ $tableBackgroundColorDarker: change-color($tableBackgroundColor, $saturation: 25
 $textColorLightTheme: hsl(0, 0%, 0%);
 $textColorDarkTheme: hsl(0, 0%, 100%);
 
+$linkColorLight: hsl(207, 60%, 50%);
+/*$linkColorDark: hsl(196, 73%, 50%);*/
+$linkColorDark: hsl(181, 100%, 61%);
+$linkColorLightHover: hsl(207, 100%, 30%);
+$linkColorDarkHover: hsl(196, 100%, 37%);
+
 @mixin prefix($name, $values...) {
 	-webkit-#{$name}: $values;
 	-moz-#{$name}: $values;
