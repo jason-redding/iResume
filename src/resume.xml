@@ -876,8 +876,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</h:p>
 								<h:ul>
 									<h:li>Interfaces with 3rd-party RESTful API to import XML data</h:li>
-									<h:li>Downloads Academic Catalog data in chunks to mitigate timeouts</h:li>
-									<h:li>Applies custom XSL transform to produce final XML</h:li>
+									<h:li>Downloads data in chunks to mitigate timeouts</h:li>
+									<h:li>Applies custom XSL Transform to produce final XML</h:li>
 									<h:li>Allows for customization of output format, and processing rules/logic via an XML properties file.</h:li>
 								</h:ul>
 							</description>
@@ -887,22 +887,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<description>
 								<h:p>
 									Event Scheduling software package (with 700+ users) follows institution-defined rules to match a
-									collection of locations with a collection of events. The product is comprised of an
-									Oracle database schema, Win32 client application, and a Java EE Web Application front-end.
-									WebViewer is the web front-end component, allowing visitors to view and search event/location details,
-									and submit requests for events. WebServices is a RESTful Java EE Web Application interface to the
-									R25 Oracle database schema.
+									collection of locations with a collection of events.
 								</h:p>
-								<h:ul>
-									<h:li>Install, configure, customize, enhance, and maintain the product (front-end and back-end), with primary focus on web front-end and Event Request Form.</h:li>
-									<h:li>With jQuery/jQueryUI/AJAX, completely revamped the WebViewer's set of pages and Request Form and added features unavailable in the original product.</h:li>
-									<h:li>
-										Developed a page using jQuery/jQueryUI/AJAX to search via WebServices for spaces matching
-										criteria based on features, capacity, layout, space categories, campus, and building. The form also
-										allowed users to check the space availability for specific dates/times and schedule and event in
-										that space. Integrated with Google Maps to show location of space and allow for 1-click access to
-										driving directions.
-									</h:li>
+								<h:ul>									
+									<h:li>Install, configure, customize, and augment front-end; maintain product front- and back-end, interfacing with an Oracle-backed RESTful Java EE Web Application.</h:li>
+									<h:li>With jQuery/jQueryUI/AJAX, augmented WebViewer's HTML pages, notably the Event Request Form, adding features unavailable in the original product.</h:li>
+									<h:li>Via WebServices, developed page with capability to search for spaces matching a wide range of space/location attributes. Allows users to check availability for specific dates/times and schedule an event in that space. Integrates with Google Maps to show location of space and allows for 1-click access to directions.</h:li>
 								</h:ul>
 							</description>
 						</project>
@@ -910,14 +900,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>Administrator AccountAssist</title>
 							<description>
 								<h:p>
-									Used by 100+ support personnel to manage over 800,000 accounts.
+									Using jQuery/jQueryUI/AJAX, created Java EE Web Application allowing 100+ support personnel to manage over 800,000 accounts.
 								</h:p>
 								<h:ul>
 									<h:li>
-										Java EE Web Application integrated with Active Directory for authentication and group membership
-										authorization, allowing support personnel to assist with user account administration. The
-										application integrated with Active Directory and Banner® by Ellucian to change account passwords
-										and display relevant account information.
+										Integrates with Active Directory for authentication and group membership authorization.
 									</h:li>
 								</h:ul>
 							</description>
@@ -926,11 +913,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>USPS Gateway</title>
 							<description>
 								<h:p>
-									Used during the student application process to determine if the submitted street address exists, and whether it is located inside or outside county boundaries.
+									Used during the student application process to verify submitted street addresses' location inside or outside county boundaries.
 								</h:p>
 								<h:ul>
 									<h:li>
-										Developed a standalone Java command-line application, the Oracle PL/SQL package, and Java code within the database.
+										Developed a standalone Java command-line application, the PL/SQL package, and Java code within the Oracle database.
 									</h:li>
 								</h:ul>
 							</description>
@@ -938,14 +925,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<project>
 							<title>Web Calendar</title>
 							<description>
+									<h:p>
+										Developed an interactive, highly customizable web calendar using jQuery, designed to parse an XML file containing event data.
+									</h:p>
 								<h:ul>
 									<h:li>
-										Developed an interactive highly customizable web calendar using jQuery, designed to parse an XML file containing event data.
+										Used JavaScript to create an extremely customizable formatting engine for highly versatile text, date, and number formatting.
 									</h:li>
 									<h:li>
-										Developed an extremely customizable formatting engine using Javascript for highly versatile custom formatting of predefined
-										core objects such as: String, Date, and Number. The formatting engine parses tokens in the form of "${property.name#format}",
-										and will format Date objects using most of the patterns available for use by the Java class SimpleDateFormat.
+										Parses tokens in the form of "${property.name#format}".
+									</h:li>
+									<h:li>
+										Formats Date objects using most of the patterns available for use by the Java class&#160;
+										<h:a href="http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html" target="_blank">SimpleDateFormat</h:a>.
 									</h:li>
 								</h:ul>
 							</description>
