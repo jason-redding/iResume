@@ -50,7 +50,7 @@ body {
 			}
 		}
 	}
-	> p:first-child {
+	> p:nth-child(-n+2) {
 		margin-top: 0;
 		text-align: center;
 	}
@@ -58,6 +58,28 @@ body {
 		.show-when-data-loaded {
 			display: none;
 		}
+	}
+}
+
+.block {
+	display: block;
+}
+
+.inline-block {
+	display: inline-block;
+}
+
+span.github-link {
+	font-size: 0.75em;
+	margin-top: 0.5em;
+	padding: 0.5em 0.8em;
+	border-radius: 0.5em;
+	.ui-page-theme-a & {
+		border: 1px solid hsl(0, 0%, 80%);
+		background-color: hsl(0, 0%, 94%);
+	}
+	.ui-page-theme-b & {
+		background-color: hsl(209, 50%, 30%);
 	}
 }
 
@@ -98,6 +120,10 @@ pre.code-container {
 			display: none;
 		}
 	}
+}
+
+#categories-button > span:first-child::before {
+	content: 'Category: ';
 }
 
 #select-code-container {

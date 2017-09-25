@@ -26,12 +26,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<!-- Global Site Tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-106877989-1"></script>
 		<script>
-  		window.dataLayer = window.dataLayer || [];
-	  	function gtag() {
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
 				dataLayer.push(arguments);
 			}
-  		gtag('js', new Date());
-	  	gtag('config', 'UA-106877989-1');
+			gtag('js', new Date());
+			gtag('config', 'UA-106877989-1');
 		</script>
 
 		<link id="jqueryui-theme" type="text/css" rel="stylesheet" href="/css/jquery-ui.dark-hive.theme.min.css"/>
@@ -120,7 +120,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						</table>
 					</div>
 					<div id="tab-panel-code" data-panel="code" class="tab-panel ui-screen-hidden">
-						<p>Select a file below to view its code.</p>
+						<p>
+							<span class="block">Select a file below to view its code.</span>
+							<span class="github-link inline-block">(Alternatively, visit the GitHub Repository at <a href="https://github.com/jason-redding/iResume" target="_blank" class="github-link">https://github.com/jason-redding/iResume</a>)</span>
+						</p>
 						<div id="select-code-container">
 							<label for="select-code" class="ui-hidden-accessible">Select file:</label>
 							<select id="select-code">
