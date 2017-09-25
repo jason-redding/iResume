@@ -415,7 +415,7 @@
 		.attr({
 			id: 'categories'
 		});
-		$('<option/>').val('*').text('Show All Skills').appendTo($select);
+		$('<option/>').val('*').text('All Categories').appendTo($select);
 		$xmlCategories.each(function() {
 			var $category = $(this);
 			var id = $.trim($category.attr('value'));
