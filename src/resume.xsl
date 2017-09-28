@@ -600,7 +600,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:text> </xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select="normalize-space($text)"/>
+				<xsl:value-of select="$text"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -731,6 +731,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xsl:variable name="skill-ref" select="."/>
 		<xsl:variable name="ref-name" select="translate(normalize-space($skill-ref/@name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-')"/>
 		<xsl:variable name="ref" select="/r:resume/r:skills/r:skill[translate(normalize-space(r:name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-') = $ref-name]"/>
-		<xsl:value-of select="concat(' ', normalize-space($skill-ref))"/>
+		<xsl:value-of select="normalize-space($skill-ref)"/>
 	</xsl:template>
 </xsl:stylesheet>
