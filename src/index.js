@@ -148,7 +148,7 @@
 				newPageTheme = (options.theme !== 'a' ? 'b' : 'a');
 				pageTheme = (newPageTheme !== 'a' ? 'a' : 'b');
 			} else {
-				pageTheme = $body.pagecontainer('option', 'theme');
+				pageTheme = ($body.pagecontainer('option', 'theme') !== 'a' ? 'b' : 'a');
 				newPageTheme = (pageTheme !== 'a' ? 'a' : 'b');
 			}
 
