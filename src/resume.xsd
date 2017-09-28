@@ -193,6 +193,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																						<xs:element name="link" minOccurs="0"/>
 																						<xs:element name="description"/>
 																					</xs:sequence>
+																					<xs:attribute name="type" use="optional"/>
 																				</xs:complexType>
 																			</xs:element>
 																		</xs:choice>

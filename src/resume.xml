@@ -862,8 +862,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<end-date symbolic="present"/>
 					</timeline>
 					<projects>
-						<project>
-							<title>Student Self-Help site</title>
+						<project type="web">
+							<title>Student Self-Help</title>
 							<link>https://shwa.ccbcmd.edu</link>
 							<description>
 								<h:p>Used by students to retrieve their account information and reset their password.</h:p>
@@ -880,7 +880,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</h:ul>
 							</description>
 						</project>
-						<project>
+						<project type="cli">
 							<title>AcalogExtract</title>
 							<description>
 								<h:p>
