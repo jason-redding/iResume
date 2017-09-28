@@ -9,14 +9,13 @@ var preprocess = require('gulp-preprocess');
 
 var NOW = new Date();
 var CONTEXT = {
+	SRC: 'src',
+	DEST: 'public_html',
+	DEPLOY_PATH: '/var/www/html.iresume',
 	NOW: NOW.getFullYear() + '-' + padLeft(NOW.getMonth() + 1, '0', 2) + '-' + padLeft(NOW.getDate(), '0', 2) + 'T' + padLeft(NOW.getHours(), '0', 2) + ':' + padLeft(NOW.getMinutes(), '0', 2) + ':' + padLeft(NOW.getSeconds(), '0', 2) + '.' + NOW.getMilliseconds() + (NOW.getTimezoneOffset() === 0 ? 'Z' : (NOW.getTimezoneOffset() < 0 ? '+' : '-') + (padLeft(Math.floor(NOW.getTimezoneOffset() / 60), '0', 2) + padLeft(NOW.getTimezoneOffset() % 60, '0', 2))),
 	DEBUG: true,
 	NODE_ENV: 'development'
 };
-
-var SRC = 'src';
-var DEST = 'public_html';
-var DEPLOY_PATH = '/var/www/html.iresume';
 
 function displayContext(context) {
 	console.dir(context);
@@ -36,18 +35,18 @@ gulp.task('browserSync', function() {
 		ui: false,
 		reloadOnRestart: true,
 		server: {
-			baseDir: DEST
+			baseDir: CONTEXT.DEST
 		}
 	});
 });
 
 gulp.task('watch', ['browserSync'], function() {
-	gulp.watch(SRC + '/**/*.html', ['clean-build-refresh']);
-	gulp.watch(SRC + '/**/*.js', ['clean-build-refresh']);
-	gulp.watch(SRC + '/**/*.scss', ['clean-build-refresh']);
-	gulp.watch(SRC + '/**/*.xml', ['clean-build-refresh']);
-	gulp.watch(SRC + '/**/*.xsl', ['clean-build-refresh']);
-	return gulp.watch(SRC + '/**/*.xsd', ['clean-build-refresh']);
+	gulp.watch(CONTEXT.SRC + '/**/*.html', ['clean-build-refresh']);
+	gulp.watch(CONTEXT.SRC + '/**/*.js', ['clean-build-refresh']);
+	gulp.watch(CONTEXT.SRC + '/**/*.scss', ['clean-build-refresh']);
+	gulp.watch(CONTEXT.SRC + '/**/*.xml', ['clean-build-refresh']);
+	gulp.watch(CONTEXT.SRC + '/**/*.xsl', ['clean-build-refresh']);
+	return gulp.watch(CONTEXT.SRC + '/**/*.xsd', ['clean-build-refresh']);
 });
 
 gulp.task('clean-build', function(callback) {
@@ -90,14 +89,14 @@ gulp.task('deploy', function(callback) {
 
 gulp.task('deploy-live', function() {
 	return gulp.src([
-		DEST + '/**/*'
+		CONTEXT.DEST + '/**/*'
 	], {
-		base: DEST
+		base: CONTEXT.DEST
 	})
 	.pipe(preprocess({
 		context: CONTEXT
 	}))
-	.pipe(gulp.dest(DEPLOY_PATH));
+	.pipe(gulp.dest(CONTEXT.DEPLOY_PATH));
 });
 
 gulp.task('run', function(callback) {
@@ -108,43 +107,43 @@ gulp.task('run', function(callback) {
 });
 
 gulp.task('concat', ['sass'], function() {
-	return gulp.src(SRC + '/**/*.html', {
-		base: SRC
+	return gulp.src(CONTEXT.SRC + '/**/*.html', {
+		base: CONTEXT.SRC
 	})
 	.pipe(preprocess({
 		context: CONTEXT
 	}))
 	.pipe(useref({
-		searchPath: DEST,
-		base: DEST
+		searchPath: CONTEXT.DEST,
+		base: CONTEXT.DEST
 	}))
-	.pipe(gulp.dest(DEST));
+	.pipe(gulp.dest(CONTEXT.DEST));
 });
 
 gulp.task('sass', function() {
-	return gulp.src(DEST + '/scss/**/*.scss', {
-		base: DEST + '/scss'
+	return gulp.src(CONTEXT.DEST + '/scss/**/*.scss', {
+		base: CONTEXT.DEST + '/scss'
 	})
 	.pipe(sass({
 		sourceMap: false,
 		outputStyle: 'expanded'
 	}).on('error', sass.logError))
-	.pipe(gulp.dest(DEST + '/css'));
+	.pipe(gulp.dest(CONTEXT.DEST + '/css'));
 });
 
 gulp.task('copy-static', function() {
 	return gulp.src([
-		SRC + '/**/*'
+		CONTEXT.SRC + '/**/*'
 	], {
-		base: SRC
+		base: CONTEXT.SRC
 	})
 	//.pipe(preprocess())
-	.pipe(gulp.dest(DEST));
+	.pipe(gulp.dest(CONTEXT.DEST));
 });
 
 gulp.task('clean', function(callback) {
 	return del([
-		DEST + '/**/*'
+		CONTEXT.DEST + '/**/*'
 	], callback);
 });
 
