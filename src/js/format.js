@@ -539,9 +539,12 @@
 			r = am + ' minute' + (am === 1 ? '' : 's');
 		} else if (as > 0) {
 			r = as + ' second' + (as === 1 ? '' : 's');
+		} else {
+			r = 'just now';
 		}
-		r += (td < 0 ? ' ago' : ' from now');
-
+		if (as > 0) {
+			r += (td < 0 ? ' ago' : ' from now');
+		}
 		return r;
 	};
 	Date.format = function(date, format) {
@@ -598,19 +601,19 @@
 					}
 				} else if (mm === 'y') {
 					var sy = ('' + y);
-					rv = sy.substring(Math.max(0, sy.length - match.length)).padLeft(match.length, '0');
+					rv = String.padLeft(sy.substring(Math.max(0, sy.length - match.length)), match.length, '0');
 				} else if (mm === 'M') {
 					if (match.length >= 4) {
 						rv = calendar_month_names[M - 1];
 					} else if (match.length >= 3) {
 						rv = calendar_month_names[M - 1].substring(0, 3);
 					} else {
-						rv = ('' + M).padLeft(match.length, '0');
+						rv = String.padLeft(M, match.length, '0');
 					}
 				} else if (mm === 'd') {
-					rv = ('' + d).padLeft(match.length, '0');
+					rv = String.padLeft(d, match.length, '0');
 				} else if (mm === 'F') {
-					rv = ('' + diw).padLeft(match.length, '0');
+					rv = String.padLeft(diw, match.length, '0');
 				} else if (mm === 'E') {
 					if (match.length >= 4) {
 						rv = calendar_day_names[diw - 1];
@@ -622,19 +625,19 @@
 				} else if (mm === 'a') {
 					rv = ampm.substring(0, Math.min(match.length, 2));
 				} else if (mm === 'H') {
-					rv = ('' + H).padLeft(match.length, '0');
+					rv = String.padLeft(H, match.length, '0');
 				} else if (mm === 'k') {
-					rv = ('' + (H + 1)).padLeft(match.length, '0');
+					rv = String.padLeft((H + 1), match.length, '0');
 				} else if (mm === 'K') {
-					rv = ('' + (h - 1)).padLeft(match.length, '0');
+					rv = String.padLeft((h - 1), match.length, '0');
 				} else if (mm === 'h') {
-					rv = ('' + h).padLeft(match.length, '0');
+					rv = String.padLeft(h, match.length, '0');
 				} else if (mm === 'm') {
-					rv = ('' + m).padLeft(match.length, '0');
+					rv = String.padLeft(m, match.length, '0');
 				} else if (mm === 's') {
-					rv = ('' + s).padLeft(match.length, '0');
+					rv = String.padLeft(s, match.length, '0');
 				} else if (mm === 'S') {
-					rv = ('' + S).padLeft(match.length, '0');
+					rv = String.padLeft(S, match.length, '0');
 				} else {
 					rv = match;
 				}
@@ -727,26 +730,28 @@
 		var dOffset = this.getMonthStartingDay();
 		return Math.ceil(((mLength + dOffset) / 7));
 	};
-	String.prototype.padLeft = function(size, c) {
-		if (this.length >= size) {
-			return this;
+	String.padLeft = function(text, size, c) {
+		text = ('' + text);
+		if (text.length >= size) {
+			return text;
 		}
 		c = c.substring(0, 1);
 		var p = '';
-		for (var i = this.length; i < size; i++) {
+		for (var i = text.length; i < size; i++) {
 			p += c;
 		}
-		return (p + this);
+		return (p + text);
 	};
-	String.prototype.padRight = function(size, c) {
-		if (this.length >= size) {
-			return this;
+	String.padRight = function(text, size, c) {
+		text = ('' + text);
+		if (text.length >= size) {
+			return text;
 		}
 		c = c.substring(0, 1);
 		var p = '';
-		for (var i = this.length; i < size; i++) {
+		for (var i = text.length; i < size; i++) {
 			p += c;
 		}
-		return (this + p);
+		return (text + p);
 	};
 })();
