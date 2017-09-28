@@ -622,6 +622,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</categories>
 		</skill>
 		<skill>
+			<name>Responsive Design</name>
+			<level value="3.75"/>
+			<experience>
+				<since>2012-01</since>
+			</experience>
+			<categories>
+				<category value="client"/>
+				<category value="relevant"/>
+				<category value="web"/>
+			</categories>
+		</skill>
+		<skill>
 			<name>RESTful</name>
 			<level value="3"/>
 			<experience>
