@@ -410,6 +410,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xsl:attribute name="data-experience-duration">
 				<xsl:value-of select="concat('P', $experience-years, 'Y')"/>
 			</xsl:attribute>
+			<xsl:attribute name="tabindex">
+				<xsl:value-of select="0"/>
+			</xsl:attribute>
 			<span class="text">
 				<xsl:value-of select="normalize-space(r:name)"/>
 			</span>
@@ -489,7 +492,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xsl:when test="string-length($start-year) > 0 and string-length($end-year) > 0">
 				<xsl:choose>
 					<xsl:when test="count(self::r:duration) > 0">
-						<xsl:text> </xsl:text>
 						<xsl:element name="time">
 							<xsl:attribute name="datetime">
 								<xsl:text>P</xsl:text>
@@ -498,10 +500,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<xsl:attribute name="title">
 								<xsl:value-of select="concat('Since ', $start-year)"/>
 							</xsl:attribute>
+							<xsl:attribute name="tabindex">
+								<xsl:value-of select="0"/>
+							</xsl:attribute>
 							<xsl:value-of select="$duration"/>
 							<xsl:value-of select="concat(' ', normalize-space(@unit))"/>
 						</xsl:element>
-						<xsl:text> </xsl:text>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:value-of select="$duration"/>
@@ -509,13 +513,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				</xsl:choose>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:if test="count(self::r:duration) > 0">
-					<xsl:text> </xsl:text>
-				</xsl:if>
 				<xsl:value-of select="normalize-space(text())"/>
-				<xsl:if test="count(self::r:duration) > 0">
-					<xsl:text> </xsl:text>
-				</xsl:if>
 				<xsl:message terminate="no">
 					<xsl:text disable-output-escaping="yes">&lt;duration&gt; using fallback value: </xsl:text>
 					<xsl:value-of select="concat('&quot;', normalize-space(text()), '&quot;')"/>
