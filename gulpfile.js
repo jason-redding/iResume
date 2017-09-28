@@ -5,12 +5,26 @@ var gulpSequence = require('gulp-sequence');
 var uglify = require('gulp-uglify');
 var del = require('del');
 var browserSync = require('browser-sync').create();
+var preprocess = require('gulp-preprocess');
+
+var NOW = new Date();
+
+var CURRENT_CONTEXT = {
+	NOW: NOW.getFullYear() + '-' + padLeft(NOW.getMonth() + 1, '0', 2) + '-' + padLeft(NOW.getDate(), '0', 2) + 'T' + padLeft(NOW.getHours(), '0', 2) + ':' + padLeft(NOW.getMinutes(), '0', 2) + ':' + padLeft(NOW.getSeconds(), '0', 2) + '.' + NOW.getMilliseconds() + (NOW.getTimezoneOffset() === 0 ? 'Z' : (NOW.getTimezoneOffset() < 0 ? '+' : '-') + (padLeft(Math.floor(NOW.getTimezoneOffset() / 60), '0', 2) + padLeft(NOW.getTimezoneOffset() % 60, '0', 2))),
+	DEBUG: true,
+	NODE_ENV: 'development'
+};
 
 var SRC = 'src';
 var DEST = 'public_html';
 var DEPLOY_PATH = '/var/www/html.iresume';
 
+function displayContext(context) {
+	console.dir(context);
+}
+
 gulp.task('default', function(callback) {
+	displayContext(CURRENT_CONTEXT);
 	return gulpSequence(
 	'clean-build',
 	'watch',
@@ -43,6 +57,7 @@ gulp.task('clean-build', function(callback) {
 });
 
 gulp.task('clean-build-refresh', function(callback) {
+	console.log(CURRENT_CONTEXT.NOW);
 	return gulpSequence(
 	'clean-build',
 	'browser-reload',
@@ -62,6 +77,9 @@ gulp.task('browser-reload', function() {
 });
 
 gulp.task('deploy', function(callback) {
+	CURRENT_CONTEXT['DEBUG'] = false;
+	CURRENT_CONTEXT['NODE_ENV'] = 'production';
+	displayContext(CURRENT_CONTEXT);
 	return gulpSequence(
 	'clean',
 	'build',
@@ -69,12 +87,15 @@ gulp.task('deploy', function(callback) {
 	callback);
 });
 
-gulp.task('deploy-live', function(callback) {
+gulp.task('deploy-live', function() {
 	return gulp.src([
 		DEST + '/**/*'
 	], {
 		base: DEST
 	})
+	.pipe(preprocess({
+		context: CURRENT_CONTEXT
+	}))
 	.pipe(gulp.dest(DEPLOY_PATH));
 });
 
@@ -89,6 +110,9 @@ gulp.task('concat', ['sass'], function() {
 	return gulp.src(SRC + '/**/*.html', {
 		base: SRC
 	})
+	.pipe(preprocess({
+		context: CURRENT_CONTEXT
+	}))
 	.pipe(useref({
 		searchPath: DEST,
 		base: DEST
@@ -113,6 +137,7 @@ gulp.task('copy-static', function() {
 	], {
 		base: SRC
 	})
+	//.pipe(preprocess())
 	.pipe(gulp.dest(DEST));
 });
 
@@ -121,3 +146,16 @@ gulp.task('clean', function(callback) {
 		DEST + '/**/*'
 	], callback);
 });
+
+function padLeft(input, char, size) {
+	if (('' + char).length === 0) {
+		char = ' ';
+	}
+	input = ('' + input);
+	var i = input.length;
+	while (i < size) {
+		input = char + input;
+		i += char.length;
+	}
+	return input;
+}
