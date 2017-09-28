@@ -33,6 +33,8 @@ gulp.task('default', function(callback) {
 gulp.task('browserSync', function() {
 	return browserSync.init({
 		open: false,
+		ui: false,
+		reloadOnRestart: true,
 		server: {
 			baseDir: DEST
 		}
