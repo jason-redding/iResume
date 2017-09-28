@@ -695,7 +695,10 @@
 			'data-sort-direction': firstSortDirection,
 			'data-order-by': firstSortBy
 		});
-		$table.attr('data-order-by', sortingProperties.field);
+		$table.attr({
+			'data-sort-order': sortingProperties.sortDirection,
+			'data-order-by': sortingProperties.field
+		});
 		Array.prototype.sort.call($rows, function(a, b) {
 			var aRow = $(a).templateProperties();
 			var bRow = $(b).templateProperties();

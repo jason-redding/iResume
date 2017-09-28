@@ -22,26 +22,24 @@ body {
 	}
 }
 
-#tab-panel-resume, #tab-panel-skills {
-	&.final-rendering {
-		max-width: 50em;
-		margin-left: auto;
-		margin-right: auto;
-	}
-}
-
 .tab-panel {
 	display: flex;
 	flex-direction: column;
 	margin-top: 1em;
-	padding: 1em;
 	box-sizing: border-box;
 	&:not(#tab-panel-skills) {
 		border-radius: 1em;
+		&.final-rendering {
+			@media screen {
+				border: 1px solid hsla(0, 0%, 0%, 0);
+			}
+		}
 		.ui-page-theme-a & {
 			@media screen {
-				box-shadow: 0px 0px 1.2em 0px hsla(0, 0%, 0%, 0.5);
-				border: 1px solid $textColorLightTheme;
+				&.final-rendering {
+					box-shadow: 0px 0px 1.2em 0px hsla(0, 0%, 0%, 0.5);
+					border-color: $textColorLightTheme;
+				}
 			}
 		}
 		.ui-page-theme-b & {
@@ -61,6 +59,33 @@ body {
 	}
 }
 
+#tab-panel-resume {
+	padding: 1em;
+}
+
+#tab-panel-resume, #tab-panel-skills {
+	&.final-rendering {
+		max-width: 50em;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+#tab-panel-skills {
+	&:not(.final-rendering) {
+		#skill-categories, #skills-table {
+			display: none;
+		}
+	}
+	&.final-rendering {
+		padding: 0;
+	}
+}
+
+#tab-panel-code {
+	padding: 0;
+}
+
 .block {
 	display: block;
 }
@@ -74,23 +99,13 @@ span.github-link {
 	margin-top: 0.5em;
 	padding: 0.5em 0.8em;
 	border-radius: 0.5em;
+	border: 1px solid hsla(0, 0%, 0%, 0);
 	.ui-page-theme-a & {
-		border: 1px solid hsl(0, 0%, 80%);
+		border-color: hsl(0, 0%, 80%);
 		background-color: hsl(0, 0%, 94%);
 	}
 	.ui-page-theme-b & {
 		background-color: hsl(209, 50%, 30%);
-	}
-}
-
-#tab-panel-skills {
-	&:not(.final-rendering) {
-		#skill-categories, #skills-table {
-			display: none;
-		}
-	}
-	&.final-rendering {
-		padding: 0;
 	}
 }
 
@@ -112,8 +127,9 @@ span.github-link {
 pre.code-container {
 	white-space: pre-wrap;
 	word-break: break-word;
+	border: 1px solid hsla(0, 0%, 0%, 0);
 	.ui-page-theme-b & {
-		border: 1px solid hsla(0, 0%, 0%, 0.7);
+		border-color: hsla(0, 0%, 0%, 0.7);
 	}
 	code {
 		> .hljs-comment:nth-child(-n+3) {
@@ -629,6 +645,36 @@ table.skills {
 			}
 			background-color: hsla(0, 0%, 0%, 0.04);
 		}
+		@include media-width-max(374) {
+			&::after {
+				order: 1;
+				content: '';
+				display: block;
+				width: 16px;
+				height: 16px;
+				background-position: 0 -16px;
+				flex: 0 0 auto;
+				margin-top: 2px;
+				margin-right: 3px;
+				/*background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/images/ui-icons_777777_256x240.png);*/
+			}
+			.ui-page-theme-a &::after {
+				/*background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/cupertino/images/ui-icons_2694e8_256x240.png);*/
+				background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/dark-hive/images/ui-icons_222222_256x240.png);
+			}
+			.ui-page-theme-b &::after {
+				background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/images/ui-icons_ffffff_256x240.png);
+			}
+		}
+	}
+	&[data-sort-order="desc"] {
+		&[data-order-by="name"] tbody tr td.field-name,
+		&[data-order-by="level"] tbody tr td.field-level,
+		&[data-order-by="experience"] tbody tr td.field-experience {
+			&::after {
+				background-position: -65px -16px;
+			}
+		}
 	}
 }
 
@@ -649,24 +695,34 @@ table.skills {
 					display: block;
 				}
 				td {
-					display: block;
+					display: flex;
+					justify-content: flex-end;
 					&::before {
+						order: 2;
 						content: attr(data-header) ":";
-						width: 50%;
 						box-sizing: border-box;
 						display: inline-block;
 						vertical-align: top;
 						text-align: right;
 						padding-right: 0.4em;
 						font-weight: bold;
+						flex: 0 0 auto;
 					}
 					&.field-year {
 						text-align: left;
 					}
 					> .data {
+						order: 3;
 						display: inline-block;
 						width: 50%;
 						box-sizing: border-box;
+						flex: 0 0 auto;
+					}
+					&:not(:first-child) {
+						border-top-style: none;
+					}
+					&:not(:last-child) {
+						border-bottom-style: none;
 					}
 				}
 			}
