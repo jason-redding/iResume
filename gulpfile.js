@@ -8,8 +8,7 @@ var browserSync = require('browser-sync').create();
 var preprocess = require('gulp-preprocess');
 
 var NOW = new Date();
-
-var CURRENT_CONTEXT = {
+var CONTEXT = {
 	NOW: NOW.getFullYear() + '-' + padLeft(NOW.getMonth() + 1, '0', 2) + '-' + padLeft(NOW.getDate(), '0', 2) + 'T' + padLeft(NOW.getHours(), '0', 2) + ':' + padLeft(NOW.getMinutes(), '0', 2) + ':' + padLeft(NOW.getSeconds(), '0', 2) + '.' + NOW.getMilliseconds() + (NOW.getTimezoneOffset() === 0 ? 'Z' : (NOW.getTimezoneOffset() < 0 ? '+' : '-') + (padLeft(Math.floor(NOW.getTimezoneOffset() / 60), '0', 2) + padLeft(NOW.getTimezoneOffset() % 60, '0', 2))),
 	DEBUG: true,
 	NODE_ENV: 'development'
@@ -24,7 +23,7 @@ function displayContext(context) {
 }
 
 gulp.task('default', function(callback) {
-	displayContext(CURRENT_CONTEXT);
+	displayContext(CONTEXT);
 	return gulpSequence(
 	'clean-build',
 	'watch',
@@ -57,7 +56,7 @@ gulp.task('clean-build', function(callback) {
 });
 
 gulp.task('clean-build-refresh', function(callback) {
-	console.log(CURRENT_CONTEXT.NOW);
+	console.log(CONTEXT.NOW);
 	return gulpSequence(
 	'clean-build',
 	'browser-reload',
@@ -77,9 +76,9 @@ gulp.task('browser-reload', function() {
 });
 
 gulp.task('deploy', function(callback) {
-	CURRENT_CONTEXT['DEBUG'] = false;
-	CURRENT_CONTEXT['NODE_ENV'] = 'production';
-	displayContext(CURRENT_CONTEXT);
+	CONTEXT['DEBUG'] = false;
+	CONTEXT['NODE_ENV'] = 'production';
+	displayContext(CONTEXT);
 	return gulpSequence(
 	'clean',
 	'build',
@@ -94,7 +93,7 @@ gulp.task('deploy-live', function() {
 		base: DEST
 	})
 	.pipe(preprocess({
-		context: CURRENT_CONTEXT
+		context: CONTEXT
 	}))
 	.pipe(gulp.dest(DEPLOY_PATH));
 });
@@ -111,7 +110,7 @@ gulp.task('concat', ['sass'], function() {
 		base: SRC
 	})
 	.pipe(preprocess({
-		context: CURRENT_CONTEXT
+		context: CONTEXT
 	}))
 	.pipe(useref({
 		searchPath: DEST,
