@@ -358,7 +358,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</xsl:attribute>
 			<xsl:attribute name="title">
 				<xsl:value-of select="normalize-space($meta-skill-level)"/>
-				<xsl:value-of select="concat(' (', ($skill-level div $max-level) * 100, '%) ')"/>
+				<xsl:text> </xsl:text>
 				<xsl:value-of select="$skill-level-preposition"/>
 				<xsl:text> </xsl:text>
 				<xsl:value-of select="normalize-space(r:name)"/>
