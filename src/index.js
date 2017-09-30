@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 (function($, document, window) {
-	var DEFAULT_SORT_COLUMN = 'name';
+	var DEFAULT_SORT_COLUMN = 'level';
 	var PATTERN_DATA_RENDER_PREFIX = /^data-render-(.+)$/i;
 
 	function onReady() {
@@ -267,7 +267,11 @@
 
 	function enforcePreferences() {
 		if (('localStorage' in window)) {
-			var theme = window.localStorage.getItem('theme');
+			var theme = null;
+			try {
+				theme = window.localStorage.getItem('theme');
+			} catch (ex) {
+			}
 			if (theme !== null) {
 				$('#theme-toggle-button').trigger('click', {
 					theme: theme
@@ -278,7 +282,10 @@
 
 	function savePreference(name, value) {
 		if (('localStorage' in window)) {
-			window.localStorage.setItem(name, value);
+			try {
+				window.localStorage.setItem(name, value);
+			} catch (ex) {
+			}
 		}
 	}
 
@@ -397,6 +404,11 @@
 			var $b = $(b);
 			var aName = $.trim($a.text());
 			var bName = $.trim($b.text());
+			if ($a.attr('value') === 'relevant') {
+				return -1;
+			} else if ($b.attr('value') === 'relevant') {
+				return 1;
+			}
 			if (aName < bName) {
 				return -1;
 			} else if (aName > bName) {
@@ -415,7 +427,6 @@
 		.attr({
 			id: 'categories'
 		});
-		$('<option/>').val('*').text('All Categories').appendTo($select);
 		$xmlCategories.each(function() {
 			var $category = $(this);
 			var id = $.trim($category.attr('value'));
@@ -426,6 +437,7 @@
 			.text(name)
 			.appendTo($select);
 		});
+		$('<option/>').val('*').text('All Categories').prependTo($select);
 
 		$select.on('change', function(event) {
 			var $table = $('#skills-table');
