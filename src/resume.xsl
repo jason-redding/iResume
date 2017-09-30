@@ -253,7 +253,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 														</select>
 													</div>-->
 													<div class="projects-container">
-														<xsl:for-each select="r:project">
+														<xsl:for-each select="r:project[not(@hidden='true' or @hidden='1' or @hidden='yes' or @hidden='on')]">
 															<div class="project-item">
 																<div class="project-title">
 																	<!--<a>

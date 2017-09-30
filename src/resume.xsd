@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xs:documentation></xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
-			<xs:sequence>
+			<xs:all>
 				<xs:element name="meta">
 					<xs:complexType>
 						<xs:sequence>
@@ -194,6 +194,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																						<xs:element name="description"/>
 																					</xs:sequence>
 																					<xs:attribute name="type" use="optional"/>
+																					<xs:attribute name="hidden" type="type-boolean" use="optional"/>
 																				</xs:complexType>
 																			</xs:element>
 																		</xs:choice>
@@ -212,7 +213,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<xs:attribute name="title" default="Employers" use="optional"/>
 					</xs:complexType>
 				</xs:element>
-			</xs:sequence>
+			</xs:all>
 			<xs:attribute name="last-modified" type="type-date-time"/>
 		</xs:complexType>
 		<xs:key name="key-skill-level">
@@ -247,6 +248,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</xs:sequence>
 		<xs:attribute name="title" default="Description" use="optional"/>
 	</xs:complexType>
+
+	<xs:simpleType name="type-boolean">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true"/>
+			<xs:enumeration value="false"/>
+			<xs:enumeration value="yes"/>
+			<xs:enumeration value="no"/>
+			<xs:enumeration value="on"/>
+			<xs:enumeration value="off"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
 
 	<xs:complexType name="type-start-date">
 		<xs:simpleContent>
