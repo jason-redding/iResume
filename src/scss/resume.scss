@@ -59,8 +59,16 @@ body {
 	}
 }
 
-#tab-panel-resume {
+#tab-panel-resume.final-rendering {
 	padding: 1em;
+}
+
+@media screen {
+	#tab-panel-resume.final-rendering, #tab-panel-code.data-loaded code.hljs {
+		.ui-page-theme-a & {
+			background: hsl(0, 0%, 94%);
+		}
+	}
 }
 
 #tab-panel-resume, #tab-panel-skills {
@@ -77,13 +85,6 @@ body {
 			display: none;
 		}
 	}
-	&.final-rendering {
-		padding: 0;
-	}
-}
-
-#tab-panel-code {
-	padding: 0;
 }
 
 .block {
@@ -115,6 +116,7 @@ span.github-link {
 	}
 	.ui-page-theme-b & {
 		box-shadow: 0px 0px 1em 0px hsla(0, 0%, 100%, 0.7);
+		text-shadow: 0px 1px 0px #111;
 	}
 	border-radius: 1em;
 	margin-top: 1em;
@@ -509,15 +511,15 @@ table.skills {
 		vertical-align: top;
 	}
 	thead {
-		> tr {
-			> th {
+		tr {
+			th {
 				text-align: left;
 				font-weight: bold;
 				&.sort-by {
 					.ui-page-theme-b & {
 						border: 1px solid hsl(0, 0%, 27%);
 						background-color: hsl(0, 0%, 13%);
-						background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/dark-hive/images/ui-bg_highlight-soft_35_222222_1x100.png);
+						background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/dark-hive/images/ui-bg_highlight-soft_35_222222_1x100.png);
 						background-position: 50% 50%;
 						background-repeat: repeat-x;
 						color: hsl(0, 0%, 93%);
@@ -525,6 +527,7 @@ table.skills {
 					.ui-page-theme-a & {
 						border: 1px solid hsl(206, 59%, 80%);
 						background-color: hsl(205, 74%, 91%);
+						/*background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/cupertino/images/ui-bg_glass_80_d7ebf9_1x400.png);*/
 						background-image: url(images/ui-bg_glass_80_d7ebf9_1x400.png);
 						background-position: 50% 50%;
 						background-repeat: repeat-x;
@@ -563,34 +566,34 @@ table.skills {
 					&:hover, &:focus {
 						> .data::after {
 							.ui-page-theme-b & {
-								background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/dark-hive/images/ui-icons_cccccc_256x240.png);
+								background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/dark-hive/images/ui-icons_cccccc_256x240.png);
 							}
 							.ui-page-theme-a & {
-								background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/images/ui-icons_777777_256x240.png);
+								background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/images/ui-icons_777777_256x240.png);
 							}
 						}
 					}
 					&.sort-by {
 						> .data::after {
 							.ui-page-theme-b & {
-								background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/images/ui-icons_ffffff_256x240.png);
+								background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/images/ui-icons_ffffff_256x240.png);
 							}
 							.ui-page-theme-a & {
-								background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/cupertino/images/ui-icons_2694e8_256x240.png);
+								background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/cupertino/images/ui-icons_2694e8_256x240.png);
 							}
 						}
 					}
 					&:active {
 						border: 1px solid hsl(200, 93%, 56%);
 						background-color: hsl(200, 90%, 34%);
-						background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/dark-hive/images/ui-bg_highlight-hard_20_0972a5_1x100.png);
+						background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/dark-hive/images/ui-bg_highlight-hard_20_0972a5_1x100.png);
 						background-position: 50% 50%;
 						background-repeat: repeat-x;
 						color: hsl(0, 0%, 100%);
 						text-shadow: 0px 1px #111111;
 						> .data::after {
 							.ui-page & {
-								background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/images/ui-icons_ffffff_256x240.png);
+								background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/images/ui-icons_ffffff_256x240.png);
 							}
 						}
 					}
@@ -610,7 +613,7 @@ table.skills {
 			}
 		}
 	}
-	tbody tr, tbody tr, thead th[data-order-by] {
+	tbody tr, thead th[data-order-by] {
 		&:hover, &:focus {
 			@media screen {
 				outline: hsl(217, 99%, 65%) auto 1px;
@@ -625,8 +628,6 @@ table.skills {
 			color: inherit;
 			.ui-page-theme-b & {
 				background-color: $tableBackgroundColorLighter;
-			}
-			.ui-page-theme-a & {
 			}
 		}
 	}
@@ -656,14 +657,18 @@ table.skills {
 				flex: 0 0 auto;
 				margin-top: 2px;
 				margin-right: 3px;
-				/*background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/images/ui-icons_777777_256x240.png);*/
+				/*background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/images/ui-icons_777777_256x240.png);*/
 			}
-			.ui-page-theme-a &::after {
-				/*background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/cupertino/images/ui-icons_2694e8_256x240.png);*/
-				background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/dark-hive/images/ui-icons_222222_256x240.png);
+			.ui-page-theme-a & {
+				&::after {
+					/*background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/cupertino/images/ui-icons_2694e8_256x240.png);*/
+					background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/dark-hive/images/ui-icons_222222_256x240.png);
+				}
 			}
-			.ui-page-theme-b &::after {
-				background-image: url(//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/images/ui-icons_ffffff_256x240.png);
+			.ui-page-theme-b & {
+				&::after {
+					background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/images/ui-icons_ffffff_256x240.png);
+				}
 			}
 		}
 	}
@@ -693,6 +698,23 @@ table.skills {
 				display: block;
 				tr {
 					display: block;
+					&[aria-describedby] {
+						/*.ui-page-theme-a & {
+							background: hsl(206, 74%, 94%) url(images/ui-bg_glass_100_e4f1fb_1x400.png) 50% 45% repeat-x;
+							td {
+								background-image: none;
+								background-color: hsla(0, 0%, 0%, 0);
+								background: hsla(0, 0%, 0%, 0);
+							}
+						}*/
+						.ui-page-theme-b & {
+							background: hsl(199, 100%, 14%) url(images/ui-bg_highlight-soft_33_003147_1x100.png) 50% 0 repeat-x;
+							td {
+								background-image: none;
+								background-color: hsla(0, 0%, 0%, 0);
+							}
+						}
+					}
 				}
 				td {
 					display: flex;
