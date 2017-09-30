@@ -492,22 +492,72 @@
 		if (typeof includeNumber !== 'boolean') {
 			includeNumber = false;
 		}
-		var suffix;
+		var suffix = '';
 		var sNum = ('' + value);
 		var lastDigit = parseInt(sNum.substring(sNum.length - 1));
-		var lastTwoDigits = (sNum.length > 1 ? parseInt(sNum.substring(sNum.length - 2)) : 0);
-		if (lastTwoDigits > 10 && lastTwoDigits < 20) {
-			suffix = 'th';
-		} else if (lastDigit === 1) {
-			suffix = 'st';
-		} else if (lastDigit === 2) {
-			suffix = 'nd';
-		} else if (lastDigit === 3) {
-			suffix = 'rd';
-		} else {
-			suffix = 'th';
+		while (true) {
+			var di = sNum.indexOf('.');
+			if (di >= 0) {
+				var columnValuesRight = [
+					'Tenth',
+					'Hundredth',
+					'Thousandth',
+					'Ten-thousandth',
+					'Hundred-thousandth',
+					'Millionth',
+					'Ten-millionth',
+					'Hundred-millionth',
+					'Billionth',
+					'Ten-billionth',
+					'Hundred-billionth',
+					'Trillionth',
+					'Ten-trillionth',
+					'Hundred-trillionth',
+					'Quadrillionth',
+					'Ten-quadrillionth',
+					'Hundred-quadrillionth',
+					'Quintillionth',
+					'Ten-Quintillionth',
+					'Hundred-quintillionth',
+					'Sextillionth',
+					'Ten-sextillionth',
+					'Hundred-sextillionth',
+					'Septillionth',
+					'Ten-septillionth',
+					'Hundred-septillionth',
+					'Octillionth',
+					'Ten-octillionth',
+					'Hundred-octillionth',
+					'Nonillionth'
+				];
+				var columnPos = (sNum.length - 1) - di - 1;
+				if (columnPos >= 0 && columnPos < columnValuesRight.length) {
+					if (includeNumber) {
+						suffix += ' ';
+					}
+					suffix += columnValuesRight[columnPos].toLowerCase();
+					var rightQuantity = parseInt(sNum.substring(di + 1));
+					if (rightQuantity > 1) {
+						suffix += 's';
+					}
+				}
+				break;
+			}
+			var lastTwoDigits = (sNum.length > 1 ? parseInt(sNum.substring(sNum.length - 2)) : lastDigit);
+			if (lastTwoDigits > 10 && lastTwoDigits < 20) {
+				suffix = 'th';
+			} else if (lastDigit === 1) {
+				suffix = 'st';
+			} else if (lastDigit === 2) {
+				suffix = 'nd';
+			} else if (lastDigit === 3) {
+				suffix = 'rd';
+			} else {
+				suffix = 'th';
+			}
+			break;
 		}
-		return ((includeNumber ? value : '') + suffix);
+		return ((includeNumber ? sNum : '') + suffix);
 	};
 	Date.prototype.relativeToNow = function() {
 		var dSelf = this;
