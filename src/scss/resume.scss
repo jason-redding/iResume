@@ -515,6 +515,14 @@ table.skills {
 			th {
 				text-align: left;
 				font-weight: bold;
+				&.ui-widget-header {
+					.ui-page-theme-a & {
+						background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/cupertino/images/ui-bg_highlight-soft_100_deedf7_1x100.png);
+					}
+					.ui-page-theme-b & {
+						/*background-image: url();*/
+					}
+				}
 				&.sort-by {
 					.ui-page-theme-b & {
 						border: 1px solid hsl(0, 0%, 27%);
@@ -527,8 +535,8 @@ table.skills {
 					.ui-page-theme-a & {
 						border: 1px solid hsl(206, 59%, 80%);
 						background-color: hsl(205, 74%, 91%);
-						/*background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/cupertino/images/ui-bg_glass_80_d7ebf9_1x400.png);*/
-						background-image: url(images/ui-bg_glass_80_d7ebf9_1x400.png);
+						background-image: url(https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/cupertino/images/ui-bg_glass_80_d7ebf9_1x400.png);
+						/*background-image: url(images/ui-bg_glass_80_d7ebf9_1x400.png);*/
 						background-position: 50% 50%;
 						background-repeat: repeat-x;
 						color: hsl(202, 63%, 41%);
