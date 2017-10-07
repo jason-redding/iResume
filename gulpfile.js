@@ -9,27 +9,29 @@ var preprocess = require('gulp-preprocess');
 
 var NOW = new Date();
 var CONTEXT = {
+	THEME: 'a',
 	SRC: 'src',
 	DEST: 'public_html',
 	DEPLOY_PATH: '/var/www/html.iresume',
-	NOW: NOW.getFullYear() + '-' + padLeft(NOW.getMonth() + 1, '0', 2) + '-' + padLeft(NOW.getDate(), '0', 2) + 'T' + padLeft(NOW.getHours(), '0', 2) + ':' + padLeft(NOW.getMinutes(), '0', 2) + ':' + padLeft(NOW.getSeconds(), '0', 2) + '.' + NOW.getMilliseconds() + (NOW.getTimezoneOffset() === 0 ? 'Z' : (NOW.getTimezoneOffset() < 0 ? '+' : '-') + (padLeft(Math.floor(NOW.getTimezoneOffset() / 60), '0', 2) + padLeft(NOW.getTimezoneOffset() % 60, '0', 2))),
 	DEBUG: true,
-	NODE_ENV: 'development'
+	NODE_ENV: 'development',
+	NOW: NOW.getFullYear() + '-' + padLeft(NOW.getMonth() + 1, '0', 2) + '-' + padLeft(NOW.getDate(), '0', 2) + 'T' + padLeft(NOW.getHours(), '0', 2) + ':' + padLeft(NOW.getMinutes(), '0', 2) + ':' + padLeft(NOW.getSeconds(), '0', 2) + '.' + NOW.getMilliseconds() + (NOW.getTimezoneOffset() === 0 ? 'Z' : (NOW.getTimezoneOffset() < 0 ? '+' : '-') + (padLeft(Math.floor(NOW.getTimezoneOffset() / 60), '0', 2) + padLeft(NOW.getTimezoneOffset() % 60, '0', 2)))
 };
 
 function displayContext(context) {
-	console.dir(context);
+	console.info('CONTEXT: ');
+	console.info(context);
 }
 
 gulp.task('default', function(callback) {
 	displayContext(CONTEXT);
 	return gulpSequence(
-	'clean-build',
-	'watch',
+	'clean',
+	'build',
 	callback);
 });
 
-gulp.task('browserSync', function() {
+gulp.task('browser', function() {
 	return browserSync.init({
 		open: false,
 		ui: false,
@@ -40,13 +42,21 @@ gulp.task('browserSync', function() {
 	});
 });
 
-gulp.task('watch', ['browserSync'], function() {
-	gulp.watch(CONTEXT.SRC + '/**/*.html', ['clean-build-refresh']);
-	gulp.watch(CONTEXT.SRC + '/**/*.js', ['clean-build-refresh']);
-	gulp.watch(CONTEXT.SRC + '/**/*.scss', ['clean-build-refresh']);
-	gulp.watch(CONTEXT.SRC + '/**/*.xml', ['clean-build-refresh']);
-	gulp.watch(CONTEXT.SRC + '/**/*.xsl', ['clean-build-refresh']);
-	return gulp.watch(CONTEXT.SRC + '/**/*.xsd', ['clean-build-refresh']);
+gulp.task('dev', function(callback) {
+	displayContext(CONTEXT);
+	gulpSequence(
+	'clean',
+	'build',
+	'browser',
+	function() {
+		gulp.watch(CONTEXT.SRC + '/**/*.html', ['clean-build-refresh']);
+		gulp.watch(CONTEXT.SRC + '/**/*.js', ['clean-build-refresh']);
+		gulp.watch(CONTEXT.SRC + '/**/*.scss', ['clean-build-refresh']);
+		gulp.watch(CONTEXT.SRC + '/**/*.xml', ['clean-build-refresh']);
+		gulp.watch(CONTEXT.SRC + '/**/*.xsl', ['clean-build-refresh']);
+		gulp.watch(CONTEXT.SRC + '/**/*.xsd', ['clean-build-refresh']);
+		callback();
+	});
 });
 
 gulp.task('clean-build', function(callback) {
@@ -57,9 +67,10 @@ gulp.task('clean-build', function(callback) {
 });
 
 gulp.task('clean-build-refresh', function(callback) {
-	console.log(CONTEXT.NOW);
+	displayContext(CONTEXT);
 	return gulpSequence(
-	'clean-build',
+	'clean',
+	'build',
 	'browser-reload',
 	callback);
 });
@@ -72,8 +83,9 @@ gulp.task('build', function(callback) {
 	callback);
 });
 
-gulp.task('browser-reload', function() {
+gulp.task('browser-reload', function(callback) {
 	browserSync.reload();
+	callback();
 });
 
 gulp.task('deploy', function(callback) {
@@ -141,10 +153,10 @@ gulp.task('copy-static', function() {
 	.pipe(gulp.dest(CONTEXT.DEST));
 });
 
-gulp.task('clean', function(callback) {
+gulp.task('clean', function() {
 	return del([
 		CONTEXT.DEST + '/**/*'
-	], callback);
+	]);
 });
 
 function padLeft(input, char, size) {
