@@ -18,6 +18,18 @@
 	.project-description {
 		page-break-before: avoid;
 		break-before: avoid;
+		span.project-link {
+			text-align: left;
+		}
+	}
+	.project-item {
+		border-radius: 0 !important;
+		.ui-collapsible-content {
+			border-bottom-width: 0;
+			&.ui-collapsible-content-collapsed {
+				display: block;
+			}
+		}
 	}
 	li, tr, td, th {
 		page-break-inside: avoid;

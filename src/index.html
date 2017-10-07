@@ -36,39 +36,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</script>
 		<!-- @endif -->
 
-		<!-- @ifndef DEFAULT_THEME -->
+		<!-- @ifdef THEME -->
+		<!-- @if THEME='a' -->
 		<link id="jqueryui-theme" type="text/css" rel="stylesheet" href="/css/jquery-ui.cupertino.theme.min.css"/>
 		<!-- @endif -->
-		<!-- @ifdef DEFAULT_THEME -->
-		<!-- @if DEFAULT_THEME='a' -->
-		<link id="jqueryui-theme" type="text/css" rel="stylesheet" href="/css/jquery-ui.cupertino.theme.min.css"/>
-		<!-- @endif -->
-		<!-- @if DEFAULT_THEME='b' -->
+		<!-- @if THEME='b' -->
 		<link id="jqueryui-theme" type="text/css" rel="stylesheet" href="/css/jquery-ui.dark-hive.theme.min.css"/>
 		<!-- @endif -->
 		<!-- @endif -->
-		<link type="text/css" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.4.5/jquery.mobile.min.css"/>
+		<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.4.5/jquery.mobile.min.css"/>
 
 		<!-- build:css /css/all-stylesheets.css -->
 		<link type="text/css" rel="stylesheet" href="/css/jquery-ui.structure.min.css"/>
 		<link type="text/css" rel="stylesheet" href="/css/resume.css"/>
 		<link type="text/css" rel="stylesheet" href="/css/resume-print.css" media="print"/>
 		<!-- endbuild -->
-		<!-- @ifndef DEFAULT_THEME -->
+		<!-- @ifdef THEME -->
+		<!-- @if THEME='a' -->
 		<link id="highlight-theme" type="text/css" rel="stylesheet" href="/css/highlight/atom-one-light.css"/>
 		<!-- @endif -->
-		<!-- @ifdef DEFAULT_THEME -->
-		<!-- @if DEFAULT_THEME='a' -->
-		<link id="highlight-theme" type="text/css" rel="stylesheet" href="/css/highlight/atom-one-light.css"/>
-		<!-- @endif -->
-		<!-- @if DEFAULT_THEME='b' -->
+		<!-- @if THEME='b' -->
 		<link id="highlight-theme" type="text/css" rel="stylesheet" href="/css/highlight/atom-one-dark.css"/>
 		<!-- @endif -->
 		<!-- @endif -->
 
-		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.4.5/jquery.mobile.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.4.5/jquery.mobile.min.js"></script>
 
 		<!-- build:js /js/all-javascripts.js -->
 		<script type="text/javascript" src="/js/format.js"></script>
@@ -82,7 +76,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<div data-role="page" data-theme="a">
 			<header data-role="header">
 				<h1 data-short-text="Interactive Résumé"><span class="text">Jason Redding &ndash; Interactive Résumé</span></h1>
-				<button id="theme-toggle-button" class="ui-btn ui-btn-right ui-btn-inline ui-btn-icon-notext ui-icon-eye" type="button" title="Toggle light/dark theme">Toggle light/dark theme</button>
+				<button id="theme-toggle-button" class="ui-btn ui-btn-right ui-btn-inline ui-btn-icon-notext ui-icon-eye ui-shadow" type="button" title="Toggle light/dark theme">Toggle light/dark theme</button>
 			</header>
 			<main data-role="main" class="ui-content">
 				<div class="main-inner">

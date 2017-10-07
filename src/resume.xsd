@@ -112,45 +112,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<xs:attribute name="name"/>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="description" type="type-mixed-content"/>
-				<xs:element name="skills" minOccurs="0">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="skill" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="name"/>
-										<xs:element name="level">
-											<xs:complexType>
-												<xs:attribute name="value" type="nonNegativeDecimal"/>
-											</xs:complexType>
-										</xs:element>
-										<xs:element name="experience">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="since" type="type-date-time"/>
-													<xs:element name="until" type="type-date-time" minOccurs="0"/>
-												</xs:sequence>
-											</xs:complexType>
-										</xs:element>
-										<xs:element name="categories" minOccurs="0">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="category" maxOccurs="unbounded">
-														<xs:complexType>
-															<xs:attribute name="value"/>
-														</xs:complexType>
-													</xs:element>
-												</xs:sequence>
-											</xs:complexType>
-										</xs:element>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element>
-						</xs:sequence>
-						<xs:attribute name="title" default="Skills" use="optional"/>
-					</xs:complexType>
-				</xs:element>
+				<xs:element name="description" type="type-profile-description"/>
 				<xs:element name="employers">
 					<xs:complexType>
 						<xs:sequence>
@@ -194,7 +156,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																						<xs:element name="description"/>
 																					</xs:sequence>
 																					<xs:attribute name="type" use="optional"/>
-																					<xs:attribute name="hidden" type="type-boolean" use="optional"/>
+																					<xs:attribute name="hidden" type="type-boolean" default="false" use="optional"/>
 																				</xs:complexType>
 																			</xs:element>
 																		</xs:choice>
@@ -211,6 +173,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							</xs:element>
 						</xs:sequence>
 						<xs:attribute name="title" default="Employers" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="skills" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="skill" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="name"/>
+										<xs:element name="level">
+											<xs:complexType>
+												<xs:attribute name="value" type="nonNegativeDecimal"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="experience">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="since" type="type-date-time"/>
+													<xs:element name="until" type="type-date-time" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="categories" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="category" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="value"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="hidden" type="type-boolean" default="false" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="title" default="Skills" use="optional"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:all>
@@ -242,9 +243,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</xs:complexType>
 	</xs:element>
 
-	<xs:complexType name="type-mixed-content" mixed="true">
+	<xs:complexType name="type-profile-description" mixed="true">
 		<xs:sequence>
 			<xs:element name="duration" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:attribute name="title" default="Description" use="optional"/>
 	</xs:complexType>

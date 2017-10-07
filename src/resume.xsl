@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xsl:preserve-space elements="*"/>
 	<xsl:output method="xml" encoding="utf-8" indent="yes" omit-xml-declaration="yes"/>
 	<xsl:param name="author-name" select="'1'"/>
-	<xsl:param name="experience-sort" select="'descending'"/>
+	<xsl:param name="position-sort" select="'descending'"/>
 	<xsl:param name="system-date" select="''"/>
 	<xsl:param name="factor-relevance" select="true()"/>
 	<xsl:key name="level" match="/r:resume/r:meta/r:skill/r:levels/r:level" use="@value"/>
@@ -113,7 +113,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<main>
 						<div class="main-inner">
 							<xsl:for-each select="r:description">
-								<div class="section-heading">
+								<h2 class="section-heading">
 									<xsl:attribute name="data-section">
 										<xsl:value-of select="local-name()"/>
 									</xsl:attribute>
@@ -125,7 +125,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 											<xsl:text>Description</xsl:text>
 										</xsl:otherwise>
 									</xsl:choose>
-								</div>
+								</h2>
 								<div class="section-content">
 									<xsl:attribute name="data-section">
 										<xsl:value-of select="local-name()"/>
@@ -134,7 +134,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</div>
 							</xsl:for-each>
 							<xsl:for-each select="r:skills">
-								<div class="section-heading">
+								<h2 class="section-heading">
 									<xsl:attribute name="data-section">
 										<xsl:value-of select="local-name()"/>
 									</xsl:attribute>
@@ -146,7 +146,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 											<xsl:text>Skills</xsl:text>
 										</xsl:otherwise>
 									</xsl:choose>
-								</div>
+								</h2>
 								<div class="section-content">
 									<xsl:attribute name="data-section">
 										<xsl:value-of select="local-name()"/>
@@ -160,21 +160,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 													<xsl:for-each select="$relevant-skills">
 														<xsl:sort select="r:level/@value" data-type="number" order="descending"/>
 														<xsl:sort select="concat(r:experience/r:since, '_', r:experience/r:until)" data-type="text" order="ascending"/>
-														<xsl:call-template name="list-skills"/>
+														<xsl:if test="position() > 1">
+															<xsl:text>, </xsl:text>
+														</xsl:if>
+														<xsl:call-template name="list-skill"/>
 													</xsl:for-each>
 												</div>
 												<div class="skills-group-others">
 													<xsl:for-each select="$more-skills">
 														<xsl:sort select="r:level/@value" data-type="number" order="descending"/>
 														<xsl:sort select="concat(r:experience/r:since, '_', r:experience/r:until)" data-type="text" order="ascending"/>
-														<xsl:call-template name="list-skills"/>
+														<xsl:if test="position() > 1">
+															<xsl:text>, </xsl:text>
+														</xsl:if>
+														<xsl:call-template name="list-skill"/>
 													</xsl:for-each>
 												</div>
 											</xsl:when>
 											<xsl:otherwise>
 												<xsl:for-each select="r:skill">
 													<xsl:sort select="r:name" order="ascending"/>
-													<xsl:call-template name="list-skills"/>
+													<xsl:if test="position() > 1">
+														<xsl:text>, </xsl:text>
+													</xsl:if>
+													<xsl:call-template name="list-skill"/>
 												</xsl:for-each>
 											</xsl:otherwise>
 										</xsl:choose>
@@ -182,7 +191,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</div>
 							</xsl:for-each>
 							<xsl:for-each select="r:employers">
-								<div class="section-heading">
+								<h2 class="section-heading">
 									<xsl:attribute name="data-section">
 										<xsl:value-of select="local-name()"/>
 									</xsl:attribute>
@@ -194,21 +203,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 											<xsl:text>Employers</xsl:text>
 										</xsl:otherwise>
 									</xsl:choose>
-								</div>
+								</h2>
 								<div class="section-content">
 									<xsl:attribute name="data-section">
 										<xsl:value-of select="local-name()"/>
 									</xsl:attribute>
 									<xsl:for-each select="r:employer">
-										<div class="employer-title">
+										<h3 class="employer-title">
 											<xsl:value-of select="normalize-space(r:title)"/>
-										</div>
+										</h3>
 										<xsl:for-each select="r:positions/r:position">
-											<xsl:sort select="r:timeline/r:start-date" data-type="text" order="{$experience-sort}"/>
+											<xsl:sort select="r:timeline/r:start-date" data-type="text" order="{$position-sort}"/>
 											<div class="position-container">
-												<div class="position-title">
+												<h4 class="position-title">
 													<xsl:value-of select="normalize-space(r:title)"/>
-												</div>
+												</h4>
 												<xsl:for-each select="r:timeline">
 													<div class="timeline-container">
 														<span class="timeline-start">
@@ -252,10 +261,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 															</xsl:for-each>
 														</select>
 													</div>-->
-													<div class="projects-container">
+													<div class="projects-container" data-role="collapsibleset" data-inset="false">
 														<xsl:for-each select="r:project[not(@hidden='true' or @hidden='1' or @hidden='yes' or @hidden='on')]">
-															<div class="project-item">
-																<div class="project-title">
+															<div class="project-item" data-role="collapsible">
+																<h5 class="project-title">
 																	<!--<a>
 																		<xsl:attribute name="name">
 																			<xsl:value-of select="translate(normalize-space(r:title), ' ABCDEFGHIJKLMNOPQRSTUVWXYZ', '-abcdefghijklmnopqrstuvwxyz')"/>
@@ -267,18 +276,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																	<span class="project-title-text">
 																		<xsl:value-of select="normalize-space(r:title)"/>
 																	</span>
+																</h5>
+																<div class="project-description">
 																	<xsl:if test="string-length(normalize-space(r:link)) > 0">
-																		<xsl:text>  </xsl:text>
-																		<a href="{normalize-space(r:link)}" target="_blank" class="project-link">
-																			<xsl:value-of select="normalize-space(r:link)"/>
-																		</a>
+																		<span class="project-link">
+																			<span class="project-link-label">Project Link:</span>
+																			<xsl:text> </xsl:text>
+																			<a href="{normalize-space(r:link)}" target="_blank" class="project-link">
+																				<xsl:value-of select="normalize-space(r:link)"/>
+																			</a>
+																		</span>
 																	</xsl:if>
-																</div>
-																<xsl:for-each select="r:description">
-																	<div class="project-description">
+																	<xsl:for-each select="r:description">
 																		<xsl:apply-templates mode="html"/>
-																	</div>
-																</xsl:for-each>
+																	</xsl:for-each>
+																</div>
 															</div>
 														</xsl:for-each>
 													</div>
@@ -300,13 +312,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</html>
 	</xsl:template>
 
-	<xsl:template name="list-skills">
-		<xsl:param name="skills" select="."/>
-		<xsl:variable name="experience-ongoing" select="string-length(normalize-space(r:experience/r:until)) = 0"/>
+	<xsl:template name="list-skill" match="r:skill">
+		<xsl:param name="skill" select="."/>
+		<xsl:param name="skill-text" select="$skill/r:name"/>
+		<xsl:variable name="experience-ongoing" select="string-length(normalize-space($skill/r:experience/r:until)) = 0"/>
 		<xsl:variable name="experience-since-year">
 			<xsl:call-template name="date-eval">
 				<xsl:with-param name="truncate-to" select="'year'"/>
-				<xsl:with-param name="date" select="normalize-space(r:experience/r:since)"/>
+				<xsl:with-param name="date" select="normalize-space($skill/r:experience/r:since)"/>
 			</xsl:call-template>
 		</xsl:variable>
 		<xsl:variable name="experience-until-year">
@@ -318,7 +331,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<xsl:value-of select="$system-date"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:value-of select="normalize-space(r:experience/r:until)"/>
+							<xsl:value-of select="normalize-space($skill/r:experience/r:until)"/>
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:with-param>
@@ -330,7 +343,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:with-param name="to-year" select="$experience-until-year"/>
 			</xsl:call-template>
 		</xsl:variable>
-		<xsl:variable name="skill-level" select="r:level/@value"/>
+		<xsl:variable name="skill-level" select="$skill/r:level/@value"/>
 		<xsl:variable name="meta-skill-level" select="key('level', floor($skill-level))"/>
 		<xsl:variable name="skill-level-preposition">
 			<xsl:choose>
@@ -345,14 +358,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-		<xsl:if test="position() > 1">
-			<xsl:text>, </xsl:text>
-		</xsl:if>
 		<span class="skill">
 			<xsl:attribute name="class">
 				<xsl:text>skill skill-name</xsl:text>
 				<xsl:value-of select="concat(' level-', $skill-level)"/>
-				<xsl:for-each select="r:categories/r:category">
+				<xsl:for-each select="$skill/r:categories/r:category">
 					<xsl:value-of select="concat(' category-', @value)"/>
 				</xsl:for-each>
 			</xsl:attribute>
@@ -361,7 +371,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:text> </xsl:text>
 				<xsl:value-of select="$skill-level-preposition"/>
 				<xsl:text> </xsl:text>
-				<xsl:value-of select="normalize-space(r:name)"/>
+				<xsl:value-of select="normalize-space($skill/r:name)"/>
 				<xsl:text> with </xsl:text>
 				<xsl:value-of select="$experience-years"/>
 				<xsl:text> year</xsl:text>
@@ -397,7 +407,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</xsl:attribute>
 			<xsl:attribute name="data-since">
 				<xsl:call-template name="date-eval">
-					<xsl:with-param name="date" select="r:experience/r:since"/>
+					<xsl:with-param name="date" select="$skill/r:experience/r:since"/>
 					<xsl:with-param name="truncate-to" select="'year'"/>
 				</xsl:call-template>
 			</xsl:attribute>
@@ -414,7 +424,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:value-of select="0"/>
 			</xsl:attribute>
 			<span class="text">
-				<xsl:value-of select="normalize-space(r:name)"/>
+				<!--<xsl:value-of select="normalize-space($skill/r:name)"/>-->
+				<xsl:value-of select="$skill-text"/>
 			</span>
 		</span>
 	</xsl:template>
@@ -726,9 +737,47 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</xsl:template>
 
 	<xsl:template name="skill-ref" match="r:skill" mode="html">
-		<xsl:variable name="skill-ref" select="."/>
-		<xsl:variable name="ref-name" select="translate(normalize-space($skill-ref/@name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-')"/>
+		<xsl:param name="skill-ref" select="."/>
+		<xsl:variable name="skill-name">
+			<xsl:choose>
+				<xsl:when test="count($skill-ref/self::*[@name]) > 0">
+					<xsl:value-of select="normalize-space($skill-ref/@name)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="normalize-space($skill-ref)"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="ref-name" select="translate(normalize-space($skill-name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-')"/>
 		<xsl:variable name="ref" select="/r:resume/r:skills/r:skill[translate(normalize-space(r:name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-') = $ref-name]"/>
-		<xsl:value-of select="normalize-space($skill-ref)"/>
+		<xsl:variable name="skill-text">
+			<xsl:choose>
+				<xsl:when test="count($skill-ref/self::*[@name]) = 0 and translate(normalize-space($ref/r:name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-') = $ref-name">
+					<xsl:value-of select="normalize-space($ref/r:name)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="normalize-space($skill-ref)"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:choose>
+			<xsl:when test="count($ref) > 0">
+				<xsl:call-template name="list-skill">
+					<xsl:with-param name="skill" select="$ref"/>
+					<xsl:with-param name="skill-text" select="normalize-space($skill-text)"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:element name="span">
+					<xsl:attribute name="class">
+						<xsl:text>skill-reference skill-reference-error</xsl:text>
+					</xsl:attribute>
+					<xsl:attribute name="data-skill-reference">
+						<xsl:value-of select="$ref-name"/>
+					</xsl:attribute>
+					<xsl:value-of select="normalize-space($skill-text)"/>
+				</xsl:element>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 </xsl:stylesheet>

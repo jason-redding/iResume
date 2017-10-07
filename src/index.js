@@ -78,14 +78,6 @@
 				}
 			}
 		});
-		//$skillsTable.on('mouseenter mouseleave', 'thead > tr > th', function(event) {
-		//	var $this = $(this);
-		//	var isEnter = (event.type === 'mouseenter');
-		//	if ($this.is('.sort-by')) {
-		//		return;
-		//	}
-		//	$this[isEnter ? 'addClass' : 'removeClass']('ui-state-default');
-		//});
 		$skillsTable.on('click', 'th[data-order-by]', function(event) {
 			var $this = $(this);
 			var sortOrder = $.trim($this.attr('data-sort-order'));
@@ -109,13 +101,17 @@
 		});
 
 		$(document).tooltip({
-			items: 'table.skills > tbody [title], #tab-panel-resume [title]',
+			items: 'table.skills > tbody *[title], #tab-panel-resume *[title]',
 			content: function() {
 				var $this = $(this);
 				var title = $.trim($this.attr('title'));
-				if ($this.is('span.skill')) {
+				if ($this.is('span.skill') && $this.closest('div.section-content[data-section="skills"]').length > 0) {
 					var r = '<div class="header" style="font-size: 1.3em; margin-bottom: 0.5em; text-align: center;">' + $.trim($this.text()) + '</div>';
 					r += '<div style="white-space:pre-wrap">' + title + '</div>';
+					return r;
+				} else if ($this.is('a[title][href]')) {
+					var r = '<div>' + $.trim(title) + '</div>';
+					r += '<div style="font-size:0.65em;margin-top: 1em">' + $.trim($this.attr('href')) + '</div>';
 					return r;
 				}
 				return title;
@@ -142,20 +138,17 @@
 
 		$('#theme-toggle-button').on('click', function(event, options) {
 			var $body = $('body');
-			var pageTheme;
+			var oldPageTheme;
 			var newPageTheme;
 			if ($.isPlainObject(options) && ('theme' in options)) {
 				newPageTheme = (options.theme !== 'a' ? 'b' : 'a');
-				pageTheme = (newPageTheme !== 'a' ? 'a' : 'b');
+				oldPageTheme = (newPageTheme !== 'a' ? 'a' : 'b');
 			} else {
-				pageTheme = ($body.pagecontainer('option', 'theme') !== 'a' ? 'b' : 'a');
-				newPageTheme = (pageTheme !== 'a' ? 'a' : 'b');
+				oldPageTheme = ($body.pagecontainer('option', 'theme') !== 'a' ? 'b' : 'a');
+				newPageTheme = (oldPageTheme !== 'a' ? 'a' : 'b');
 			}
 
 			savePreference('theme', newPageTheme);
-
-			$body
-			.pagecontainer('option', 'theme', newPageTheme);
 
 			$('#highlight-theme').attr('href', '/css/highlight/atom-one-' + (newPageTheme !== 'a' ? 'dark' : 'light') + '.css');
 			$('#jqueryui-theme').attr('href', '/css/jquery-ui.' + (newPageTheme !== 'a' ? 'dark-hive' : 'cupertino') + '.theme.min.css');
@@ -164,9 +157,9 @@
 			.each(function() {
 				var $this = $(this);
 				var rv;
-				var attrTheme = $.trim($this.attr('data-theme'));
-				if (attrTheme.length > 0) {
-					$this.attr('data-theme', (attrTheme !== 'a' ? 'a' : 'b'));
+				var pageTheme = $this.attr('data-theme') || newPageTheme;
+				if ($this.is('[data-theme]') && (pageTheme !== newPageTheme)) {
+					$this.attr('data-theme', newPageTheme);
 				}
 				var classes = $.trim($this.attr('class')).split(/\s+/);
 				var themeSuffix = /^(.+?)((-theme-|-)(a|b))$/;
@@ -177,17 +170,27 @@
 							return true;
 						}
 						rv = true;
-						$this.removeClass(matcher[0]);
 						if ($this.is('.ui-loader')) {
-							$this.addClass(matcher[1] + matcher[3] + pageTheme);
+							if (matcher[4] === oldPageTheme) {
+								return true;
+							}
+							$this.removeClass(matcher[0]);
+							$this.addClass(matcher[1] + matcher[3] + oldPageTheme);
 						} else {
+							if (matcher[4] === newPageTheme) {
+								return true;
+							}
+							$this.removeClass(matcher[0]);
 							$this.addClass(matcher[1] + matcher[3] + newPageTheme);
 						}
-						return false;
+						return true;
 					}
 				});
 				return rv;
 			});
+
+			$body
+			.pagecontainer('option', 'theme', newPageTheme);
 		});
 
 		$('#highlight-theme-picker')
@@ -340,7 +343,11 @@
 
 	function loadResume() {
 		var resume;
-		$(document).data('resume', resume = loadResumeXML());
+		var $document = $(document);
+		resume = $document.data('resume');
+		if ($.type(resume) === 'undefined') {
+			$document.data('resume', resume = loadResumeXML());
+		}
 
 		resume.done(function(docs) {
 			var xmlDoc = docs[0].data;
@@ -417,12 +424,16 @@
 			return 0;
 		});
 
+		var $categoriesSelectContainer = $('<div/>')
+		.appendTo($categories);
+
 		$('<label/>').attr({
 			'for': 'categories'
 		})
 		.addClass('ui-hidden-accessible')
 		.text('Categories: ')
-		.appendTo($categories);
+		.appendTo($categoriesSelectContainer);
+
 		var $select = $('<select/>')
 		.attr({
 			id: 'categories'
@@ -460,7 +471,7 @@
 			}
 			refreshTable($table);
 		})
-		.appendTo($categories);
+		.appendTo($categoriesSelectContainer);
 		$categories.enhanceWithin();
 	}
 
@@ -475,6 +486,11 @@
 	}
 
 	function loadResumeXML() {
+		$.mobile.loading('show', {
+			text: 'Tranforming résumé from XML...',
+			textVisible: true
+		});
+
 		var dfd = $.Deferred();
 		var jobs = [];
 		jobs.push($.get('/resume.xml'));
@@ -494,6 +510,9 @@
 			});
 			dfd.resolve(jobs);
 		});
+		dfd.always(function() {
+			$.mobile.loading('hide');
+		});
 		return dfd.promise();
 	}
 
@@ -509,10 +528,20 @@
 			var xslDoc = docs[1].data;
 			var resultDoc = null;
 			var systemDate = Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
+			var transformParameters = {
+				'author-name': '1',
+				'position-sort': 'descending',
+				'system-date': systemDate
+			};
+			$.mobile.loading('show', {
+				text: 'Applying XML Transform...',
+				textVisible: true
+			});
 			var xslTransformer = new XSLTProcessor();
 			xslTransformer.importStylesheet(xslDoc);
-			xslTransformer.setParameter(null, 'author-name', '0');
-			xslTransformer.setParameter(null, 'system-date', systemDate);
+			$.each(transformParameters, function(name, value) {
+				xslTransformer.setParameter(null, name, value);
+			});
 			try {
 				resultDoc = xslTransformer.transformToDocument(xmlDoc);
 			} catch (ex) {
@@ -527,11 +556,17 @@
 					.addClass('final-rendering');
 					var $pageContent = $('body > .page-wrapper > *', resultDoc);
 					$this.html($pageContent);
+					if ($.isFunction($.fn.enhanceWithin)) {
+						$this.enhanceWithin();
+					}
 				});
 				dfd.resolve(docs);
 			} else {
 				dfd.reject(docs);
 			}
+		});
+		dfd.always(function() {
+			$.mobile.loading('hide');
 		});
 		return dfd.promise();
 	}

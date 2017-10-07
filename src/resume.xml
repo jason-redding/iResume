@@ -53,8 +53,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<address>Greenbelt, MD</address>
 	</author>
 	<description title="Profile">
-		I have over <duration from="2001" unit="years">16 years</duration> professional experience creating solutions ranging from command-line interface for modifying production
-		enterprise web applications, to HTML5/jQueryMobile web front-end for a Higher Education Student Information System.
+		I have over <duration from="2001" unit="years">16 years</duration> professional experience creating solutions ranging from
+		<skill>command-line interface</skill> for modifying production enterprise web applications, to
+		<skill>HTML 5</skill>/<skill>jQuery Mobile</skill> web front-end for a Higher Education Student Information System.
 	</description>
 	<employers title="Experience">
 		<employer>
@@ -93,29 +94,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<description>
 								<h:p>Used by students to retrieve their account information and reset their password.</h:p>
 								<h:ul>
+									<h:li>Site uses <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>jQuery Mobile</skill> to deliver a <skill name="responsive-design">responsive</skill> experience.</h:li>
 									<h:li>
-										The site uses jQuery, jQueryUI, and jQueryMobile to deliver a responsive experience.
-									</h:li>
-									<h:li>
-										Javascript and CSS assets are bundled into a Java EE Web Application.
-									</h:li>
-									<h:li>
-										Java EE Web Application runs on Tomcat and exposes servlets to communicate with Oracle DBMS and Active Directory.
-									</h:li>
+										<skill>Javascript</skill> and <skill>CSS</skill> assets are bundled into a <skill name="J2EE">Java EE</skill> Web Application.</h:li>
+										<h:li>
+											<skill name="J2EE">Java EE</skill> Web Application runs on <skill>Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
+										</h:li>
 								</h:ul>
 							</description>
 						</project>
 						<project type="cli">
 							<title>AcalogExtract</title>
 							<description>
-								<h:p>
-									Executed from CRON to automate the importing, processing, and exporting of Academic Catalog information to an XML file.
-								</h:p>
+								<h:p>Automates the importing, processing, and exporting of Academic Catalog information.</h:p>
 								<h:ul>
-									<h:li>Interfaces with 3rd-party RESTful API to import XML data</h:li>
-									<h:li>Downloads data in chunks to mitigate timeouts</h:li>
-									<h:li>Applies custom XSL Transform to produce final XML</h:li>
-									<h:li>Allows for customization of output format, and processing rules/logic via an XML properties file.</h:li>
+									<h:li>Interfaces with 3rd-party <skill>RESTful</skill> API to import <skill>XML</skill> data.</h:li>
+									<h:li>Requests data in chunks to mitigate timeouts.</h:li>
+									<h:li>Applies custom <skill name="xsl/xslt">XSL Transform</skill> to produce final <skill>XML</skill>.</h:li>
+									<h:li>Allows for customization of output format, and processing rules/logic via an <skill>XML</skill> properties file.</h:li>
 								</h:ul>
 							</description>
 						</project>
@@ -127,9 +123,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 									collection of locations with a collection of events.
 								</h:p>
 								<h:ul>									
-									<h:li>Install, configure, customize, and augment front-end; maintain product front- and back-end, interfacing with an Oracle-backed RESTful Java EE Web Application.</h:li>
-									<h:li>With jQuery/jQueryUI/AJAX, augmented WebViewer's HTML pages, notably the Event Request Form, adding features unavailable in the original product.</h:li>
-									<h:li>Via WebServices, developed page with capability to search for spaces matching a wide range of space/location attributes. Allows users to check availability for specific dates/times and schedule an event in that space. Integrates with Google Maps to show location of space and allows for 1-click access to directions.</h:li>
+									<h:li>Install, configure, customize, and augment front-end; maintain product front- and back-end, interfacing with an <skill name="oracle-dbms">Oracle</skill>-backed <skill>RESTful</skill> 
+										<skill name="J2EE">Java EE</skill> Web Application.</h:li>
+										<h:li>Augmented WebViewer's <skill>HTML</skill> pages (notably the Event Request Form) with <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill>, adding features unavailable in the original product.</h:li>
+										<h:li>
+											Via <skill name="restful">Web Services</skill>, developed page with capability to search for spaces matching a
+											wide range of space/location attributes. Allows users to check availability for specific dates/times and schedule
+											an event in that space. Integrates with <skill name="google-maps-javascript-api-v3">Google Maps</skill> to show
+											location of space and allows for 1-click access to directions.
+										</h:li>
 								</h:ul>
 							</description>
 						</project>
@@ -137,16 +139,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>Administrator AccountAssist</title>
 							<description>
 								<h:p>
-									Using jQuery/jQueryUI/AJAX, created Java EE Web Application allowing 100+ support personnel to manage over 800,000 accounts.
+									Used by 100+ support personnel to manage/troubleshoot over 800,000 accounts.
 								</h:p>
 								<h:ul>
 									<h:li>
-										Integrates with Active Directory for authentication and group membership authorization.
+										<skill>Javascript</skill> and <skill>CSS</skill> assets are bundled into a <skill name="J2EE">Java EE</skill> Web Application.
+									</h:li>
+									<h:li>Site uses <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill> to deliver an interactive experience.</h:li>
+									<h:li>Integrates with <skill>Active Directory</skill> for authentication and group membership authorization.</h:li>
+									<h:li>
+										<skill name="J2EE">Java EE</skill> Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
 									</h:li>
 								</h:ul>
 							</description>
 						</project>
-						<project hidden="true">
+						<project hidden="false">
 							<title>USPS Gateway</title>
 							<description>
 								<h:p>
@@ -154,7 +161,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</h:p>
 								<h:ul>
 									<h:li>
-										Developed a standalone Java command-line application, the PL/SQL package, and Java code within the Oracle database.
+										Developed a standalone <skill>Java</skill>
+										<skill name="command-line-interface">command-line</skill> application, the <skill>PL/SQL</skill> package, and
+										<skill>Java</skill> code within the <skill name="oracle-dbms">Oracle</skill> database.
 									</h:li>
 								</h:ul>
 							</description>
@@ -162,18 +171,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<project>
 							<title>Web Calendar</title>
 							<description>
-									<h:p>
-										Developed an interactive, highly customizable web calendar using jQuery, designed to parse an XML file containing event data.
-									</h:p>
+								<h:p>
+									Interactive, highly customizable web calendar designed to parse an <skill>XML</skill> file of event data.
+								</h:p>
 								<h:ul>
 									<h:li>
-										Used JavaScript to create an extremely customizable formatting engine for highly versatile text, date, and number formatting.
-									</h:li>
+										Uses an extremely customizable
+										<h:a href="https://github.com/jason-redding/jFormat/" target="_blank" title="Created by Jason Redding">Formatting Engine</h:a>
+										written in <skill>JavaScript</skill> for highly versatile text, date, and number formatting.</h:li>
+									<h:li>Parses tokens in the form of "${property.name#format(arg1, arg2)}".</h:li>
 									<h:li>
-										Parses tokens in the form of "${property.name#format}".
-									</h:li>
-									<h:li>
-										Formats Date objects using most of the patterns available for use by the Java class&#160;
+										Formats Date objects using most of the patterns available for use by the <skill>Java</skill> class
 										<h:a href="http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html" target="_blank">SimpleDateFormat</h:a>.
 									</h:li>
 								</h:ul>
@@ -182,20 +190,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<project>
 							<title>Online Phone Directory</title>
 							<description>
+								<h:p>
+									Used by the community to search for faculty and staff by name, email, phone, office, campus, title, and department.
+								</h:p>
 								<h:ul>
 									<h:li>
-										Developed Java EE Web Application and its jQuery front-end counterpart that enabled users to search
-										an Oracle database for faculty and staff by name, email, phone, office, campus, title, and department.
-										The application was designed to support a combination of up to 20 user-specified criteria using
-										conditions including: is, is not, starts with, ends with, contains, excludes, does not start with, does not end with.
+										<skill name="J2EE">Java EE</skill> Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill>.
+									</h:li>
+									<h:li>Uses <skill>jQuery</skill> to deliver an interactive, flexible experience.</h:li>
+									<h:li>
+										Provides Simple and Advanced search modes. Advanced mode allows a combination of up to 20 user-specified
+										criteria using conditions including: "is", "is not", "starts with", "ends with", "contains", "excludes",
+										"does not start with", "does not end with".
 									</h:li>
 									<h:li>
-										Java CLI that uses the Java Excel API to generate and publish a downloadable spreadsheet containing the entire
-										phone directory. Configured CRON to automate the process.
-									</h:li>
-									<h:li>
-										Developed Java EE Web Application primarily to force browsers to prompt the user to save the phone directory
-										excel spreadsheet, but will work with any file published to the web site.
+										Supplimental <skill>Java</skill>
+										<skill name="command-line-interface">CLI</skill> that uses the <skill>Java</skill> Excel API to generate and
+										publish a downloadable spreadsheet containing the entire phone directory.
 									</h:li>
 								</h:ul>
 							</description>
@@ -204,30 +215,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>Online Orientation</title>
 							<description>
 								<h:p>
-									Java EE Web Application and its HTML/Javascript front-end counterpart that provided an online orientation for new students.
+									<skill name="J2EE">Java EE</skill> Web Application and its <skill>HTML</skill>/<skill>Javascript</skill> front-end counterpart providing an online orientation for new students.
 								</h:p>
 								<h:ul>
+									<h:li>Includes custom-developed supporting <skill name="oracle-dbms">Oracle</skill> database schema and all tables, views, triggers, sequences, etc.</h:li>
+									<h:li>Integrates with <skill>Active Directory</skill> for authentication and group membership authorization.</h:li>
 									<h:li>
-										Designed and created supporting Oracle database schema and all tables, views, triggers, sequences, etc.
-									</h:li>
-									<h:li>
-										Built an Administration portal to allow authenticated (via Active Directory) and authorized academic advisors
-										to customize the orientation pages/quizzes, track student progress, and manage the list of authorized advisors.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>Extension Lookup</title>
-							<description>
-								<h:p>
-									When the college telephone system was upgraded across all campuses, telephone numbers changed and users needed a way to find the new number.
-								</h:p>
-								<h:ul>
-									<h:li>
-										Developed Java EE Web Application and HTML/Javascript front-end counterpart that enabled users to find
-										the new phone number by searching for a person’s name or old extension. The application interfaced with an
-										Oracle database to perform the search.
+										Administration portal built with <skill>jQuery</skill> and <skill>jQuery UI</skill> allows authorized academic advisors to customize the
+										orientation pages and assessments, track student progress, and manage the list of authorized advisors.
 									</h:li>
 								</h:ul>
 							</description>
@@ -235,11 +230,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<project>
 							<title>WebCT Language Modifier</title>
 							<description>
+								<h:p>
+									Robust <skill>Java</skill> 
+									<skill name="command-line-interface">CLI</skill> tool for managing language strings for a proprietary online
+									virtual learning environment (WebCT).
+								</h:p>
 								<h:ul>
 									<h:li>
-										Developed Java CLI to update the proprietary online virtual learning environment (WebCT) with a compiled set of
-										preferred language strings. The application also allowed users to search for text to change, making the initial
-										compilation process much easier.
+										Applies a compiled set of preferred language strings to a <h:abbr title="Web Application Archive">WAR</h:abbr> file.
+									</h:li>
+									<h:li>
+										Provided options to search for text to change, making the initial compilation process much easier.
 									</h:li>
 								</h:ul>
 							</description>
@@ -248,66 +249,56 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>CMS (Content Management System)</title>
 							<description>
 								<h:p>
-									Homegrown Content Management System that allows faculty and staff to create, publish, and manage their own pages
+									Homegrown Content Management System allowing faculty and staff to create, publish, and manage their own pages
 									and content for the external-facing college website of over 12,000 pages.
 								</h:p>
 								<h:ul>
 									<h:li>
-										Developed custom application framework using Java on a Linux server to facilitate communication between service objects, even when distributed among several servers:
+										Developed custom framework using <skill>Java</skill> in a <skill>Linux</skill> server environment to facilitate
+										communication between service objects, even when distributed among several servers.
+									</h:li>
+									<h:li>
+										<skill name="java">Java Applet</skill> used to visualize and navigate the Website's hierarchy of pages – as represented in the database.
+									</h:li>
+									<h:li>
+										<skill name="java">Java Applet</skill>
+										<h:abbr title="What You See Is What You Get">WYSIWYG</h:abbr> Advanced <skill>HTML</skill> Editor with Dreamweaver-like capabilities including:
 										<h:ul>
 											<h:li>
-												Name Server for registering and resolving the network address for custom service objects by name.
+												Spellchecker (integrated with aspell on <skill>Linux</skill> server) – added custom implementation to support a global dictionary in addition to user-editable per-user dictionaries.
 											</h:li>
 											<h:li>
-												Front-end-targeted service objects which generate and return HTTP responses intended to be used by the
-												Java EE Web Application handling browser requests.
-											</h:li>
-											<h:li>
-												Back-end-targeted service objects which returned data retrieved from Oracle database, intended to be used
-												by front-end-targeted service objects.
-											</h:li>
-											<h:li>
-												Java Applet used to visualize and navigate the Website's hierarchy of pages – as represented in the database.
-											</h:li>
-											<h:li>
-												Java Applet WYSIWYG Advanced HTML Editor with Dreamweaver-like capabilities including:
+												Table-specific editor dialogs for inserting/modifying tables, and inserting/splitting table cells; includes features not found in Dreamweaver:
 												<h:ul>
 													<h:li>
-														Spellchecker (integrated with aspell on a Linux server) – added custom implementation to support a global dictionary in addition to user-editable per-user custom dictionaries.
+														Element "breadcrumb" Bar with shortcut modification menu.
 													</h:li>
 													<h:li>
-														Table-specific editor dialogs for inserting/modifying tables, and inserting/splitting table cells; includes features not found in Dreamweaver:
-														<h:ul>
-															<h:li>
-																Element "breadcrumb" Bar with shortcut modification menu.
-															</h:li>
-															<h:li>
-																Attribute Explorer dialog for direct modification of element attributes.
-															</h:li>
-															<h:li>
-																Undo/Redo History panel; Design/Code View; Find/Replace.
-															</h:li>
-														</h:ul>
+														Attribute Explorer dialog for direct modification of element attributes.
+													</h:li>
+													<h:li>
+														Undo/Redo History panel; Design/Code View; Find/Replace.
 													</h:li>
 												</h:ul>
 											</h:li>
 										</h:ul>
 									</h:li>
 									<h:li>
-										Developed Java EE Web Application responsible for handling file uploads (media, templates, etc.).
-										Application interfaced with Oracle database to register files with CMS.
+										Developed <skill name="J2EE">Java EE</skill> Web Application responsible for handling file uploads and
+										interfaced with <skill name="oracle-dbms">Oracle</skill> database to register files with CMS.
 									</h:li>
 									<h:li>
-										Developed a standalone Java application to batch upload the existing website content into the appropriate CMS
-										database tables.
+										Developed a standalone <skill>Java</skill> application to batch upload the existing website content
+										into the appropriate CMS database tables.
 									</h:li>
 									<h:li>
-										Developed a custom Win32 installer using NSIS (Nullsoft Scriptable Install System) to install the Java policy file
-										necessary for certain features of the HTML Editor Java Applet.
+										Developed a custom Win32 installer using <skill name="nsis">NSIS (Nullsoft Scriptable Install System)</skill>
+										to install the <skill>Java</skill> policy file necessary for certain features of the
+										<skill>HTML</skill> Editor <skill name="java">Java Applet</skill>.
 									</h:li>
 								</h:ul>
 								<h:p>
-									Experience using Oracle's Regular Expressions for data scrubbing and integrity.
+									Experience using <skill>Oracle</skill>'s <skill>Regular Expressions</skill> for data scrubbing and integrity.
 								</h:p>
 							</description>
 						</project>
@@ -351,7 +342,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="web"/>
 			</categories>
 		</skill>
-		<skill>
+		<skill hidden="true">
 			<name>Apache Commons</name>
 			<level value="3"/>
 			<experience>
@@ -584,7 +575,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</categories>
 		</skill>
 		<skill>
-			<name>HTML5</name>
+			<name>HTML 5</name>
 			<level value="4"/>
 			<experience>
 				<since>2011-01</since>
