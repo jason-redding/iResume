@@ -45,9 +45,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 				<meta name="viewport" content="width=device-width, initial-scale=1"/>
 				<title>resume.xml -> resume.xsl -> resume.xhtml</title>
-				<!--<link type="text/css" rel="stylesheet" href="/css/jquery-ui.structure.min.css"/>
-				<link type="text/css" rel="stylesheet" href="/css/jquery-ui.theme.min.css"/>
-				<link type="text/css" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.4.5/jquery.mobile.min.css"/>-->
 				<link type="text/css" rel="stylesheet" href="/css/resume.css"/>
 				<link type="text/css" rel="stylesheet" href="/css/resume-print.css" media="print"/>
 			</head>
@@ -276,6 +273,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																	<span class="project-title-text">
 																		<xsl:value-of select="normalize-space(r:title)"/>
 																	</span>
+																	<!--<span class="project-skills">
+																		<xsl:for-each select="r:description//r:skill">
+																			<xsl:if test="position() > 1">
+																				<xsl:text>, </xsl:text>
+																			</xsl:if>
+																			<xsl:call-template name="skill-ref"/>
+																		</xsl:for-each>
+																	</span>-->
 																</h5>
 																<div class="project-description">
 																	<xsl:if test="string-length(normalize-space(r:link)) > 0">

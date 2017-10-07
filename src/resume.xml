@@ -98,7 +98,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 									<h:li>
 										<skill>Javascript</skill> and <skill>CSS</skill> assets are bundled into a <skill name="J2EE">Java EE</skill> Web Application.</h:li>
 										<h:li>
-											<skill name="J2EE">Java EE</skill> Web Application runs on <skill>Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
+											<skill name="J2EE">Java EE</skill> Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
 										</h:li>
 								</h:ul>
 							</description>

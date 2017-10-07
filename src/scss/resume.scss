@@ -369,6 +369,9 @@ h1, h2, h3, h4, h5, h6 {
 	&:not(.ui-collapsible-heading) {
 		display: list-item;
 	}
+	> .ui-collapsible-heading-toggle {
+		white-space: normal;
+	}
 	.project-title-text {
 		font-weight: bold;
 	}
