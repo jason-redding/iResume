@@ -74,7 +74,7 @@ abbr[title], acronym[title], a {
 @media screen {
 	#tab-panel-resume.final-rendering, #tab-panel-code.data-loaded code.hljs, #tab-panel-skills.final-rendering table.skills {
 		.ui-page-theme-a & {
-			background: hsl(0, 0%, 96%);
+			background: hsl(0, 0%, 98%);
 		}
 	}
 }
@@ -308,6 +308,10 @@ h1, h2, h3, h4, h5, h6 {
 	.project-item {
 		margin-left: -2em;
 		margin-right: -2em;
+		.ui-collapsible-content {
+			border-left-width: 1px;
+			border-right-width: 1px;
+		}
 	}
 }
 
