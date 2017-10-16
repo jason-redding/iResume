@@ -1022,8 +1022,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<until>2016-07</until>
 			</experience>
 			<categories>
-				<category value="app-server"/>
-				<category value="dev-tool"/>
 				<category value="server"/>
 				<category value="web"/>
 			</categories>
