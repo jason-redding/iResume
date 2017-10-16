@@ -95,6 +95,25 @@ abbr[title], acronym[title], a {
 	}
 }
 
+#skill-categories {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.relevant-checkbox {
+	flex: 1 0 auto;
+	max-width: 100%;
+}
+
+.select-category-container {
+	flex: 42 0 auto;
+	max-width: 100%;
+}
+
+.ui-select .ui-btn > span:not(.ui-li-count) {
+	white-space: normal;
+}
+
 .block {
 	display: block;
 }
@@ -308,10 +327,6 @@ h1, h2, h3, h4, h5, h6 {
 	.project-item {
 		margin-left: -2em;
 		margin-right: -2em;
-		.ui-collapsible-content {
-			border-left-width: 1px;
-			border-right-width: 1px;
-		}
 	}
 }
 
@@ -348,6 +363,10 @@ h1, h2, h3, h4, h5, h6 {
 				border-bottom-right-radius: inherit;
 			}
 			.ui-collapsible-heading .ui-btn {
+				border-left-width: 1px;
+				border-right-width: 1px;
+			}
+			.ui-collapsible-content {
 				border-left-width: 1px;
 				border-right-width: 1px;
 			}

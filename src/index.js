@@ -397,6 +397,9 @@
 					}
 					$select.triggerHandler('change');
 				}
+				$('#is-relevant-category').trigger('change', {
+					checked: true
+				});
 				dfd.resolve(docs);
 			});
 		});
@@ -406,14 +409,15 @@
 	function initCategories($categories, $xml) {
 		$categories.html('');
 		var $xmlCategories = $xml.xpath('r:meta/r:skill/r:categories/r:category', 'nodeset');
+		var relevantKey = 'relevant';
 		$xmlCategories.sort(function(a, b) {
 			var $a = $(a);
 			var $b = $(b);
 			var aName = $.trim($a.text());
 			var bName = $.trim($b.text());
-			if ($a.attr('value') === 'relevant') {
+			if ($a.attr('value') === relevantKey) {
 				return -1;
-			} else if ($b.attr('value') === 'relevant') {
+			} else if ($b.attr('value') === relevantKey) {
 				return 1;
 			}
 			if (aName < bName) {
@@ -423,21 +427,95 @@
 			}
 			return 0;
 		});
+		
+		var relevantText = $.trim($xmlCategories.xpath('self::*[@value = "' + relevantKey + '"]').text());
+		
+		var $isRelevantLabel = $('<label/>').attr({
+			'for': 'is-relevant-category'
+		})
+		.addClass('ui-shadow')
+		.text('Relevant')
+		.appendTo($categories);
+		var $isRelevant = $('<input type="checkbox"/>')
+		.attr({
+			'data-wrapper-class': 'relevant-checkbox',
+			'data-iconpos': 'right',
+			value: '1',
+			id: 'is-relevant-category'
+		})
+		.on('change', function(event, options) {
+			var $this = $(this);
+			if ($.isPlainObject(options)) {
+				if ('checked' in options) {
+					$this.prop('checked', options.checked === true);
+					try {
+						$this.checkboxradio('refresh');
+					} catch (ex) {
+						console.error(ex);
+					}
+				}
+			}
+			var $select = $('select#categories');
+			var isChecked = $this.is(':checked');
+			if (isChecked) {
+				if (!$select.is('[data-last-value]')) {
+					$select.attr('data-last-value', $.trim($select.find('option:selected').val()));
+				}
+				var $relevant = $select.find('option[value="' + relevantKey + '"]');
+				if ($relevant.length === 0) {
+					$relevant = $('<option/>').attr('value', relevantKey)
+					.text(relevantText)
+					.insertAfter($select.find('option[value="*"]'));
+				}
+				$relevant.prop('selected', true);
+				$select.prop('disabled', true);
+				try {
+					$select.selectmenu('disable');
+				} catch (ex) {
+					console.error(ex);
+				}
+			} else {
+				var lastValue = $.trim($select.attr('data-last-value'));
+				$select.removeAttr('data-last-value');
+				$select.prop('disabled', false);
+				if (lastValue.length === 0 || lastValue === 'relevant') {
+					lastValue = '*';
+				}
+				if (lastValue.length > 0) {
+					$select.find('option[value="' + lastValue + '"]').prop('selected', true);
+				}
+				$select.find('option[value="' + relevantKey + '"]').remove();
+				try {
+					$select.selectmenu('enable');
+				} catch (ex) {
+					console.error(ex);
+				}
+			}
+			try {
+				$select.selectmenu('refresh');
+			} catch (ex) {
+				console.error(ex);
+			}
+			$select.trigger('change');
+		})
+		.appendTo($categories);
 
 		var $categoriesSelectContainer = $('<div/>')
-		.appendTo($categories);
+		.addClass('select-category-container')
+		.prependTo($categories);
 
 		$('<label/>').attr({
 			'for': 'categories'
 		})
 		.addClass('ui-hidden-accessible')
-		.text('Categories: ')
+		.text('Category: ')
 		.appendTo($categoriesSelectContainer);
 
 		var $select = $('<select/>')
 		.attr({
 			id: 'categories'
 		});
+		$('<option/>').val('*').text('All Categories').prependTo($select);
 		$xmlCategories.each(function() {
 			var $category = $(this);
 			var id = $.trim($category.attr('value'));
@@ -448,7 +526,6 @@
 			.text(name)
 			.appendTo($select);
 		});
-		$('<option/>').val('*').text('All Categories').prependTo($select);
 
 		$select.on('change', function(event) {
 			var $table = $('#skills-table');
