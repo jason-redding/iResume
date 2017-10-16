@@ -6,6 +6,8 @@ var uglify = require('gulp-uglify');
 var del = require('del');
 var browserSync = require('browser-sync').create();
 var preprocess = require('gulp-preprocess');
+var GulpSSH = require('gulp-ssh');
+var fs = require('fs');
 
 var NOW = new Date();
 var CONTEXT = {
@@ -100,15 +102,21 @@ gulp.task('deploy', function(callback) {
 });
 
 gulp.task('deploy-live', function() {
+	var gulpSSH = new GulpSSH({
+		sshConfig: {
+			username: 'god',
+			host: 'jman.ddns.info',
+			port: 422,
+			privateKey: fs.readFileSync('/Users/god/.ssh/id_rsa')
+		}
+	});
 	return gulp.src([
 		CONTEXT.DEST + '/**/*'
-	], {
-		base: CONTEXT.DEST
-	})
+	])
 	.pipe(preprocess({
 		context: CONTEXT
 	}))
-	.pipe(gulp.dest(CONTEXT.DEPLOY_PATH));
+	.pipe(gulpSSH.dest(CONTEXT.DEPLOY_PATH));
 });
 
 gulp.task('run', function(callback) {
@@ -157,6 +165,14 @@ gulp.task('clean', function() {
 	return del([
 		CONTEXT.DEST + '/**/*'
 	]);
+});
+
+gulp.task('help', function(callback) {
+	console.log('List of gulp tasks:');
+	console.log('\tdefault -- Clean, and build to project folder.');
+	console.log('\tdev     -- Clean, build, start web-server, and setup watches to reload browser.');
+	console.log('\tdeploy  -- Clean, build, and deploy to live site.');
+	callback();
 });
 
 function padLeft(input, char, size) {
