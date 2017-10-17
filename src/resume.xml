@@ -76,7 +76,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								upgraded hardware and software in computer labs.
 							</h:li>
 							<h:li>
-								Created Microsoft Access Database, Forms, and accompanying VBA code to facilitate technical support by Help Desk personnel.
+								Created Microsoft Access Database, Forms, and accompanying <skill>VBA</skill> code to facilitate technical support by Help Desk personnel.
 							</h:li>
 						</h:ul>
 					</description>
@@ -297,9 +297,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 										<skill>HTML</skill> Editor <skill name="java">Java Applet</skill>.
 									</h:li>
 								</h:ul>
-								<h:p>
-									Experience using <skill>Oracle</skill>'s <skill>Regular Expressions</skill> for data scrubbing and integrity.
-								</h:p>
 							</description>
 						</project>
 					</projects>
