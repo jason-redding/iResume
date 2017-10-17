@@ -273,14 +273,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																	<span class="project-title-text">
 																		<xsl:value-of select="normalize-space(r:title)"/>
 																	</span>
-																	<!--<span class="project-skills">
-																		<xsl:for-each select="r:description//r:skill">
-																			<xsl:if test="position() > 1">
-																				<xsl:text>, </xsl:text>
-																			</xsl:if>
-																			<xsl:call-template name="skill-ref"/>
-																		</xsl:for-each>
-																	</span>-->
 																</h5>
 																<div class="project-description">
 																	<xsl:if test="string-length(normalize-space(r:link)) > 0">
