@@ -113,13 +113,31 @@
 					}
 				}
 				#skill-categories {
-					label[for="categories"] {
-						display: none;
-						+ .ui-select {
-							display: none;
-						}
-					}
+					display: none;
 				}
+			}
+		}
+	}
+	.ui-collapsible {
+		.ui-collapsible-heading {
+			.ui-collapsible-heading-toggle {
+				&.ui-btn-icon-left {
+					padding-left: 1em !important;
+				}
+				&.ui-btn-icon-right {
+					padding-right: 1em !important;
+				}
+			}
+		}
+		.ui-collapsible-heading-toggle, .ui-collapsible-content {
+			border-color: hsla(0, 0%, 0%, 0) !important;
+		}
+	}
+	a[href]:not([href^="#"]) {
+		&:not(.project-link):not(.author-contact-info) {
+			&::after {
+				content: " [" attr(href) "]";
+				font-size: 0.9em;
 			}
 		}
 	}
