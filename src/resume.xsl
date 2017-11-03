@@ -154,6 +154,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 												<xsl:variable name="relevant-skills" select="r:skill[r:categories/r:category/@value = 'relevant']"/>
 												<xsl:variable name="more-skills" select="r:skill[not(r:categories/r:category/@value = 'relevant')]"/>
 												<div class="skills-group-relevant">
+													<div class="skills-group-label">
+														<xsl:text>Relevant Skills:</xsl:text>
+													</div>
 													<xsl:for-each select="$relevant-skills">
 														<xsl:sort select="r:level/@value" data-type="number" order="descending"/>
 														<xsl:sort select="concat(r:experience/r:since, '_', r:experience/r:until)" data-type="text" order="ascending"/>
@@ -164,6 +167,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 													</xsl:for-each>
 												</div>
 												<div class="skills-group-others">
+													<div class="skills-group-label">
+														<xsl:text>More Skills:</xsl:text>
+													</div>
 													<xsl:for-each select="$more-skills">
 														<xsl:sort select="r:level/@value" data-type="number" order="descending"/>
 														<xsl:sort select="concat(r:experience/r:since, '_', r:experience/r:until)" data-type="text" order="ascending"/>

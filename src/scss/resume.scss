@@ -264,15 +264,8 @@ div.skills {
 			margin-bottom: 0.25em;
 		}
 	}
-	.skills-group-relevant {
-		&::before {
-			content: 'Relevant Skills:';
-		}
-	}
-	.skills-group-others {
-		&::before {
-			content: 'More Skills:';
-		}
+	.skills-group-label {
+		font-weight: bold;
 	}
 }
 
