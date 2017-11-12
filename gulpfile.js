@@ -1,13 +1,14 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var useref = require('gulp-useref');
-var gulpSequence = require('gulp-sequence');
-var uglify = require('gulp-uglify');
-var del = require('del');
-var browserSync = require('browser-sync').create();
-var preprocess = require('gulp-preprocess');
-var GulpSSH = require('gulp-ssh');
-var fs = require('fs');
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const useref = require('gulp-useref');
+const gulpSequence = require('gulp-sequence');
+const uglify = require('gulp-uglify');
+const del = require('del');
+const browserSync = require('browser-sync').create();
+const preprocess = require('gulp-preprocess');
+const GulpSSH = require('gulp-ssh');
+const fs = require('fs');
+const os = require('os');
 
 var NOW = new Date();
 var CONTEXT = {
@@ -17,6 +18,7 @@ var CONTEXT = {
 	DEPLOY_PATH: '/var/www/html.iresume',
 	DEBUG: true,
 	NODE_ENV: 'development',
+	HOMEDIR: os.homedir(),
 	NOW: NOW.getFullYear() + '-' + padLeft(NOW.getMonth() + 1, '0', 2) + '-' + padLeft(NOW.getDate(), '0', 2) + 'T' + padLeft(NOW.getHours(), '0', 2) + ':' + padLeft(NOW.getMinutes(), '0', 2) + ':' + padLeft(NOW.getSeconds(), '0', 2) + '.' + NOW.getMilliseconds() + (NOW.getTimezoneOffset() === 0 ? 'Z' : (NOW.getTimezoneOffset() < 0 ? '+' : '-') + (padLeft(Math.floor(NOW.getTimezoneOffset() / 60), '0', 2) + padLeft(NOW.getTimezoneOffset() % 60, '0', 2)))
 };
 
@@ -107,7 +109,7 @@ gulp.task('deploy-live', function() {
 			username: 'god',
 			host: 'jman.ddns.info',
 			port: 422,
-			privateKey: fs.readFileSync('/Users/god/.ssh/id_rsa')
+			privateKey: fs.readFileSync(CONTEXT.HOMEDIR + '/.ssh/id_rsa')
 		}
 	});
 	return gulp.src([
