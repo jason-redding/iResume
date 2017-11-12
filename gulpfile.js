@@ -19,6 +19,7 @@ var CONTEXT = {
 	DEBUG: true,
 	NODE_ENV: 'development',
 	HOMEDIR: os.homedir(),
+	HOSTNAME: os.hostname(),
 	NOW: NOW.getFullYear() + '-' + padLeft(NOW.getMonth() + 1, '0', 2) + '-' + padLeft(NOW.getDate(), '0', 2) + 'T' + padLeft(NOW.getHours(), '0', 2) + ':' + padLeft(NOW.getMinutes(), '0', 2) + ':' + padLeft(NOW.getSeconds(), '0', 2) + '.' + NOW.getMilliseconds() + (NOW.getTimezoneOffset() === 0 ? 'Z' : (NOW.getTimezoneOffset() < 0 ? '+' : '-') + (padLeft(Math.floor(NOW.getTimezoneOffset() / 60), '0', 2) + padLeft(NOW.getTimezoneOffset() % 60, '0', 2)))
 };
 
@@ -104,21 +105,34 @@ gulp.task('deploy', function(callback) {
 });
 
 gulp.task('deploy-live', function() {
-	var gulpSSH = new GulpSSH({
-		sshConfig: {
-			username: 'god',
-			host: 'jman.ddns.info',
-			port: 422,
-			privateKey: fs.readFileSync(CONTEXT.HOMEDIR + '/.ssh/id_rsa')
-		}
-	});
-	return gulp.src([
-		CONTEXT.DEST + '/**/*'
-	])
-	.pipe(preprocess({
-		context: CONTEXT
-	}))
-	.pipe(gulpSSH.dest(CONTEXT.DEPLOY_PATH));
+	var isLocal = (('HOSTNAME' in CONTEXT) && CONTEXT['HOSTNAME'] === 'jman.ddns.info');
+	if (isLocal) {
+		return gulp.src([
+			CONTEXT.DEST + '/**/*'
+		], {
+			base: CONTEXT.DEST
+		})
+		.pipe(preprocess({
+			context: CONTEXT
+		}))
+		.pipe(gulp.dest(CONTEXT.DEPLOY_PATH));
+	} else {
+		var gulpSSH = new GulpSSH({
+			sshConfig: {
+				username: 'god',
+				host: 'jman.ddns.info',
+				port: 422,
+				privateKey: fs.readFileSync(CONTEXT.HOMEDIR + '/.ssh/id_rsa')
+			}
+		});
+		return gulp.src([
+			CONTEXT.DEST + '/**/*'
+		])
+		.pipe(preprocess({
+			context: CONTEXT
+		}))
+		.pipe(gulpSSH.dest(CONTEXT.DEPLOY_PATH));
+	}
 });
 
 gulp.task('run', function(callback) {
