@@ -88,6 +88,15 @@ gulp.task('build', function(callback) {
 	callback);
 });
 
+gulp.task('build:production', function(callback) {
+	CONTEXT['DEBUG'] = false;
+	CONTEXT['NODE_ENV'] = 'production';
+	return gulpSequence(
+	'clean',
+	'build',
+	callback);
+});
+
 gulp.task('browser-reload', function(callback) {
 	browserSync.reload();
 	callback();
