@@ -71,6 +71,15 @@ abbr[title], acronym[title], a {
 	padding: 1em;
 }
 
+.section-content[data-section="skills"] {
+	> div.skills {
+		> div {
+			margin-top: 1em;
+			margin-bottom: 1em;
+		}
+	}
+}
+
 @media screen {
 	#tab-panel-resume.final-rendering, #tab-panel-code.data-loaded code.hljs, #tab-panel-skills.final-rendering table.skills {
 		.ui-page-theme-a & {
