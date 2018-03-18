@@ -123,7 +123,9 @@
 			try {
 				r = ownerDoc.evaluate(path, this, namespace.lookupNamespace, resultType, null);
 			} catch (ex) {
+				console.groupCollapsed('document.evaluate() exception!');
 				console.error(ex);
+				console.groupEnd();
 			}
 			if (!!!r) {
 				return true;
@@ -147,7 +149,9 @@
 						}
 					}
 				} catch (ex) {
+					console.groupCollapsed('Exception while iterating over result nodes!');
 					console.error(ex);
+					console.groupEnd();
 				}
 			} else if (t === XPathResult.ORDERED_NODE_SNAPSHOT_TYPE || t === XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE) {
 				for (var i = 0; i < r.snapshotLength; i++) {
