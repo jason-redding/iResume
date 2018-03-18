@@ -19,8 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <resume xmlns="http://witcraft.com/xsd/resume"
 				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				xmlns:h="http://www.w3.org/1999/xhtml"
+				xmlns:r="http://witcraft.com/xsd/resume"
 				xsi:schemaLocation="http://witcraft.com/xsd/resume resume.xsd"
-				last-modified="2017-09-21T18:00:00">
+				last-modified="2018-03-18T13:30:00">
 	<meta>
 		<skill>
 			<levels preposition="at">
@@ -53,11 +54,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<address>Greenbelt, MD</address>
 	</author>
 	<description title="Profile">
-		I have over <duration from="2001" unit="years">16 years</duration> professional experience creating solutions ranging from
+		I have over <duration from="2001" unit="years">17 years</duration> professional experience creating solutions ranging from
 		<skill>command-line interface</skill> for modifying production enterprise web applications, to
 		<skill>HTML 5</skill>/<skill>jQuery Mobile</skill> web front-end for a Higher Education Student Information System.
 	</description>
 	<employers title="Experience">
+		<employer>
+			<title>Booz Allen Hamilton</title>
+			<positions>
+				<position>
+					<title>Full-Stack Developer</title>
+					<timeline>
+						<start-date format="MMMM yyyy">2018-01-08</start-date>
+					</timeline>
+					<description>
+						<h:ul>
+							<h:li>Develop and improve Web Interfaces.</h:li>
+							<h:li>Design and develop software in <skill>Java</skill> to query <skill>MySQL</skill> databases.</h:li>
+							<h:li>Integrate various components and test end-to-end capability.</h:li>
+						</h:ul>
+					</description>
+				</position>
+			</positions>
+		</employer>
 		<employer>
 			<title>Community College of Baltimore County</title>
 			<positions>
@@ -65,8 +84,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<title>IT Computer Technician (Student Aid)</title>
 					<department>Support Center</department>
 					<timeline>
-						<start-date truncate-to="year">2000-07-01</start-date>
-						<end-date truncate-to="year">2001-06-31</end-date>
+						<start-date format="MMMM yyyy">2000-07-01</start-date>
+						<end-date format="MMMM yyyy">2001-06-31</end-date>
 					</timeline>
 					<description>
 						<h:ul>
@@ -84,8 +103,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<position>
 					<title>Programmer</title>
 					<timeline>
-						<start-date truncate-to="year">2001-07-01</start-date>
-						<end-date symbolic="present"/>
+						<start-date format="MMMM yyyy">2001-07-01</start-date>
+						<end-date format="MMMM yyyy">2017-12-31</end-date>
 					</timeline>
 					<projects>
 						<project type="web">
