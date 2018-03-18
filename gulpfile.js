@@ -15,7 +15,7 @@ var CONTEXT = {
 	THEME: 'a',
 	SRC: 'src',
 	DEST: 'public_html',
-	DEPLOY_PATH: '/var/www/html.iresume',
+	DEPLOY_PATH: os.homedir() + '/www',
 	DEBUG: true,
 	NODE_ENV: 'development',
 	HOMEDIR: os.homedir(),
@@ -114,7 +114,7 @@ gulp.task('deploy', function(callback) {
 });
 
 gulp.task('deploy-live', function() {
-	var isLocal = (('HOSTNAME' in CONTEXT) && CONTEXT['HOSTNAME'] === 'jman.ddns.info');
+	var isLocal = (('HOSTNAME' in CONTEXT) && CONTEXT['HOSTNAME'] === 'purple.atonal.org');
 	if (isLocal) {
 		return gulp.src([
 			CONTEXT.DEST + '/**/*'
@@ -128,9 +128,9 @@ gulp.task('deploy-live', function() {
 	} else {
 		var gulpSSH = new GulpSSH({
 			sshConfig: {
-				username: 'god',
-				host: 'jman.ddns.info',
-				port: 422,
+				username: 'jason',
+				host: 'jman.rocketssdhosting.com',
+				port: 22,
 				privateKey: fs.readFileSync(CONTEXT.HOMEDIR + '/.ssh/id_rsa')
 			}
 		});
