@@ -352,7 +352,6 @@
 		resume.done(function(docs) {
 			var xmlDoc = docs[0].data;
 			$.xmlns.reset(xmlDoc);
-			$.xmlns.addNamespace('r', 'http://witcraft.com/xsd/resume');
 			console.groupCollapsed('Namespace Prefixes');
 			console.dir($.xmlns.prefixes());
 			console.groupEnd();
@@ -614,12 +613,12 @@
 				text: 'Applying XML Transform...',
 				textVisible: true
 			});
-			var xslTransformer = new XSLTProcessor();
-			xslTransformer.importStylesheet(xslDoc);
-			$.each(transformParameters, function(name, value) {
-				xslTransformer.setParameter(null, name, value);
-			});
 			try {
+				var xslTransformer = new XSLTProcessor();
+				xslTransformer.importStylesheet(xslDoc);
+				$.each(transformParameters, function(name, value) {
+					xslTransformer.setParameter(null, name, value);
+				});
 				resultDoc = xslTransformer.transformToDocument(xmlDoc);
 			} catch (ex) {
 				console.error(ex);
