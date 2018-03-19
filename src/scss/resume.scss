@@ -1,6 +1,8 @@
 @import "_common";
 
 body {
+	-o-tab-size: 2;
+	-moz-tab-size: 2;
 	tab-size: 2;
 }
 
@@ -306,6 +308,14 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 	font-size: 1.1em;
 	text-align: center;
+	&:not(:first-child) {
+		&::before {
+			content: '';
+			display: block;
+			margin-bottom: 1em;
+			border-top: 3px double hsl(34, 57%, 70%);
+		}
+	}
 }
 
 .position-container {
