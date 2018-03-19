@@ -281,12 +281,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</xs:complexType>
 
 	<xs:attributeGroup name="group-date-attrs">
-		<xs:attribute name="truncate-to" type="type-date-precision"/>
+		<xs:attribute name="truncate-to" type="type-date-precision" use="optional"/>
+		<xs:attribute name="format" type="xs:string" use="optional"/>
 	</xs:attributeGroup>
 
 	<xs:attributeGroup name="group-date-attrs-with-symbolic">
-		<xs:attribute name="truncate-to" type="type-date-precision"/>
-		<xs:attribute name="symbolic" type="type-date-symbolic-attribute"/>
+		<xs:attribute name="truncate-to" type="type-date-precision" use="optional"/>
+		<xs:attribute name="format" type="xs:string" use="optional"/>
+		<xs:attribute name="symbolic" type="type-date-symbolic-attribute" use="optional"/>
 	</xs:attributeGroup>
 
 	<xs:simpleType name="type-date-symbolic-attribute">
@@ -326,19 +328,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xs:simpleType name="type-date-time">
 		<xs:restriction base="xs:string">
 			<xs:pattern value="\d{4,}-\d{2}(-\d{2}(T\d{2}(:\d{2}(:\d{2}(\.\d{1,3})?)?)?(Z|[+-]\d{2}(:?\d{2})?)?)?)?"/>
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="e-boolean">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="true"/>
-			<xs:enumeration value="false"/>
-			<xs:enumeration value="yes"/>
-			<xs:enumeration value="no"/>
-			<xs:enumeration value="on"/>
-			<xs:enumeration value="off"/>
-			<xs:enumeration value="1"/>
-			<xs:enumeration value="0"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
