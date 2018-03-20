@@ -25,7 +25,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xsl:output method="xml" encoding="utf-8" indent="yes" omit-xml-declaration="yes"/>
 	<xsl:param name="author-name" select="'1'"/>
 	<xsl:param name="position-sort" select="'descending'"/>
-	<xsl:param name="system-date" select="''"/>
+	<xsl:param name="system-date">
+		<xsl:if test="count(/r:resume[@last-modified]) > 0 and string-length(/r:resume/@last-modified) > 0">
+			<xsl:value-of select="/r:resume/@last-modified"/>
+		</xsl:if>
+	</xsl:param>
 	<xsl:param name="factor-relevance" select="true()"/>
 	<xsl:key name="level" match="/r:resume/r:meta/r:skill/r:levels/r:level" use="@value"/>
 	<xsl:key name="category" match="/r:resume/r:meta/r:skill/r:categories/r:category" use="@value"/>
@@ -228,6 +232,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																<xsl:call-template name="date-eval">
 																	<xsl:with-param name="symbolic" select="@symbolic"/>
 																	<xsl:with-param name="truncate-to" select="@truncate-to"/>
+																	<xsl:with-param name="format" select="@format"/>
 																</xsl:call-template>
 															</xsl:for-each>
 														</span>
@@ -239,6 +244,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																		<xsl:call-template name="date-eval">
 																			<xsl:with-param name="symbolic" select="@symbolic"/>
 																			<xsl:with-param name="truncate-to" select="@truncate-to"/>
+																			<xsl:with-param name="format" select="@format"/>
 																		</xsl:call-template>
 																	</xsl:for-each>
 																</xsl:when>
@@ -364,7 +370,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<span class="skill">
 			<xsl:attribute name="class">
 				<xsl:text>skill skill-name</xsl:text>
-				<xsl:value-of select="concat(' level-', $skill-level)"/>
+				<xsl:value-of select="concat(' base-level-', floor($skill-level))"/>
+				<xsl:if test="not($skill-level = floor($skill-level))">
+					<xsl:value-of select="concat(' level-', $skill-level)"/>
+				</xsl:if>
+				<xsl:value-of select="concat(' experience-years-', $experience-years)"/>
 				<xsl:for-each select="$skill/r:categories/r:category">
 					<xsl:value-of select="concat(' category-', @value)"/>
 				</xsl:for-each>
@@ -409,10 +419,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:value-of select="($skill-level div $max-level)"/>
 			</xsl:attribute>
 			<xsl:attribute name="data-since">
-				<xsl:call-template name="date-eval">
-					<xsl:with-param name="date" select="$skill/r:experience/r:since"/>
-					<xsl:with-param name="truncate-to" select="'year'"/>
-				</xsl:call-template>
+				<xsl:value-of select="$experience-since-year"/> 
 			</xsl:attribute>
 			<xsl:attribute name="data-until">
 				<xsl:value-of select="$experience-until-year"/>
@@ -468,6 +475,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						</xsl:when>
 						<xsl:when test="string-length($system-date) > 0">
 							<xsl:value-of select="$system-date"/>
+						</xsl:when>
+						<xsl:when test="string-length(/r:resume/@last-modified) > 0">
+							<xsl:value-of select="/r:resume/@last-modified"/>
 						</xsl:when>
 					</xsl:choose>
 				</xsl:with-param>
@@ -619,8 +629,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	<xsl:template name="date-eval" match="r:start-date | r:end-date">
 		<xsl:param name="date" select="."/>
+		<xsl:param name="format" select="@format"/>
 		<xsl:param name="symbolic">
-			<xsl:value-of select="normalize-space($date) = 'now' or normalize-space($date) = 'present'"/>
+			<xsl:choose>
+				<xsl:when test="$date = 'now' or $date = 'present'">
+					<xsl:value-of select="'present'"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="false()"/>
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:param>
 		<xsl:param name="truncate-to" select="''"/>
 		<xsl:variable name="value" select="normalize-space($date)"/>
@@ -629,72 +647,515 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:text>Present</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
+				<xsl:variable name="truncated-date">
+					<xsl:choose>
+						<xsl:when test="$truncate-to = 'year'">
+							<xsl:call-template name="grab-until">
+								<xsl:with-param name="text" select="$value"/>
+								<xsl:with-param name="token" select="'-'"/>
+							</xsl:call-template>
+						</xsl:when>
+						<xsl:when test="$truncate-to = 'month'">
+							<xsl:call-template name="grab-until">
+								<xsl:with-param name="text" select="$value"/>
+								<xsl:with-param name="token" select="'-'"/>
+								<xsl:with-param name="skip-count" select="1"/>
+							</xsl:call-template>
+						</xsl:when>
+						<xsl:when test="$truncate-to = 'day'">
+							<xsl:call-template name="grab-until">
+								<xsl:with-param name="text" select="substring-before($value, 'T')"/>
+								<xsl:with-param name="token" select="'-'"/>
+								<xsl:with-param name="skip-count" select="2"/>
+							</xsl:call-template>
+						</xsl:when>
+						<xsl:when test="$truncate-to = 'hour'">
+							<xsl:call-template name="grab-until">
+								<xsl:with-param name="text" select="$value"/>
+								<xsl:with-param name="token" select="'T'"/>
+							</xsl:call-template>
+							<xsl:if test="contains($value, 'T')">
+								<xsl:text>T</xsl:text>
+							</xsl:if>
+							<xsl:call-template name="grab-until">
+								<xsl:with-param name="text" select="substring-after($value, 'T')"/>
+								<xsl:with-param name="token" select="':'"/>
+							</xsl:call-template>
+						</xsl:when>
+						<xsl:when test="$truncate-to = 'minute'">
+							<xsl:call-template name="grab-until">
+								<xsl:with-param name="text" select="$value"/>
+								<xsl:with-param name="token" select="'T'"/>
+							</xsl:call-template>
+							<xsl:if test="contains($value, 'T')">
+								<xsl:text>T</xsl:text>
+							</xsl:if>
+							<xsl:call-template name="grab-until">
+								<xsl:with-param name="text" select="substring-after($value, 'T')"/>
+								<xsl:with-param name="token" select="':'"/>
+								<xsl:with-param name="skip-count" select="1"/>
+							</xsl:call-template>
+						</xsl:when>
+						<xsl:when test="$truncate-to = 'second'">
+							<xsl:call-template name="grab-until">
+								<xsl:with-param name="text" select="$value"/>
+								<xsl:with-param name="token" select="'T'"/>
+							</xsl:call-template>
+							<xsl:if test="contains($value, 'T')">
+								<xsl:text>T</xsl:text>
+							</xsl:if>
+							<xsl:call-template name="grab-until">
+								<xsl:with-param name="text" select="substring-after($value, 'T')"/>
+								<xsl:with-param name="token" select="':'"/>
+								<xsl:with-param name="skip-count" select="2"/>
+							</xsl:call-template>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$value"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
 				<xsl:choose>
-					<xsl:when test="$truncate-to = 'year'">
-						<xsl:call-template name="grab-until">
-							<xsl:with-param name="text" select="$value"/>
-							<xsl:with-param name="token" select="'-'"/>
-						</xsl:call-template>
-					</xsl:when>
-					<xsl:when test="$truncate-to = 'month'">
-						<xsl:call-template name="grab-until">
-							<xsl:with-param name="text" select="$value"/>
-							<xsl:with-param name="token" select="'-'"/>
-							<xsl:with-param name="skip-count" select="1"/>
-						</xsl:call-template>
-					</xsl:when>
-					<xsl:when test="$truncate-to = 'day'">
-						<xsl:call-template name="grab-until">
-							<xsl:with-param name="text" select="$value"/>
-							<xsl:with-param name="token" select="'-'"/>
-							<xsl:with-param name="skip-count" select="2"/>
-						</xsl:call-template>
-					</xsl:when>
-					<xsl:when test="$truncate-to = 'hour'">
-						<xsl:call-template name="grab-until">
-							<xsl:with-param name="text" select="$value"/>
-							<xsl:with-param name="token" select="'T'"/>
-						</xsl:call-template>
-						<xsl:if test="contains($value, 'T')">
-							<xsl:text>T</xsl:text>
-						</xsl:if>
-						<xsl:call-template name="grab-until">
-							<xsl:with-param name="text" select="substring-after($value, 'T')"/>
-							<xsl:with-param name="token" select="':'"/>
-						</xsl:call-template>
-					</xsl:when>
-					<xsl:when test="$truncate-to = 'minute'">
-						<xsl:call-template name="grab-until">
-							<xsl:with-param name="text" select="$value"/>
-							<xsl:with-param name="token" select="'T'"/>
-						</xsl:call-template>
-						<xsl:if test="contains($value, 'T')">
-							<xsl:text>T</xsl:text>
-						</xsl:if>
-						<xsl:call-template name="grab-until">
-							<xsl:with-param name="text" select="substring-after($value, 'T')"/>
-							<xsl:with-param name="token" select="':'"/>
-							<xsl:with-param name="skip-count" select="1"/>
-						</xsl:call-template>
-					</xsl:when>
-					<xsl:when test="$truncate-to = 'second'">
-						<xsl:call-template name="grab-until">
-							<xsl:with-param name="text" select="$value"/>
-							<xsl:with-param name="token" select="'T'"/>
-						</xsl:call-template>
-						<xsl:if test="contains($value, 'T')">
-							<xsl:text>T</xsl:text>
-						</xsl:if>
-						<xsl:call-template name="grab-until">
-							<xsl:with-param name="text" select="substring-after($value, 'T')"/>
-							<xsl:with-param name="token" select="':'"/>
-							<xsl:with-param name="skip-count" select="2"/>
+					<xsl:when test="string-length($format) > 0">
+						<xsl:call-template name="date-translate">
+							<xsl:with-param name="date" select="$truncated-date"/>
+							<xsl:with-param name="format" select="$format"/>
 						</xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:value-of select="$value"/>
+						<xsl:value-of select="$truncated-date"/>
 					</xsl:otherwise>
 				</xsl:choose>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template name="date-translate">
+		<xsl:param name="date" select="."/>
+		<xsl:param name="format" select="'M/d/yyyy'"/>
+		<xsl:variable name="value" select="normalize-space($date)"/>
+		<xsl:variable name="year-test">
+			<xsl:call-template name="grab-until">
+				<xsl:with-param name="text" select="$value"/>
+				<xsl:with-param name="token" select="'-'"/>
+			</xsl:call-template>
+		</xsl:variable>
+		<xsl:variable name="month-test">
+			<xsl:call-template name="grab-until">
+				<xsl:with-param name="text" select="$value"/>
+				<xsl:with-param name="token" select="'-'"/>
+				<xsl:with-param name="skip-count" select="1"/>
+				<xsl:with-param name="include-skipped" select="false()"/>
+			</xsl:call-template>
+		</xsl:variable>
+		<xsl:variable name="day-test">
+			<xsl:choose>
+				<xsl:when test="contains($value, 'T')">
+					<xsl:call-template name="grab-until">
+						<xsl:with-param name="text" select="substring-before($value, 'T')"/>
+						<xsl:with-param name="token" select="'-'"/>
+						<xsl:with-param name="skip-count" select="2"/>
+						<xsl:with-param name="include-skipped" select="false()"/>
+					</xsl:call-template>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:call-template name="grab-until">
+						<xsl:with-param name="text" select="$value"/>
+						<xsl:with-param name="token" select="'-'"/>
+						<xsl:with-param name="skip-count" select="2"/>
+						<xsl:with-param name="include-skipped" select="false()"/>
+					</xsl:call-template>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="hour-test">
+			<xsl:choose>
+				<xsl:when test="contains($value, 'T')">
+					<xsl:call-template name="grab-until">
+						<xsl:with-param name="text" select="substring-after($value, 'T')"/>
+						<xsl:with-param name="token" select="':'"/>
+					</xsl:call-template>
+				</xsl:when>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="minute-test">
+			<xsl:choose>
+				<xsl:when test="contains($value, 'T')">
+					<xsl:call-template name="grab-until">
+						<xsl:with-param name="text" select="substring-after($value, 'T')"/>
+						<xsl:with-param name="token" select="':'"/>
+						<xsl:with-param name="skip-count" select="1"/>
+						<xsl:with-param name="include-skipped" select="false()"/>
+					</xsl:call-template>
+				</xsl:when>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="second-test">
+			<xsl:choose>
+				<xsl:when test="contains($value, 'T')">
+					<xsl:call-template name="grab-until">
+						<xsl:with-param name="text" select="substring-after($value, 'T')"/>
+						<xsl:with-param name="token" select="':'"/>
+						<xsl:with-param name="skip-count" select="2"/>
+						<xsl:with-param name="include-skipped" select="false()"/>
+					</xsl:call-template>
+				</xsl:when>
+			</xsl:choose>
+		</xsl:variable>
+		
+		<xsl:variable name="year">
+			<xsl:value-of select="number($year-test)"/>
+		</xsl:variable>
+		<xsl:variable name="month">
+			<xsl:choose>
+				<xsl:when test="string-length($month-test) > 0">
+					<xsl:value-of select="number($month-test)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="1"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="day">
+			<xsl:choose>
+				<xsl:when test="string-length($day-test) > 0">
+					<xsl:value-of select="number($day-test)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="1"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="hour">
+			<xsl:choose>
+				<xsl:when test="string-length($hour-test) > 0">
+					<xsl:value-of select="number($hour-test)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="0"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="minute">
+			<xsl:choose>
+				<xsl:when test="string-length($minute-test) > 0">
+					<xsl:value-of select="number($minute-test)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="0"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="second">
+			<xsl:choose>
+				<xsl:when test="string-length($second-test) > 0">
+					<xsl:value-of select="number($second-test)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="0"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		
+		<xsl:call-template name="eval-date-format">
+			<xsl:with-param name="date-year" select="$year"/>
+			<xsl:with-param name="date-month" select="$month"/>
+			<xsl:with-param name="date-day" select="$day"/>
+			<xsl:with-param name="date-hour" select="$hour"/>
+			<xsl:with-param name="date-minute" select="$minute"/>
+			<xsl:with-param name="date-second" select="$second"/>
+			<xsl:with-param name="format" select="$format"/>
+		</xsl:call-template>
+	</xsl:template>
+	
+	<xsl:template name="eval-date-format">
+		<xsl:param name="date-year" select="''"/>
+		<xsl:param name="date-month" select="''"/>
+		<xsl:param name="date-day" select="''"/>
+		<xsl:param name="date-hour" select="''"/>
+		<xsl:param name="date-minute" select="''"/>
+		<xsl:param name="date-second" select="''"/>
+		<xsl:param name="format" select="''"/>
+		<xsl:param name="position" select="1"/>
+		<xsl:choose>
+			<xsl:when test="$position &lt;= string-length($format)">
+				<xsl:variable name="mask">
+					<xsl:call-template name="grab-same">
+						<xsl:with-param name="text" select="$format"/>
+						<xsl:with-param name="position" select="$position"/>
+					</xsl:call-template>
+				</xsl:variable>
+				<xsl:variable name="token" select="substring($mask, 1, 1)"/>
+				<xsl:variable name="date-part">
+					<xsl:choose>
+						<xsl:when test="$token = 'y'">
+							<xsl:value-of select="$date-year"/>
+						</xsl:when>
+						<xsl:when test="$token = 'M'">
+							<xsl:value-of select="$date-month"/>
+						</xsl:when>
+						<xsl:when test="$token = 'd'">
+							<xsl:value-of select="$date-day"/>
+						</xsl:when>
+						<xsl:when test="$token = 'H'">
+							<xsl:value-of select="$date-hour"/>
+						</xsl:when>
+						<xsl:when test="$token = 'h'">
+							<xsl:choose>
+								<xsl:when test="$date-hour = 0">
+									<xsl:value-of select="12"/>
+								</xsl:when>
+								<xsl:when test="$date-hour > 12">
+									<xsl:value-of select="$date-hour - 12"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$date-hour"/>
+								</xsl:otherwise>
+							</xsl:choose>
+							<xsl:value-of select="$date-hour"/>
+						</xsl:when>
+						<xsl:when test="$token = 'm'">
+							<xsl:value-of select="$date-minute"/>
+						</xsl:when>
+						<xsl:when test="$token = 's'">
+							<xsl:value-of select="$date-second"/>
+						</xsl:when>
+						<xsl:when test="$token = 'a'">
+							<xsl:choose>
+								<xsl:when test="$date-hour &lt; 12">
+									<xsl:value-of select="'AM'"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="'PM'"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:when>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="string-length(translate($token, 'yMdHhmsa', '')) = 0">
+						<xsl:call-template name="format-date-part">
+							<xsl:with-param name="date-part" select="$date-part"/>
+							<xsl:with-param name="format" select="$mask"/>
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="$mask"/>
+					</xsl:otherwise>
+				</xsl:choose>
+				<xsl:call-template name="eval-date-format">
+					<xsl:with-param name="date-year" select="$date-year"/>
+					<xsl:with-param name="date-month" select="$date-month"/>
+					<xsl:with-param name="date-day" select="$date-day"/>
+					<xsl:with-param name="date-hour" select="$date-hour"/>
+					<xsl:with-param name="date-minute" select="$date-minute"/>
+					<xsl:with-param name="date-second" select="$date-second"/>
+					<xsl:with-param name="format" select="$format"/>
+					<xsl:with-param name="position" select="$position + string-length($mask)"/>
+				</xsl:call-template>
+			</xsl:when>
+		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template name="format-date-part">
+		<xsl:param name="date-part" select="''"/>
+		<xsl:param name="format" select="''"/>
+		<xsl:variable name="value" select="number(normalize-space($date-part))"/>
+		<xsl:variable name="token" select="substring($format, 1, 1)"/>
+		<xsl:choose>
+			<xsl:when test="$token = 'y'">
+				<xsl:choose>
+					<xsl:when test="string-length($format) &lt; 4">
+						<xsl:value-of select="substring($value, string-length($value) - string-length($format) + 1)"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="zero-pad">
+							<xsl:with-param name="value" select="$value"/>
+							<xsl:with-param name="size" select="string-length($format)"/>
+						</xsl:call-template>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:when test="$token = 'M'">
+				<xsl:variable name="value-name">
+					<xsl:call-template name="get-month-name">
+						<xsl:with-param name="value" select="$value"/>
+					</xsl:call-template>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="string-length($format) &lt; 3">
+						<xsl:call-template name="zero-pad">
+							<xsl:with-param name="value" select="$value"/>
+							<xsl:with-param name="size" select="string-length($format)"/>
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:when test="string-length($format) = 3">
+						<xsl:value-of select="substring($value-name, 1, string-length($format))"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="$value-name"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:when test="$token = 'd'">
+				<xsl:call-template name="zero-pad">
+					<xsl:with-param name="value" select="$value"/>
+					<xsl:with-param name="size" select="string-length($format)"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:when test="$token = 'H'">
+				<xsl:call-template name="zero-pad">
+					<xsl:with-param name="value" select="$value"/>
+					<xsl:with-param name="size" select="string-length($format)"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:when test="$token = 'h'">
+				<xsl:call-template name="zero-pad">
+					<xsl:with-param name="value" select="$value"/>
+					<xsl:with-param name="size" select="string-length($format)"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:when test="$token = 'm'">
+				<xsl:call-template name="zero-pad">
+					<xsl:with-param name="value" select="$value"/>
+					<xsl:with-param name="size" select="string-length($format)"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:when test="$token = 's'">
+				<xsl:call-template name="zero-pad">
+					<xsl:with-param name="value" select="$value"/>
+					<xsl:with-param name="size" select="string-length($format)"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$date-part"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template name="get-month-name">
+		<xsl:param name="value" select="."/>
+		<xsl:variable name="month" select="number(normalize-space($value))"/>
+		<xsl:choose>
+			<xsl:when test="$month = 1">
+				<xsl:value-of select="'January'"/>
+			</xsl:when>
+			<xsl:when test="$month = 2">
+				<xsl:value-of select="'February'"/>
+			</xsl:when>
+			<xsl:when test="$month = 3">
+				<xsl:value-of select="'March'"/>
+			</xsl:when>
+			<xsl:when test="$month = 4">
+				<xsl:value-of select="'April'"/>
+			</xsl:when>
+			<xsl:when test="$month = 5">
+				<xsl:value-of select="'May'"/>
+			</xsl:when>
+			<xsl:when test="$month = 6">
+				<xsl:value-of select="'June'"/>
+			</xsl:when>
+			<xsl:when test="$month = 7">
+				<xsl:value-of select="'July'"/>
+			</xsl:when>
+			<xsl:when test="$month = 8">
+				<xsl:value-of select="'August'"/>
+			</xsl:when>
+			<xsl:when test="$month = 9">
+				<xsl:value-of select="'September'"/>
+			</xsl:when>
+			<xsl:when test="$month = 10">
+				<xsl:value-of select="'October'"/>
+			</xsl:when>
+			<xsl:when test="$month = 11">
+				<xsl:value-of select="'November'"/>
+			</xsl:when>
+			<xsl:when test="$month = 12">
+				<xsl:value-of select="'December'"/>
+			</xsl:when>
+		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template name="zero-pad">
+		<xsl:param name="value" select="."/>
+		<xsl:param name="size" select="2"/>
+		<xsl:variable name="number" select="number(normalize-space($value))"/>
+		<xsl:call-template name="pad-left">
+			<xsl:with-param name="char" select="'0'"/>
+			<xsl:with-param name="value" select="$number"/>
+			<xsl:with-param name="size" select="$size"/>
+		</xsl:call-template>
+	</xsl:template>
+	
+	<xsl:template name="pad-left">
+		<xsl:param name="value" select="."/>
+		<xsl:param name="char" select="' '"/>
+		<xsl:param name="size" select="0"/>
+		<xsl:choose>
+			<xsl:when test="string-length($value) &lt; $size">
+				<xsl:call-template name="pad-left">
+					<xsl:with-param name="char" select="$char"/>
+					<xsl:with-param name="value" select="concat($char, $value)"/>
+					<xsl:with-param name="size" select="$size"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$value"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template name="pad-right">
+		<xsl:param name="value" select="."/>
+		<xsl:param name="char" select="' '"/>
+		<xsl:param name="size" select="0"/>
+		<xsl:choose>
+			<xsl:when test="string-length($value) &lt; $size">
+				<xsl:call-template name="pad-right">
+					<xsl:with-param name="char" select="$char"/>
+					<xsl:with-param name="value" select="concat($value, $char)"/>
+					<xsl:with-param name="size" select="$size"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$value"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template name="grab-same">
+		<xsl:param name="text" select="."/>
+		<xsl:param name="position" select="1"/>
+		<xsl:param name="output" select="''"/>
+		<xsl:variable name="char" select="substring($text, $position, 1)"/>
+		<xsl:choose>
+			<xsl:when test="$position &lt;= string-length($text)">
+				<xsl:choose>
+					<xsl:when test="string-length($output) > 0">
+						<xsl:choose>
+							<xsl:when test="substring($output, 1, 1) = $char">
+								<xsl:call-template name="grab-same">
+									<xsl:with-param name="text" select="$text"/>
+									<xsl:with-param name="position" select="$position + 1"/>
+									<xsl:with-param name="output" select="concat($output, $char)"/>
+								</xsl:call-template>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$output"/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="grab-same">
+							<xsl:with-param name="text" select="$text"/>
+							<xsl:with-param name="position" select="$position + 1"/>
+							<xsl:with-param name="output" select="$char"/>
+						</xsl:call-template>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$output"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -734,6 +1195,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xsl:with-param name="token" select="$token"/>
 					<xsl:with-param name="skip-count" select="$skip-count"/>
 					<xsl:with-param name="index" select="$index + 1"/>
+					<xsl:with-param name="include-skipped" select="$include-skipped"/>
 				</xsl:call-template>
 			</xsl:otherwise>
 		</xsl:choose>
