@@ -717,7 +717,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				</xsl:variable>
 				<xsl:choose>
 					<xsl:when test="string-length($format) > 0">
-						<xsl:call-template name="date-translate">
+						<xsl:call-template name="date-format">
 							<xsl:with-param name="date" select="$truncated-date"/>
 							<xsl:with-param name="format" select="$format"/>
 						</xsl:call-template>
@@ -730,7 +730,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</xsl:choose>
 	</xsl:template>
 	
-	<xsl:template name="date-translate">
+	<xsl:template name="date-format">
 		<xsl:param name="date" select="."/>
 		<xsl:param name="format" select="'M/d/yyyy'"/>
 		<xsl:variable name="value" select="normalize-space($date)"/>
@@ -878,6 +878,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xsl:param name="format" select="''"/>
 		<xsl:param name="position" select="1"/>
 		<xsl:choose>
+			<xsl:when test="substring($format, $position, 1) = &quot;'&quot;">
+				<xsl:variable name="literal">
+					<xsl:call-template name="grab-until">
+						<xsl:with-param name="text" select="substring($format, $position + 1)"/>
+						<xsl:with-param name="token" select="&quot;'&quot;"/>
+					</xsl:call-template>
+				</xsl:variable>
+				<xsl:value-of select="$literal"/>
+				<xsl:call-template name="eval-date-format">
+					<xsl:with-param name="date-year" select="$date-year"/>
+					<xsl:with-param name="date-month" select="$date-month"/>
+					<xsl:with-param name="date-day" select="$date-day"/>
+					<xsl:with-param name="date-hour" select="$date-hour"/>
+					<xsl:with-param name="date-minute" select="$date-minute"/>
+					<xsl:with-param name="date-second" select="$date-second"/>
+					<xsl:with-param name="format" select="$format"/>
+					<xsl:with-param name="position" select="$position + string-length($literal) + 2"/>
+				</xsl:call-template>
+			</xsl:when>
 			<xsl:when test="$position &lt;= string-length($format)">
 				<xsl:variable name="mask">
 					<xsl:call-template name="grab-same">
@@ -912,7 +931,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 									<xsl:value-of select="$date-hour"/>
 								</xsl:otherwise>
 							</xsl:choose>
-							<xsl:value-of select="$date-hour"/>
 						</xsl:when>
 						<xsl:when test="$token = 'm'">
 							<xsl:value-of select="$date-minute"/>
@@ -932,12 +950,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						</xsl:when>
 					</xsl:choose>
 				</xsl:variable>
+				
+				<xsl:variable name="modifier">
+					<xsl:choose>
+						<xsl:when test="substring($format, $position + string-length($mask), 1) = '{'">
+							<xsl:call-template name="grab-until">
+								<xsl:with-param name="text" select="substring($format, $position + string-length($mask))"/>
+								<xsl:with-param name="token" select="'}'"/>
+							</xsl:call-template>
+							<xsl:value-of select="'}'"/>
+						</xsl:when>
+					</xsl:choose>
+				</xsl:variable>
+				
 				<xsl:choose>
 					<xsl:when test="string-length(translate($token, 'yMdHhmsa', '')) = 0">
-						<xsl:call-template name="format-date-part">
-							<xsl:with-param name="date-part" select="$date-part"/>
-							<xsl:with-param name="format" select="$mask"/>
-						</xsl:call-template>
+						<xsl:variable name="format-date-part-result">
+							<xsl:call-template name="format-date-part">
+								<xsl:with-param name="date-part" select="$date-part"/>
+								<xsl:with-param name="format" select="$mask"/>
+							</xsl:call-template>
+						</xsl:variable>
+						<xsl:variable name="final-result">
+							<xsl:choose>
+								<xsl:when test="string-length($modifier) > 0">
+									<xsl:call-template name="eval-modifier">
+										<xsl:with-param name="input" select="$format-date-part-result"/>
+										<xsl:with-param name="modifier" select="$modifier"/>
+									</xsl:call-template>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$format-date-part-result"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+						<xsl:value-of select="$final-result"/>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:value-of select="$mask"/>
@@ -951,8 +998,52 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xsl:with-param name="date-minute" select="$date-minute"/>
 					<xsl:with-param name="date-second" select="$date-second"/>
 					<xsl:with-param name="format" select="$format"/>
-					<xsl:with-param name="position" select="$position + string-length($mask)"/>
+					<xsl:with-param name="position" select="$position + string-length($mask) + string-length($modifier)"/>
 				</xsl:call-template>
+			</xsl:when>
+		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template name="eval-modifier">
+		<xsl:param name="input" select="''"/>
+		<xsl:param name="modifier" select="''"/>
+		<xsl:choose>
+			<xsl:when test="$modifier = '{st}' or $modifier = '{nd}' or $modifier = '{rd}' or $modifier = '{th}'">
+				<xsl:variable name="last-digit" select="number(substring($input, string-length($input)))"/>
+				<xsl:variable name="last-two-digits">
+					<xsl:choose>
+						<xsl:when test="string-length($input) > 1">
+							<xsl:value-of select="number(substring($input, string-length($input) - 1))"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$last-digit"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:value-of select="$input"/>
+				<xsl:choose>
+					<xsl:when test="$last-two-digits > 10 and $last-two-digits &lt; 20">
+						<xsl:value-of select="'th'"/>
+					</xsl:when>
+					<xsl:when test="$last-digit = 1">
+						<xsl:value-of select="'st'"/>
+					</xsl:when>
+					<xsl:when test="$last-digit = 2">
+						<xsl:value-of select="'nd'"/>
+					</xsl:when>
+					<xsl:when test="$last-digit = 3">
+						<xsl:value-of select="'rd'"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="'th'"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:when test="$modifier = '{upper}' or $modifier = '{uppercase}'">
+				<xsl:value-of select="translate($input, 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
+			</xsl:when>
+			<xsl:when test="$modifier = '{lower}' or $modifier = '{lowercase}'">
+				<xsl:value-of select="translate($input, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
 			</xsl:when>
 		</xsl:choose>
 	</xsl:template>
