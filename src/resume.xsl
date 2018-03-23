@@ -197,6 +197,50 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 									</div>
 								</div>
 							</xsl:for-each>
+							<xsl:for-each select="r:certifications[count(r:certificate) > 0]">
+								<h2 class="section-heading">
+									<xsl:attribute name="data-section">
+										<xsl:value-of select="local-name()"/>
+									</xsl:attribute>
+									<xsl:choose>
+										<xsl:when test="string-length(normalize-space(@title)) > 0">
+											<xsl:value-of select="@title"/>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:text>Certifications</xsl:text>
+										</xsl:otherwise>
+									</xsl:choose>
+								</h2>
+								<div class="section-content">
+									<xsl:attribute name="data-section">
+										<xsl:value-of select="local-name()"/>
+									</xsl:attribute>
+									<div class="certifications">
+										<xsl:for-each select="r:certificate">
+											<xsl:if test="position() > 1">
+												<xsl:text>, </xsl:text>
+											</xsl:if>
+											<span class="certificate">
+												<xsl:attribute name="data-name">
+													<xsl:value-of select="normalize-space(@name)"/>
+												</xsl:attribute>
+												<xsl:attribute name="data-full-name">
+													<xsl:value-of select="normalize-space()"/>
+												</xsl:attribute>
+												<xsl:attribute name="data-issuer">
+													<xsl:value-of select="normalize-space(@issuer)"/>
+												</xsl:attribute>
+												<xsl:attribute name="title">
+													<xsl:value-of select="normalize-space()"/>
+												</xsl:attribute>
+												<span class="text">
+													<xsl:value-of select="normalize-space(@name)"/>
+												</span>
+											</span>
+										</xsl:for-each>
+									</div>
+								</div>
+							</xsl:for-each>
 							<xsl:for-each select="r:employers">
 								<h2 class="section-heading">
 									<xsl:attribute name="data-section">
