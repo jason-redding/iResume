@@ -113,6 +113,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="description" type="type-profile-description"/>
+				<xs:element name="certifications" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="certificate" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="issuer" type="xs:string" use="required"/>
+											<xs:attribute name="name" type="xs:string" use="required"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
 				<xs:element name="employers">
 					<xs:complexType>
 						<xs:sequence>
