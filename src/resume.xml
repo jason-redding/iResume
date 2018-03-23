@@ -58,6 +58,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill>command-line interface</skill> for modifying production enterprise web applications, to
 		<skill>HTML 5</skill>/<skill>jQuery Mobile</skill> web front-end for a Higher Education Student Information System.
 	</description>
+	<certifications>
+		<certificate name="Security+" issuer="CompTIA">CompTIA Security+</certificate>
+		<certificate issuer="Sitecore" name="Sitecore XP 8.0 Certified Professional Developer">Sitecore XP 8.0 Certified Professional Developer</certificate>
+	</certifications>
 	<employers title="Experience">
 		<employer>
 			<title>Booz Allen Hamilton</title>
