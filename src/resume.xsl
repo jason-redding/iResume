@@ -31,6 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</xsl:if>
 	</xsl:param>
 	<xsl:param name="factor-relevance" select="true()"/>
+	<xsl:param name="build-author-info" select="true()"/>
 	<xsl:key name="level" match="/r:resume/r:meta/r:skill/r:levels/r:level" use="@value"/>
 	<xsl:key name="category" match="/r:resume/r:meta/r:skill/r:categories/r:category" use="@value"/>
 	<xsl:variable name="max-level">
@@ -57,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<header class="header">
 						<div class="author">
 							<xsl:for-each select="r:author">
-								<xsl:if test="$author-name = '1' or $author-name = 'yes' or $author-name = 'true' or $author-name = 'on'">
+								<xsl:if test="$author-name = '1' or $author-name = 'yes' or $author-name = 'true' or $author-name = 'on' or boolean($author-name) = true()">
 									<h1 class="author-name">
 										<xsl:value-of select="normalize-space(@name)"/>
 									</h1>
@@ -74,36 +75,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 													<xsl:text>ui-link author-contact-info </xsl:text>
 													<xsl:value-of select="concat('author-', local-name())"/>
 												</xsl:attribute>
-												<xsl:choose>
-													<xsl:when test="local-name() = 'address'">
-														<xsl:attribute name="href">
-															<xsl:text>//maps.apple.com/?</xsl:text>
-															<xsl:value-of select="concat('address=', normalize-space())"/>
-														</xsl:attribute>
-														<xsl:attribute name="target">
-															<xsl:text>_blank</xsl:text>
-														</xsl:attribute>
-														<address>
+												<xsl:if test="not($build-author-info = '1' or $build-author-info = 'yes' or $build-author-info = 'true' or $build-author-info = 'on' or boolean($build-author-info) = true())">
+													<xsl:choose>
+														<xsl:when test="local-name() = 'address'">
+															<xsl:attribute name="href">
+																<xsl:text>//maps.apple.com/?</xsl:text>
+																<xsl:value-of select="concat('address=', normalize-space())"/>
+															</xsl:attribute>
+															<xsl:attribute name="target">
+																<xsl:text>_blank</xsl:text>
+															</xsl:attribute>
+															<address>
+																<xsl:value-of select="normalize-space()"/>
+															</address>
+														</xsl:when>
+														<xsl:when test="local-name() = 'email'">
+															<xsl:attribute name="href">
+																<xsl:value-of select="concat('mailto:', normalize-space())"/>
+																<xsl:text>?subject=iResume</xsl:text>
+															</xsl:attribute>
 															<xsl:value-of select="normalize-space()"/>
-														</address>
-													</xsl:when>
-													<xsl:when test="local-name() = 'email'">
-														<xsl:attribute name="href">
-															<xsl:value-of select="concat('mailto:', normalize-space())"/>
-															<xsl:text>?subject=iResume</xsl:text>
-														</xsl:attribute>
-														<xsl:value-of select="normalize-space()"/>
-													</xsl:when>
-													<xsl:when test="local-name() = 'phone'">
-														<xsl:attribute name="href">
-															<xsl:value-of select="concat('tel:', translate(normalize-space(), '-', ''))"/>
-														</xsl:attribute>
-														<xsl:value-of select="normalize-space()"/>
-													</xsl:when>
-													<xsl:otherwise>
-														<xsl:value-of select="normalize-space()"/>
-													</xsl:otherwise>
-												</xsl:choose>
+														</xsl:when>
+														<xsl:when test="local-name() = 'phone'">
+															<xsl:attribute name="href">
+																<xsl:value-of select="concat('tel:', translate(normalize-space(), '-', ''))"/>
+															</xsl:attribute>
+															<xsl:value-of select="normalize-space()"/>
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:value-of select="normalize-space()"/>
+														</xsl:otherwise>
+													</xsl:choose>
+												</xsl:if>
 											</a>
 										</xsl:for-each>
 									</div>
@@ -111,6 +114,61 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							</xsl:for-each>
 						</div>
 					</header>
+					<xsl:choose>
+						<xsl:when test="$build-author-info = '1' or $build-author-info = 'yes' or $build-author-info = 'true' or $build-author-info = 'on' or boolean($build-author-info) = true()">
+							<xsl:for-each select="r:author[count(r:*) > 0]">
+								<script type="javascript">
+									<xsl:text>&#10;(function($, document, window) {&#10;</xsl:text>
+							
+									<xsl:text>var $authorContact = $('.header .author .author-contact');&#10;</xsl:text>
+									<xsl:text>var authorNode = {};&#10;</xsl:text>
+									<xsl:for-each select="r:*">
+										<xsl:value-of select="concat(&quot;authorNode['&quot;, local-name(), &quot;']&quot;)"/>
+										<xsl:text> = $authorContact.find('</xsl:text>
+										<xsl:value-of select="concat('a.author-contact-info.author-', local-name())"/>
+										<xsl:text>');&#10;</xsl:text>
+										<xsl:choose>
+											<xsl:when test="local-name() = 'address'">
+												<xsl:value-of select="concat(&quot;authorNode['&quot;, local-name(), &quot;']&quot;)"/>
+												<xsl:text>.attr({&#10;</xsl:text>
+												<xsl:text>'href': '</xsl:text>
+												<xsl:value-of select="concat('//maps.apple.com/?address=', normalize-space())"/>
+												<xsl:text>',&#10;</xsl:text>
+												<xsl:text>'target': '_blank'&#10;</xsl:text>
+												<xsl:text>})&#10;</xsl:text>
+												<xsl:text>.text('</xsl:text>
+												<xsl:value-of select="normalize-space()"/>
+												<xsl:text>');&#10;</xsl:text>
+											</xsl:when>
+											<xsl:when test="local-name() = 'email'">
+												<xsl:value-of select="concat(&quot;authorNode['&quot;, local-name(), &quot;']&quot;)"/>
+												<xsl:text>.attr({&#10;</xsl:text>
+												<xsl:text>'href': '</xsl:text>
+												<xsl:value-of select="concat('mailto:', normalize-space(), '?subject=iResume')"/>
+												<xsl:text>'&#10;</xsl:text>
+												<xsl:text>})&#10;</xsl:text>
+												<xsl:text>.text('</xsl:text>
+												<xsl:value-of select="normalize-space()"/>
+												<xsl:text>');&#10;</xsl:text>
+											</xsl:when>
+											<xsl:when test="local-name() = 'phone'">
+												<xsl:value-of select="concat(&quot;authorNode['&quot;, local-name(), &quot;']&quot;)"/>
+												<xsl:text>.attr({&#10;</xsl:text>
+												<xsl:text>'href': '</xsl:text>
+												<xsl:value-of select="concat('tel:', translate(normalize-space(), '-._( )', ''))"/>
+												<xsl:text>'&#10;</xsl:text>
+												<xsl:text>})&#10;</xsl:text>
+												<xsl:text>.text('</xsl:text>
+												<xsl:value-of select="normalize-space()"/>
+												<xsl:text>');&#10;</xsl:text>
+											</xsl:when>
+										</xsl:choose>
+									</xsl:for-each>
+									<xsl:text>})(jQuery, document, window);&#10;</xsl:text>
+								</script>
+							</xsl:for-each>
+						</xsl:when>
+					</xsl:choose>
 					<main>
 						<div class="main-inner">
 							<xsl:for-each select="r:description">
