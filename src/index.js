@@ -109,6 +109,16 @@
 					var r = '<div class="header" style="font-size: 1.3em; margin-bottom: 0.5em; text-align: center;">' + $.trim($this.text()) + '</div>';
 					r += '<div style="white-space:pre-wrap">' + title + '</div>';
 					return r;
+				} else if ($this.is('.certificate')) {
+					var issuer = $.trim($this.attr('data-issuer'));
+					var fullName = $.trim($this.attr('data-full-name'));
+					var name = $.trim($this.attr('data-name'));
+					var r = '<div class="header" style="font-size: 1.3em; margin-bottom: 0.5em; text-align: center;">' + name + '</div>';
+					if (fullName !== name && (issuer + ' ' + name) !== fullName) {
+						r += '<div style="font-size: 0.9em;">' + fullName + '</div>';
+					}
+					r += '<div style="font-size: 0.65em;margin-top: 1em">Issued by: <strong>' + issuer + '</strong></div>';
+					return r;
 				} else if ($this.is('a[title][href]')) {
 					var r = '<div>' + $.trim(title) + '</div>';
 					r += '<div style="font-size:0.65em;margin-top: 1em">' + $.trim($this.attr('href')) + '</div>';
@@ -426,9 +436,9 @@
 			}
 			return 0;
 		});
-		
+
 		var relevantText = $.trim($xmlCategories.xpath('self::*[@value = "' + relevantKey + '"]').text());
-		
+
 		var $isRelevantLabel = $('<label/>').attr({
 			'for': 'is-relevant-category'
 		})
@@ -605,8 +615,9 @@
 			var resultDoc = null;
 			var systemDate = Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
 			var transformParameters = {
-				'author-name': '1',
+				'author-name': '0',
 				'position-sort': 'descending',
+				'factor-relevance': '1',
 				'system-date': systemDate
 			};
 			$.mobile.loading('show', {
