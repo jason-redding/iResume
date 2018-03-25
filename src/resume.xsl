@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xsl:value-of select="/r:resume/@last-modified"/>
 		</xsl:if>
 	</xsl:param>
-	<xsl:param name="factor-relevance" select="true()"/>
+	<xsl:param name="factor-relevance" select="'1'"/>
 	<xsl:key name="level" match="/r:resume/r:meta/r:skill/r:levels/r:level" use="@value"/>
 	<xsl:key name="category" match="/r:resume/r:meta/r:skill/r:categories/r:category" use="@value"/>
 	<xsl:variable name="max-level">
@@ -57,7 +57,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<header class="header">
 						<div class="author">
 							<xsl:for-each select="r:author">
-								<xsl:if test="$author-name = '1' or $author-name = 'yes' or $author-name = 'true' or $author-name = 'on' or boolean($author-name) = true()">
+								<xsl:if test="$author-name = '1' or $author-name = 'yes' or $author-name = 'true' or $author-name = 'on'">
 									<h1 class="author-name">
 										<xsl:value-of select="normalize-space(@name)"/>
 									</h1>
@@ -154,7 +154,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 									</xsl:attribute>
 									<div class="skills">
 										<xsl:choose>
-											<xsl:when test="boolean($factor-relevance)">
+											<xsl:when test="$factor-relevance = '1' or $factor-relevance = 'yes' or $factor-relevance = 'on' or $factor-relevance = 'true'">
 												<xsl:variable name="relevant-skills" select="r:skill[r:categories/r:category/@value = 'relevant']"/>
 												<xsl:variable name="more-skills" select="r:skill[not(r:categories/r:category/@value = 'relevant')]"/>
 												<div class="skills-group-relevant">
@@ -187,6 +187,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 											<xsl:otherwise>
 												<xsl:for-each select="r:skill">
 													<xsl:sort select="r:name" order="ascending"/>
+													<xsl:sort select="r:level/@value" data-type="number" order="descending"/>
+													<xsl:sort select="concat(r:experience/r:since, '_', r:experience/r:until)" data-type="text" order="ascending"/>
 													<xsl:if test="position() > 1">
 														<xsl:text>, </xsl:text>
 													</xsl:if>
@@ -265,6 +267,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 										</h3>
 										<xsl:for-each select="r:positions/r:position">
 											<xsl:sort select="r:timeline/r:start-date" data-type="text" order="{$position-sort}"/>
+											<xsl:sort select="r:timeline/r:end-date" data-type="text" order="{$position-sort}"/>
 											<div class="position-container">
 												<h4 class="position-title">
 													<xsl:value-of select="normalize-space(r:title)"/>
