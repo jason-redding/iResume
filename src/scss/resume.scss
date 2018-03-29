@@ -78,6 +78,7 @@ abbr[title], acronym[title], a {
 		> div {
 			margin-top: 1em;
 			margin-bottom: 1em;
+			margin-left: 1em;
 		}
 	}
 }
@@ -277,6 +278,7 @@ div.skills {
 	}
 	.skills-group-label {
 		font-weight: bold;
+		margin-left: -1em;
 	}
 }
 
