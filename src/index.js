@@ -114,7 +114,7 @@
 					var fullName = $.trim($this.attr('data-full-name'));
 					var name = $.trim($this.attr('data-name'));
 					var r = '<div class="header" style="font-size: 1.3em; margin-bottom: 0.5em; text-align: center;">' + name + '</div>';
-					if (fullName !== name && (issuer + ' ' + name) !== fullName) {
+					if (fullName !== name && fullName !== (issuer + ' ' + name)) {
 						r += '<div style="font-size: 0.9em;">' + fullName + '</div>';
 					}
 					r += '<div style="font-size: 0.65em;margin-top: 1em">Issued by: <strong>' + issuer + '</strong></div>';
