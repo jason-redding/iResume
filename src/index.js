@@ -113,11 +113,32 @@
 					var issuer = $.trim($this.attr('data-issuer'));
 					var fullName = $.trim($this.attr('data-full-name'));
 					var name = $.trim($this.attr('data-name'));
+					var issueDate = Date.from($.trim($this.attr('data-issue-date')));
+					var expireDate = Date.from($.trim($this.attr('data-expire-date')));
+					var issueDateMask = "${issue-date#date('MMMM d')}<sup>${issue-date-dom#suffix}</sup> ${issue-date#date('yyyy')}";
+					var expireDateMask = "${expire-date#date('MMMM d')}<sup>${expire-date-dom#suffix}</sup> ${expire-date#date('yyyy')}";
 					var r = '<div class="header" style="font-size: 1.3em; margin-bottom: 0.5em; text-align: center;">' + name + '</div>';
+					var props = {
+						'expire-date-dom': (expireDate !== null ? expireDate.getDate() : ''),
+						'issue-date-dom': (issueDate !== null ? issueDate.getDate() : ''),
+						'expire-date': expireDate,
+						'issue-date': issueDate
+					};
 					if (fullName !== name && fullName !== (issuer + ' ' + name)) {
 						r += '<div style="font-size: 0.9em;">' + fullName + '</div>';
 					}
-					r += '<div style="font-size: 0.65em;margin-top: 1em">Issued by: <strong>' + issuer + '</strong></div>';
+					r += '<div style="font-size: 0.65em;margin-top: 1em">';
+					
+					r += '<div>Issued by: <strong>' + issuer + '</strong></div>';
+					if (issueDate !== null) {
+						r += '<div>Issue date: <strong>' + issueDateMask.format(props) + '</strong></div>';
+						
+					}
+					if (expireDate !== null) {
+						r += '<div>Expire date: <strong>' + expireDateMask.format(props) + '</strong></div>';
+					}
+					
+					r += '</div>';
 					return r;
 				} else if ($this.is('a[title][href]')) {
 					var r = '<div>' + $.trim(title) + '</div>';
