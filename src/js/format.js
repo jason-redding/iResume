@@ -21,7 +21,7 @@
 	var calendar_day_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	var calendar_day_names_compact = ['S', 'M', 'T', 'W', 'R', 'F', 'S'];
 	var PATTERN_ISO8601 = /((\d{4})-(\d{1,2})-(\d{1,2}))T((\d{1,2}):(\d{1,2}):((\d{1,2})(\.(\d+))?))Z?/;
-	var PATTERN_DATETIME = /^(0*(\d{4})-0*(\d{1,2})(?:-0*(\d{1,2}))?|(0*(\d{4})-0*(\d{1,2})-0*(\d{1,2}))T(0*(\d{1,2}):0*(\d{1,2})(?::(0*(\d{1,2})(\.0*(\d+))?))?)Z?)$/;
+	var PATTERN_DATETIME = /^(0*(\d{4})-0*(\d{1,2})(?:-0*(\d{1,2}))?|(0*(\d{4})-0*(\d{1,2})-0*(\d{1,2}))[T ](0*(\d{1,2}):0*(\d{1,2})(?::(0*(\d{1,2})(\.0*(\d+))?))?)Z?)$/;
 	Date.from = function(text) {
 		var m = PATTERN_DATETIME.exec(text);
 		if (m !== null && m.length > 0) {
@@ -103,8 +103,8 @@
 		}
 		return text.replace(/(\s)+/g, '$1');
 	};
-	String.prototype.format = function(props) {
-		return String.format(this, props);
+	String.prototype.format = function(props, defaultProperties) {
+		return String.format(this, props, defaultProperties);
 	};
 	String.prototype.linkUp = function(props) {
 		return String.linkUp(this, props);
@@ -239,6 +239,11 @@
 			evalArg(token);
 		}
 		function evalArg() {
+			if (token === 'true' || token === 'false') {
+				args.push((token === 'true'));
+				token = '';
+				return;
+			}
 			var type = types.pop();
 			try {
 				if (type === 'string') {
@@ -293,6 +298,9 @@
 		return args;
 	};
 	String.format = function(format, props, defaultProperties) {
+		if (typeof format === 'string' || format instanceof String) {
+			format = ('' + format);
+		}
 		var out = '';
 		//if (!$.isPlainObject(props)) {
 		//	props = {};
@@ -409,6 +417,8 @@
 						value = ('' + value).removeHTML().decodeHTML();
 					} else if (fName === 'html') {
 						value = ('' + value).decodeHTML();
+					} else if (fName === 'suffix') {
+						value = Number.getSuffix(parseFloat(value), (fArgs.length > 0 && fArgs[0] === true));
 					} else if (fName === 'date') {
 						if (value instanceof Date) {
 							value = Date.format(value, fArgs[0]);
