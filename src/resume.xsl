@@ -232,6 +232,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 												<xsl:attribute name="data-issuer">
 													<xsl:value-of select="normalize-space(@issuer)"/>
 												</xsl:attribute>
+												<xsl:attribute name="data-issue-date">
+													<xsl:value-of select="normalize-space(@issue-date)"/>
+												</xsl:attribute>
+												<xsl:if test="count(self::*[@expire-date]) > 0">
+													<xsl:attribute name="data-expire-date">
+														<xsl:value-of select="normalize-space(@expire-date)"/>
+													</xsl:attribute>
+												</xsl:if>
 												<xsl:attribute name="title">
 													<xsl:value-of select="normalize-space()"/>
 												</xsl:attribute>
