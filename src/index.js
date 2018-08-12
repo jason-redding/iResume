@@ -115,12 +115,12 @@
 					var name = $.trim($this.attr('data-name'));
 					var issueDate = Date.from($.trim($this.attr('data-issue-date')));
 					var expireDate = Date.from($.trim($this.attr('data-expire-date')));
-					var issueDateMask = "${issue-date#date('MMMM d')}<sup>${issue-date-dom#suffix}</sup> ${issue-date#date('yyyy')}";
-					var expireDateMask = "${expire-date#date('MMMM d')}<sup>${expire-date-dom#suffix}</sup> ${expire-date#date('yyyy')}";
+					var issueDateMask = "${issue-date#date('MMMM d')}<sup>${issue-day-of-month#suffix}</sup> ${issue-date#date('yyyy')}";
+					var expireDateMask = "${expire-date#date('MMMM d')}<sup>${expire-day-of-month#suffix}</sup> ${expire-date#date('yyyy')}";
 					var r = '<div class="header" style="font-size: 1.3em; margin-bottom: 0.5em; text-align: center;">' + name + '</div>';
 					var props = {
-						'expire-date-dom': (expireDate !== null ? expireDate.getDate() : ''),
-						'issue-date-dom': (issueDate !== null ? issueDate.getDate() : ''),
+						'expire-day-of-month': (expireDate !== null ? expireDate.getDate() : ''),
+						'issue-day-of-month': (issueDate !== null ? issueDate.getDate() : ''),
 						'expire-date': expireDate,
 						'issue-date': issueDate
 					};
