@@ -113,10 +113,29 @@
 					var issuer = $.trim($this.attr('data-issuer'));
 					var fullName = $.trim($this.attr('data-full-name'));
 					var name = $.trim($this.attr('data-name'));
-					var issueDate = Date.from($.trim($this.attr('data-issue-date')));
-					var expireDate = Date.from($.trim($this.attr('data-expire-date')));
-					var issueDateMask = "${issue-date#date('MMMM d')}<sup>${issue-day-of-month#suffix}</sup> ${issue-date#date('yyyy')}";
-					var expireDateMask = "${expire-date#date('MMMM d')}<sup>${expire-day-of-month#suffix}</sup> ${expire-date#date('yyyy')}";
+					var issueDateRaw = $.trim($this.attr('data-issue-date'));
+					var expireDateRaw = $.trim($this.attr('data-expire-date'));
+					var issueDate = Date.from(issueDateRaw);
+					var expireDate = Date.from(expireDateRaw);
+					var now = new Date();
+					var issueDateKey;
+					var expireDateKey;
+					var issueDatePrecision = 'yyyy-MM';
+					var expireDatePrecision = 'yyyy-MM';
+					if (issueDateRaw.length > 8) {
+						issueDatePrecision = 'yyyy-MM-dd';
+					}
+					if (expireDateRaw.length > 8) {
+						expireDatePrecision = 'yyyy-MM-dd';
+					}
+					var issueDateMasks = {
+						'yyyy-MM': "${issue-date#date('MMMM yyyy')}",
+						'yyyy-MM-dd': "${issue-date#date('MMMM d')}<sup>${issue-day-of-month#suffix}</sup> ${issue-date#date('yyyy')}"
+					};
+					var expireDateMasks = {
+						'yyyy-MM': "${expire-date#date('MMMM yyyy')}",
+						'yyyy-MM-dd': "${expire-date#date('MMMM d')}<sup>${expire-day-of-month#suffix}</sup> ${expire-date#date('yyyy')}"
+					};
 					var r = '<div class="header" style="font-size: 1.3em; margin-bottom: 0.5em; text-align: center;">' + name + '</div>';
 					var props = {
 						'expire-day-of-month': (expireDate !== null ? expireDate.getDate() : ''),
@@ -131,11 +150,13 @@
 					
 					r += '<div>Issued by: <strong>' + issuer + '</strong></div>';
 					if (issueDate !== null) {
-						r += '<div>Issue date: <strong>' + issueDateMask.format(props) + '</strong></div>';
+						issueDateKey = issueDate.format(issueDatePrecision);
+						r += '<div>Issue Date: <strong>' + issueDateMasks[issueDatePrecision].format(props) + '</strong></div>';
 						
 					}
 					if (expireDate !== null) {
-						r += '<div>Expire date: <strong>' + expireDateMask.format(props) + '</strong></div>';
+						expireDateKey = expireDate.format(expireDatePrecision);
+						r += '<div>' + (now.format(expireDatePrecision) <= expireDateKey ? 'Expires' : 'Expired') + ': <strong>' + expireDateMasks[expireDatePrecision].format(props) + '</strong></div>';
 					}
 					
 					r += '</div>';
