@@ -118,14 +118,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<xs:sequence>
 							<xs:element name="certificate" maxOccurs="unbounded">
 								<xs:complexType>
-									<xs:simpleContent>
-										<xs:extension base="xs:string">
-											<xs:attribute name="issuer" type="xs:string" use="required"/>
-											<xs:attribute name="name" type="xs:string" use="required"/>
-											<xs:attribute name="issue-date" type="type-date" use="optional"/>
-											<xs:attribute name="expire-date" type="type-date" use="optional"/>
-										</xs:extension>
-									</xs:simpleContent>
+									<xs:all>
+										<xs:element name="name">
+											<xs:simpleType>
+												<xs:restriction base="xs:string"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="issuer">
+											<xs:simpleType>
+												<xs:restriction base="xs:string"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="issue-date" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="type-date"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="expire-date" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="type-date"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="score" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="nonNegativeDecimal"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="max-score" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="nonNegativeDecimal"/>
+											</xs:simpleType>
+										</xs:element>
+									</xs:all>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
@@ -175,6 +199,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																					</xs:sequence>
 																					<xs:attribute name="type" use="optional"/>
 																					<xs:attribute name="hidden" type="type-boolean" default="false" use="optional"/>
+																					<xs:attribute name="expanded" type="type-boolean" default="false" use="optional"/>
 																				</xs:complexType>
 																			</xs:element>
 																		</xs:choice>
