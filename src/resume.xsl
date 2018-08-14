@@ -224,27 +224,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 											</xsl:if>
 											<span class="certificate">
 												<xsl:attribute name="data-name">
-													<xsl:value-of select="normalize-space(@name)"/>
-												</xsl:attribute>
-												<xsl:attribute name="data-full-name">
-													<xsl:value-of select="normalize-space()"/>
+													<xsl:value-of select="normalize-space(r:name)"/>
 												</xsl:attribute>
 												<xsl:attribute name="data-issuer">
-													<xsl:value-of select="normalize-space(@issuer)"/>
+													<xsl:value-of select="normalize-space(r:issuer)"/>
 												</xsl:attribute>
 												<xsl:attribute name="data-issue-date">
-													<xsl:value-of select="normalize-space(@issue-date)"/>
+													<xsl:value-of select="normalize-space(r:issue-date)"/>
 												</xsl:attribute>
-												<xsl:if test="count(self::*[@expire-date]) > 0">
+												<xsl:if test="count(r:expire-date) > 0">
 													<xsl:attribute name="data-expire-date">
-														<xsl:value-of select="normalize-space(@expire-date)"/>
+														<xsl:value-of select="normalize-space(r:expire-date)"/>
+													</xsl:attribute>
+												</xsl:if>
+												<xsl:if test="count(r:score) > 0">
+													<xsl:attribute name="data-score">
+														<xsl:value-of select="normalize-space(r:score)"/>
+													</xsl:attribute>
+												</xsl:if>
+												<xsl:if test="count(r:max-score) > 0">
+													<xsl:attribute name="data-max-score">
+														<xsl:value-of select="normalize-space(r:max-score)"/>
 													</xsl:attribute>
 												</xsl:if>
 												<xsl:attribute name="title">
-													<xsl:value-of select="normalize-space()"/>
+													<xsl:value-of select="normalize-space(r:name)"/>
 												</xsl:attribute>
 												<span class="text">
-													<xsl:value-of select="normalize-space(@name)"/>
+													<xsl:value-of select="normalize-space(r:name)"/>
 												</span>
 											</span>
 										</xsl:for-each>
@@ -325,39 +332,55 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 															</xsl:for-each>
 														</select>
 													</div>-->
-													<div class="projects-container" data-role="collapsibleset" data-inset="false">
-														<xsl:for-each select="r:project[not(@hidden='true' or @hidden='1' or @hidden='yes' or @hidden='on')]">
-															<div class="project-item" data-role="collapsible">
-																<h5 class="project-title">
-																	<!--<a>
-																		<xsl:attribute name="name">
-																			<xsl:value-of select="translate(normalize-space(r:title), ' ABCDEFGHIJKLMNOPQRSTUVWXYZ', '-abcdefghijklmnopqrstuvwxyz')"/>
-																		</xsl:attribute>
-																		<xsl:attribute name="href">
-																			<xsl:value-of select="concat('#', translate(normalize-space(r:title), ' ABCDEFGHIJKLMNOPQRSTUVWXYZ', '-abcdefghijklmnopqrstuvwxyz'))"/>
-																		</xsl:attribute>
-																	</a>-->
-																	<span class="project-title-text">
-																		<xsl:value-of select="normalize-space(r:title)"/>
-																	</span>
-																</h5>
-																<div class="project-description">
-																	<xsl:if test="string-length(normalize-space(r:link)) > 0">
-																		<span class="project-link">
-																			<span class="project-link-label">Project Link:</span>
-																			<xsl:text> </xsl:text>
-																			<a href="{normalize-space(r:link)}" target="_blank" class="project-link">
-																				<xsl:value-of select="normalize-space(r:link)"/>
-																			</a>
-																		</span>
-																	</xsl:if>
-																	<xsl:for-each select="r:description">
-																		<xsl:apply-templates mode="html"/>
-																	</xsl:for-each>
-																</div>
+													<xsl:choose>
+														<xsl:when test="count(r:project[not(@hidden='true' or @hidden='1' or @hidden='yes' or @hidden='on')]) > 0">
+															<div class="projects-container" data-role="collapsibleset" data-inset="false">
+																<xsl:for-each select="r:project[not(@hidden='true' or @hidden='1' or @hidden='yes' or @hidden='on')]">
+																	<div class="project-item" data-role="collapsible">
+																		<xsl:if test="count(self::r:project[@expanded]) > 0">
+																			<xsl:attribute name="data-collapsed">
+																				<xsl:choose>
+																					<xsl:when test="@expanded='true' or @expanded='yes' or @expanded='on' or @expanded='1'">
+																						<xsl:text>false</xsl:text>
+																					</xsl:when>
+																					<xsl:otherwise>
+																						<xsl:text>true</xsl:text>
+																					</xsl:otherwise>
+																				</xsl:choose>
+																			</xsl:attribute>
+																		</xsl:if>
+																		<h5 class="project-title">
+																			<!--<a>
+																				<xsl:attribute name="name">
+																					<xsl:value-of select="translate(normalize-space(r:title), ' ABCDEFGHIJKLMNOPQRSTUVWXYZ', '-abcdefghijklmnopqrstuvwxyz')"/>
+																				</xsl:attribute>
+																				<xsl:attribute name="href">
+																					<xsl:value-of select="concat('#', translate(normalize-space(r:title), ' ABCDEFGHIJKLMNOPQRSTUVWXYZ', '-abcdefghijklmnopqrstuvwxyz'))"/>
+																				</xsl:attribute>
+																			</a>-->
+																			<span class="project-title-text">
+																				<xsl:value-of select="normalize-space(r:title)"/>
+																			</span>
+																		</h5>
+																		<div class="project-description">
+																			<xsl:if test="string-length(normalize-space(r:link)) > 0">
+																				<span class="project-link">
+																					<span class="project-link-label">Project Link:</span>
+																					<xsl:text> </xsl:text>
+																					<a href="{normalize-space(r:link)}" target="_blank" class="project-link">
+																						<xsl:value-of select="normalize-space(r:link)"/>
+																					</a>
+																				</span>
+																			</xsl:if>
+																			<xsl:for-each select="r:description">
+																				<xsl:apply-templates mode="html"/>
+																			</xsl:for-each>
+																		</div>
+																	</div>
+																</xsl:for-each>
 															</div>
-														</xsl:for-each>
-													</div>
+														</xsl:when>
+													</xsl:choose>
 												</xsl:for-each>
 												<xsl:for-each select="r:description">
 													<div class="position-description">
