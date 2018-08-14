@@ -111,10 +111,17 @@
 					return r;
 				} else if ($this.is('.certificate')) {
 					var issuer = $.trim($this.attr('data-issuer'));
-					var fullName = $.trim($this.attr('data-full-name'));
 					var name = $.trim($this.attr('data-name'));
+					var displayName;
+					if (issuer === name.substring(0, Math.min(name.length, issuer.length))) {
+						displayName = name;
+					} else {
+						displayName = issuer + ' ' + name;
+					}
 					var issueDateRaw = $.trim($this.attr('data-issue-date'));
 					var expireDateRaw = $.trim($this.attr('data-expire-date'));
+					var score = parseFloat($.trim($this.attr('data-score')));
+					var maxScore = parseFloat($.trim($this.attr('data-max-score')));
 					var issueDate = Date.from(issueDateRaw);
 					var expireDate = Date.from(expireDateRaw);
 					var now = new Date();
@@ -136,19 +143,29 @@
 						'yyyy-MM': "${expire-date#date('MMMM yyyy')}",
 						'yyyy-MM-dd': "${expire-date#date('MMMM d')}<sup>${expire-day-of-month#suffix}</sup> ${expire-date#date('yyyy')}"
 					};
-					var r = '<div class="header" style="font-size: 1.3em; margin-bottom: 0.5em; text-align: center;">' + name + '</div>';
 					var props = {
 						'expire-day-of-month': (expireDate !== null ? expireDate.getDate() : ''),
 						'issue-day-of-month': (issueDate !== null ? issueDate.getDate() : ''),
 						'expire-date': expireDate,
 						'issue-date': issueDate
 					};
-					if (fullName !== name && fullName !== (issuer + ' ' + name)) {
-						r += '<div style="font-size: 0.9em;">' + fullName + '</div>';
+					var r = '<div class="header" style="font-size: 1.3em; margin-bottom: 0.5em; text-align: center;">';
+					
+					r += '<div>' + displayName + '</div>';
+					if (!isNaN(score)) {
+						r += '<div style="font-size: 0.5em; font-weight: normal;">Scored <strong>' + score + '</strong>';
+						if (!isNaN(maxScore)) {
+							r += ' of <strong>' + maxScore + '</strong>';
+						}
+						r += '</div>';
 					}
+					
+					r += '</div>';
+					
 					r += '<div style="font-size: 0.65em;margin-top: 1em">';
 					
 					r += '<div>Issued by: <strong>' + issuer + '</strong></div>';
+					
 					if (issueDate !== null) {
 						issueDateKey = issueDate.format(issueDatePrecision);
 						r += '<div>Issue Date: <strong>' + issueDateMasks[issueDatePrecision].format(props) + '</strong></div>';
