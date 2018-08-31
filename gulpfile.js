@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const exec = require('gulp-exec');
 const sass = require('gulp-sass');
 const useref = require('gulp-useref');
 const gulpSequence = require('gulp-sequence');
@@ -6,7 +7,6 @@ const uglify = require('gulp-uglify');
 const del = require('del');
 const browserSync = require('browser-sync').create();
 const preprocess = require('gulp-preprocess');
-const GulpSSH = require('gulp-ssh');
 const fs = require('fs');
 const os = require('os');
 
@@ -126,21 +126,7 @@ gulp.task('deploy-live', function() {
 		}))
 		.pipe(gulp.dest(CONTEXT.DEPLOY_PATH));
 	} else {
-		var gulpSSH = new GulpSSH({
-			sshConfig: {
-				username: 'jason',
-				host: 'jman.rocketssdhosting.com',
-				port: 22,
-				privateKey: fs.readFileSync(CONTEXT.HOMEDIR + '/.ssh/id_rsa')
-			}
-		});
-		return gulp.src([
-			CONTEXT.DEST + '/**/*'
-		])
-		.pipe(preprocess({
-			context: CONTEXT
-		}))
-		.pipe(gulpSSH.dest(CONTEXT.DEPLOY_PATH));
+		exec('echo -e "git pull && npx gulp deploy" | ssh jman');
 	}
 });
 
