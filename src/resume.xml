@@ -51,10 +51,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<author name="Jason Redding">
 		<phone>410-428-8522</phone>
 		<email>jason.redding@gmail.com</email>
-		<address>Greenbelt, MD</address>
+		<address>Washington, DC</address>
 	</author>
 	<description title="Profile">
-		I have over <duration from="2001" unit="years">17 years</duration> professional experience creating solutions ranging from
+		I have over <duration from="2001" unit="years">18 years</duration> professional experience creating solutions ranging from
 		<skill>command-line interface</skill> for modifying production enterprise web applications, to
 		<skill>HTML 5</skill>/<skill>jQuery Mobile</skill> web front-end for a Higher Education Student Information System.
 	</description>
