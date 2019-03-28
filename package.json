@@ -20,11 +20,11 @@
   },
   "homepage": "https://github.com/jason-redding/iResume#readme",
   "devDependencies": {
-    "browser-sync": "^2.18.13",
+    "browser-sync": "^2.24.7",
     "del": "^3.0.0",
     "fs": "0.0.1-security",
-    "gulp": "^3.9.1",
-    "gulp-preprocess": "^2.0.0",
+    "gulp": "^4.0.0",
+    "gulp-preprocess": "^3.0.1",
     "gulp-sass": "^3.1.0",
     "gulp-sequence": "^0.4.6",
     "gulp-sourcemaps": "^2.6.1",
@@ -32,5 +32,8 @@
     "gulp-uglify": "^3.0.0",
     "gulp-useref": "^3.1.2",
     "os": "^0.1.1"
+  },
+  "dependencies": {
+    "debug": "^3.1.0"
   }
 }
