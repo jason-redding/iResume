@@ -16,1097 +16,1283 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resume xmlns="http://witcraft.com/xsd/resume"
-				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-				xmlns:h="http://www.w3.org/1999/xhtml"
-				xmlns:r="http://witcraft.com/xsd/resume"
-				xsi:schemaLocation="http://witcraft.com/xsd/resume resume.xsd"
-				last-modified="2018-03-18T13:30:00">
-	<meta>
-		<skill>
-			<levels preposition="at">
-				<level value="0" preposition="of">None</level>
-				<level value="1" preposition="to">Exposure</level>
-				<level value="2">Beginner</level>
-				<level value="3">Skilled</level>
-				<level value="4">Advanced</level>
-				<level value="5">Expert</level>
-			</levels>
-			<categories>
-				<category value="api">API</category>
-				<category value="app-server">Application Server</category>
-				<category value="client">Client-Side</category>
-				<category value="db">Database</category>
-				<category value="dev-lib">Development Framework/Library</category>
-				<category value="dev-tool">Development Tool</category>
-				<category value="dev-format">Format</category>
-				<category value="dev-lang">Language</category>
-				<category value="os">Operating System</category>
-				<category value="relevant">Relevant Skill</category>
-				<category value="server">Server-Side</category>
-				<category value="web">Web</category>
-			</categories>
-		</skill>
-	</meta>
-	<author name="Jason Redding">
-		<phone>410-428-8522</phone>
-		<email>jason.redding@gmail.com</email>
-		<address>Washington, DC</address>
-	</author>
-	<description title="Profile">
-		I have over <duration from="2001" unit="years">18 years</duration> professional experience creating solutions ranging from
-		<skill>command-line interface</skill> for modifying production enterprise web applications, to
-		<skill>HTML 5</skill>/<skill>jQuery Mobile</skill> web front-end for a Higher Education Student Information System.
-	</description>
-	<certifications>
-		<certificate>
-			<name>Security+</name>
-			<issuer>CompTIA</issuer>
-			<issue-date>2018-02-23</issue-date>
-			<expire-date>2021-02-23</expire-date>
-		</certificate>
-		<certificate>
-			<name>Sitecore XP 8.0 Certified Professional Developer</name>
-			<issuer>Sitecore</issuer>
-			<issue-date>2015-04-02</issue-date>
-		</certificate>
-	</certifications>
-	<employers title="Experience">
-		<employer>
-			<title>Booz Allen Hamilton</title>
-			<positions>
-				<position>
-					<title>Full-Stack Developer</title>
-					<timeline>
-						<start-date format="MMMM yyyy">2018-01-08</start-date>
-					</timeline>
-					<description>
-						<h:ul>
-							<h:li>Develop and improve Web Interfaces.</h:li>
-							<h:li>Design and develop software in <skill>Java</skill> to query <skill>MySQL</skill> databases.</h:li>
-							<h:li>Integrate various components and test end-to-end capability.</h:li>
-						</h:ul>
-					</description>
-				</position>
-			</positions>
-		</employer>
-		<employer>
-			<title>Community College of Baltimore County</title>
-			<positions>
-				<position>
-					<title>IT Computer Technician (Student Aid)</title>
-					<department>Support Center</department>
-					<timeline>
-						<start-date format="MMMM yyyy">2000-07-01</start-date>
-						<end-date format="MMMM yyyy">2001-06-31</end-date>
-					</timeline>
-					<description>
-						<h:ul>
-							<h:li>Troubleshot/repaired hardware and software issues over the phone and in the field.</h:li>
-							<h:li>
-								Installed network cables, troubleshot network connectivity, and activated Ethernet wall ports across campus;
-								upgraded hardware and software in computer labs.
-							</h:li>
-							<h:li>
-								Created Microsoft Access Database, Forms, and accompanying <skill>VBA</skill> code to facilitate technical support by Help Desk personnel.
-							</h:li>
-						</h:ul>
-					</description>
-				</position>
-				<position>
-					<title>Programmer</title>
-					<timeline>
-						<start-date format="MMMM yyyy">2001-07-01</start-date>
-						<end-date format="MMMM yyyy">2017-12-31</end-date>
-					</timeline>
-					<projects>
-						<project type="web">
-							<title>Student Self-Help</title>
-							<link>https://shwa.ccbcmd.edu</link>
-							<description>
-								<h:p>Used by students to retrieve their account information and reset their password.</h:p>
-								<h:ul>
-									<h:li>Site uses <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>jQuery Mobile</skill> to deliver a <skill name="responsive-design">responsive</skill> experience.</h:li>
-									<h:li>
-										<skill>Javascript</skill> and <skill>CSS</skill> assets are bundled into a <skill name="J2EE">Java EE</skill> Web Application.</h:li>
-										<h:li>
-											<skill name="J2EE">Java EE</skill> Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
-										</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project type="cli">
-							<title>AcalogExtract</title>
-							<description>
-								<h:p>Automates the importing, processing, and exporting of Academic Catalog information.</h:p>
-								<h:ul>
-									<h:li>Interfaces with 3rd-party <skill>RESTful</skill> API to import <skill>XML</skill> data.</h:li>
-									<h:li>Requests data in chunks to mitigate timeouts.</h:li>
-									<h:li>Applies custom <skill name="xsl/xslt">XSL Transform</skill> to produce final <skill>XML</skill>.</h:li>
-									<h:li>Allows for customization of output format, and processing rules/logic via an <skill>XML</skill> properties file.</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>R25/WebViewer/WebServices (CollegeNet products)</title>
-							<description>
-								<h:p>
-									Event Scheduling software package (with 700+ users) follows institution-defined rules to match a
-									collection of locations with a collection of events.
-								</h:p>
-								<h:ul>									
-									<h:li>Install, configure, customize, and augment front-end; maintain product front- and back-end, interfacing with an <skill name="oracle-dbms">Oracle</skill>-backed <skill>RESTful</skill> 
-										<skill name="J2EE">Java EE</skill> Web Application.</h:li>
-										<h:li>Augmented WebViewer's <skill>HTML</skill> pages (notably the Event Request Form) with <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill>, adding features unavailable in the original product.</h:li>
-										<h:li>
-											Via <skill name="restful">Web Services</skill>, developed page with capability to search for spaces matching a
-											wide range of space/location attributes. Allows users to check availability for specific dates/times and schedule
-											an event in that space. Integrates with <skill name="google-maps-javascript-api-v3">Google Maps</skill> to show
-											location of space and allows for 1-click access to directions.
-										</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>Administrator AccountAssist</title>
-							<description>
-								<h:p>
-									Used by 100+ support personnel to manage/troubleshoot over 800,000 accounts.
-								</h:p>
-								<h:ul>
-									<h:li>
-										<skill>Javascript</skill> and <skill>CSS</skill> assets are bundled into a <skill name="J2EE">Java EE</skill> Web Application.
-									</h:li>
-									<h:li>Site uses <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill> to deliver an interactive experience.</h:li>
-									<h:li>Integrates with <skill>Active Directory</skill> for authentication and group membership authorization.</h:li>
-									<h:li>
-										<skill name="J2EE">Java EE</skill> Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project hidden="false">
-							<title>USPS Gateway</title>
-							<description>
-								<h:p>
-									Used during the student application process to verify submitted street addresses' location inside or outside county boundaries.
-								</h:p>
-								<h:ul>
-									<h:li>
-										Developed a standalone <skill>Java</skill>
-										<skill name="command-line-interface">command-line</skill> application, the <skill>PL/SQL</skill> package, and
-										<skill>Java</skill> code within the <skill name="oracle-dbms">Oracle</skill> database.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>Web Calendar</title>
-							<description>
-								<h:p>
-									Interactive, highly customizable web calendar designed to parse an <skill>XML</skill> file of event data.
-								</h:p>
-								<h:ul>
-									<h:li>
-										Uses an extremely customizable
-										<h:a href="https://github.com/jason-redding/jFormat/" target="_blank" title="Created by Jason Redding">Formatting Engine</h:a>
-										written in <skill>JavaScript</skill> for highly versatile text, date, and number formatting.</h:li>
-									<h:li>Parses tokens in the form of "${property.name#format(arg1, arg2)}".</h:li>
-									<h:li>
-										Formats Date objects using most of the patterns available for use by the <skill>Java</skill> class
-										<h:a href="http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html" target="_blank">SimpleDateFormat</h:a>.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>Online Phone Directory</title>
-							<description>
-								<h:p>
-									Used by the community to search for faculty and staff by name, email, phone, office, campus, title, and department.
-								</h:p>
-								<h:ul>
-									<h:li>
-										<skill name="J2EE">Java EE</skill> Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill>.
-									</h:li>
-									<h:li>Uses <skill>jQuery</skill> to deliver an interactive, flexible experience.</h:li>
-									<h:li>
-										Provides Simple and Advanced search modes. Advanced mode allows a combination of up to 20 user-specified
-										criteria using conditions including: "is", "is not", "starts with", "ends with", "contains", "excludes",
-										"does not start with", "does not end with".
-									</h:li>
-									<h:li>
-										Supplimental <skill>Java</skill>
-										<skill name="command-line-interface">CLI</skill> that uses the <skill>Java</skill> Excel API to generate and
-										publish a downloadable spreadsheet containing the entire phone directory.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>Online Orientation</title>
-							<description>
-								<h:p>
-									<skill name="J2EE">Java EE</skill> Web Application and its <skill>HTML</skill>/<skill>Javascript</skill> front-end counterpart providing an online orientation for new students.
-								</h:p>
-								<h:ul>
-									<h:li>Includes custom-developed supporting <skill name="oracle-dbms">Oracle</skill> database schema and all tables, views, triggers, sequences, etc.</h:li>
-									<h:li>Integrates with <skill>Active Directory</skill> for authentication and group membership authorization.</h:li>
-									<h:li>
-										Administration portal built with <skill>jQuery</skill> and <skill>jQuery UI</skill> allows authorized academic advisors to customize the
-										orientation pages and assessments, track student progress, and manage the list of authorized advisors.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>WebCT Language Modifier</title>
-							<description>
-								<h:p>
-									Robust <skill>Java</skill> 
-									<skill name="command-line-interface">CLI</skill> tool for managing language strings for a proprietary online
-									virtual learning environment (WebCT).
-								</h:p>
-								<h:ul>
-									<h:li>
-										Applies a compiled set of preferred language strings to a <h:abbr title="Web Application Archive">WAR</h:abbr> file.
-									</h:li>
-									<h:li>
-										Provided options to search for text to change, making the initial compilation process much easier.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>CMS (Content Management System)</title>
-							<description>
-								<h:p>
-									Homegrown Content Management System allowing faculty and staff to create, publish, and manage their own pages
-									and content for the external-facing college website of over 12,000 pages.
-								</h:p>
-								<h:ul>
-									<h:li>
-										Developed custom framework using <skill>Java</skill> in a <skill>Linux</skill> server environment to facilitate
-										communication between service objects, even when distributed among several servers.
-									</h:li>
-									<h:li>
-										<skill name="java">Java Applet</skill> used to visualize and navigate the Website's hierarchy of pages – as represented in the database.
-									</h:li>
-									<h:li>
-										<skill name="java">Java Applet</skill>
-										<h:abbr title="What You See Is What You Get">WYSIWYG</h:abbr> Advanced <skill>HTML</skill> Editor with Dreamweaver-like capabilities including:
-										<h:ul>
-											<h:li>
-												Spellchecker (integrated with aspell on <skill>Linux</skill> server) – added custom implementation to support a global dictionary in addition to user-editable per-user dictionaries.
-											</h:li>
-											<h:li>
-												Table-specific editor dialogs for inserting/modifying tables, and inserting/splitting table cells; includes features not found in Dreamweaver:
-												<h:ul>
-													<h:li>
-														Element "breadcrumb" Bar with shortcut modification menu.
-													</h:li>
-													<h:li>
-														Attribute Explorer dialog for direct modification of element attributes.
-													</h:li>
-													<h:li>
-														Undo/Redo History panel; Design/Code View; Find/Replace.
-													</h:li>
-												</h:ul>
-											</h:li>
-										</h:ul>
-									</h:li>
-									<h:li>
-										Developed <skill name="J2EE">Java EE</skill> Web Application responsible for handling file uploads and
-										interfaced with <skill name="oracle-dbms">Oracle</skill> database to register files with CMS.
-									</h:li>
-									<h:li>
-										Developed a standalone <skill>Java</skill> application to batch upload the existing website content
-										into the appropriate CMS database tables.
-									</h:li>
-									<h:li>
-										Developed a custom Win32 installer using <skill name="nsis">NSIS (Nullsoft Scriptable Install System)</skill>
-										to install the <skill>Java</skill> policy file necessary for certain features of the
-										<skill>HTML</skill> Editor <skill name="java">Java Applet</skill>.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-					</projects>
-				</position>
-			</positions>
-		</employer>
-	</employers>
-	<skills title="Skills">
-		<skill>
-			<name>Active Directory</name>
-			<level value="2"/>
-			<experience>
-				<since>2010-01</since>
-			</experience>
-			<categories>
-				<category value="server"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>AJAX</name>
-			<level value="4.5"/>
-			<experience>
-				<since>2008-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>AngularJS</name>
-			<level value="2"/>
-			<experience>
-				<since>2016-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="dev-lib"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill hidden="true">
-			<name>Apache Commons</name>
-			<level value="3"/>
-			<experience>
-				<since>2005-01</since>
-			</experience>
-			<categories>
-				<category value="api"/>
-				<category value="server"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Apache Derby</name>
-			<level value="3"/>
-			<experience>
-				<since>2013-01</since>
-			</experience>
-			<categories>
-				<category value="api"/>
-				<category value="db"/>
-				<category value="server"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Apache HTTP Server</name>
-			<level value="3"/>
-			<experience>
-				<since>2003-01</since>
-			</experience>
-			<categories>
-				<category value="app-server"/>
-				<category value="relevant"/>
-				<category value="server"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Apache Maven</name>
-			<level value="3"/>
-			<experience>
-				<since>2014-01</since>
-			</experience>
-			<categories>
-				<category value="dev-tool"/>
-				<category value="server"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Apache Tomcat</name>
-			<level value="4"/>
-			<experience>
-				<since>2003-01</since>
-			</experience>
-			<categories>
-				<category value="app-server"/>
-				<category value="relevant"/>
-				<category value="server"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Bash</name>
-			<level value="3"/>
-			<experience>
-				<since>2001-01</since>
-			</experience>
-			<categories>
-				<category value="dev-tool"/>
-				<category value="server"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>C#</name>
-			<level value="2"/>
-			<experience>
-				<since>2010-01</since>
-				<until>2011-01</until>
-			</experience>
-			<categories>
-				<category value="dev-lang"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>CentOS</name>
-			<level value="3"/>
-			<experience>
-				<since>2014-01</since>
-			</experience>
-			<categories>
-				<category value="os"/>
-				<category value="server"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Chrome Developer Tools</name>
-			<level value="4"/>
-			<experience>
-				<since>2008-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="dev-tool"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Command-line Interface</name>
-			<level value="4"/>
-			<experience>
-				<since>1999-01</since>
-			</experience>
-			<categories>
-				<category value="dev-tool"/>
-				<category value="server"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>CSS</name>
-			<level value="4"/>
-			<experience>
-				<since>2002-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>CSS3</name>
-			<level value="4"/>
-			<experience>
-				<since>2004-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Cygwin</name>
-			<level value="4"/>
-			<experience>
-				<since>2005-01</since>
-			</experience>
-			<categories>
-				<category value="dev-tool"/>
-				<category value="server"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Facebook SDK (XFBML)</name>
-			<level value="3"/>
-			<experience>
-				<since>2014-01</since>
-				<until>2015-01</until>
-			</experience>
-			<categories>
-				<category value="api"/>
-				<category value="client"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Firebug (for Firefox)</name>
-			<level value="4"/>
-			<experience>
-				<since>2005-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="dev-tool"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Git</name>
-			<level value="3"/>
-			<experience>
-				<since>2014-01</since>
-			</experience>
-			<categories>
-				<category value="dev-tool"/>
-				<category value="server"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Google Maps JavaScript API V3</name>
-			<level value="3.5"/>
-			<experience>
-				<since>2013-01</since>
-			</experience>
-			<categories>
-				<category value="api"/>
-				<category value="client"/>
-				<category value="dev-lib"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Gulp</name>
-			<level value="2.75"/>
-			<experience>
-				<since>2017-08</since>
-			</experience>
-			<categories>
-				<category value="api"/>
-				<category value="client"/>
-				<category value="dev-lib"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>HTML</name>
-			<level value="4"/>
-			<experience>
-				<since>2000-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>HTML 5</name>
-			<level value="4"/>
-			<experience>
-				<since>2011-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>J2EE</name>
-			<level value="3"/>
-			<experience>
-				<since>2007-01</since>
-			</experience>
-			<categories>
-				<category value="app-server"/>
-				<category value="server"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Java</name>
-			<level value="4"/>
-			<experience>
-				<since>2002-01</since>
-			</experience>
-			<categories>
-				<category value="dev-lang"/>
-				<category value="relevant"/>
-				<category value="server"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>JavaScript</name>
-			<level value="4"/>
-			<experience>
-				<since>2000-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>JDBC</name>
-			<level value="3"/>
-			<experience>
-				<since>2007-01</since>
-			</experience>
-			<categories>
-				<category value="api"/>
-				<category value="db"/>
-				<category value="server"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>JNDI</name>
-			<level value="3"/>
-			<experience>
-				<since>2007-01</since>
-			</experience>
-			<categories>
-				<category value="api"/>
-				<category value="db"/>
-				<category value="server"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>jQuery</name>
-			<level value="4"/>
-			<experience>
-				<since>2008-01</since>
-			</experience>
-			<categories>
-				<category value="api"/>
-				<category value="client"/>
-				<category value="dev-lib"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>jQuery Mobile</name>
-			<level value="4"/>
-			<experience>
-				<since>2011-01</since>
-			</experience>
-			<categories>
-				<category value="api"/>
-				<category value="client"/>
-				<category value="dev-lib"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>jQuery UI</name>
-			<level value="4"/>
-			<experience>
-				<since>2008-01</since>
-			</experience>
-			<categories>
-				<category value="api"/>
-				<category value="client"/>
-				<category value="dev-lib"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>JSON</name>
-			<level value="4"/>
-			<experience>
-				<since>2008-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="dev-format"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>JSP</name>
-			<level value="3"/>
-			<experience>
-				<since>2010-01</since>
-			</experience>
-			<categories>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>JSTL</name>
-			<level value="3"/>
-			<experience>
-				<since>2014-01</since>
-			</experience>
-			<categories>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>LAMP</name>
-			<level value="3"/>
-			<experience>
-				<since>2010-01</since>
-			</experience>
-			<categories>
-				<category value="app-server"/>
-				<category value="db"/>
-				<category value="dev-lang"/>
-				<category value="os"/>
-				<category value="server"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Linux</name>
-			<level value="3"/>
-			<experience>
-				<since>2001-01</since>
-			</experience>
-			<categories>
-				<category value="os"/>
-				<category value="server"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Microsoft SQL Server</name>
-			<level value="3"/>
-			<experience>
-				<since>2013-01</since>
-			</experience>
-			<categories>
-				<category value="db"/>
-				<category value="relevant"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Microsoft Windows</name>
-			<level value="4"/>
-			<experience>
-				<since>1999-01</since>
-			</experience>
-			<categories>
-				<category value="os"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>MySQL</name>
-			<level value="3"/>
-			<experience>
-				<since>2013-01</since>
-			</experience>
-			<categories>
-				<category value="db"/>
-				<category value="relevant"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>NetBeans IDE</name>
-			<level value="4"/>
-			<experience>
-				<since>2001-01</since>
-			</experience>
-			<categories>
-				<category value="dev-tool"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>NSIS</name>
-			<level value="3.75"/>
-			<experience>
-				<since>2004-01-01</since>
-				<until>2012-01-01</until>
-			</experience>
-			<categories>
-				<category value="api"/>
-				<category value="client"/>
-				<category value="dev-lang"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Oracle DBMS</name>
-			<level value="3"/>
-			<experience>
-				<since>2004-01-01</since>
-			</experience>
-			<categories>
-				<category value="db"/>
-				<category value="relevant"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Perl</name>
-			<level value="3"/>
-			<experience>
-				<since>2005-01</since>
-			</experience>
-			<categories>
-				<category value="dev-lang"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>PHP</name>
-			<level value="2"/>
-			<experience>
-				<since>2016-01</since>
-				<until>2017-01</until>
-			</experience>
-			<categories>
-				<category value="dev-lang"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>PL/SQL</name>
-			<level value="4"/>
-			<experience>
-				<since>2003-01</since>
-			</experience>
-			<categories>
-				<category value="db"/>
-				<category value="dev-lang"/>
-				<category value="relevant"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Pro*C</name>
-			<level value="1"/>
-			<experience>
-				<since>2017-07</since>
-				<until>2017-08</until>
-			</experience>
-			<categories>
-				<category value="dev-lang"/>
-				<category value="db"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Regular Expressions</name>
-			<level value="4"/>
-			<experience>
-				<since>2001-01</since>
-			</experience>
-			<categories>
-				<category value="dev-lang"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Responsive Design</name>
-			<level value="3.75"/>
-			<experience>
-				<since>2012-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>RESTful</name>
-			<level value="3"/>
-			<experience>
-				<since>2010-01</since>
-			</experience>
-			<categories>
-				<category value="api"/>
-				<category value="client"/>
-				<category value="relevant"/>
-				<category value="server"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>SASS/SCSS</name>
-			<level value="4.5"/>
-			<experience>
-				<since>2014-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Spring MVC</name>
-			<level value="1.25"/>
-			<experience>
-				<since>2015-01</since>
-				<until>2016-01</until>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="dev-lib"/>
-				<category value="relevant"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>SQL</name>
-			<level value="4"/>
-			<experience>
-				<since>2004-01</since>
-			</experience>
-			<categories>
-				<category value="db"/>
-				<category value="dev-lang"/>
-				<category value="relevant"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>SQL Developer</name>
-			<level value="2"/>
-			<experience>
-				<since>2013-01</since>
-			</experience>
-			<categories>
-				<category value="db"/>
-				<category value="dev-tool"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>SQLite</name>
-			<level value="3"/>
-			<experience>
-				<since>2011-01</since>
-				<until>2014-01</until>
-			</experience>
-			<categories>
-				<category value="db"/>
-				<category value="dev-lang"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>SSH</name>
-			<level value="3"/>
-			<experience>
-				<since>2001-01</since>
-			</experience>
-			<categories>
-				<category value="dev-tool"/>
-				<category value="server"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Toad for Oracle</name>
-			<level value="3"/>
-			<experience>
-				<since>2011-01</since>
-			</experience>
-			<categories>
-				<category value="dev-tool"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>VBA</name>
-			<level value="4"/>
-			<experience>
-				<since>2001-01</since>
-				<until>2006-01</until>
-			</experience>
-			<categories>
-				<category value="dev-lang"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Visual Basic</name>
-			<level value="4"/>
-			<experience>
-				<since>2000-01</since>
-				<until>2010-01</until>
-			</experience>
-			<categories>
-				<category value="dev-lang"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>Visual Basic .Net</name>
-			<level value="3"/>
-			<experience>
-				<since>2010-01</since>
-				<until>2012-01</until>
-			</experience>
-			<categories>
-				<category value="dev-lang"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>WordPress</name>
-			<level value="2"/>
-			<experience>
-				<since>2015-01</since>
-				<until>2016-07</until>
-			</experience>
-			<categories>
-				<category value="server"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>XHTML</name>
-			<level value="4.25"/>
-			<experience>
-				<since>2004-01</since>
-			</experience>
-			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>XML</name>
-			<level value="4"/>
-			<experience>
-				<since>2004-01</since>
-			</experience>
-			<categories>
-				<category value="dev-format"/>
-				<category value="dev-lang"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>XPath</name>
-			<level value="3"/>
-			<experience>
-				<since>2004-01</since>
-			</experience>
-			<categories>
-				<category value="dev-lang"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>XSD</name>
-			<level value="4"/>
-			<experience>
-				<since>2014-01</since>
-			</experience>
-			<categories>
-				<category value="dev-lang"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>XSL/XSLT</name>
-			<level value="4"/>
-			<experience>
-				<since>2004-01</since>
-			</experience>
-			<categories>
-				<category value="dev-lang"/>
-			</categories>
-		</skill>
-	</skills>
+<resume xmlns="http://jman.rocketssdhosting.com/xsd/resume"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns:r="http://jman.rocketssdhosting.com/xsd/resume"
+        xsi:schemaLocation="http://jman.rocketssdhosting.com/xsd/resume resume.xsd"
+        last-modified="2019-06-20T11:40:00">
+  <meta>
+    <skill>
+      <levels preposition="at">
+        <level value="0" preposition="of">None</level>
+        <level value="1" preposition="to">Exposure</level>
+        <level value="2">Beginner</level>
+        <level value="3">Skilled</level>
+        <level value="4">Advanced</level>
+        <level value="5">Expert</level>
+      </levels>
+      <categories>
+        <category value="api">API</category>
+        <category value="app-server">Application Server</category>
+        <category value="client">Client-Side</category>
+        <category value="db">Database</category>
+        <category value="dev-lib">Development Framework/Library</category>
+        <category value="dev-tool">Development Tool</category>
+        <category value="dev-format">Format</category>
+        <category value="dev-lang">Language</category>
+        <category value="os">Operating System</category>
+        <category value="relevant">Relevant Skill</category>
+        <category value="server">Server-Side</category>
+        <category value="web">Web</category>
+      </categories>
+    </skill>
+  </meta>
+  <author name="Jason Redding">
+    <name>Jason Redding</name>
+    <company>Booz Allen Hamilton</company>
+    <email label="Email">jason.redding@gmail.com</email>
+    <phone label="Cell">410-428-8522</phone>
+    <clearance label="Clearance">None</clearance>
+    <level label="Level">Staff Technologist</level>
+    <address label="Residence">Washington, DC</address>
+    <willing-to-travel label="% Willing to Travel">20%</willing-to-travel>
+    <willing-to-relocate label="Willing to Relocate">No</willing-to-relocate>
+    <last-updated label="Last Updated" format="M/d/yyyy"/>
+  </author>
+  <description title="Experience Summary">
+    Jason is an experienced <skill>Java</skill> Developer with front-end experience in an agile development team.
+    Prior to joining Booz Allen, Jason worked at the Community College of Baltimore County. During the first year,
+    he joined as an IT Computer Technician and then transitioned to a developer role on a team tasked with building a
+    Content Management System allowing faculty and staff to publish their own content to the college website. As he
+    continued to support this system, he worked with colleagues and independently to create and enhance in-house
+    software as well as install, configure, customize, enhance, and maintain various third-party software. He used
+    Full-Stack development technology including <skill>Java</skill>, <skill>SQL</skill>, <skill>JSP</skill>,
+    <skill>HTML</skill>, <skill name="sass/scss">SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>,
+    <skill name="xsl/xslt">XSLT</skill>, <skill>XPath</skill>, and <skill>LDAP</skill>. At Booz Allen, Jason supported
+    a distributed cross-domain solution using Full-Stack development technology including <skill>Java</skill>,
+    <skill>SQL</skill>, <skill>JSP</skill>, <skill>AngularJS</skill>, <skill>Angular Materials</skill>,
+    <skill>HTML</skill>, <skill name="sass/scss">SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>,
+    <skill name="xsl/xslt">XSLT</skill>, <skill>XPath</skill>, <skill>Maven</skill>, <skill>SaltStack</skill>,
+    and <skill>Python</skill>.
+  </description>
+  <competencies>
+    <competency>
+      <name>Software Development</name>
+      <duration from="2001" unit="year"/>
+    </competency>
+    <competency>
+      <name>Helpdesk</name>
+      <duration from="2000" to="2001" unit="year"/>
+    </competency>
+    <competency>
+      <name>Web Software Development</name>
+      <duration from="2000" unit="year"/>
+    </competency>
+    <competency>
+      <name>Agile/Scrum Development</name>
+      <duration from="2018" to="2019" unit="year"/>
+    </competency>
+  </competencies>
+  <skills title="Skills, Tools &amp; Technologies">
+    <skill>
+      <name>Active Directory</name>
+      <level value="2"/>
+      <experience>
+        <since>2010-01</since>
+      </experience>
+      <categories>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>AJAX</name>
+      <level value="4.5"/>
+      <experience>
+        <since>2008-01</since>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>AngularJS</name>
+      <version hint="not 2+">1.x</version>
+      <level value="3"/>
+      <experience>
+        <since>2016-01</since>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="dev-lib"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Angular Materials</name>
+      <version>1.x</version>
+      <level value="3"/>
+      <experience>
+        <since>2018-01</since>
+        <until>2019-04</until>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="dev-lib"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill hidden="true">
+      <name>Apache Commons</name>
+      <level value="3"/>
+      <experience>
+        <since>2005-01</since>
+      </experience>
+      <categories>
+        <category value="api"/>
+        <category value="server"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Apache Derby</name>
+      <level value="3"/>
+      <experience>
+        <since>2013-01</since>
+      </experience>
+      <categories>
+        <category value="api"/>
+        <category value="db"/>
+        <category value="server"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Apache HTTP Server</name>
+      <level value="3"/>
+      <experience>
+        <since>2003-01</since>
+      </experience>
+      <categories>
+        <category value="app-server"/>
+        <category value="relevant"/>
+        <category value="server"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Apache Maven</name>
+      <level value="3"/>
+      <experience>
+        <since>2014-01</since>
+      </experience>
+      <categories>
+        <category value="dev-tool"/>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Apache Tomcat</name>
+      <level value="4"/>
+      <experience>
+        <since>2003-01</since>
+      </experience>
+      <categories>
+        <category value="app-server"/>
+        <category value="relevant"/>
+        <category value="server"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Bash</name>
+      <level value="3"/>
+      <experience>
+        <since>2001-01</since>
+      </experience>
+      <categories>
+        <category value="dev-tool"/>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>C#</name>
+      <level value="2"/>
+      <experience>
+        <since>2010-01</since>
+        <until>2011-01</until>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>CentOS</name>
+      <level value="3"/>
+      <experience>
+        <since>2014-01</since>
+      </experience>
+      <categories>
+        <category value="os"/>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Chrome Developer Tools</name>
+      <level value="4"/>
+      <experience>
+        <since>2008-01</since>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="dev-tool"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Command-line Interface</name>
+      <level value="4"/>
+      <experience>
+        <since>1999-01</since>
+      </experience>
+      <categories>
+        <category value="dev-tool"/>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>CSS</name>
+      <level value="4"/>
+      <experience>
+        <since>2002-01</since>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="dev-lang"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>CSS3</name>
+      <level value="4"/>
+      <experience>
+        <since>2004-01</since>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="dev-lang"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Cygwin</name>
+      <level value="4"/>
+      <experience>
+        <since>2005-01</since>
+      </experience>
+      <categories>
+        <category value="dev-tool"/>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Facebook SDK (XFBML)</name>
+      <level value="3"/>
+      <experience>
+        <since>2014-01</since>
+        <until>2015-01</until>
+      </experience>
+      <categories>
+        <category value="api"/>
+        <category value="client"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Firebug (for Firefox)</name>
+      <level value="4"/>
+      <experience>
+        <since>2005-01</since>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="dev-tool"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Git</name>
+      <level value="3"/>
+      <experience>
+        <since>2014-01</since>
+      </experience>
+      <categories>
+        <category value="dev-tool"/>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Google Maps JavaScript API</name>
+      <version>V3</version>
+      <level value="3.5"/>
+      <experience>
+        <since>2013-01</since>
+      </experience>
+      <categories>
+        <category value="api"/>
+        <category value="client"/>
+        <category value="dev-lib"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Gulp</name>
+      <level value="2.75"/>
+      <experience>
+        <since>2017-08</since>
+      </experience>
+      <categories>
+        <category value="api"/>
+        <category value="client"/>
+        <category value="dev-lib"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>HTML</name>
+      <version>5</version>
+      <level value="4"/>
+      <experience>
+        <since>2011-01</since>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="dev-lang"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>IntelliJ IDEA</name>
+      <level value="3"/>
+      <experience>
+        <since>2018-01</since>
+      </experience>
+      <categories>
+        <category value="dev-tool"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>J2EE</name>
+      <level value="3"/>
+      <experience>
+        <since>2007-01</since>
+      </experience>
+      <categories>
+        <category value="app-server"/>
+        <category value="server"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Java</name>
+      <level value="4"/>
+      <experience>
+        <since>2002-01</since>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+        <category value="relevant"/>
+        <category value="server"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>JavaScript</name>
+      <level value="4"/>
+      <experience>
+        <since>2000-01</since>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="dev-lang"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>JDBC</name>
+      <level value="3"/>
+      <experience>
+        <since>2007-01</since>
+      </experience>
+      <categories>
+        <category value="api"/>
+        <category value="db"/>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>JNDI</name>
+      <level value="3"/>
+      <experience>
+        <since>2007-01</since>
+      </experience>
+      <categories>
+        <category value="api"/>
+        <category value="db"/>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>jQuery</name>
+      <level value="4"/>
+      <experience>
+        <since>2008-01</since>
+      </experience>
+      <categories>
+        <category value="api"/>
+        <category value="client"/>
+        <category value="dev-lib"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>jQuery Mobile</name>
+      <level value="4"/>
+      <experience>
+        <since>2011-01</since>
+      </experience>
+      <categories>
+        <category value="api"/>
+        <category value="client"/>
+        <category value="dev-lib"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>jQuery UI</name>
+      <level value="4"/>
+      <experience>
+        <since>2008-01</since>
+      </experience>
+      <categories>
+        <category value="api"/>
+        <category value="client"/>
+        <category value="dev-lib"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>JSON</name>
+      <level value="4"/>
+      <experience>
+        <since>2008-01</since>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="dev-format"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>JSP</name>
+      <level value="3"/>
+      <experience>
+        <since>2010-01</since>
+      </experience>
+      <categories>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>JSTL</name>
+      <level value="3"/>
+      <experience>
+        <since>2014-01</since>
+      </experience>
+      <categories>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>LAMP</name>
+      <level value="3"/>
+      <experience>
+        <since>2010-01</since>
+      </experience>
+      <categories>
+        <category value="app-server"/>
+        <category value="db"/>
+        <category value="dev-lang"/>
+        <category value="os"/>
+        <category value="server"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Linux</name>
+      <level value="3"/>
+      <experience>
+        <since>2001-01</since>
+      </experience>
+      <categories>
+        <category value="os"/>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Maven</name>
+      <level value="3"/>
+      <experience>
+        <since>2016-01</since>
+      </experience>
+      <categories>
+        <category value="dev-tool"/>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Microsoft SQL Server</name>
+      <level value="3"/>
+      <experience>
+        <since>2013-01</since>
+      </experience>
+      <categories>
+        <category value="db"/>
+        <category value="relevant"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Microsoft Windows</name>
+      <level value="4"/>
+      <experience>
+        <since>1999-01</since>
+      </experience>
+      <categories>
+        <category value="os"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>MySQL</name>
+      <level value="3"/>
+      <experience>
+        <since>2013-01</since>
+      </experience>
+      <categories>
+        <category value="db"/>
+        <category value="relevant"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>NetBeans IDE</name>
+      <level value="4"/>
+      <experience>
+        <since>2001-01</since>
+        <until>2019-04</until>
+      </experience>
+      <categories>
+        <category value="dev-tool"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>NSIS</name>
+      <level value="3.75"/>
+      <experience>
+        <since>2004-01-01</since>
+        <until>2012-01-01</until>
+      </experience>
+      <categories>
+        <category value="api"/>
+        <category value="client"/>
+        <category value="dev-lang"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Oracle DBMS</name>
+      <level value="3"/>
+      <experience>
+        <since>2004-01-01</since>
+      </experience>
+      <categories>
+        <category value="db"/>
+        <category value="relevant"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Perl</name>
+      <level value="3"/>
+      <experience>
+        <since>2005-01</since>
+        <until>2011-01</until>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>PHP</name>
+      <level value="2"/>
+      <experience>
+        <since>2016-01</since>
+        <until>2017-01</until>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>PL/SQL</name>
+      <level value="4"/>
+      <experience>
+        <since>2003-01</since>
+      </experience>
+      <categories>
+        <category value="db"/>
+        <category value="dev-lang"/>
+        <category value="relevant"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Pro*C</name>
+      <level value="1"/>
+      <experience>
+        <since>2017-07</since>
+        <until>2017-08</until>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+        <category value="db"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Python</name>
+      <level value="2.75"/>
+      <experience>
+        <since>2018-01</since>
+        <until>2019-04</until>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+        <category value="relevant"/>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Regular Expressions</name>
+      <level value="4"/>
+      <experience>
+        <since>2001-01</since>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Responsive Design</name>
+      <level value="3.75"/>
+      <experience>
+        <since>2012-01</since>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>RESTful</name>
+      <level value="3"/>
+      <experience>
+        <since>2010-01</since>
+      </experience>
+      <categories>
+        <category value="api"/>
+        <category value="client"/>
+        <category value="relevant"/>
+        <category value="server"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>SaltStack</name>
+      <level value="2"/>
+      <experience>
+        <since>2018-01</since>
+        <until>2019-04</until>
+      </experience>
+      <categories>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>SASS/SCSS</name>
+      <level value="4.5"/>
+      <experience>
+        <since>2014-01</since>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="dev-lang"/>
+        <category value="relevant"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>SQL</name>
+      <level value="4"/>
+      <experience>
+        <since>2004-01</since>
+      </experience>
+      <categories>
+        <category value="db"/>
+        <category value="dev-lang"/>
+        <category value="relevant"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>SQL Developer</name>
+      <level value="2"/>
+      <experience>
+        <since>2013-01</since>
+      </experience>
+      <categories>
+        <category value="db"/>
+        <category value="dev-tool"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>SQLite</name>
+      <level value="3"/>
+      <experience>
+        <since>2011-01</since>
+        <until>2014-01</until>
+      </experience>
+      <categories>
+        <category value="db"/>
+        <category value="dev-lang"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>SSH</name>
+      <level value="3"/>
+      <experience>
+        <since>2001-01</since>
+      </experience>
+      <categories>
+        <category value="dev-tool"/>
+        <category value="server"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Toad for Oracle</name>
+      <level value="3"/>
+      <experience>
+        <since>2011-01</since>
+      </experience>
+      <categories>
+        <category value="dev-tool"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>VBA</name>
+      <level value="4"/>
+      <experience>
+        <since>2001-01</since>
+        <until>2006-01</until>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Visual Basic</name>
+      <level value="4"/>
+      <experience>
+        <since>2000-01</since>
+        <until>2010-01</until>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>Visual Basic .Net</name>
+      <level value="3"/>
+      <experience>
+        <since>2010-01</since>
+        <until>2012-01</until>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>WordPress</name>
+      <level value="2"/>
+      <experience>
+        <since>2015-01</since>
+        <until>2016-07</until>
+      </experience>
+      <categories>
+        <category value="server"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>XHTML</name>
+      <level value="4.25"/>
+      <experience>
+        <since>2004-01</since>
+      </experience>
+      <categories>
+        <category value="client"/>
+        <category value="dev-lang"/>
+        <category value="web"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>XML</name>
+      <level value="4"/>
+      <experience>
+        <since>2004-01</since>
+      </experience>
+      <categories>
+        <category value="dev-format"/>
+        <category value="dev-lang"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>XPath</name>
+      <level value="3"/>
+      <experience>
+        <since>2004-01</since>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>XSD</name>
+      <level value="4"/>
+      <experience>
+        <since>2014-01</since>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+      </categories>
+    </skill>
+    <skill>
+      <name>XSL/XSLT</name>
+      <level value="4"/>
+      <experience>
+        <since>2004-01</since>
+      </experience>
+      <categories>
+        <category value="dev-lang"/>
+      </categories>
+    </skill>
+  </skills>
+  <employers title="Experience Details">
+    <employer>
+      <title>Booz Allen Hamilton</title>
+      <location>Laurel, MD</location>
+      <positions>
+        <position>
+          <title>Full-Stack Developer</title>
+          <timeline>
+            <start-date format="M/yyyy">2018-01-08</start-date>
+            <end-date format="M/yyyy">2019-04-29</end-date>
+          </timeline>
+          <description>
+            <h:ul>
+              <h:li>Develop and improve Web Interfaces.</h:li>
+              <h:li>Design and develop software in <skill>Java</skill> to query <skill>MySQL</skill> databases.</h:li>
+              <h:li>Integrate various components and test end-to-end capability.</h:li>
+              <h:li>Collaborate with and assist team members.</h:li>
+            </h:ul>
+          </description>
+        </position>
+      </positions>
+    </employer>
+    <employer>
+      <title>Community College of Baltimore County</title>
+      <location>Baltimore, MD</location>
+      <positions>
+        <position>
+          <title>IT Computer Technician (Student Aid)</title>
+          <department>Support Center</department>
+          <timeline>
+            <start-date format="M/yyyy">2000-07-01</start-date>
+            <end-date format="M/yyyy">2001-06-31</end-date>
+          </timeline>
+          <description>
+            <h:ul>
+              <h:li>Troubleshot/repaired hardware and software issues over the phone and in the field.</h:li>
+              <h:li>
+                Installed network cables, troubleshot network connectivity, and activated Ethernet wall ports across
+                campus;
+                upgraded hardware and software in computer labs.
+              </h:li>
+              <h:li>
+                Created Microsoft Access Database, Forms, and accompanying <skill>VBA</skill> code to facilitate
+                technical support by Help Desk personnel.
+              </h:li>
+            </h:ul>
+          </description>
+        </position>
+        <position>
+          <title>Programmer</title>
+          <timeline>
+            <start-date format="M/yyyy">2001-07-01</start-date>
+            <end-date format="M/yyyy">2017-12-31</end-date>
+          </timeline>
+          <description>
+            <h:ul>
+              <h:li>Develop, enhance, and maintain a custom in-house Content Management System for the college website
+                using <skill>Java</skill>, <skill>PL/SQL</skill>, <skill name="restful">REST</skill>,
+                <skill>HTML</skill>, <skill>CSS</skill>, <skill>jQuery</skill>, and <skill>Apache Tomcat</skill>.
+              </h:li>
+              <h:li>Design and develop a <skill>J2EE</skill> web application and its
+                <skill>HTML</skill>/<skill>Javascript</skill> front-end counterpart providing and Online Orientation
+                for new students.
+              </h:li>
+              <h:li>Design, develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application
+                interfacing with <skill>Active Directory</skill> to provide and Online Phone Directory with advanced
+                search capabilities.
+              </h:li>
+              <h:li>Design and develop an interactive, reusable, and highly versatile and customizable Web Calendar
+                designed to consume event data in <skill>XML</skill> form using <skill>JSP</skill>, <skill>HTML</skill>,
+                <skill>CSS</skill>, <skill>Javascript</skill>, and <skill>jQuery</skill>.
+              </h:li>
+              <h:li>Develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application interfacing
+                with <skill>Active Directory</skill> and multiple RDBMS to provide Technical Support personnel with
+                indispensible information dashboards and tools that they can use to manage and troubleshoot account
+                issues.
+              </h:li>
+              <h:li>Design and develop a <skill name="command-line interface">CLI</skill> which uses
+                <skill>Java</skill>, <skill>XML</skill>, <skill name="xsl/xslt">XSLT</skill>, and <skill>XPath</skill>
+                while interfacing with third-party <skill name="restful">REST API</skill> to automate the importing,
+                processing, and exporting of Academic Catalog information.
+              </h:li>
+              <h:li>Design, develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application
+                interfacing with <skill>Active Directory</skill> and RDBMS to provide students a way to recover their
+                account and reset their password.
+              </h:li>
+              <h:li>Install, configure, customize, augment, and maintain a third-party multitier Event Scheduling
+                software package using <skill>Javascript</skill>, <skill>jQuery</skill>, <skill>jQuery UI</skill>,
+                <skill>HTML</skill>, <skill>CSS</skill>, <skill name="xsl/xslt">XSLT</skill>, <skill>XPath</skill>,
+                and <skill>SQL</skill>.
+              </h:li>
+            </h:ul>
+          </description>
+          <projects>
+            <project type="web">
+              <title>Student Self-Help</title>
+              <link>https://shwa.ccbcmd.edu</link>
+              <description>
+                <h:p>Used by students to retrieve their account information and reset their password.</h:p>
+                <h:ul>
+                  <h:li>Site uses <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>jQuery Mobile</skill> to
+                    deliver a <skill name="responsive-design">responsive</skill> experience.
+                  </h:li>
+                  <h:li>
+                    <skill>Javascript</skill>
+                    and <skill>CSS</skill> assets are bundled into a <skill name="J2EE">Java EE</skill> Web Application.
+                  </h:li>
+                  <h:li>
+                    <skill name="J2EE">Java EE</skill>
+                    Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to
+                    communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
+                  </h:li>
+                </h:ul>
+              </description>
+            </project>
+            <project type="cli">
+              <title>AcalogExtract</title>
+              <description>
+                <h:p>Automates the importing, processing, and exporting of Academic Catalog information.</h:p>
+                <h:ul>
+                  <h:li>Interfaces with 3rd-party <skill>RESTful</skill> API to import <skill>XML</skill> data.
+                  </h:li>
+                  <h:li>Requests data in chunks to mitigate timeouts.</h:li>
+                  <h:li>Applies custom <skill name="xsl/xslt">XSL Transform</skill> to produce final <skill>XML</skill>.
+                  </h:li>
+                  <h:li>Allows for customization of output format, and processing rules/logic via an <skill>XML</skill> properties
+                    file.
+                  </h:li>
+                </h:ul>
+              </description>
+            </project>
+            <project>
+              <title>R25/WebViewer/WebServices (CollegeNet products)</title>
+              <description>
+                <h:p>
+                  Event Scheduling software package (with 700+ users) follows institution-defined rules to match a
+                  collection of locations with a collection of events.
+                </h:p>
+                <h:ul>
+                  <h:li>Install, configure, customize, and augment front-end; maintain product front- and back-end,
+                    interfacing with an <skill name="oracle-dbms">Oracle</skill>-backed
+                    <skill>RESTful</skill>
+                    <skill name="J2EE">Java EE</skill>
+                    Web Application.
+                  </h:li>
+                  <h:li>Augmented WebViewer's <skill>HTML</skill> pages (notably the Event Request Form) with <skill>
+                    jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill>, adding features unavailable in
+                    the original product.
+                  </h:li>
+                  <h:li>
+                    Via <skill name="restful">Web Services</skill>, developed page with capability to search for spaces
+                    matching a
+                    wide range of space/location attributes. Allows users to check availability for specific dates/times
+                    and schedule
+                    an event in that space. Integrates with <skill name="google-maps-javascript-api-v3">Google Maps
+                  </skill> to show
+                    location of space and allows for 1-click access to directions.
+                  </h:li>
+                </h:ul>
+              </description>
+            </project>
+            <project>
+              <title>Administrator AccountAssist</title>
+              <description>
+                <h:p>
+                  Used by 100+ support personnel to manage/troubleshoot over 800,000 accounts.
+                </h:p>
+                <h:ul>
+                  <h:li>
+                    <skill>Javascript</skill>
+                    and <skill>CSS</skill> assets are bundled into a <skill name="J2EE">Java EE</skill> Web Application.
+                  </h:li>
+                  <h:li>Site uses <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill> to deliver an
+                    interactive experience.
+                  </h:li>
+                  <h:li>Integrates with <skill>Active Directory</skill> for authentication and group membership
+                    authorization.
+                  </h:li>
+                  <h:li>
+                    <skill name="J2EE">Java EE</skill>
+                    Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to
+                    communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
+                  </h:li>
+                </h:ul>
+              </description>
+            </project>
+            <project hidden="false">
+              <title>USPS Gateway</title>
+              <description>
+                <h:p>
+                  Used during the student application process to verify submitted street addresses' location inside or
+                  outside county boundaries.
+                </h:p>
+                <h:ul>
+                  <h:li>
+                    Developed a standalone
+                    <skill>Java</skill>
+                    <skill name="command-line-interface">command-line</skill>
+                    application, the <skill>PL/SQL</skill> package, and
+                    <skill>Java</skill>
+                    code within the <skill name="oracle-dbms">Oracle</skill> database.
+                  </h:li>
+                </h:ul>
+              </description>
+            </project>
+            <project>
+              <title>Web Calendar</title>
+              <description>
+                <h:p>
+                  Interactive, highly customizable web calendar designed to parse an <skill>XML</skill> file of event
+                  data.
+                </h:p>
+                <h:ul>
+                  <h:li>
+                    Uses an extremely customizable
+                    <h:a href="https://github.com/jason-redding/jFormat/" target="_blank"
+                         title="Created by Jason Redding">Formatting Engine
+                    </h:a>
+                    written in <skill>JavaScript</skill> for highly versatile text, date, and number formatting.
+                  </h:li>
+                  <h:li>Parses tokens in the form of "${property.name#format(arg1, arg2)}".</h:li>
+                  <h:li>
+                    Formats Date objects using most of the patterns available for use by the <skill>Java</skill> class
+                    <h:a href="http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html"
+                         target="_blank">SimpleDateFormat</h:a>.
+                  </h:li>
+                </h:ul>
+              </description>
+            </project>
+            <project>
+              <title>Online Phone Directory</title>
+              <description>
+                <h:p>
+                  Used by the community to search for faculty and staff by name, email, phone, office, campus, title,
+                  and department.
+                </h:p>
+                <h:ul>
+                  <h:li>
+                    <skill name="J2EE">Java EE</skill>
+                    Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to
+                    communicate with <skill>Oracle DBMS</skill>.
+                  </h:li>
+                  <h:li>Uses <skill>jQuery</skill> to deliver an interactive, flexible experience.
+                  </h:li>
+                  <h:li>
+                    Provides Simple and Advanced search modes. Advanced mode allows a combination of up to 20
+                    user-specified
+                    criteria using conditions including: "is", "is not", "starts with", "ends with", "contains",
+                    "excludes",
+                    "does not start with", "does not end with".
+                  </h:li>
+                  <h:li>
+                    Supplimental
+                    <skill>Java</skill>
+                    <skill name="command-line-interface">CLI</skill>
+                    that uses the <skill>Java</skill> Excel API to generate and
+                    publish a downloadable spreadsheet containing the entire phone directory.
+                  </h:li>
+                </h:ul>
+              </description>
+            </project>
+            <project>
+              <title>Online Orientation</title>
+              <description>
+                <h:p>
+                  <skill name="J2EE">Java EE</skill>
+                  Web Application and its <skill>HTML</skill>/<skill>Javascript</skill> front-end counterpart providing
+                  an online orientation for new students.
+                </h:p>
+                <h:ul>
+                  <h:li>Includes custom-developed supporting <skill name="oracle-dbms">Oracle</skill> database schema
+                    and all tables, views, triggers, sequences, etc.
+                  </h:li>
+                  <h:li>Integrates with <skill>Active Directory</skill> for authentication and group membership
+                    authorization.
+                  </h:li>
+                  <h:li>
+                    Administration portal built with <skill>jQuery</skill> and <skill>jQuery UI</skill> allows
+                    authorized academic advisors to customize the
+                    orientation pages and assessments, track student progress, and manage the list of authorized
+                    advisors.
+                  </h:li>
+                </h:ul>
+              </description>
+            </project>
+            <project>
+              <title>WebCT Language Modifier</title>
+              <description>
+                <h:p>
+                  Robust
+                  <skill>Java</skill>
+                  <skill name="command-line-interface">CLI</skill>
+                  tool for managing language strings for a proprietary online
+                  virtual learning environment (WebCT).
+                </h:p>
+                <h:ul>
+                  <h:li>
+                    Applies a compiled set of preferred language strings to a <h:abbr title="Web Application Archive">
+                    WAR
+                  </h:abbr> file.
+                  </h:li>
+                  <h:li>
+                    Provided options to search for text to change, making the initial compilation process much easier.
+                  </h:li>
+                </h:ul>
+              </description>
+            </project>
+            <project>
+              <title>CMS (Content Management System)</title>
+              <description>
+                <h:p>
+                  Homegrown Content Management System allowing faculty and staff to create, publish, and manage their
+                  own pages
+                  and content for the external-facing college website of over 12,000 pages.
+                </h:p>
+                <h:ul>
+                  <h:li>
+                    Developed custom framework using <skill>Java</skill> in a <skill>Linux</skill> server environment to
+                    facilitate
+                    communication between service objects, even when distributed among several servers.
+                  </h:li>
+                  <h:li>
+                    <skill name="java">Java Applet</skill>
+                    used to visualize and navigate the Website's hierarchy of pages – as represented in the database.
+                  </h:li>
+                  <h:li>
+                    <skill name="java">Java Applet</skill>
+                    <h:abbr title="What You See Is What You Get">WYSIWYG</h:abbr>
+                    Advanced <skill>HTML</skill> Editor with Dreamweaver-like capabilities including:
+                    <h:ul>
+                      <h:li>
+                        Spellchecker (integrated with aspell on <skill>Linux</skill> server) – added custom
+                        implementation to support a global dictionary in addition to user-editable per-user
+                        dictionaries.
+                      </h:li>
+                      <h:li>
+                        Table-specific editor dialogs for inserting/modifying tables, and inserting/splitting table
+                        cells; includes features not found in Dreamweaver:
+                        <h:ul>
+                          <h:li>
+                            Element "breadcrumb" Bar with shortcut modification menu.
+                          </h:li>
+                          <h:li>
+                            Attribute Explorer dialog for direct modification of element attributes.
+                          </h:li>
+                          <h:li>
+                            Undo/Redo History panel; Design/Code View; Find/Replace.
+                          </h:li>
+                        </h:ul>
+                      </h:li>
+                    </h:ul>
+                  </h:li>
+                  <h:li>
+                    Developed <skill name="J2EE">Java EE</skill> Web Application responsible for handling file uploads
+                    and
+                    interfaced with <skill name="oracle-dbms">Oracle</skill> database to register files with CMS.
+                  </h:li>
+                  <h:li>
+                    Developed a standalone <skill>Java</skill> application to batch upload the existing website content
+                    into the appropriate CMS database tables.
+                  </h:li>
+                  <h:li>
+                    Developed a custom Win32 installer using
+                    <skill name="nsis">NSIS (Nullsoft Scriptable Install System)</skill>
+                    to install the <skill>Java</skill> policy file necessary for certain features of the
+                    <skill>HTML</skill>
+                    Editor <skill name="java">Java Applet</skill>.
+                  </h:li>
+                </h:ul>
+              </description>
+            </project>
+          </projects>
+        </position>
+      </positions>
+    </employer>
+  </employers>
+  <certifications>
+    <certificate>
+      <name>Security+</name>
+      <issuer>CompTIA</issuer>
+      <issue-date>2018-02-23</issue-date>
+      <expire-date>2021-02-23</expire-date>
+    </certificate>
+    <certificate>
+      <name>Sitecore XP 8.0 Certified Professional Developer</name>
+      <issuer>Sitecore</issuer>
+      <issue-date>2015-04-02</issue-date>
+    </certificate>
+  </certifications>
 </resume>

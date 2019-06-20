@@ -15,12 +15,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<xs:schema xmlns="http://jman.rocketssdhosting.com/xsd/resume"
-					 xmlns:r="http://jman.rocketssdhosting.com/xsd/resume"
+<xs:schema xmlns="http://witcraft.com/xsd/resume"
+					 xmlns:r="http://witcraft.com/xsd/resume"
 					 xmlns:xs="http://www.w3.org/2001/XMLSchema"
 					 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 					 xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd"
-					 targetNamespace="http://jman.rocketssdhosting.com/xsd/resume"
+					 targetNamespace="http://witcraft.com/xsd/resume"
 					 elementFormDefault="qualified">
 
 	<xs:annotation>
@@ -81,43 +81,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xs:element name="author">
 					<xs:complexType>
 						<xs:all>
-							<xs:element name="name" minOccurs="0" type="type-contact-info"/>
-							<xs:element name="company" minOccurs="0" type="type-contact-info"/>
-							<xs:element name="email" minOccurs="0" type="type-contact-info"/>
-							<xs:element name="phone" minOccurs="0" type="type-contact-info"/>
-							<xs:element name="address" minOccurs="0" type="type-contact-info"/>
-							<xs:element name="clearance" minOccurs="0" type="type-contact-info"/>
-							<xs:element name="level" minOccurs="0" type="type-contact-info"/>
-							<xs:element name="willing-to-travel" minOccurs="0" type="type-contact-info"/>
-							<xs:element name="willing-to-relocate" minOccurs="0" type="type-contact-info"/>
-							<xs:element name="last-updated" minOccurs="0">
-                <xs:complexType>
-                  <xs:complexContent>
-                    <xs:extension base="type-contact-info">
-                      <xs:attribute name="format" use="optional"/>
-                    </xs:extension>
-                  </xs:complexContent>
-                </xs:complexType>
-              </xs:element>
+							<xs:element name="email" minOccurs="0">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="order" type="nonNegativeInteger"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="phone" minOccurs="0">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="order" type="nonNegativeInteger"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="address" minOccurs="0">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="order" type="nonNegativeInteger"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
 						</xs:all>
 						<xs:attribute name="name"/>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="description" type="type-profile-description"/>
-				<xs:element name="competencies" minOccurs="0">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="competency" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:all>
-										<xs:element name="name" minOccurs="1" type="xs:string"/>
-										<xs:element name="duration" minOccurs="1" type="type-duration"/>
-									</xs:all>
-								</xs:complexType>
-							</xs:element>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
 				<xs:element name="certifications" minOccurs="0">
 					<xs:complexType>
 						<xs:sequence>
@@ -167,11 +162,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="title"/>
-										<xs:element name="location" minOccurs="0">
-											<xs:simpleType>
-												<xs:restriction base="xs:string"/>
-											</xs:simpleType>
-										</xs:element>
 										<xs:element name="positions" minOccurs="0">
 											<xs:complexType>
 												<xs:sequence>
@@ -179,11 +169,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 														<xs:complexType>
 															<xs:sequence>
 																<xs:element name="title">
-																	<xs:simpleType>
-																		<xs:restriction base="xs:string"/>
-																	</xs:simpleType>
-																</xs:element>
-																<xs:element name="location" minOccurs="0">
 																	<xs:simpleType>
 																		<xs:restriction base="xs:string"/>
 																	</xs:simpleType>
@@ -201,7 +186,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
-																<xs:element name="description" minOccurs="0" type="type-position-description"/>
+																<xs:element name="description" minOccurs="0"/>
 																<xs:element name="projects" minOccurs="0">
 																	<xs:complexType>
 																		<xs:choice>
@@ -210,7 +195,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																					<xs:sequence>
 																						<xs:element name="title"/>
 																						<xs:element name="link" minOccurs="0"/>
-																						<xs:element name="description" type="type-project-description"/>
+																						<xs:element name="description"/>
 																					</xs:sequence>
 																					<xs:attribute name="type" use="optional"/>
 																					<xs:attribute name="hidden" type="type-boolean" default="false" use="optional"/>
@@ -240,16 +225,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="name"/>
-										<xs:element name="version" minOccurs="0">
-											<xs:complexType>
-												<xs:simpleContent>
-													<xs:restriction base="xs:string">
-														<xs:minLength value="1"/>
-														<xs:attribute name="hint"/>
-													</xs:restriction>
-												</xs:simpleContent>
-											</xs:complexType>
-										</xs:element>
 										<xs:element name="level">
 											<xs:complexType>
 												<xs:attribute name="value" type="nonNegativeDecimal"/>
@@ -282,10 +257,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<xs:attribute name="title" default="Skills" use="optional"/>
 					</xs:complexType>
 				</xs:element>
-        <xs:element name="skills-legend" minOccurs="0">
-          <xs:complexType>
-          </xs:complexType>
-        </xs:element>
 			</xs:all>
 			<xs:attribute name="last-modified" type="type-date-time"/>
 		</xs:complexType>
@@ -307,41 +278,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</xs:keyref>
 	</xs:element>
 
-	<xs:element name="duration" type="type-duration"/>
-
-	<xs:element name="skill" type="type-skill-reference"/>
-
-	<xs:complexType name="type-skill-reference" mixed="true">
-		<xs:simpleContent>
-			<xs:extension base="xs:string">
-				<xs:attribute name="name" type="xs:string" use="optional"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-	
-	<xs:complexType name="type-duration" mixed="true">
-		<xs:attribute name="from" type="type-date-time"/>
-		<xs:attribute name="to" type="type-date-time"/>
-		<xs:attribute name="unit" type="type-date-precision"/>
-	</xs:complexType>
+	<xs:element name="duration">
+		<xs:complexType mixed="true">
+			<xs:attribute name="from" type="type-date-time"/>
+			<xs:attribute name="to" type="type-date-time"/>
+			<xs:attribute name="unit" type="type-date-precision"/>
+		</xs:complexType>
+	</xs:element>
 
 	<xs:complexType name="type-profile-description" mixed="true">
 		<xs:sequence>
+			<xs:element name="duration" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:attribute name="title" default="Description" use="optional"/>
-	</xs:complexType>
-
-	<xs:complexType name="type-position-description" mixed="true">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="type-project-description" mixed="true">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
 	</xs:complexType>
 
 	<xs:simpleType name="type-boolean">
@@ -356,15 +306,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xs:enumeration value="0"/>
 		</xs:restriction>
 	</xs:simpleType>
-
-	<xs:complexType name="type-contact-info">
-		<xs:simpleContent>
-			<xs:extension base="xs:string">
-				<xs:attribute name="order" type="nonNegativeInteger" use="optional"/>
-				<xs:attribute name="label" type="xs:string" use="optional"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
 
 	<xs:complexType name="type-start-date">
 		<xs:simpleContent>
@@ -429,7 +370,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xs:simpleType name="type-date-time">
 		<xs:restriction base="xs:string">
-			<xs:pattern value="\d{4,}(-\d{2}(-\d{2}(T\d{2}(:\d{2}(:\d{2}(\.\d{1,3})?)?)?(Z|[+-]\d{2}(:?\d{2})?)?)?)?)?"/>
+			<xs:pattern value="\d{4,}-\d{2}(-\d{2}(T\d{2}(:\d{2}(:\d{2}(\.\d{1,3})?)?)?(Z|[+-]\d{2}(:?\d{2})?)?)?)?"/>
 		</xs:restriction>
 	</xs:simpleType>
 	

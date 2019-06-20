@@ -107,9 +107,11 @@
 						margin-left: 0;
 						margin-right: 0;
 						max-width: none;
+						display: none !important;
 					}
 					&#tab-panel-code {
 						order: 3;
+						display: none;
 					}
 				}
 				#skill-categories {
@@ -133,12 +135,35 @@
 			border-color: hsla(0, 0%, 0%, 0) !important;
 		}
 	}
-	a[href]:not([href^="#"]) {
-		&:not(.project-link):not(.author-contact-info) {
-			&::after {
-				content: " [" attr(href) "]";
-				font-size: 0.9em;
-			}
+	.ui-page.ui-page-active.ui-page-header-fixed {
+		padding-top: 0 !important;
+		> header.ui-header.ui-header-fixed {
+			display: none;
 		}
 	}
+	div.skills {
+		-webkit-column-count: 2;
+		-moz-column-count: 2;
+		column-count: 2;
+	}
+
+	.section-content[data-section="competencies"] {
+		-webkit-column-count: 2;
+		-moz-column-count: 2;
+		column-count: 2;
+	}
+
+	.position-header {
+		&::before, &::after {
+			content: none;
+		}
+	}
+	//a[href]:not([href^="#"]) {
+	//	&:not(.project-link):not(.author-contact-info) {
+	//		&::after {
+	//			content: " [" attr(href) "]";
+	//			font-size: 0.9em;
+	//		}
+	//	}
+	//}
 }
