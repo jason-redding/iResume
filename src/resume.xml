@@ -73,8 +73,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     a distributed cross-domain solution using Full-Stack development technology including <skill>Java</skill>,
     <skill>SQL</skill>, <skill>JSP</skill>, <skill>AngularJS</skill>, <skill>Angular Materials</skill>,
     <skill>HTML</skill>, <skill name="sass/scss">SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>,
-    <skill name="xsl/xslt">XSLT</skill>, <skill>XPath</skill>, <skill>Maven</skill>, <skill>SaltStack</skill>,
-    and <skill>Python</skill>.
+    <skill name="xsl/xslt">XSLT</skill>, <skill>XPath</skill>, <skill>Maven</skill>, <skill>SaltStack</skill>, and
+    <skill>Python</skill>.
   </description>
   <competencies>
     <competency>
@@ -984,7 +984,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 issues.
               </h:li>
               <h:li>Design and develop a <skill name="command-line interface">CLI</skill> which uses
-                <skill>Java</skill>, <skill>XML</skill>, <skill name="xsl/xslt">XSLT</skill>, and <skill>XPath</skill>
+                <skill>Java</skill>, <skill>XML</skill>, <skill name="xsl/xslt">XSLT</skill>, and
+                <skill>XPath</skill>
                 while interfacing with third-party <skill name="restful">REST API</skill> to automate the importing,
                 processing, and exporting of Academic Catalog information.
               </h:li>

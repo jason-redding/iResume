@@ -105,33 +105,7 @@
       content: function () {
         var $this = $(this);
         var title = $.trim($this.attr('title'));
-        if ($this.is('span.skill') && $this.closest('div.section-content[data-section="skills"]').length > 0) {
-          var skillVersion = $.trim($this.attr('data-version'));
-          var skillVersionHint = $.trim($this.attr('data-version-hint'));
-          var skillName = $.trim($this.attr('data-name'));
-          var r = '<div class="header" style="font-size: 1.3em; text-align: center;">';
-          if (skillName.length > 0) {
-            r += skillName;
-          } else {
-            r += $.trim($this.text());
-          }
-          if (skillVersion.length > 0 || skillVersionHint.length > 0) {
-            if (skillVersion.length > 0) {
-              r += ' ' + skillVersion;
-            }
-            if (skillVersionHint.length > 0) {
-              r += '<span style="display: block; font-size: 0.7em; font-style: italic;">';
-              if (skillVersion.length > 0) {
-                r += ' ';
-              }
-              r += '(' + skillVersionHint + ')';
-              r += '</span>';
-            }
-          }
-          r += '</div>';
-          r += '<div style="white-space:pre-wrap; margin-top: 0.8em;">' + title + '</div>';
-          return r;
-        } else if ($this.is('.certificate')) {
+        if ($this.is('.certificate')) {
           var issuer = $.trim($this.attr('data-issuer'));
           var name = $.trim($this.attr('data-name'));
           var displayName;
@@ -200,9 +174,35 @@
 
           r += '</div>';
           return r;
-        } else if ($this.is('a[title][href]')) {
+        } else if ($this.is('a[title][href]:not(.skill)')) {
           var r = '<div>' + $.trim(title) + '</div>';
           r += '<div style="font-size:0.65em;margin-top: 1em">' + $.trim($this.attr('href')) + '</div>';
+          return r;
+        } else if ($this.is('[data-name][data-level][data-level-value][data-level-percentage]')) {
+          var skillVersion = $.trim($this.attr('data-version'));
+          var skillVersionHint = $.trim($this.attr('data-version-hint'));
+          var skillName = $.trim($this.attr('data-name'));
+          var r = '<div class="header" style="font-size: 1.3em; text-align: center;">';
+          if (skillName.length > 0) {
+            r += skillName;
+          } else {
+            r += $.trim($this.text());
+          }
+          if (skillVersion.length > 0 || skillVersionHint.length > 0) {
+            if (skillVersion.length > 0) {
+              r += ' ' + skillVersion;
+            }
+            if (skillVersionHint.length > 0) {
+              r += '<span style="display: block; font-size: 0.7em; font-style: italic;">';
+              if (skillVersion.length > 0) {
+                r += ' ';
+              }
+              r += '(' + skillVersionHint + ')';
+              r += '</span>';
+            }
+          }
+          r += '</div>';
+          r += '<div style="white-space:pre-wrap; margin-top: 0.8em;">' + title + '</div>';
           return r;
         }
         return title;
@@ -693,6 +693,25 @@
     return dfd.promise();
   }
 
+  function getLatestModifiedDate(docs) {
+    if (!$.isArray(docs)) {
+      docs = [docs];
+    }
+    var lastModifiedDate = null;
+    $.each(docs, function() {
+      var doc = this;
+      if (('xhr' in doc)) {
+        if (('getResponseHeader' in doc.xhr) && $.isFunction(doc.xhr.getResponseHeader)) {
+          var lastModified = new Date($.trim(doc.xhr.getResponseHeader('Last-Modified')));
+          if (lastModifiedDate === null || lastModifiedDate.getTime() < lastModified.getTime()) {
+            lastModifiedDate = lastModified;
+          }
+        }
+      }
+    });
+    return lastModifiedDate;
+  }
+
   function buildResumeBlob() {
     var dfd = $.Deferred();
     var resume = $(document).data('resume');
@@ -704,18 +723,14 @@
       var xmlDoc = docs[0].data;
       var xslDoc = docs[1].data;
       var resultDoc = null;
-      var systemDate = Date.format(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss');
-      var lastModifiedXmlDate = lastModifiedDate = new Date($.trim(docs[0].xhr.getResponseHeader('Last-Modified')));
-      var lastModifiedXslDate = new Date($.trim(docs[1].xhr.getResponseHeader('Last-Modified')));
+      var systemDate = Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
+      var latestModifiedDate = getLatestModifiedDate(docs);
       var transformParameters = {
         'author-name': '0',
         'position-sort': 'descending',
         'factor-relevance': '1',
         'system-date': systemDate
       };
-      if (lastModifiedXslDate.getTime() > lastModifiedDate.getTime()) {
-        lastModifiedDate = lastModifiedXslDate;
-      }
       $.mobile.loading('show', {
         text: 'Applying XML Transform...',
         textVisible: true
@@ -723,7 +738,7 @@
       try {
         var xslTransformer = new XSLTProcessor();
         xslTransformer.importStylesheet(xslDoc);
-        $.each(transformParameters, function (name, value) {
+        $.each(transformParameters, function(name, value) {
           xslTransformer.setParameter(null, name, value);
         });
         resultDoc = xslTransformer.transformToDocument(xmlDoc);
@@ -739,12 +754,12 @@
           .addClass('final-rendering');
           var $pageContent = $('body > .page-wrapper > *', resultDoc);
           $xslt.html($pageContent);
-          if ($.type(lastModifiedDate) === 'date') {
+          if ($.type(latestModifiedDate) === 'date') {
             $xslt.find('.author-contact-info-value.author-last-updated').each(function () {
               var $lastUpdated = $(this);
               var dateFormat = $.trim($lastUpdated.attr('data-date-format'));
-              $lastUpdated.attr('data-detected-date', Date.format(lastModifiedDate, 'yyyy-MM-dd\'T\'HH:mm:ss'));
-              $lastUpdated.text(Date.format(lastModifiedDate, dateFormat));
+              $lastUpdated.attr('data-detected-date', Date.format(latestModifiedDate, "yyyy-MM-dd'T'HH:mm:ss"));
+              $lastUpdated.text(Date.format(latestModifiedDate, dateFormat));
             });
           }
           if ($.isFunction($.fn.enhanceWithin)) {
@@ -1078,8 +1093,8 @@
           });
         }
         $.each(element.attributes, function (attrIndex, attr) {
-          var attrName = attr.localName;
-          var attrValue = attr.nodeValue;
+          let attrName = attr.localName;
+          let attrValue = attr.nodeValue;
           if (!isNaN(parseFloat(attrValue))) {
             attrValue = parseFloat(attrValue);
           }

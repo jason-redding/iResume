@@ -107,7 +107,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<div class="text">Full List of Skills</div>
 							</caption>
 							<thead>
-								<tr data-render-title="${level} ${level.preposition#default(levels.preposition)} ${name} with ${experience.duration} ${experience.duration#grammar('year','years')} of experience${experience.until#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}" data-render-tabindex="0">
+								<tr data-render-title="${level} ${level.preposition#default(levels.preposition)} ${name} with ${experience.duration} ${experience.duration#grammar('year','years')} of experience${experience.until#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}"
+										data-render-data-name="${name}"
+										data-render-data-level="${level}"
+										data-render-data-level-value="${level.originalValue}"
+										data-render-data-level-percentage="${level.percentage}"
+										data-render-data-since="${experience.since.value}"
+										data-render-data-until="${experience.until.value}"
+										data-render-data-experience-years="${experience.duration}"
+										data-render-data-experience-duration="P${experience.duration}Y"
+										data-render-data-version="${version}"
+										data-render-data-version-hint="${version.hint}"
+										data-render-tabindex="0">
 									<th class="ui-widget-header"
 											tabindex="0"
 											data-header="Name"

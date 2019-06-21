@@ -31,7 +31,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </xsl:if>
   </xsl:param>
   <xsl:param name="factor-relevance" select="'1'"/>
-  <xsl:param name="enum-author-info" select="false()"/>
   <xsl:key name="level" match="/r:resume/r:meta/r:skill/r:levels/r:level" use="@value"/>
   <xsl:key name="category" match="/r:resume/r:meta/r:skill/r:categories/r:category" use="@value"/>
   <xsl:variable name="max-level">
@@ -87,54 +86,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </xsl:if>
     <xsl:if test="count(r:*) > 0">
       <div class="author-contact">
-        <xsl:choose>
-          <xsl:when
-            test="$enum-author-info = true() or $enum-author-info = '1' or $enum-author-info = 'on' or $enum-author-info = 'yes' or $enum-author-info = 'true'">
-            <xsl:for-each select="r:*">
-              <xsl:sort select="@order" data-type="number" order="ascending"/>
-              <xsl:if test="position() > 1">
-                <span class="separator"></span>
-              </xsl:if>
-              <xsl:call-template name="list-author-info-item"/>
-            </xsl:for-each>
-          </xsl:when>
-          <xsl:otherwise>
-            <div class="author-contact-left">
-              <xsl:call-template name="list-author-info-item">
-                <xsl:with-param name="node" select="r:name"/>
-              </xsl:call-template>
-              <xsl:call-template name="list-author-info-item">
-                <xsl:with-param name="node" select="r:company"/>
-              </xsl:call-template>
-              <xsl:call-template name="list-author-info-item">
-                <xsl:with-param name="node" select="r:email"/>
-              </xsl:call-template>
-              <xsl:call-template name="list-author-info-item">
-                <xsl:with-param name="node" select="r:phone"/>
-              </xsl:call-template>
-            </div>
-            <div class="author-contact-right">
-              <xsl:call-template name="list-author-info-item">
-                <xsl:with-param name="node" select="r:clearance"/>
-              </xsl:call-template>
-              <xsl:call-template name="list-author-info-item">
-                <xsl:with-param name="node" select="r:level"/>
-              </xsl:call-template>
-              <xsl:call-template name="list-author-info-item">
-                <xsl:with-param name="node" select="r:address"/>
-              </xsl:call-template>
-              <xsl:call-template name="list-author-info-item">
-                <xsl:with-param name="node" select="r:willing-to-travel"/>
-              </xsl:call-template>
-              <xsl:call-template name="list-author-info-item">
-                <xsl:with-param name="node" select="r:willing-to-relocate"/>
-              </xsl:call-template>
-              <xsl:call-template name="list-author-info-item">
-                <xsl:with-param name="node" select="r:last-updated"/>
-              </xsl:call-template>
-            </div>
-          </xsl:otherwise>
-        </xsl:choose>
+        <div class="author-contact-left">
+          <xsl:call-template name="list-author-info-item">
+            <xsl:with-param name="node" select="r:name"/>
+          </xsl:call-template>
+          <xsl:call-template name="list-author-info-item">
+            <xsl:with-param name="node" select="r:company"/>
+          </xsl:call-template>
+          <xsl:call-template name="list-author-info-item">
+            <xsl:with-param name="node" select="r:email"/>
+          </xsl:call-template>
+          <xsl:call-template name="list-author-info-item">
+            <xsl:with-param name="node" select="r:phone"/>
+          </xsl:call-template>
+        </div>
+        <div class="author-contact-right">
+          <xsl:call-template name="list-author-info-item">
+            <xsl:with-param name="node" select="r:clearance"/>
+          </xsl:call-template>
+          <xsl:call-template name="list-author-info-item">
+            <xsl:with-param name="node" select="r:level"/>
+          </xsl:call-template>
+          <xsl:call-template name="list-author-info-item">
+            <xsl:with-param name="node" select="r:address"/>
+          </xsl:call-template>
+          <xsl:call-template name="list-author-info-item">
+            <xsl:with-param name="node" select="r:willing-to-travel"/>
+          </xsl:call-template>
+          <xsl:call-template name="list-author-info-item">
+            <xsl:with-param name="node" select="r:willing-to-relocate"/>
+          </xsl:call-template>
+          <xsl:call-template name="list-author-info-item">
+            <xsl:with-param name="node" select="r:last-updated"/>
+          </xsl:call-template>
+        </div>
       </div>
     </xsl:if>
   </xsl:template>

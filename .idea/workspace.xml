@@ -2,26 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ce47777-a2e6-4d57-a4d9-3b839ba33b72" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/god.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/iResume.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resume-old.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resume-old.xsd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resume-old.xsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gulpfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/gulpfile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/iResume.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/iResume.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/format.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/format.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resume.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resume.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resume.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/src/resume.xsd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resume.xsl" beforeDir="false" afterPath="$PROJECT_DIR$/src/resume.xsl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scss/resume-print.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/scss/resume-print.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scss/resume.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/scss/resume.scss" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,16 +32,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="672" column="28" selection-start-line="672" selection-start-column="28" selection-end-line="672" selection-end-column="28" />
+            <state relative-caret-position="368">
+              <caret line="760" column="108" selection-start-line="760" selection-start-column="108" selection-end-line="760" selection-end-column="108" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <element signature="e#4546#9165#0" />
+                <element signature="e#1626#2134#0" />
+                <element signature="e#2208#3050#0" />
+                <element signature="e#3111#3663#0" />
+                <element signature="e#3733#4415#0" />
                 <element signature="e#9691#11773#0" />
                 <element signature="e#12352#13211#0" />
+                <element signature="e#22780#23469#0" />
               </folding>
             </state>
           </provider>
@@ -61,8 +54,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="169" column="40" selection-start-line="169" selection-start-column="40" selection-end-line="169" selection-end-column="40" />
+            <state relative-caret-position="310">
+              <caret line="114" column="64" selection-start-line="114" selection-start-column="64" selection-end-line="114" selection-end-column="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/js/format.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1369">
+              <caret line="453" column="13" selection-start-line="453" selection-start-column="13" selection-end-line="453" selection-end-column="13" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#4857#8295#0" />
+                <element signature="e#7722#7884#0" />
+                <element signature="e#7906#8071#0" />
+                <element signature="e#8094#8277#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,7 +80,7 @@
         <entry file="file://$PROJECT_DIR$/src/resume.xsd">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="552">
-              <caret line="284" column="55" lean-forward="true" selection-start-line="284" selection-start-column="55" selection-end-line="284" selection-end-column="55" />
+              <caret line="284" column="55" selection-start-line="284" selection-start-column="55" selection-end-line="284" selection-end-column="55" />
               <folding>
                 <element signature="n#xs:element#0;n#xs:all#0;n#xs:complexType#0;n#xs:element#0;n#xs:schema#0;n#!!top" />
                 <element signature="n#xs:element#1;n#xs:all#0;n#xs:complexType#0;n#xs:element#0;n#xs:schema#0;n#!!top" />
@@ -87,11 +96,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/resume.xsl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="69" lean-forward="true" selection-start-line="20" selection-start-column="69" selection-end-line="20" selection-end-column="69" />
+            <state relative-caret-position="-369">
+              <caret line="591" column="22" selection-start-line="591" selection-start-column="22" selection-end-line="591" selection-end-column="22" />
               <folding>
                 <element signature="n#head#0;n#html#0;n#xsl:template#0;n#xsl:stylesheet#0;n#!!top" />
-                <element signature="n#xsl:template#1;n#xsl:stylesheet#0;n#!!top" />
                 <element signature="n#xsl:template#6;n#xsl:stylesheet#0;n#!!top" />
                 <element signature="n#xsl:variable#1;n#xsl:template#11;n#xsl:stylesheet#0;n#!!top" />
                 <element signature="n#xsl:variable#2;n#xsl:template#11;n#xsl:stylesheet#0;n#!!top" />
@@ -105,13 +113,12 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/resume.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="471">
-              <caret line="71" selection-start-line="71" selection-end-line="71" />
+            <state relative-caret-position="12555">
+              <caret line="915" column="20" selection-start-line="915" selection-start-column="20" selection-end-line="915" selection-end-column="20" />
               <folding>
-                <element signature="n#skills#0;n#resume#0;n#!!top" />
                 <element signature="n#position#0;n#positions#0;n#employer#1;n#employers#0;n#resume#0;n#!!top" />
                 <element signature="n#projects#0;n#position#1;n#positions#0;n#employer#1;n#employers#0;n#resume#0;n#!!top" />
               </folding>
@@ -131,8 +138,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/scss/resume-print.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2355">
-              <caret line="157" column="20" selection-start-line="157" selection-start-column="20" selection-end-line="157" selection-end-column="20" />
+            <state relative-caret-position="45">
+              <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -141,10 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.skills</find>
-      <find>[.&quot;]skills</find>
-      <find>certificate</find>
-      <find>employer</find>
       <find>competenc</find>
       <find>\.skill</find>
       <find>\.section-heading</find>
@@ -171,11 +174,16 @@
       <find>div\.skills</find>
       <find>skill\b</find>
       <find>resume\.(xml|xsl)</find>
+      <find>\$enum-author-info</find>
+      <find>skillsTable\.on</find>
+      <find>date\.(get)([^(]*)</find>
+      <find>levels</find>
     </findStrings>
     <replaceStrings>
       <replace>$1&gt;\n&lt;xsl:value-of select=&quot;$2&quot;/&gt;\n&lt;/xsl:with-param&gt;</replace>
       <replace>$1&gt;\n\t&lt;xsl:value-of select=&quot;$2&quot;/&gt;\n&lt;/xsl:with-param&gt;</replace>
       <replace>$1&gt;\n\t\t\t\t\t\t&lt;xsl:value-of select=&quot;$2&quot;/&gt;\n\t\t\t\t\t&lt;/xsl:with-param&gt;</replace>
+      <replace>date['$1' + useUTC + '$2']</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -184,17 +192,18 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/scss/resume-print.scss" />
         <option value="$PROJECT_DIR$/src/resume.xsd" />
         <option value="$PROJECT_DIR$/src/scss/resume.scss" />
         <option value="$PROJECT_DIR$/gulpfile.js" />
         <option value="$PROJECT_DIR$/src/resume-bah.xml" />
         <option value="$PROJECT_DIR$/src/resume-bah.xsl" />
-        <option value="$PROJECT_DIR$/src/index.html" />
         <option value="$PROJECT_DIR$/src/resume-old.xml" />
-        <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/src/resume.xsl" />
         <option value="$PROJECT_DIR$/src/resume.xml" />
+        <option value="$PROJECT_DIR$/src/scss/resume-print.scss" />
+        <option value="$PROJECT_DIR$/src/index.html" />
+        <option value="$PROJECT_DIR$/src/js/format.js" />
+        <option value="$PROJECT_DIR$/src/index.js" />
       </list>
     </option>
   </component>
@@ -231,17 +240,6 @@
             <path>
               <item name="iResume" type="b2602c69:ProjectViewProjectNode" />
               <item name="master" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="iResume" type="b2602c69:ProjectViewProjectNode" />
-              <item name="master" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="iResume" type="b2602c69:ProjectViewProjectNode" />
-              <item name="master" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="scss" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -345,19 +343,19 @@
       <workItem from="1559329919962" duration="8095000" />
       <workItem from="1560476517700" duration="57614000" />
       <workItem from="1560971889830" duration="3033000" />
-      <workItem from="1560984914115" duration="13042000" />
+      <workItem from="1560984914115" duration="28134000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="84542000" />
+    <option name="totallyTimeSpent" value="99634000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="49" y="23" width="1871" height="1177" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49438202" visible="true" weight="0.19409513" />
-      <window_info id="Structure" order="1" sideWeight="0.505618" side_tool="true" visible="true" weight="0.19409513" />
+      <window_info active="true" id="Structure" order="1" sideWeight="0.505618" side_tool="true" visible="true" weight="0.19409513" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -365,7 +363,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32956687" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32956687" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32956687" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -427,13 +425,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/scss/resume-print.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2355">
-          <caret line="157" column="20" selection-start-line="157" selection-start-column="20" selection-end-line="157" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/scss/resume.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
@@ -448,13 +439,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="169" column="40" selection-start-line="169" selection-start-column="40" selection-end-line="169" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/resume-old.xsl">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -465,26 +449,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="672" column="28" selection-start-line="672" selection-start-column="28" selection-end-line="672" selection-end-column="28" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#4546#9165#0" />
-            <element signature="e#9691#11773#0" />
-            <element signature="e#12352#13211#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/resume-old.xsd">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/resume.xsd">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="552">
-          <caret line="284" column="55" lean-forward="true" selection-start-line="284" selection-start-column="55" selection-end-line="284" selection-end-column="55" />
+          <caret line="284" column="55" selection-start-line="284" selection-start-column="55" selection-end-line="284" selection-end-column="55" />
           <folding>
             <element signature="n#xs:element#0;n#xs:all#0;n#xs:complexType#0;n#xs:element#0;n#xs:schema#0;n#!!top" />
             <element signature="n#xs:element#1;n#xs:all#0;n#xs:complexType#0;n#xs:element#0;n#xs:schema#0;n#!!top" />
@@ -496,13 +467,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/scss/resume-print.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/resume.xsl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="69" lean-forward="true" selection-start-line="20" selection-start-column="69" selection-end-line="20" selection-end-column="69" />
+        <state relative-caret-position="-369">
+          <caret line="591" column="22" selection-start-line="591" selection-start-column="22" selection-end-line="591" selection-end-column="22" />
           <folding>
             <element signature="n#head#0;n#html#0;n#xsl:template#0;n#xsl:stylesheet#0;n#!!top" />
-            <element signature="n#xsl:template#1;n#xsl:stylesheet#0;n#!!top" />
             <element signature="n#xsl:template#6;n#xsl:stylesheet#0;n#!!top" />
             <element signature="n#xsl:variable#1;n#xsl:template#11;n#xsl:stylesheet#0;n#!!top" />
             <element signature="n#xsl:variable#2;n#xsl:template#11;n#xsl:stylesheet#0;n#!!top" />
@@ -517,12 +494,63 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/resume.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="71" selection-start-line="71" selection-end-line="71" />
+        <state relative-caret-position="12555">
+          <caret line="915" column="20" selection-start-line="915" selection-start-column="20" selection-end-line="915" selection-end-column="20" />
           <folding>
-            <element signature="n#skills#0;n#resume#0;n#!!top" />
             <element signature="n#position#0;n#positions#0;n#employer#1;n#employers#0;n#resume#0;n#!!top" />
             <element signature="n#projects#0;n#position#1;n#positions#0;n#employer#1;n#employers#0;n#resume#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="70" column="2" selection-start-line="70" selection-start-column="2" selection-end-line="70" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="573" column="13" selection-start-line="573" selection-start-column="13" selection-end-line="573" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="114" column="64" selection-start-line="114" selection-start-column="64" selection-end-line="114" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/format.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1369">
+          <caret line="453" column="13" selection-start-line="453" selection-start-column="13" selection-end-line="453" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#4857#8295#0" />
+            <element signature="e#7722#7884#0" />
+            <element signature="e#7906#8071#0" />
+            <element signature="e#8094#8277#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="760" column="108" selection-start-line="760" selection-start-column="108" selection-end-line="760" selection-end-column="108" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#1626#2134#0" />
+            <element signature="e#2208#3050#0" />
+            <element signature="e#3111#3663#0" />
+            <element signature="e#3733#4415#0" />
+            <element signature="e#9691#11773#0" />
+            <element signature="e#12352#13211#0" />
+            <element signature="e#22780#23469#0" />
           </folding>
         </state>
       </provider>

@@ -1,5 +1,8 @@
 @import "_common";
 
+$competencyColumns: 2;
+$skillColumns: 2;
+
 @media print {
 	thead {
 		> tr {
@@ -141,16 +144,17 @@
 			display: none;
 		}
 	}
+
 	div.skills {
-		-webkit-column-count: 2;
-		-moz-column-count: 2;
-		column-count: 2;
+		-webkit-column-count: $skillColumns;
+		-moz-column-count: $skillColumns;
+		column-count: $skillColumns;
 	}
 
 	.section-content[data-section="competencies"] {
-		-webkit-column-count: 2;
-		-moz-column-count: 2;
-		column-count: 2;
+		-webkit-column-count: $competencyColumns;
+		-moz-column-count: $competencyColumns;
+		column-count: $competencyColumns;
 	}
 
 	.position-header {

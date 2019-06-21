@@ -238,7 +238,7 @@
 		if (token.length > 0) {
 			evalArg(token);
 		}
-		function evalArg() {
+		function evalArg(token) {
 			if (token === 'true' || token === 'false') {
 				args.push((token === 'true'));
 				token = '';
@@ -397,7 +397,7 @@
 			var evalTokenMod = function(token, format, value, props) {
 				if (format === null) {
 					if (value instanceof Date) {
-						format = "date('M/d/yyyy')";
+						format = "date(\"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'\", true)";
 					} else {
 						format = 'raw';
 					}
@@ -418,10 +418,11 @@
 					} else if (fName === 'html') {
 						value = ('' + value).decodeHTML();
 					} else if (fName === 'suffix') {
-						value = Number.getSuffix(parseFloat(value), (fArgs.length > 0 && fArgs[0] === true));
+						// value = Number.getSuffix(parseFloat(value), (fArgs.length > 0 && fArgs[0] === true));
+						value = Number.prototype.getSuffix.apply(parseFloat(value), fArgs);
 					} else if (fName === 'date') {
 						if (value instanceof Date) {
-							value = Date.format(value, fArgs[0]);
+							value = Date.prototype.format.apply(value, fArgs);
 						}
 					} else if (fName === 'grammar') {
 						if (fArgs.length > 1) {
@@ -451,14 +452,6 @@
 						if (value === null) {
 							value = fArgs[0];
 						}
-//						try {
-//							console.log(value);
-//							var temp = evalToken(value);
-//							console.log(temp);
-//							//value = temp;
-//						} catch (ex) {
-//							console.dir(ex);
-//						}
 					} else if (/^upper(case)?$/.test(fName)) {
 						value = ('' + value).toUpperCase();
 					} else if (/^lower(case)?$/.test(fName)) {
@@ -607,17 +600,27 @@
 		}
 		return r;
 	};
-	Date.format = function(date, format) {
+	Date.stringify = function(date) {
+		if (date === null) {
+			return null;
+		}
+		return Date.format(date, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", true);
+	};
+	Date.prototype.stringify = function() {
+		return Date.stringify(this);
+	};
+	Date.format = function(date, format, useUTC) {
 		var ampm = 'AM';
-		var y = date.getFullYear();
-		var M = (date.getMonth() + 1);
-		var d = date.getDate();
-		var diw = (date.getDay() + 1);
-		var H = date.getHours();
+		useUTC = (useUTC === true ? 'UTC' : '');
+		var y = date['get' + useUTC + 'FullYear']();
+		var M = (date['get' + useUTC + 'Month']() + 1);
+		var d = date['get' + useUTC + 'Date']();
+		var diw = (date['get' + useUTC + 'Day']() + 1);
+		var H = date['get' + useUTC + 'Hours']();
 		var h = H;
-		var m = date.getMinutes();
-		var s = date.getSeconds();
-		var S = date.getMilliseconds();
+		var m = date['get' + useUTC + 'Minutes']();
+		var s = date['get' + useUTC + 'Seconds']();
+		var S = date['get' + useUTC + 'Milliseconds']();
 		if (H >= 12) {
 			if (H > 12) {
 				h = H - 12;
@@ -703,7 +706,6 @@
 				}
 				break;
 			}
-			//			alert("'" + match + "'.length = " + match.length + "\nreplaced with: '" + rv + "'.length = " + rv.length);
 			var num = parseInt(rv);
 			var isNum = !isNaN(num);
 			var mod = '';
@@ -722,8 +724,8 @@
 		out = ('' + format).replace(PATTERN_ALL_SYMBOLS, regexReplace, 'gm');
 		return out;
 	};
-	Date.prototype.format = function(format) {
-		return Date.format(this, format);
+	Date.prototype.format = function(format, useUTC) {
+		return Date.format(this, format, useUTC);
 	};
 	Date.isLeapYear = function(year) {
 		return ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0);
