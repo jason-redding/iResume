@@ -236,6 +236,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <level value="3"/>
       <experience>
         <since>2014-01</since>
+        <until>2017-01</until>
       </experience>
       <categories>
         <category value="os"/>
