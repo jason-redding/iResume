@@ -215,14 +215,14 @@ pre.code-container {
 }
 
 .section-heading {
-  margin: 1em 0;
+  margin: 1em 0 0.5em;
   font-weight: bold;
   font-size: 1.3em;
   text-decoration: underline;
 }
 
 .section-content {
-  margin: 1em;
+  margin: 0.5em 1em 1em;
 }
 
 .header {
@@ -385,7 +385,8 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     &.author-name {
-      font-size: 1.5em;
+      font-size: 1.7em;
+      min-height: 1.45em;
     }
   }
 
@@ -398,9 +399,41 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+.certifications {
+  margin-left: 1.5em;
+
+  .certificate-item {
+    display: list-item;
+    list-style-type: square;
+  }
+
+  @media (min-width: 55em) {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+  }
+  //@media (min-width: 80em) {
+  //  -webkit-column-count: 3;
+  //  -moz-column-count: 3;
+  //  column-count: 3;
+  //}
+  //@media (min-width: 100em) {
+  //  -webkit-column-count: 4;
+  //  -moz-column-count: 4;
+  //  column-count: 4;
+  //}
+}
+
 .certificate {
+  display: inline-flex;
+  flex-direction: column;
+
   &[data-issue-year]::after {
-    content: ' (' attr(data-issue-year) ')';
+    content: '(' attr(data-issue-year) ')';
+    font-size: 0.75em;
+  }
+  &[data-issue-year][data-expire-year]::after {
+    content: '(' attr(data-issue-year) ' - ' attr(data-expire-year) ')';
   }
 }
 
@@ -434,7 +467,7 @@ h1, h2, h3, h4, h5, h6 {
     }
   }
 
-  @media (min-width: 45em) {
+  @media (min-width: 46em) {
     -webkit-column-count: 2;
     -moz-column-count: 2;
     column-count: 2;
@@ -443,6 +476,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .position-container {
   margin-top: 1em;
+  margin-bottom: 1.5em;
   page-break-before: always;
 }
 
@@ -451,7 +485,7 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   position: relative;
   flex-wrap: wrap;
-  margin-top: 1.5em;
+  margin-top: 1em;
   margin-bottom: 0.5em;
 
   .position-employer {

@@ -82,6 +82,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xs:complexType>
 						<xs:all>
 							<xs:element name="name" minOccurs="0" type="type-contact-info"/>
+              <xs:element name="seeking" minOccurs="0" type="type-contact-info"/>
 							<xs:element name="company" minOccurs="0" type="type-contact-info"/>
 							<xs:element name="email" minOccurs="0" type="type-contact-info"/>
 							<xs:element name="phone" minOccurs="0" type="type-contact-info"/>
@@ -320,8 +321,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</xs:complexType>
 	
 	<xs:complexType name="type-duration" mixed="true">
-		<xs:attribute name="from" type="type-date-time"/>
+		<xs:attribute name="from" type="type-date-time" use="required"/>
 		<xs:attribute name="to" type="type-date-time"/>
+		<xs:attribute name="weight" type="type-duration-weight" default="1"/>
 		<xs:attribute name="unit" type="type-date-precision"/>
 	</xs:complexType>
 
@@ -343,6 +345,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
+
+	<xs:simpleType name="type-duration-weight">
+		<xs:restriction base="xs:decimal">
+			<xs:minExclusive value="0"/>
+			<xs:maxInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
 
 	<xs:simpleType name="type-boolean">
 		<xs:restriction base="xs:string">

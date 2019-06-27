@@ -664,7 +664,7 @@
 
   function loadResumeXML() {
     $.mobile.loading('show', {
-      text: 'Tranforming résumé from XML...',
+      text: 'Transforming résumé from XML...',
       textVisible: true
     });
 

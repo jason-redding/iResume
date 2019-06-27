@@ -78,8 +78,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </xsl:template>
 
   <xsl:template name="handle-profile-author" match="r:author">
-    <xsl:if
-      test="$author-name = '1' or $author-name = 'yes' or $author-name = 'true' or $author-name = 'on'">
+    <xsl:if test="$author-name = '1' or $author-name = 'yes' or $author-name = 'true' or $author-name = 'on'">
       <h1 class="author-name">
         <xsl:value-of select="normalize-space(@name)"/>
       </h1>
@@ -92,6 +91,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </xsl:call-template>
           <xsl:call-template name="list-author-info-item">
             <xsl:with-param name="node" select="r:company"/>
+          </xsl:call-template>
+          <xsl:call-template name="list-author-info-item">
+            <xsl:with-param name="node" select="r:seeking"/>
           </xsl:call-template>
           <xsl:call-template name="list-author-info-item">
             <xsl:with-param name="node" select="r:email"/>
@@ -318,7 +320,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <xsl:for-each select="r:skill">
           <xsl:sort select="r:name" order="ascending"/>
           <xsl:sort select="r:level/@value" data-type="number" order="descending"/>
-          <xsl:sort select="concat(r:experience/r:since, '_', r:experience/r:until)" data-type="text" order="ascending"/>
+          <xsl:sort select="concat(r:experience/r:since, '_', r:experience/r:until)" data-type="text"
+                    order="ascending"/>
           <div class="skill-item">
             <xsl:call-template name="list-skill">
               <xsl:with-param name="show-details" select="true()"/>
@@ -518,55 +521,55 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </xsl:attribute>
       <div class="certifications">
         <xsl:for-each select="r:certificate">
-          <xsl:if test="position() > 1">
-            <xsl:text>, </xsl:text>
-          </xsl:if>
-          <span class="certificate">
-            <xsl:attribute name="data-name">
-              <xsl:value-of select="normalize-space(r:name)"/>
-            </xsl:attribute>
-            <xsl:attribute name="data-issuer">
-              <xsl:value-of select="normalize-space(r:issuer)"/>
-            </xsl:attribute>
-            <xsl:attribute name="data-issue-date">
-              <xsl:value-of select="normalize-space(r:issue-date)"/>
-            </xsl:attribute>
-            <xsl:attribute name="data-issue-year">
-              <xsl:call-template name="date-format">
-                <xsl:with-param name="date" select="r:issue-date"/>
-                <xsl:with-param name="format" select="'yyyy'"/>
-              </xsl:call-template>
-            </xsl:attribute>
-            <xsl:if test="count(r:expire-date) > 0">
-              <xsl:attribute name="data-expire-date">
-                <xsl:value-of select="normalize-space(r:expire-date)"/>
+          <span class="certificate-item">
+            <span class="certificate">
+              <xsl:attribute name="data-name">
+                <xsl:value-of select="normalize-space(r:name)"/>
               </xsl:attribute>
-              <xsl:attribute name="data-expire-year">
+              <xsl:attribute name="data-issuer">
+                <xsl:value-of select="normalize-space(r:issuer)"/>
+              </xsl:attribute>
+              <xsl:attribute name="data-issue-date">
+                <xsl:value-of select="normalize-space(r:issue-date)"/>
+              </xsl:attribute>
+              <xsl:attribute name="data-issue-year">
                 <xsl:call-template name="date-format">
-                  <xsl:with-param name="date" select="r:expire-date"/>
+                  <xsl:with-param name="date" select="r:issue-date"/>
                   <xsl:with-param name="format" select="'yyyy'"/>
                 </xsl:call-template>
               </xsl:attribute>
-            </xsl:if>
-            <xsl:if test="count(r:score) > 0">
-              <xsl:attribute name="data-score">
-                <xsl:value-of select="normalize-space(r:score)"/>
-              </xsl:attribute>
-            </xsl:if>
-            <xsl:if test="count(r:max-score) > 0">
-              <xsl:attribute name="data-max-score">
-                <xsl:value-of select="normalize-space(r:max-score)"/>
-              </xsl:attribute>
-            </xsl:if>
-            <xsl:attribute name="title">
-              <xsl:value-of select="normalize-space(r:name)"/>
-            </xsl:attribute>
-            <span class="text">
-              <xsl:if test="count(r:issuer) > 0 and not(starts-with(normalize-space(r:name), normalize-space(r:issuer)))">
-                <xsl:value-of select="normalize-space(r:issuer)"/>
-                <xsl:text> </xsl:text>
+              <xsl:if test="count(r:expire-date) > 0">
+                <xsl:attribute name="data-expire-date">
+                  <xsl:value-of select="normalize-space(r:expire-date)"/>
+                </xsl:attribute>
+                <xsl:attribute name="data-expire-year">
+                  <xsl:call-template name="date-format">
+                    <xsl:with-param name="date" select="r:expire-date"/>
+                    <xsl:with-param name="format" select="'yyyy'"/>
+                  </xsl:call-template>
+                </xsl:attribute>
               </xsl:if>
-              <xsl:value-of select="normalize-space(r:name)"/>
+              <xsl:if test="count(r:score) > 0">
+                <xsl:attribute name="data-score">
+                  <xsl:value-of select="normalize-space(r:score)"/>
+                </xsl:attribute>
+              </xsl:if>
+              <xsl:if test="count(r:max-score) > 0">
+                <xsl:attribute name="data-max-score">
+                  <xsl:value-of select="normalize-space(r:max-score)"/>
+                </xsl:attribute>
+              </xsl:if>
+              <xsl:attribute name="title">
+                <xsl:value-of select="normalize-space(r:name)"/>
+              </xsl:attribute>
+              <span class="text">
+                <xsl:if
+                  test="count(r:issuer) > 0 and not(starts-with(normalize-space(r:name), normalize-space(r:issuer)))">
+                  <xsl:value-of select="normalize-space(r:issuer)"/>
+                  <xsl:text> </xsl:text>
+                </xsl:if>
+                <xsl:value-of select="normalize-space(r:name)"/>
+              </span>
             </span>
           </span>
         </xsl:for-each>
@@ -769,6 +772,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <xsl:value-of select="normalize-space(@to)"/>
       </xsl:if>
     </xsl:param>
+    <xsl:param name="weight">
+      <xsl:if test="count(self::r:duration[@weight]) > 0">
+        <xsl:value-of select="number(normalize-space(@weight))"/>
+      </xsl:if>
+    </xsl:param>
     <xsl:variable name="start-date">
       <xsl:call-template name="date-eval">
         <xsl:with-param name="date">
@@ -821,13 +829,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </xsl:call-template>
     </xsl:variable>
 
+    <xsl:variable name="duration-weight">
+      <xsl:choose>
+        <xsl:when test="number($weight) = number($weight)">
+          <xsl:value-of select="number($weight)"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="1"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
     <xsl:variable name="duration">
       <xsl:choose>
-        <xsl:when test="(number($end-year) - number($start-year)) = 0">
+        <xsl:when test="((number($end-year) - number($start-year)) * $duration-weight) = 0">
           <xsl:value-of select="1"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="(number($end-year) - number($start-year))"/>
+          <xsl:value-of select="((number($end-year) - number($start-year)) * $duration-weight)"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>

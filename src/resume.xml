@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         xmlns:h="http://www.w3.org/1999/xhtml"
         xmlns:r="http://jman.rocketssdhosting.com/xsd/resume"
         xsi:schemaLocation="http://jman.rocketssdhosting.com/xsd/resume resume.xsd"
-        last-modified="2019-06-20T11:40:00">
+        last-modified="2019-06-26T23:42:00">
   <meta>
     <skill>
       <levels preposition="at">
@@ -50,13 +50,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </meta>
   <author name="Jason Redding">
     <name>Jason Redding</name>
-    <company>Booz Allen Hamilton</company>
+    <seeking label="Seeking">Mid-level position</seeking>
     <email label="Email">jason.redding@gmail.com</email>
     <phone label="Cell">410-428-8522</phone>
     <clearance label="Clearance">None</clearance>
-    <level label="Level">Staff Technologist</level>
     <address label="Residence">Washington, DC</address>
-    <willing-to-travel label="% Willing to Travel">20%</willing-to-travel>
+    <willing-to-travel label="% Willing to Travel">15%</willing-to-travel>
     <willing-to-relocate label="Willing to Relocate">No</willing-to-relocate>
     <last-updated label="Last Updated" format="M/d/yyyy"/>
   </author>
