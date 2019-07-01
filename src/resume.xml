@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         xmlns:h="http://www.w3.org/1999/xhtml"
         xmlns:r="http://jman.rocketssdhosting.com/xsd/resume"
         xsi:schemaLocation="http://jman.rocketssdhosting.com/xsd/resume resume.xsd"
-        last-modified="2019-06-26T23:42:00">
+        last-modified="2019-07-01T11:13:00">
   <meta>
     <skill>
       <levels preposition="at">
@@ -49,7 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </skill>
   </meta>
   <author name="Jason Redding">
-    <name>Jason Redding</name>
+    <name/>
     <seeking label="Seeking">Mid-level position</seeking>
     <email label="Email">jason.redding@gmail.com</email>
     <phone label="Cell">410-428-8522</phone>

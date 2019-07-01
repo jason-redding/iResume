@@ -101,7 +101,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </xs:complexType>
               </xs:element>
 						</xs:all>
-						<xs:attribute name="name"/>
+						<xs:attribute name="name" use="required"/>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="description" type="type-profile-description"/>

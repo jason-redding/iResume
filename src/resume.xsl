@@ -182,6 +182,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </xsl:attribute>
           </xsl:if>
           <xsl:choose>
+            <xsl:when test="local-name() = 'name'">
+              <xsl:choose>
+                <xsl:when test="string-length(normalize-space()) > 0">
+                  <xsl:value-of select="normalize-space()"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="normalize-space(ancestor::r:author/@name)"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:when>
             <xsl:when test="local-name() = 'address'">
               <xsl:attribute name="href">
                 <xsl:text>//maps.apple.com/?</xsl:text>

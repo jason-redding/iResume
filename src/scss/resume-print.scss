@@ -1,7 +1,8 @@
 @import "_common";
 
-$competencyColumns: 2;
-$skillColumns: 2;
+$competencyPrintColumns: 2;
+$skillPrintColumns: 2;
+$certificationPrintColumns: 2;
 
 @media print {
 	thead {
@@ -146,16 +147,31 @@ $skillColumns: 2;
 	}
 
 	div.skills {
-		-webkit-column-count: $skillColumns;
-		-moz-column-count: $skillColumns;
-		column-count: $skillColumns;
+		-webkit-column-count: $skillPrintColumns;
+		-moz-column-count: $skillPrintColumns;
+		column-count: $skillPrintColumns;
+    -webkit-column-width: auto;
+    -moz-column-width: auto;
+    column-width: auto;
 	}
 
 	.section-content[data-section="competencies"] {
-		-webkit-column-count: $competencyColumns;
-		-moz-column-count: $competencyColumns;
-		column-count: $competencyColumns;
+		-webkit-column-count: $competencyPrintColumns;
+		-moz-column-count: $competencyPrintColumns;
+		column-count: $competencyPrintColumns;
+    -webkit-column-width: auto;
+    -moz-column-width: auto;
+    column-width: auto;
 	}
+
+  div.certifications {
+    -webkit-column-count: $certificationPrintColumns;
+    -moz-column-count: $certificationPrintColumns;
+    column-count: $certificationPrintColumns;
+    -webkit-column-width: auto;
+    -moz-column-width: auto;
+    column-width: auto;
+  }
 
 	.position-header {
 		&::before, &::after {
