@@ -980,7 +980,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </h:li>
               <h:li>Develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application interfacing
                 with <skill>Active Directory</skill> and multiple RDBMS to provide Technical Support personnel with
-                indispensible information dashboards and tools that they can use to manage and troubleshoot account
+                indispensable information dashboards and tools that they can use to manage and troubleshoot account
                 issues.
               </h:li>
               <h:li>Design and develop a <skill name="command-line interface">CLI</skill> which uses
@@ -993,7 +993,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 interfacing with <skill>Active Directory</skill> and RDBMS to provide students a way to recover their
                 account and reset their password.
               </h:li>
-              <h:li>Install, configure, customize, augment, and maintain a third-party multitier Event Scheduling
+              <h:li>Install, configure, customize, augment, and maintain a third-party multi-tier Event Scheduling
                 software package using <skill>Javascript</skill>, <skill>jQuery</skill>, <skill>jQuery UI</skill>,
                 <skill>HTML</skill>, <skill>CSS</skill>, <skill name="xsl/xslt">XSLT</skill>, <skill>XPath</skill>,
                 and <skill>SQL</skill>.
