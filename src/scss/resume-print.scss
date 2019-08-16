@@ -5,166 +5,187 @@ $skillPrintColumns: 2;
 $certificationPrintColumns: 2;
 
 @media print {
-	thead {
-		> tr {
-			page-break-inside: avoid;
-			break-inside: avoid;
-			page-break-after: auto;
-			break-after: auto;
-		}
-	}
-	.project-title,
-	.section-heading,
-	.employer-title {
-		page-break-after: avoid;
-		break-after: avoid;
-	}
-	.project-description {
-		page-break-before: avoid;
-		break-before: avoid;
-		span.project-link {
-			text-align: left;
-		}
-	}
-	.project-item {
-		border-radius: 0 !important;
-		.ui-collapsible-content {
-			border-bottom-width: 0;
-			&.ui-collapsible-content-collapsed {
-				display: block;
-			}
-		}
-	}
-	li, tr, td, th {
-		page-break-inside: avoid;
-		break-inside: avoid;
-	}
-	table.skills {
-		border-style: none;
-		caption {
-			display: table-caption;
-		}
-		thead > tr > th > .data {
-			margin-right: 0;
-			&::after {
-				content: none;
-			}
-		}
-		&, th, td {
-			border: 1px solid hsl(0, 0%, 87%) !important;
-		}
-	}
-	* {
-		&, &::before, &::after {
-			background-image: none !important;
-			background-color: initial !important;
-			text-shadow: none !important;
-			color: hsl(0, 0%, 10%) !important;
-		}
-		&.ui-header {
-			border-color: hsl(0, 0%, 87%) !important
-		}
-	}
-	#tabs-nav, #tab-panel-code, .ui-tooltip {
-		display: none !important;
-	}
-	.ui-page-theme-a,
-	html .ui-bar-a,
-	html .ui-body-a,
-	html body .ui-group-theme-a,
-	.ui-page-theme-b,
-	html .ui-bar-b,
-	html .ui-body-b,
-	html body .ui-group-theme-b {
-		a:hover {
-			&::before, &::after {
-				color: $textColorLightTheme;
-			}
-		}
-	}
-	body {
-		> .ui-page.ui-page-active {
-			box-shadow: none;
-			> main > .main-inner {
-				display: flex;
-				flex-direction: column;
-				div.skills .skill {
-					color: inherit;
-				}
-				.tab-panel {
-					&:not(#tab-panel-code) {
-						page-break-before: always;
-						break-before: page;
-						page-break-after: always;
-						break-after: page;
-						display: flex !important;
-						&:not(#tab-panel-skills) {
-							max-width: none !important;
-						}
-					}
-					&#tab-panel-resume {
-						order: 1;
-						margin-top: 0;
-					}
-					&#tab-panel-skills {
-						order: 2;
-						margin-left: 0;
-						margin-right: 0;
-						max-width: none;
-						display: none !important;
-					}
-					&#tab-panel-code {
-						order: 3;
-						display: none;
-					}
-				}
-				#skill-categories {
-					display: none;
-				}
-			}
-		}
-	}
-	.ui-collapsible {
-		.ui-collapsible-heading {
-			.ui-collapsible-heading-toggle {
-				&.ui-btn-icon-left {
-					padding-left: 1em !important;
-				}
-				&.ui-btn-icon-right {
-					padding-right: 1em !important;
-				}
-			}
-		}
-		.ui-collapsible-heading-toggle, .ui-collapsible-content {
-			border-color: hsla(0, 0%, 0%, 0) !important;
-		}
-	}
-	.ui-page.ui-page-active.ui-page-header-fixed {
-		padding-top: 0 !important;
-		> header.ui-header.ui-header-fixed {
-			display: none;
-		}
-	}
+  thead {
+    > tr {
+      page-break-inside: avoid;
+      break-inside: avoid;
+      page-break-after: auto;
+      break-after: auto;
+    }
+  }
+  .project-title,
+  .section-heading,
+  .employer-title {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  .project-description {
+    page-break-before: avoid;
+    break-before: avoid;
 
-	div.skills {
-		-webkit-column-count: $skillPrintColumns;
-		-moz-column-count: $skillPrintColumns;
-		column-count: $skillPrintColumns;
+    span.project-link {
+      text-align: left;
+    }
+  }
+  .project-item {
+    border-radius: 0 !important;
+
+    .ui-collapsible-content {
+      border-bottom-width: 0;
+
+      &.ui-collapsible-content-collapsed {
+        display: block;
+      }
+    }
+  }
+  li, tr, td, th {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  table.skills {
+    border-style: none;
+
+    caption {
+      display: table-caption;
+    }
+
+    thead > tr > th > .data {
+      margin-right: 0;
+
+      &::after {
+        content: none;
+      }
+    }
+
+    &, th, td {
+      border: 1px solid hsl(0, 0%, 87%) !important;
+    }
+  }
+  * {
+    &, &::before, &::after {
+      background-image: none !important;
+      background-color: initial !important;
+      text-shadow: none !important;
+      color: hsl(0, 0%, 10%) !important;
+    }
+
+    &.ui-header {
+      border-color: hsl(0, 0%, 87%) !important
+    }
+  }
+  #tabs-nav, #tab-panel-code, .ui-tooltip {
+    display: none !important;
+  }
+  .ui-page-theme-a,
+  html .ui-bar-a,
+  html .ui-body-a,
+  html body .ui-group-theme-a,
+  .ui-page-theme-b,
+  html .ui-bar-b,
+  html .ui-body-b,
+  html body .ui-group-theme-b {
+    a:hover {
+      &::before, &::after {
+        color: $textColorLightTheme;
+      }
+    }
+  }
+  body {
+    > .ui-page.ui-page-active {
+      box-shadow: none;
+
+      > main > .main-inner {
+        display: flex;
+        flex-direction: column;
+
+        div.skills .skill {
+          color: inherit;
+        }
+
+        .tab-panel {
+          &:not(#tab-panel-code) {
+            page-break-before: always;
+            break-before: page;
+            page-break-after: always;
+            break-after: page;
+            display: flex !important;
+
+            &:not(#tab-panel-skills) {
+              max-width: none !important;
+            }
+          }
+
+          &#tab-panel-resume {
+            order: 1;
+            margin-top: 0;
+          }
+
+          &#tab-panel-skills {
+            order: 2;
+            margin-left: 0;
+            margin-right: 0;
+            max-width: none;
+            display: none !important;
+          }
+
+          &#tab-panel-code {
+            order: 3;
+            display: none;
+          }
+        }
+
+        #skill-categories {
+          display: none;
+        }
+      }
+    }
+  }
+  .ui-collapsible {
+    .ui-collapsible-heading {
+      .ui-collapsible-heading-toggle {
+        &.ui-btn-icon-left {
+          padding-left: 1em !important;
+        }
+
+        &.ui-btn-icon-right {
+          padding-right: 1em !important;
+        }
+      }
+    }
+
+    .ui-collapsible-heading-toggle, .ui-collapsible-content {
+      border-color: hsla(0, 0%, 0%, 0) !important;
+    }
+  }
+  .ui-page.ui-page-active.ui-page-header-fixed {
+    padding-top: 0 !important;
+
+    > header.ui-header.ui-header-fixed {
+      display: none;
+    }
+  }
+
+  ul, ol {
+    &.skills {
+      -webkit-column-count: $skillPrintColumns;
+      -moz-column-count: $skillPrintColumns;
+      column-count: $skillPrintColumns;
+      -webkit-column-width: auto;
+      -moz-column-width: auto;
+      column-width: auto;
+    }
+  }
+
+  .competency-list {
+    -webkit-column-count: $competencyPrintColumns;
+    -moz-column-count: $competencyPrintColumns;
+    column-count: $competencyPrintColumns;
     -webkit-column-width: auto;
     -moz-column-width: auto;
     column-width: auto;
-	}
+  }
 
-	.section-content[data-section="competencies"] {
-		-webkit-column-count: $competencyPrintColumns;
-		-moz-column-count: $competencyPrintColumns;
-		column-count: $competencyPrintColumns;
-    -webkit-column-width: auto;
-    -moz-column-width: auto;
-    column-width: auto;
-	}
-
-  div.certifications {
+  .certificate-list {
     -webkit-column-count: $certificationPrintColumns;
     -moz-column-count: $certificationPrintColumns;
     column-count: $certificationPrintColumns;
@@ -173,17 +194,17 @@ $certificationPrintColumns: 2;
     column-width: auto;
   }
 
-	.position-header {
-		&::before, &::after {
-			content: none;
-		}
-	}
-	//a[href]:not([href^="#"]) {
-	//	&:not(.project-link):not(.author-contact-info) {
-	//		&::after {
-	//			content: " [" attr(href) "]";
-	//			font-size: 0.9em;
-	//		}
-	//	}
-	//}
+  .position-header {
+    &::before, &::after {
+      content: none;
+    }
+  }
+  //a[href]:not([href^="#"]) {
+  //	&:not(.project-link):not(.author-contact-info) {
+  //		&::after {
+  //			content: " [" attr(href) "]";
+  //			font-size: 0.9em;
+  //		}
+  //	}
+  //}
 }

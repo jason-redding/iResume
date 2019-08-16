@@ -293,22 +293,17 @@ pre.code-container {
   }
 }
 
-div.skills {
-  margin-left: 1.4em;
-  -webkit-column-width: 20em;
-  -moz-column-width: 20em;
-  column-width: 20em;
+ul, ol {
+  &.skills {
+    .skill-item {
+    }
 
-  .skill-item {
-    display: list-item;
-    list-style-type: square;
-  }
+    .skill {
+      cursor: default;
 
-  .skill {
-    cursor: default;
-
-    &[aria-describedby] {
-      color: hsl(196, 100%, 37%);
+      &[aria-describedby] {
+        color: hsl(196, 100%, 37%);
+      }
     }
   }
 }
@@ -381,16 +376,13 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.certifications {
-  margin-left: 1.5em;
+.competency-list,
+ul.skills, ol.skills,
+.certificate-list {
   -webkit-column-width: 20em;
   -moz-column-widows: 20em;
   column-width: 20em;
-
-  .certificate-item {
-    display: list-item;
-    list-style-type: square;
-  }
+  list-style-type: square;
 }
 
 .certificate {
@@ -406,36 +398,33 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.section-content[data-section="competencies"] {
-  margin-left: 2em;
-  -webkit-column-width: 20em;
-  -moz-column-width: 20em;
-  column-width: 20em;
+.section-content {
+  &[data-section="competencies"],
+  &[data-section="skills"],
+  &[data-section="certifications"] {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
 
-  .competency {
-    display: flex;
-    flex-wrap: wrap;
+.competency {
+  display: flex;
+  flex-wrap: wrap;
 
-    > * {
-      margin-left: 0.25em;
-      margin-right: 0.25em;
+  > * {
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+  }
+
+  .competency-duration {
+    display: inline-flex;
+
+    &::before {
+      content: '(';
     }
 
-    .competency-name {
-      display: list-item;
-      list-style-type: square;
-    }
-
-    .competency-duration {
-      display: inline-flex;
-
-      &::before {
-        content: '(';
-      }
-
-      &::after {
-        content: ')';
-      }
+    &::after {
+      content: ')';
     }
   }
 }

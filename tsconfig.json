@@ -1,0 +1,13 @@
+{
+    "compilerOptions":  {
+        "target": "es6",
+        "newLine": "LF",
+        "module": "amd",
+        "declaration": true,
+        "sourceMap": true
+    },
+    "exclude": [
+        "node_modules",
+        "public_html"
+    ]
+}

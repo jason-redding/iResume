@@ -20,7 +20,12 @@
   },
   "homepage": "https://github.com/jason-redding/iResume#readme",
   "devDependencies": {
-    "browser-sync": "^2.26.5",
+    "@types/highlight.js": "^9.12.3",
+    "@types/jquery": "^3.3.30",
+    "@types/jquerymobile": "^1.4.30",
+    "@types/jqueryui": "^1.12.7",
+    "@types/requirejs": "^2.1.31",
+    "browser-sync": "^2.26.7",
     "del": "^3.0.0",
     "fs": "0.0.1-security",
     "gulp": "^4.0.0",
@@ -30,10 +35,14 @@
     "gulp-sequence": "^0.4.6",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-ssh": "^0.6.0",
+    "gulp-typescript": "^5.0.1",
     "gulp-uglify": "^3.0.0",
     "gulp-useref": "^3.1.2",
+    "highlight.js": "^9.15.9",
     "node-sass": "^4.12.0",
-    "os": "^0.1.1"
+    "os": "^0.1.1",
+    "requirejs": "^2.3.6",
+    "typescript": "^3.5.3"
   },
   "dependencies": {
     "debug": "^3.1.0"

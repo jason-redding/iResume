@@ -68,17 +68,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<!-- @endif -->
 		<!-- @endif -->
 
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.4.5/jquery.mobile.min.js"></script>
-
-		<!-- build:js /js/all-javascripts.js -->
-		<script type="text/javascript" src="/js/format.js"></script>
-		<script type="text/javascript" src="/js/highlight.pack.js"></script>
-		<script type="text/javascript" src="/js/common.js"></script>
-		<script type="text/javascript" src="/js/namespace.js"></script>
-		<!-- endbuild -->
-		<script type="text/javascript" src="index.js"></script>
+		<script type="text/javascript" src="/js/require.js" data-main="app/app"></script>
 	</head>
 	<body>
 		<div data-role="page" data-theme="a">
@@ -107,15 +97,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<div class="text">Full List of Skills</div>
 							</caption>
 							<thead>
-								<tr data-render-title="${level} ${level.preposition#default(levels.preposition)} ${name} with ${experience.duration} ${experience.duration#grammar('year','years')} of experience${experience.until#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}"
+								<tr data-render-title="${level} (${level.percentage#percent}) ${level.preposition#default(levels.preposition)} ${name} with ${experience.duration} of experience${experience.last#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}"
 										data-render-data-name="${name}"
 										data-render-data-level="${level}"
 										data-render-data-level-value="${level.originalValue}"
 										data-render-data-level-percentage="${level.percentage}"
-										data-render-data-since="${experience.since.value}"
-										data-render-data-until="${experience.until.value}"
-										data-render-data-experience-years="${experience.duration}"
-										data-render-data-experience-duration="P${experience.duration}Y"
+										data-render-data-since="${experience.first.value}"
+										data-render-data-until="${experience.last.value}"
+										data-render-data-experience-years="${experience.duration.years}"
+										data-render-data-experience-duration="P${experience.duration.years}Y"
 										data-render-data-version="${version}"
 										data-render-data-version-hint="${version.hint}"
 										data-render-tabindex="0">
@@ -143,9 +133,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 											data-header="Experience"
 											data-field="experience"
 											title="Years of experience"
-											data-render="${experience.duration} ${experience.duration#grammar('year','years')}"
+											data-render="${experience.duration#join(', ')}"
 											data-sort-order="desc"
-											data-order-by="experience.duration, experience.since:desc, level.originalValue:desc, name">
+											data-order-by="experience.duration.totalMilliseconds, experience.first:desc, level.originalValue:desc, name">
 										<span class="data">Experience</span>
 									</th>
 								</tr>
@@ -162,11 +152,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<div id="select-code-container">
 							<label for="select-code" class="ui-hidden-accessible">Select file:</label>
 							<select id="select-code">
-								<optgroup label="JavaScript">
-									<option value="/index.js">index.js</option>
-									<option value="/js/namespace.js">namespace.js</option>
-									<option value="/js/format.js">format.js</option>
-									<option value="/js/common.js">common.js</option>
+								<optgroup label="TypeScript">
+									<option value="/main.ts">main.ts</option>
+									<option value="/app/Namespace/Namespace.ts">Namespace.ts</option>
+									<option value="/app/Env/Env.ts">Env.ts</option>
+									<option value="/app/iResume/ResumeComponent/ResumeComponent.ts">ResumeComponent.ts</option>
+									<option value="/app/iResume/ResumeLoader/ResumeLoader.ts">ResumeLoader.ts</option>
+									<option value="/app/iResume/ResumeSkillsTable/ResumeSkillsTable.ts">ResumeSkillsTable.ts</option>
+									<option value="/app/XPath/XPath.ts">XPath.ts</option>
 								</optgroup>
 								<optgroup label="HTML">
 									<option value="/index.html">index.html</option>
@@ -184,10 +177,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 									<option value="/scss/resume.scss">resume.scss</option>
 									<option value="/scss/resume-print.scss">resume-print.scss</option>
 									<option value="/scss/_common.scss">_common.scss</option>
-								</optgroup>
-								<optgroup label="CSS">
-									<option value="/css/resume.css">resume.css</option>
-									<option value="/css/resume-print.css">resume-print.css</option>
 								</optgroup>
 							</select>
 						</div>
