@@ -209,13 +209,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<xsl:value-of select="concat('mailto:', normalize-space())"/>
 								<xsl:text>?subject=iResume</xsl:text>
 							</xsl:attribute>
-							<xsl:value-of select="normalize-space()"/>
+							<xsl:call-template name="handle-html-within"/>
 						</xsl:when>
 						<xsl:when test="local-name() = 'phone'">
 							<xsl:attribute name="href">
-								<xsl:value-of select="concat('tel:', translate(normalize-space(), '-', ''))"/>
+								<xsl:value-of select="concat('tel:', translate(normalize-space(), '-./', ''))"/>
 							</xsl:attribute>
-							<xsl:value-of select="normalize-space()"/>
+							<xsl:call-template name="handle-html-within"/>
 						</xsl:when>
 						<xsl:when test="local-name() = 'last-updated'">
 							<xsl:choose>
@@ -241,11 +241,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							</xsl:choose>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:value-of select="normalize-space()"/>
+							<xsl:call-template name="handle-html-within"/>
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:element>
 			</xsl:element>
+		</xsl:for-each>
+	</xsl:template>
+
+	<xsl:template name="handle-html-within">
+		<xsl:for-each select="*|text()">
+			<xsl:call-template name="handle-html"/>
 		</xsl:for-each>
 	</xsl:template>
 

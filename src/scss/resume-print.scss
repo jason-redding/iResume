@@ -5,6 +5,9 @@ $skillPrintColumns: 2;
 $certificationPrintColumns: 2;
 
 @media print {
+  .hide-when-print {
+    display: none;
+  }
   thead {
     > tr {
       page-break-inside: avoid;

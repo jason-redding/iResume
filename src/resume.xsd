@@ -388,13 +388,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:complexType name="type-contact-info">
-		<xs:simpleContent>
-			<xs:extension base="xs:string">
-				<xs:attribute name="order" type="nonNegativeInteger" use="optional"/>
-				<xs:attribute name="label" type="xs:string" use="optional"/>
-			</xs:extension>
-		</xs:simpleContent>
+	<xs:complexType name="type-contact-info" mixed="true">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="order" type="nonNegativeInteger" use="optional"/>
+		<xs:attribute name="label" type="xs:string" use="optional"/>
 	</xs:complexType>
 
 	<xs:complexType name="type-start-date">

@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jman.rocketssdhosting.com/xsd/resume"
 	xsi:schemaLocation="http://jman.rocketssdhosting.com/xsd/resume  resume.xsd"
-	last-modified="2019-08-16T11:13:00">
+	last-modified="2019-08-17T11:13:00">
 	<meta>
 		<skill>
 			<levels preposition="at">
@@ -50,12 +50,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</meta>
 	<author name="Jason Redding">
 		<name/>
-		<seeking label="Seeking">Mid-level position</seeking>
+		<seeking label="Seeking">Commercial, mid-level positions</seeking>
 		<email label="Email">jason.redding@gmail.com</email>
 		<phone label="Cell">410-428-8522</phone>
 		<clearance label="Clearance">None</clearance>
 		<address label="Residence">Washington, DC</address>
-		<willing-to-travel label="% Willing to Travel">15%</willing-to-travel>
+		<willing-to-travel label="% Willing to Travel">20%</willing-to-travel>
 		<willing-to-relocate label="Willing to Relocate">Yes</willing-to-relocate>
 		<last-updated label="Last Updated" format="M/d/yyyy"/>
 	</author>
@@ -372,7 +372,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill>
 			<name>Gulp</name>
-			<level value="2.75"/>
+			<level value="3"/>
 			<experience>
 				<since>2017-08</since>
 			</experience>
@@ -399,7 +399,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill>
 			<name>IntelliJ IDEA</name>
-			<level value="3"/>
+			<level value="3.75"/>
 			<experience>
 				<since>2018-01</since>
 			</experience>
@@ -930,8 +930,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<h:li>Develop and improve Web Interfaces using <skill>AngularJS</skill>, <skill>Angular Materials</skill>, <skill>jQuery</skill>, <skill>SCSS</skill>, <skill>XSLT</skill>, and <skill>Responsive Design</skill>.</h:li>
 							<h:li>Design and develop software in <skill>Java</skill> and <skill>Apache Tomcat</skill> to query <skill>MySQL</skill> databases.</h:li>
 							<h:li>Integrate various components and test end-to-end capability using <skill>Python</skill>, <skill>SaltStack</skill>, and <skill>Apache Storm</skill>.</h:li>
-              <h:li>Participate in code reviews.</h:li>
 							<h:li>Collaborate with and assist team members.</h:li>
+              <h:li>Participate in code reviews.</h:li>
 						</h:ul>
 					</description>
 				</position>
@@ -999,7 +999,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								processing, and exporting of Academic Catalog information.
 							</h:li>
 							<h:li>Design, develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application
-								interfacing with <skill>Active Directory</skill> and RDBMS to provide students a way to recover their
+								interfacing with <skill>Active Directory</skill> and <skill name="oracle-dbms">RDBMS</skill> to provide students a way to recover their
 								account and reset their password.
 							</h:li>
 							<h:li>Install, configure, customize, augment, and maintain a third-party multi-tier Event Scheduling
