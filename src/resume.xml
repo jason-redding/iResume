@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jman.rocketssdhosting.com/xsd/resume"
-	xsi:schemaLocation="http://jman.rocketssdhosting.com/xsd/resume resume.xsd"
+	xsi:schemaLocation="http://jman.rocketssdhosting.com/xsd/resume  resume.xsd"
 	last-modified="2019-08-16T11:13:00">
 	<meta>
 		<skill>
@@ -68,7 +68,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		software as well as install, configure, customize, enhance, and maintain various third-party software. He used
 		Full-Stack development technology including <skill>Java</skill>, <skill>SQL</skill>, <skill>JSP</skill>,
 		<skill>HTML</skill>, <skill>SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>,
-		<skill name="xsl/xslt">XSLT</skill>, <skill>XPath</skill>, and <skill>LDAP</skill>. At Booz Allen, Jason supported
+		<skill>XSLT</skill>, <skill>XPath</skill>, and <skill>LDAP</skill>. At Booz Allen, Jason supported
 		a distributed cross-domain solution using Full-Stack development technology including <skill>Java</skill>,
 		<skill>SQL</skill>, <skill>JSP</skill>, <skill>AngularJS</skill>, <skill>Angular Materials</skill>,
 		<skill>HTML</skill>, <skill>SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>,
@@ -224,6 +224,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="dev-tool"/>
 				<category value="server"/>
+			</categories>
+		</skill>
+		<skill>
+			<name>Bootstrap</name>
+			<level value="1"/>
+			<experience>
+				<spanning from="2018-01-08" to="2019-04-29"/>
+			</experience>
+			<categories>
+				<category value="client"/>
+				<category value="dev-lang"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill>

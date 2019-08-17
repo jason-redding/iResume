@@ -26,6 +26,8 @@ export default class ResumeLoader implements Promise<ResumeResponseBundle | JQue
     private _job: JQueryDeferred<any>;
     private _file: string;
     private _jobs: jqXHRBundle;
+    private _runBefore: Array<(jobs?: jqXHRBundle) => any | void> = [];
+    private _runAfter: Array<(response?: ResumeResponseBundle) => any | void> = [];
 
     static PATTERN_PATH: RegExp = /^(.*?\/?)([^/]*)$/;
 
@@ -41,21 +43,6 @@ export default class ResumeLoader implements Promise<ResumeResponseBundle | JQue
         this.file = file;
         this._job = $.Deferred();
         this._jobs = {};
-        let xmlPath = this.getDataPath();
-        let xslPath = this.getTransformPath();
-        let jobs: string[] = [xmlPath, xslPath];
-        let xhrList: JQuery.jqXHR[] = [];
-        for (let job of jobs) {
-            this._jobs[job] = $.get(job);
-            xhrList.push(this._jobs[job]);
-        }
-        $.when.apply($.when, xhrList)
-        .fail((xhr, type, ex) => {
-            this._job.reject(jobs);
-        })
-        .done(() => {
-            this._job.resolve(ResumeLoader._responsesToBundle(ResumeLoader._xhrToResponse(this._jobs)));
-        });
     }
 
     private static _constructPathFor(file_path: string, type: ResumeFileType) {
@@ -94,6 +81,49 @@ export default class ResumeLoader implements Promise<ResumeResponseBundle | JQue
         return responses;
     }
 
+    load(): ResumeLoader {
+        let xmlPath = this.getDataPath();
+        let xslPath = this.getTransformPath();
+        let jobs: string[] = [xmlPath, xslPath];
+        let xhrList: JQuery.jqXHR[] = [];
+        for (let job of jobs) {
+            this._jobs[job] = $.get(job);
+            xhrList.push(this._jobs[job]);
+        }
+        this._triggerBefore(this._jobs);
+        $.when.apply($.when, xhrList)
+        .fail((xhr, type, ex) => {
+            this._triggerAfter(null);
+            this._job.reject(jobs);
+        })
+        .done(() => {
+            const responseBundle: ResumeResponseBundle = ResumeLoader._responsesToBundle(ResumeLoader._xhrToResponse(this._jobs));
+            this._triggerAfter(responseBundle);
+            this._job.resolve(responseBundle);
+        });
+        return this;
+    }
+
+    _triggerBefore(jobs: jqXHRBundle) {
+        for (let run of this._runBefore) {
+            try {
+                run.call(this, jobs);
+            } catch (ex) {
+                console.error(ex);
+            }
+        }
+    }
+
+    _triggerAfter(response: ResumeResponseBundle) {
+        for (let run of this._runAfter) {
+            try {
+                run.call(this, response);
+            } catch (ex) {
+                console.error(ex);
+            }
+        }
+    }
+
     getDataPath() {
         return ResumeLoader._constructPathFor(this.file, ResumeFileType.DATA);
     }
@@ -106,7 +136,15 @@ export default class ResumeLoader implements Promise<ResumeResponseBundle | JQue
         return ResumeLoader._constructPathFor(this.file, ResumeFileType.DEFINITION);
     }
 
-    then<TResult1 = ResumeResponseBundle, TResult2 = never>(onfulfilled?: ((value: ResumeResponseBundle) => (PromiseLike<TResult1> | TResult1)) | undefined | null, onrejected?: ((reason: any) => (PromiseLike<TResult2> | TResult2)) | undefined | null): Promise<TResult1 | TResult2> {
+    onBefore(callback: (jobs?: jqXHRBundle) => any | void) {
+        this._runBefore.push(callback);
+    }
+
+    onAfter(callback: (response?: ResumeResponseBundle) => any | void) {
+        this._runAfter.push(callback);
+    }
+
+    then<TResult1 = ResumeResponseBundle, TResult2 = never>(onfulfilled?: ((response: ResumeResponseBundle) => (PromiseLike<TResult1> | TResult1)) | undefined | null, onrejected?: ((reason: any) => (PromiseLike<TResult2> | TResult2)) | undefined | null): Promise<TResult1 | TResult2> {
         this._job.then(onfulfilled, onrejected);
         return;
     }

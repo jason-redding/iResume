@@ -5,30 +5,57 @@ import ResumeComponent from './app/iResume/ResumeComponent/ResumeComponent';
 import ResumeLoader from './app/iResume/ResumeLoader/ResumeLoader';
 import * as hljs from './js/highlight.pack';
 
-const resumeLoader: ResumeLoader = new ResumeLoader('/resume');
-
-require(['jqueryui'], () => {
-    $(document).on('pagecreate', () => {
-        initTabs();
-    });
-    require(['jquerymobile'], onReady);
-});
+onReady();
 
 function onReady() {
-    const resumeSkillsTable: ResumeSkillsTable = initSkillsTable();
-    initTooltips(resumeSkillsTable);
+    loadResume();
     initThemeUI();
     initHighlightThemePicker();
     initCodeSelector();
-    initResumeComponent();
+    initTabs();
     initPreferences();
 }
 
-function initSkillsTable() {
+function loadResume() {
+    const resumeLoader: ResumeLoader = new ResumeLoader('/resume');
+    resumeLoader.onBefore(() => {
+        $.mobile.loading('show', {
+            text: 'Loading and transforming résumé XML...',
+            textVisible: true
+        });
+    });
+    resumeLoader.onAfter(() => {
+        $.mobile.loading('hide');
+    });
+    resumeLoader
+    .load()
+    .then(response => {
+        const resumeSkillsTable: ResumeSkillsTable = initSkillsTable(resumeLoader);
+        initTooltips(resumeSkillsTable);
+        initResumeComponent(resumeLoader);
+    });
+}
+
+function initSkillsTable(resumeLoader: ResumeLoader) {
     console.debug('Initializing skills table...');
 
     const resumeSkillsTable: ResumeSkillsTable = new ResumeSkillsTable(resumeLoader, $('#skills-table'));
     return resumeSkillsTable;
+}
+
+function initResumeComponent(resumeLoader: ResumeLoader) {
+    console.debug('Initializing component...');
+
+    const resumeComponent: ResumeComponent = new ResumeComponent(resumeLoader, $('.resume-xslt'));
+    resumeComponent.onBeforeRender(response => {
+        $.mobile.loading('show', {
+            text: 'Transforming résumé XML...',
+            textVisible: true
+        });
+    });
+    resumeComponent.onAfterRender(() => {
+        $.mobile.loading('hide');
+    });
 }
 
 function initTooltips(resumeSkillsTable?: ResumeSkillsTable) {
@@ -216,8 +243,7 @@ function initThemeUI() {
             });
         });
 
-        $body
-        .pagecontainer('option', 'theme', newPageTheme);
+        $body.pagecontainer('option', 'theme', newPageTheme);
     });
 }
 
@@ -308,7 +334,7 @@ function initTabs() {
         $(document.activeElement).trigger('blur');
         let tooltipInstance: any = $(document).tooltip('instance');
         if (typeof tooltipInstance !== 'undefined' && ('tooltips' in tooltipInstance)) {
-            let allTooltips: {element: JQuery}[] = tooltipInstance.tooltips;
+            let allTooltips: { element: JQuery }[] = tooltipInstance.tooltips;
             $.each(tooltipInstance.tooltips, function (id, tooltipData) {
                 tooltipData.element.trigger('focusout').trigger('mouseleave');
             });
@@ -316,17 +342,27 @@ function initTabs() {
         let $selectedPanel = $('.tab-panel[data-panel="' + $this.val() + '"]');
         $('.tab-panel').not($selectedPanel).addClass('ui-screen-hidden');
         $selectedPanel.removeClass('ui-screen-hidden');
-    })
-    .each(function () {
+    });
+    $tabsNavRadios.each(function () {
         let $this: JQuery = $(this);
-        let ds = ($.trim($this.attr('data-default-selected')) === 'true');
-        if (ds) {
+        if ($this.is(':checked')) {
             $defaultSelected = $this;
             return false;
         }
     });
     if ($defaultSelected.length === 0) {
-        $defaultSelected = $tabsNavRadios.first();
+        $tabsNavRadios
+        .each(function () {
+            let $this: JQuery = $(this);
+            let ds = ($.trim($this.attr('data-default-selected')) === 'true');
+            if (ds) {
+                $defaultSelected = $this;
+                return false;
+            }
+        });
+        if ($defaultSelected.length === 0) {
+            $defaultSelected = $tabsNavRadios.first();
+        }
     }
     if ($defaultSelected.length > 0) {
         $defaultSelected.trigger('click');
@@ -334,13 +370,6 @@ function initTabs() {
             $defaultSelected.checkboxradio('refresh');
         }
     }
-}
-
-function initResumeComponent() {
-    console.debug('Initializing component...');
-
-    const resumeComponent: ResumeComponent = new ResumeComponent(resumeLoader, $('.resume-xslt'));
-
 }
 
 function loadSourceFile(path: string): JQueryPromise<any> {

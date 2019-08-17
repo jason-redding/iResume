@@ -8,4 +8,13 @@ require.config({
     }
 });
 
-require(['jquery', '../main']);
+require(['jquery', 'jqueryui'], () => {
+    // $(document).on('mobileinit', () => {
+    //     $.extend($.mobile, {
+    //         autoInitializePage: false
+    //     });
+    // });
+    require(['jquerymobile'], () => {
+        require(['../main']);
+    });
+});

@@ -8,7 +8,10 @@ export default class ResumeComponent {
     private _loader: ResumeLoader;
     private _viewport: JQuery = null;
     private _viewportProperties: Partial<ResumeViewportProperties>;
+    private _responseBundle: ResumeResponseBundle = null;
     private _transformedDocument: Document = null;
+    private _runBefore: Array<(response?: ResumeResponseBundle) => any | void> = [];
+    private _runAfter: Array<() => any | void> = [];
 
     get xmlPath() {
         return this._loader.getDataPath();
@@ -82,31 +85,58 @@ export default class ResumeComponent {
                 console.debug('ERROR!');
                 return;
             }
-            let resultDoc: XMLDocument = null;
-            const systemDate = Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
-            const latestModifiedDate = this._getLatestModifiedDate(response);
-            const transformParameters = {
-                'author-name': '0',
-                'position-sort': 'descending',
-                'factor-relevance': '1',
-                'system-date': systemDate
-            };
-            // Show "transforming" UI...
+            this._responseBundle = response;
+            this._applyTransform();
+        });
+    }
+
+    onBeforeRender(callback: (response: ResumeResponseBundle) => any | void) {
+        this._runBefore.push(callback);
+    }
+
+    onAfterRender(callback: () => any | void) {
+        this._runAfter.push(callback);
+    }
+
+    private _applyTransform() {
+        const response: ResumeResponseBundle = this._responseBundle;
+        for (let run of this._runBefore) {
             try {
-                let xslTransformer: XSLTProcessor = new XSLTProcessor();
-                xslTransformer.importStylesheet(response.xsl.document);
-                for (let pName in transformParameters) {
-                    xslTransformer.setParameter(null, pName, transformParameters[pName]);
-                }
-                this._transformedDocument = xslTransformer.transformToDocument(response.xml.document);
+                run.call(response, response);
             } catch (ex) {
                 console.error(ex);
             }
-            this.viewportProperties = {
-                latestModifiedDate: latestModifiedDate
-            };
-            this._applyToViewport();
-        });
+        }
+        let resultDoc: XMLDocument = null;
+        const systemDate = Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
+        const latestModifiedDate = this._getLatestModifiedDate(response);
+        const transformParameters = {
+            'author-name': '0',
+            'position-sort': 'descending',
+            'factor-relevance': '1',
+            'system-date': systemDate
+        };
+        try {
+            let xslTransformer: XSLTProcessor = new XSLTProcessor();
+            xslTransformer.importStylesheet(response.xsl.document);
+            for (let pName in transformParameters) {
+                xslTransformer.setParameter(null, pName, transformParameters[pName]);
+            }
+            this._transformedDocument = xslTransformer.transformToDocument(response.xml.document);
+        } catch (ex) {
+            console.error(ex);
+        }
+        this.viewportProperties = {
+            latestModifiedDate: latestModifiedDate
+        };
+        this._applyToViewport();
+        for (let run of this._runAfter) {
+            try {
+                run.call(this._transformedDocument, this._transformedDocument, response.xml.document, response.xsl.document);
+            } catch (ex) {
+                console.error(ex);
+            }
+        }
     }
 
     private _applyToViewport(properties: Partial<ResumeViewportProperties> = this.viewportProperties) {

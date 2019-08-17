@@ -6,6 +6,10 @@ body {
   tab-size: 2;
 }
 
+*[data-role="page"]:not(.ui-page) {
+  display: none;
+}
+
 @media screen {
   .ui-page.ui-page-active {
     &.ui-page-theme-b {
