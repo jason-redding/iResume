@@ -222,6 +222,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																	</xs:complexType>
 																</xs:element>
 															</xs:sequence>
+															<xs:attribute name="hidden" type="type-boolean" use="optional"/>
 														</xs:complexType>
 													</xs:element>
 												</xs:sequence>

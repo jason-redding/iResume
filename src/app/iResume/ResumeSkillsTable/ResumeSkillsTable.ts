@@ -711,7 +711,7 @@ export default class ResumeSkillsTable {
     }
 
     getSkillProperties(skillKey: string) {
-        let $skill: JQuery<Element> = this._xpath.evaluate(this._response.xml.document, "/r:resume/r:skills/r:skill[translate(normalize-space(r:name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-') = '" + skillKey.replace(/[^a-z0-9/#*()-]/gi, '') + "']", 'node');
+        let $skill: JQuery<Element> = this._xpath.evaluate(this._response.xml.document, "/r:resume/r:skills/r:skill[translate(normalize-space(r:name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-') = '" + skillKey.replace(/[^a-z0-9/#*(.)-]/gi, '') + "']", 'node');
         let props: object = this._extractSkillFromXML($skill);
         let renderProps: object = $.extend(true, this._element.templateProperties(), props);
         return renderProps;

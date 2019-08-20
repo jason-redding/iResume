@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jman.socialis.dev/xsd/resume"
 	xsi:schemaLocation="http://jman.socialis.dev/xsd/resume"
-	last-modified="2019-08-17T11:13:00">
+	last-modified="2019-08-20T11:13:00">
 	<meta>
 		<skill>
 			<levels preposition="at">
@@ -61,17 +61,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</author>
 	<description title="Experience Summary">
 		Jason is an experienced <skill>Java</skill> Developer with front-end experience in an agile development team.
-		Prior to joining Booz Allen, Jason worked at the Community College of Baltimore County. During the first year,
-		he joined as an IT Computer Technician and then transitioned to a developer role on a team tasked with building a
-		Content Management System allowing faculty and staff to publish their own content to the college website. As he
-		continued to support this system, he worked with colleagues and independently to create and enhance in-house
-		software as well as install, configure, customize, enhance, and maintain various third-party software. He used
-		Full-Stack development technology including <skill>Java</skill>, <skill>SQL</skill>, <skill>JSP</skill>,
-		<skill>HTML</skill>, <skill>SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>, <skill>XSLT</skill>,
-		and <skill>XPath</skill>. At Booz Allen, Jason supported a distributed cross-domain solution using
-		Full-Stack development technology including <skill>Java</skill>, <skill>SQL</skill>, <skill>JSP</skill>,
-		<skill>AngularJS</skill>, <skill>Angular Materials</skill>, <skill>HTML</skill>, <skill>SCSS</skill>,
-		<skill>jQuery</skill>, <skill>XML</skill>, <skill>XSLT</skill>, <skill>XPath</skill>,
+		Prior to joining Booz Allen, Jason worked at the Community College of Baltimore County.
+		During the first year, he joined as an IT Computer Technician and then transitioned to a developer role on a team
+		tasked with building a Content Management System allowing faculty and staff to publish their own content to the college website.
+		As he continued to support this system, he worked with colleagues and independently to create and enhance in-house software
+		as well as install, configure, customize, enhance, and maintain various third-party software.
+		He used Full-Stack development technology including <skill>Java</skill>, <skill>SQL</skill>, <skill>JSP</skill>, <skill>HTML</skill>,
+		<skill>SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>, <skill>XSLT</skill>, and <skill>XPath</skill>.
+		At Booz Allen, Jason supported a distributed cross-domain solution using Full-Stack development technology including
+		<skill>Java</skill>, <skill>SQL</skill>, <skill>JSP</skill>, <skill>AngularJS</skill>, <skill>Angular Materials</skill>,
+		<skill>HTML</skill>, <skill>SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>, <skill>XSLT</skill>, <skill>XPath</skill>,
 		<skill name="apache-maven">Maven</skill>, <skill>SaltStack</skill>, and <skill>Python</skill>.
 	</description>
 	<competencies>
@@ -92,6 +91,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<duration from="2018" to="2019" unit="year"/>
 		</competency>
 	</competencies>
+	<certifications>
+		<certificate>
+			<name>Security+</name>
+			<issuer>CompTIA</issuer>
+			<issue-date>2018-02-23</issue-date>
+			<expire-date>2021-02-23</expire-date>
+		</certificate>
+		<certificate>
+			<name>Sitecore XP 8.0 Certified Professional Developer</name>
+			<issuer>Sitecore</issuer>
+			<issue-date>2015-04-02</issue-date>
+		</certificate>
+	</certifications>
 	<skills title="Skills, Tools &amp; Technologies">
 		<skill>
 			<name>Active Directory</name>
@@ -537,7 +549,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>JSTL</name>
 			<level value="3"/>
 			<experience precision="years">
-				<since>2014-01</since>
+				<spanning from="2014-01" to="2016-06"/>
 			</experience>
 			<categories>
 				<category value="web"/>
@@ -926,14 +938,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					</timeline>
 					<description>
 						<h:ul>
-							<h:li>Develop and improve Web Interfaces using <skill>AngularJS</skill>, <skill>Angular Materials</skill>, <skill>jQuery</skill>, <skill>SCSS</skill>, <skill>XSLT</skill>, and <skill>Responsive Design</skill>.
+							<h:li>
+								Develop and improve Web Interfaces using <skill>AngularJS</skill>, <skill>Angular Materials</skill>, <skill>jQuery</skill>, <skill>SCSS</skill>, <skill>XSLT</skill>, and <skill>Responsive Design</skill>.
 							</h:li>
-							<h:li>Design and develop software in <skill>Java</skill> and <skill>Apache Tomcat</skill> to query <skill>MySQL</skill> databases.
+							<h:li>
+								Design and develop software in <skill>Java</skill> and <skill>Apache Tomcat</skill> to query <skill>MySQL</skill> databases.
 							</h:li>
-							<h:li>Integrate various components and test end-to-end capability using <skill>Python</skill>, <skill>SaltStack</skill>, and <skill>Apache Storm</skill>.
+							<h:li>
+								Integrate various components and test end-to-end capability using <skill>Python</skill>, <skill>SaltStack</skill>, and <skill>Apache Storm</skill>.
 							</h:li>
-							<h:li>Collaborate with and assist team members.</h:li>
-							<h:li>Participate in code reviews.</h:li>
+							<h:li>
+								Collaborate with and assist team members.
+							</h:li>
+							<h:li>
+								Participate in code reviews.
+							</h:li>
 						</h:ul>
 					</description>
 				</position>
@@ -952,15 +971,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					</timeline>
 					<description>
 						<h:ul>
-							<h:li>Troubleshot/repaired hardware and software issues over the phone and in the field.</h:li>
 							<h:li>
-								Installed network cables, troubleshot network connectivity, and activated Ethernet wall ports across
-								campus;
-								upgraded hardware and software in computer labs.
+								Troubleshot/repaired hardware and software issues over the phone and in the field.
 							</h:li>
 							<h:li>
-								Created Microsoft Access Database, Forms, and accompanying <skill>VBA</skill> code to facilitate
-								technical support by Help Desk personnel.
+								Installed network cables, troubleshot network connectivity, and activated Ethernet wall ports across campus; upgraded hardware and software in computer labs.
+							</h:li>
+							<h:li>
+								Created Microsoft Access Database, Forms, and accompanying <skill>VBA</skill> code to facilitate technical support by Help Desk personnel.
 							</h:li>
 						</h:ul>
 					</description>
@@ -973,41 +991,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					</timeline>
 					<description>
 						<h:ul>
-							<h:li>Develop, enhance, and maintain a custom in-house Content Management System for the college website
-								using <skill>Java</skill>, <skill>PL/SQL</skill>, <skill name="restful">REST</skill>,
+							<h:li>
+								Develop, enhance, and maintain a custom in-house Content Management System for the college website using <skill>Java</skill>, <skill>PL/SQL</skill>, <skill name="restful">REST</skill>,
 								<skill>HTML</skill>, <skill>CSS</skill>, <skill>jQuery</skill>, and <skill>Apache Tomcat</skill>.
 							</h:li>
-							<h:li>Design and develop a <skill>J2EE</skill> web application and its
-								<skill>HTML</skill>/<skill>Javascript</skill> front-end counterpart providing and Online Orientation
-								for new students.
+							<h:li>
+								Design and develop a <skill>J2EE</skill> web application and its
+								<skill>HTML</skill>/<skill>Javascript</skill> front-end counterpart providing and Online Orientation for new students.
 							</h:li>
-							<h:li>Design, develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application
-								interfacing with <skill>Active Directory</skill> to provide and Online Phone Directory with advanced
-								search capabilities.
+							<h:li>
+								Design, develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application interfacing with <skill>Active Directory</skill> to provide and Online Phone Directory with advanced search capabilities.
 							</h:li>
-							<h:li>Design and develop an interactive, reusable, and highly versatile and customizable Web Calendar
-								designed to consume event data in <skill>XML</skill> form using <skill>JSP</skill>, <skill>HTML</skill>,
+							<h:li>
+								Design and develop an interactive, reusable, and highly versatile and customizable Web Calendar designed to consume event data in <skill>XML</skill> form using <skill>JSP</skill>, <skill>HTML</skill>,
 								<skill>CSS</skill>, <skill>Javascript</skill>, and <skill>jQuery</skill>.
 							</h:li>
-							<h:li>Develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application interfacing
-								with <skill>Active Directory</skill> and multiple RDBMS to provide Technical Support personnel with
-								indispensable information dashboards and tools that they can use to manage and troubleshoot account
-								issues.
+							<h:li>
+								Develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application interfacing with <skill>Active Directory</skill> and multiple RDBMS to provide Technical Support personnel with indispensable information dashboards and tools that they can use to manage and troubleshoot account issues.
 							</h:li>
 							<h:li>Design and develop a <skill name="command-line interface">CLI</skill> which uses
 								<skill>Java</skill>, <skill>XML</skill>, <skill>XSLT</skill>, and
 								<skill>XPath</skill>
-								while interfacing with third-party <skill name="restful">REST API</skill> to automate the importing,
-								processing, and exporting of Academic Catalog information.
+								while interfacing with third-party <skill name="restful">REST API</skill> to automate the importing, processing, and exporting of Academic Catalog information.
 							</h:li>
-							<h:li>Design, develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application
-								interfacing with <skill>Active Directory</skill> and <skill name="oracle-dbms">RDBMS</skill> to provide students a way to recover their
-								account and reset their password.
+							<h:li>
+								Design, develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application interfacing with <skill>Active Directory</skill> and <skill name="oracle-dbms">RDBMS</skill> to provide students a way to recover their account and reset their password.
 							</h:li>
-							<h:li>Install, configure, customize, augment, and maintain a third-party multi-tier Event Scheduling
-								software package using <skill>Javascript</skill>, <skill>jQuery</skill>, <skill>jQuery UI</skill>,
-								<skill>HTML</skill>, <skill>CSS</skill>, <skill>XSLT</skill>, <skill>XPath</skill>,
-								and <skill>SQL</skill>.
+							<h:li>
+								Install, configure, customize, augment, and maintain a third-party multi-tier Event Scheduling software package using <skill>Javascript</skill>, <skill>jQuery</skill>, <skill>jQuery UI</skill>,
+								<skill>HTML</skill>, <skill>CSS</skill>, <skill>XSLT</skill>, <skill>XPath</skill>, and <skill>SQL</skill>.
 							</h:li>
 						</h:ul>
 					</description>
@@ -1018,8 +1030,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<description>
 								<h:p>Used by students to retrieve their account information and reset their password.</h:p>
 								<h:ul>
-									<h:li>Site uses <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>jQuery Mobile</skill> to
-										deliver a <skill name="responsive-design">responsive</skill> experience.
+									<h:li>
+										Site uses <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>jQuery Mobile</skill> to deliver a <skill name="responsive-design">responsive</skill> experience.
 									</h:li>
 									<h:li>
 										<skill>Javascript</skill>
@@ -1027,8 +1039,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 									</h:li>
 									<h:li>
 										<skill name="J2EE">Java EE</skill>
-										Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to
-										communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
+										Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
 									</h:li>
 								</h:ul>
 							</description>
@@ -1038,12 +1049,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<description>
 								<h:p>Automates the importing, processing, and exporting of Academic Catalog information.</h:p>
 								<h:ul>
-									<h:li>Interfaces with 3rd-party <skill>RESTful</skill> API to import <skill>XML</skill> data.
+									<h:li>
+										Interfaces with 3rd-party <skill>RESTful</skill> API to import <skill>XML</skill> data.
 									</h:li>
-									<h:li>Requests data in chunks to mitigate timeouts.</h:li>
-									<h:li>Applies custom <skill name="xslt">XSL Transform</skill> to produce final <skill>XML</skill>.
+									<h:li>
+										Requests data in chunks to mitigate timeouts.
 									</h:li>
-									<h:li>Allows for customization of output format, and processing rules/logic via an <skill>XML</skill> properties file.
+									<h:li>
+										Applies custom <skill name="xslt">XSL Transform</skill> to produce final <skill>XML</skill>.
+									</h:li>
+									<h:li>
+										Allows for customization of output format, and processing rules/logic via an <skill>XML</skill> properties file.
 									</h:li>
 								</h:ul>
 							</description>
@@ -1052,24 +1068,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>R25/WebViewer/WebServices (CollegeNet products)</title>
 							<description>
 								<h:p>
-									Event Scheduling software package (with 700+ users) follows institution-defined rules to match a
-									collection of locations with a collection of events.
+									Event Scheduling software package (with 700+ users) follows institution-defined rules to match a collection of locations with a collection of events.
 								</h:p>
 								<h:ul>
-									<h:li>Install, configure, customize, and augment front-end; maintain product front- and back-end,
-										interfacing with an <skill name="oracle-dbms">Oracle</skill>-backed
+									<h:li>
+										Install, configure, customize, and augment front-end; maintain product front- and back-end, interfacing with an <skill name="oracle-dbms">Oracle</skill>-backed
 										<skill>RESTful</skill>
 										<skill name="J2EE">Java EE</skill>
 										Web Application.
 									</h:li>
-									<h:li>Augmented WebViewer's <skill>HTML</skill> pages (notably the Event Request Form) with <skill>
-										jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill>, adding features unavailable in
-										the original product.
+									<h:li>
+										Augmented WebViewer's <skill>HTML</skill> pages (notably the Event Request Form) with <skill>
+										jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill>, adding features unavailable in the original product.
 									</h:li>
 									<h:li>
-										Via <skill name="restful">Web Services</skill>, developed page with capability to search for spaces
-										matching a wide range of space/location attributes. Allows users to check availability for specific dates/times
-										and schedule an event in that space. Integrates with
+										Via <skill name="restful">Web Services</skill>, developed page with capability to search for spaces matching a wide range of space/location attributes. Allows users to check availability for specific dates/times and schedule an event in that space. Integrates with
 										<skill name="google-maps-javascript-api-v3">Google Maps</skill>
 										to show location of space and allows for 1-click access to directions.
 									</h:li>
@@ -1087,16 +1100,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 										<skill>Javascript</skill>
 										and <skill>CSS</skill> assets are bundled into a <skill name="J2EE">Java EE</skill> Web Application.
 									</h:li>
-									<h:li>Site uses <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill> to deliver an
-										interactive experience.
+									<h:li>
+										Site uses <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill> to deliver an interactive experience.
 									</h:li>
-									<h:li>Integrates with <skill>Active Directory</skill> for authentication and group membership
-										authorization.
+									<h:li>
+										Integrates with <skill>Active Directory</skill> for authentication and group membership authorization.
 									</h:li>
 									<h:li>
 										<skill name="J2EE">Java EE</skill>
-										Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to
-										communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
+										Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
 									</h:li>
 								</h:ul>
 							</description>
@@ -1105,8 +1117,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>USPS Gateway</title>
 							<description>
 								<h:p>
-									Used during the student application process to verify submitted street addresses' location inside or
-									outside county boundaries.
+									Used during the student application process to verify submitted street addresses' location inside or outside county boundaries.
 								</h:p>
 								<h:ul>
 									<h:li>
@@ -1124,22 +1135,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>Web Calendar</title>
 							<description>
 								<h:p>
-									Interactive, highly customizable web calendar designed to parse an <skill>XML</skill> file of event
-									data.
+									Interactive, highly customizable web calendar designed to parse an <skill>XML</skill> file of event data.
 								</h:p>
 								<h:ul>
 									<h:li>
 										Uses an extremely customizable
-										<h:a href="https://github.com/jason-redding/jFormat/" target="_blank"
-											title="Created by Jason Redding">Formatting Engine
+										<h:a href="https://github.com/jason-redding/jFormat/" target="_blank" title="Created by Jason Redding">Formatting Engine
 										</h:a>
 										written in <skill>JavaScript</skill> for highly versatile text, date, and number formatting.
 									</h:li>
-									<h:li>Parses tokens in the form of "${property.name#format(arg1, arg2)}".</h:li>
+									<h:li>
+										Parses tokens in the form of "${property.name#format(arg1, arg2)}".
+									</h:li>
 									<h:li>
 										Formats Date objects using most of the patterns available for use by the <skill>Java</skill> class
-										<h:a href="http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html"
-											target="_blank">SimpleDateFormat</h:a>.
+										<h:a href="http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html" target="_blank">SimpleDateFormat</h:a>.
 									</h:li>
 								</h:ul>
 							</description>
@@ -1148,30 +1158,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>Online Phone Directory</title>
 							<description>
 								<h:p>
-									Used by the community to search for faculty and staff by name, email, phone, office, campus, title,
-									and department.
+									Used by the community to search for faculty and staff by name, email, phone, office, campus, title, and department.
 								</h:p>
 								<h:ul>
 									<h:li>
 										<skill name="J2EE">Java EE</skill>
-										Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to
-										communicate with <skill>Oracle DBMS</skill>.
-									</h:li>
-									<h:li>Uses <skill>jQuery</skill> to deliver an interactive, flexible experience.
+										Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill>.
 									</h:li>
 									<h:li>
-										Provides Simple and Advanced search modes. Advanced mode allows a combination of up to 20
-										user-specified
-										criteria using conditions including: "is", "is not", "starts with", "ends with", "contains",
-										"excludes",
-										"does not start with", "does not end with".
+										Uses <skill>jQuery</skill> to deliver an interactive, flexible experience.
+									</h:li>
+									<h:li>
+										Provides Simple and Advanced search modes. Advanced mode allows a combination of up to 20 user-specified criteria using conditions including: "is", "is not", "starts with", "ends with", "contains", "excludes", "does not start with", "does not end with".
 									</h:li>
 									<h:li>
 										Supplimental
 										<skill>Java</skill>
 										<skill name="command-line-interface">CLI</skill>
-										that uses the <skill>Java</skill> Excel API to generate and
-										publish a downloadable spreadsheet containing the entire phone directory.
+										that uses the <skill>Java</skill> Excel API to generate and publish a downloadable spreadsheet containing the entire phone directory.
 									</h:li>
 								</h:ul>
 							</description>
@@ -1181,21 +1185,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<description>
 								<h:p>
 									<skill name="J2EE">Java EE</skill>
-									Web Application and its <skill>HTML</skill>/<skill>Javascript</skill> front-end counterpart providing
-									an online orientation for new students.
+									Web Application and its <skill>HTML</skill>/<skill>Javascript</skill> front-end counterpart providing an online orientation for new students.
 								</h:p>
 								<h:ul>
-									<h:li>Includes custom-developed supporting <skill name="oracle-dbms">Oracle</skill> database schema
-										and all tables, views, triggers, sequences, etc.
-									</h:li>
-									<h:li>Integrates with <skill>Active Directory</skill> for authentication and group membership
-										authorization.
+									<h:li>
+										Includes custom-developed supporting <skill name="oracle-dbms">Oracle</skill> database schema and all tables, views, triggers, sequences, etc.
 									</h:li>
 									<h:li>
-										Administration portal built with <skill>jQuery</skill> and <skill>jQuery UI</skill> allows
-										authorized academic advisors to customize the
-										orientation pages and assessments, track student progress, and manage the list of authorized
-										advisors.
+										Integrates with <skill>Active Directory</skill> for authentication and group membership authorization.
+									</h:li>
+									<h:li>
+										Administration portal built with <skill>jQuery</skill> and <skill>jQuery UI</skill> allows authorized academic advisors to customize the orientation pages and assessments, track student progress, and manage the list of authorized advisors.
 									</h:li>
 								</h:ul>
 							</description>
@@ -1207,14 +1207,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 									Robust
 									<skill>Java</skill>
 									<skill name="command-line-interface">CLI</skill>
-									tool for managing language strings for a proprietary online
-									virtual learning environment (WebCT).
+									tool for managing language strings for a proprietary online virtual learning environment (WebCT).
 								</h:p>
 								<h:ul>
 									<h:li>
-										Applies a compiled set of preferred language strings to a <h:abbr title="Web Application Archive">
-										WAR
-									</h:abbr> file.
+										Applies a compiled set of preferred language strings to a <h:abbr title="Web Application Archive">WAR</h:abbr> file.
 									</h:li>
 									<h:li>
 										Provided options to search for text to change, making the initial compilation process much easier.
@@ -1226,33 +1223,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>CMS (Content Management System)</title>
 							<description>
 								<h:p>
-									Homegrown Content Management System allowing faculty and staff to create, publish, and manage their
-									own pages
-									and content for the external-facing college website of over 12,000 pages.
+									Homegrown Content Management System allowing faculty and staff to create, publish, and manage their own pages and content for the external-facing college website of over 12,000 pages.
 								</h:p>
 								<h:ul>
 									<h:li>
-										Developed custom framework using <skill>Java</skill> in a <skill>Linux</skill> server environment to
-										facilitate
-										communication between service objects, even when distributed among several servers.
+										Developed custom framework using <skill>Java</skill> in a <skill>Linux</skill> server environment to facilitate communication between service objects, even when distributed among several servers.
 									</h:li>
 									<h:li>
 										<skill name="java">Java Applet</skill>
-										used to visualize and navigate the Website's hierarchy of pages – as represented in the database.
+										used to visualize and navigate the Website's hierarchy of pages - as represented in the database.
 									</h:li>
 									<h:li>
 										<skill name="java">Java Applet</skill>
-										<h:abbr title="What You See Is What You Get">WYSIWYG</h:abbr>
-										Advanced <skill>HTML</skill> Editor with Dreamweaver-like capabilities including:
+										<h:abbr title="What You See Is What You Get">WYSIWYG</h:abbr> Advanced <skill>HTML</skill> Editor with Dreamweaver-like capabilities including:
 										<h:ul>
 											<h:li>
-												Spellchecker (integrated with aspell on <skill>Linux</skill> server) – added custom
-												implementation to support a global dictionary in addition to user-editable per-user
-												dictionaries.
+												Spellchecker (integrated with aspell on <skill>Linux</skill> server) – added custom implementation to support a global dictionary in addition to user-editable per-user dictionaries.
 											</h:li>
 											<h:li>
-												Table-specific editor dialogs for inserting/modifying tables, and inserting/splitting table
-												cells; includes features not found in Dreamweaver:
+												Table-specific editor dialogs for inserting/modifying tables, and inserting/splitting table cells; includes features not found in Dreamweaver:
 												<h:ul>
 													<h:li>
 														Element "breadcrumb" Bar with shortcut modification menu.
@@ -1268,20 +1257,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 										</h:ul>
 									</h:li>
 									<h:li>
-										Developed <skill name="J2EE">Java EE</skill> Web Application responsible for handling file uploads
-										and
-										interfaced with <skill name="oracle-dbms">Oracle</skill> database to register files with CMS.
+										Developed <skill name="J2EE">Java EE</skill> Web Application responsible for handling file uploads and interfaced with <skill name="oracle-dbms">Oracle</skill> database to register files with CMS.
 									</h:li>
 									<h:li>
-										Developed a standalone <skill>Java</skill> application to batch upload the existing website content
-										into the appropriate CMS database tables.
+										Developed a standalone <skill>Java</skill> application to batch upload the existing website content into the appropriate CMS database tables.
 									</h:li>
 									<h:li>
 										Developed a custom Win32 installer using
-										<skill name="nsis">NSIS (Nullsoft Scriptable Install System)</skill>
-										to install the <skill>Java</skill> policy file necessary for certain features of the
-										<skill>HTML</skill>
-										Editor <skill name="java">Java Applet</skill>.
+										<skill name="nsis">NSIS (Nullsoft Scriptable Install System)</skill> to install the <skill>Java</skill> policy file necessary for certain features of the
+										<skill>HTML</skill> Editor <skill name="java">Java Applet</skill>.
 									</h:li>
 								</h:ul>
 							</description>
@@ -1291,17 +1275,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</positions>
 		</employer>
 	</employers>
-	<certifications>
-		<certificate>
-			<name>Security+</name>
-			<issuer>CompTIA</issuer>
-			<issue-date>2018-02-23</issue-date>
-			<expire-date>2021-02-23</expire-date>
-		</certificate>
-		<certificate>
-			<name>Sitecore XP 8.0 Certified Professional Developer</name>
-			<issuer>Sitecore</issuer>
-			<issue-date>2015-04-02</issue-date>
-		</certificate>
-	</certifications>
 </resume>

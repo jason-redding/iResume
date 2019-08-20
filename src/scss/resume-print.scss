@@ -5,6 +5,11 @@ $skillPrintColumns: 2;
 $certificationPrintColumns: 2;
 
 @media print {
+  @page {
+    size: portrait;
+    margin-left: 0;
+    margin-right: 0;
+  }
   .hide-when-print {
     display: none;
   }
@@ -16,11 +21,50 @@ $certificationPrintColumns: 2;
       break-after: auto;
     }
   }
-  .project-title,
-  .section-heading,
-  .employer-title {
-    page-break-after: avoid;
-    break-after: avoid;
+  .page-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+  .page-break-after {
+    page-break-after: always;
+    break-after: page;
+  }
+  .section-heading {
+    margin-bottom: 0;
+    &[data-section="skills"],
+    &[data-section="employers"] {
+      page-break-before: always;
+      break-before: page;
+    }
+    &, .project-title {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+  }
+  .section-content:last-child {
+    margin-bottom: 0;
+  }
+  .position-container {
+    margin-bottom: 1em;
+    &:first-child {
+      &, & > .position-header {
+        margin-top: 0.5em;
+      }
+    }
+  }
+  .position-header {
+    //margin-bottom: 0.25em;
+    &::before, &::after {
+      content: none;
+    }
+  }
+  .position-description {
+    ul, ol {
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-block-start: 0;
+      margin-block-end: 0;
+    }
   }
   .project-description {
     page-break-before: avoid;
@@ -93,52 +137,61 @@ $certificationPrintColumns: 2;
       }
     }
   }
+  *[role="log"] {
+    display: none;
+  }
   body {
     > .ui-page.ui-page-active {
+      position: static;
       box-shadow: none;
 
-      > main > .main-inner {
-        display: flex;
-        flex-direction: column;
+      > main {
+        padding-bottom: 0;
+        > .main-inner {
+          display: flex;
+          flex-direction: column;
 
-        div.skills .skill {
-          color: inherit;
-        }
+          div.skills .skill {
+            color: inherit;
+          }
 
-        .tab-panel {
-          &:not(#tab-panel-code) {
-            page-break-before: always;
-            break-before: page;
-            page-break-after: always;
-            break-after: page;
-            display: flex !important;
+          .tab-panel {
+            padding: 0 !important;
 
-            &:not(#tab-panel-skills) {
-              max-width: none !important;
+            &:not(#tab-panel-code) {
+              page-break-before: always;
+              break-before: page;
+              page-break-after: always;
+              break-after: page;
+              display: flex !important;
+
+              &:not(#tab-panel-skills) {
+                max-width: none !important;
+              }
+            }
+
+            &#tab-panel-resume {
+              order: 1;
+              margin-top: 0;
+            }
+
+            &#tab-panel-skills {
+              order: 2;
+              margin-left: 0;
+              margin-right: 0;
+              max-width: none;
+              display: none !important;
+            }
+
+            &#tab-panel-code {
+              order: 3;
+              display: none;
             }
           }
 
-          &#tab-panel-resume {
-            order: 1;
-            margin-top: 0;
-          }
-
-          &#tab-panel-skills {
-            order: 2;
-            margin-left: 0;
-            margin-right: 0;
-            max-width: none;
-            display: none !important;
-          }
-
-          &#tab-panel-code {
-            order: 3;
+          #skill-categories {
             display: none;
           }
-        }
-
-        #skill-categories {
-          display: none;
         }
       }
     }
@@ -197,11 +250,6 @@ $certificationPrintColumns: 2;
     column-width: auto;
   }
 
-  .position-header {
-    &::before, &::after {
-      content: none;
-    }
-  }
   //a[href]:not([href^="#"]) {
   //	&:not(.project-link):not(.author-contact-info) {
   //		&::after {

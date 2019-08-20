@@ -374,7 +374,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</xsl:attribute>
 			<xsl:for-each select="r:employer">
 				<xsl:variable name="employer" select="."/>
-				<xsl:for-each select="r:positions/r:position">
+				<xsl:for-each select="r:positions/r:position[not(@hidden = 'true' or @hidden = 'yes' or @hidden = 'on' or @hidden = '1')]">
 					<xsl:sort select="r:timeline/r:start-date" data-type="text" order="{$position-sort}"/>
 					<xsl:sort select="r:timeline/r:end-date" data-type="text" order="{$position-sort}"/>
 					<div class="position-container">
@@ -422,11 +422,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</select>
 		</div>-->
 		<xsl:choose>
-			<xsl:when
-				test="count(r:project[not(@hidden='true' or @hidden='1' or @hidden='yes' or @hidden='on')]) > 0">
+			<xsl:when test="count(r:project[not(@hidden='true' or @hidden='1' or @hidden='yes' or @hidden='on')]) > 0">
 				<div class="projects-container" data-role="collapsibleset" data-inset="false">
-					<xsl:for-each
-						select="r:project[not(@hidden='true' or @hidden='1' or @hidden='yes' or @hidden='on')]">
+					<h4 class="projects-heading">
+						<span class="projects-heading-text">
+							<xsl:text>Projects</xsl:text>
+						</span>
+					</h4>
+					<xsl:for-each select="r:project[not(@hidden='true' or @hidden='1' or @hidden='yes' or @hidden='on')]">
 						<div class="project-item" data-role="collapsible">
 							<xsl:if test="count(self::r:project[@expanded]) > 0">
 								<xsl:attribute name="data-collapsed">
@@ -475,7 +478,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</xsl:choose>
 	</xsl:template>
 
-	<xsl:template name="handle-position-location" match="r:positions/r:position">
+	<xsl:template name="handle-position-location">
 		<xsl:param name="position" select="."/>
 		<xsl:variable name="location-value">
 			<xsl:choose>
@@ -1000,42 +1003,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xsl:attribute name="title">
 				<xsl:text>${level} (${level.percentage#percent}) ${level.preposition#default(levels.preposition)} ${name} with ${experience.duration} of experience${experience.last#date("'&lt;br/>&lt;br/>Last used: 'MMMM' of 'yyyy")}</xsl:text>
 			</xsl:attribute>
-<!--			<xsl:attribute name="title">-->
-<!--				<xsl:value-of select="normalize-space($meta-skill-level)"/>-->
-<!--				<xsl:text> </xsl:text>-->
-<!--				<xsl:value-of select="concat('(', ($skill-level div $max-level) *100, '%)')"/>-->
-<!--				<xsl:text> </xsl:text>-->
-<!--				<xsl:value-of select="$skill-level-preposition"/>-->
-<!--				<xsl:text> </xsl:text>-->
-<!--				<xsl:value-of select="normalize-space($skill/r:name)"/>-->
-<!--				<xsl:text> with </xsl:text>-->
-<!--				<xsl:value-of select="$experience-years"/>-->
-<!--				<xsl:text> year</xsl:text>-->
-<!--				<xsl:if test="not(number($experience-years) = 1)">-->
-<!--					<xsl:text>s</xsl:text>-->
-<!--				</xsl:if>-->
-<!--				<xsl:text> of experience</xsl:text>-->
-<!--				<xsl:if test="not($experience-ongoing)">-->
-<!--					<xsl:text>&#10;&#10;</xsl:text>-->
-<!--					<xsl:value-of select="concat('Last used: ', $skill-last-used)"/>-->
-<!--				</xsl:if>-->
-				<!--<xsl:text>&#10;&#10;</xsl:text>
-			<xsl:choose>
-				<xsl:when test="count(r:categories/r:category) = 1">
-					<xsl:text>Category: </xsl:text>
-				</xsl:when>
-				<xsl:when test="count(r:categories/r:category) > 1">
-					<xsl:text>Categories: </xsl:text>
-				</xsl:when>
-			</xsl:choose>
-			<xsl:for-each select="r:categories/r:category">
-				<xsl:sort select="normalize-space(key('category', @value))" data-type="text" order="ascending"/>
-				<xsl:if test="position() > 1">
-					<xsl:text>, </xsl:text>
-				</xsl:if>
-				<xsl:value-of select="normalize-space(key('category', @value))"/>
-				</xsl:for-each>-->
-<!--			</xsl:attribute>-->
+			<!--<xsl:attribute name="title">-->
+			<!--<xsl:value-of select="normalize-space($meta-skill-level)"/>-->
+			<!--<xsl:text> </xsl:text>-->
+			<!--<xsl:value-of select="concat('(', ($skill-level div $max-level) *100, '%)')"/>-->
+			<!--<xsl:text> </xsl:text>-->
+			<!--<xsl:value-of select="$skill-level-preposition"/>-->
+			<!--<xsl:text> </xsl:text>-->
+			<!--<xsl:value-of select="normalize-space($skill/r:name)"/>-->
+			<!--<xsl:text> with </xsl:text>-->
+			<!--<xsl:value-of select="$experience-years"/>-->
+			<!--<xsl:text> year</xsl:text>-->
+			<!--<xsl:if test="not(number($experience-years) = 1)">-->
+			<!--	<xsl:text>s</xsl:text>-->
+			<!--</xsl:if>-->
+			<!--<xsl:text> of experience</xsl:text>-->
+			<!--<xsl:if test="not($experience-ongoing)">-->
+			<!--	<xsl:text>&#10;&#10;</xsl:text>-->
+			<!--	<xsl:value-of select="concat('Last used: ', $skill-last-used)"/>-->
+			<!--</xsl:if>-->
+			<!--<xsl:text>&#10;&#10;</xsl:text>
+		<xsl:choose>
+			<xsl:when test="count(r:categories/r:category) = 1">
+				<xsl:text>Category: </xsl:text>
+			</xsl:when>
+			<xsl:when test="count(r:categories/r:category) > 1">
+				<xsl:text>Categories: </xsl:text>
+			</xsl:when>
+		</xsl:choose>
+		<xsl:for-each select="r:categories/r:category">
+			<xsl:sort select="normalize-space(key('category', @value))" data-type="text" order="ascending"/>
+			<xsl:if test="position() > 1">
+				<xsl:text>, </xsl:text>
+			</xsl:if>
+			<xsl:value-of select="normalize-space(key('category', @value))"/>
+			</xsl:for-each>-->
+			<!--</xsl:attribute>-->
 			<xsl:attribute name="data-name">
 				<xsl:value-of select="normalize-space($skill/r:name)"/>
 			</xsl:attribute>
@@ -1079,18 +1082,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:value-of select="0"/>
 			</xsl:attribute>
 			<span class="text">
-				<!--				<xsl:value-of select="normalize-space($skill/r:name)"/>-->
+				<!--<xsl:value-of select="normalize-space($skill/r:name)"/>-->
 				<xsl:value-of select="$skill-text"/>
 			</span>
 			<xsl:if test="$show-details">
 				<xsl:text> (</xsl:text>
-<!--				<span class="skill-experience">-->
-<!--					<xsl:value-of select="concat($experience-years, ' yr')"/>-->
-<!--					<xsl:if test="not(number($experience-years) = 1)">-->
-<!--						<xsl:text>s</xsl:text>-->
-<!--					</xsl:if>-->
-<!--				</span>-->
-<!--				<xsl:text>, </xsl:text>-->
+				<!--<span class="skill-experience">-->
+				<!--	<xsl:value-of select="concat($experience-years, ' yr')"/>-->
+				<!--	<xsl:if test="not(number($experience-years) = 1)">-->
+				<!--		<xsl:text>s</xsl:text>-->
+				<!--	</xsl:if>-->
+				<!--</span>-->
+				<!--<xsl:text>, </xsl:text>-->
 				<span class="skill-level">
 					<xsl:value-of select="concat(($skill-level div $max-level) *100, '%')"/>
 				</span>
