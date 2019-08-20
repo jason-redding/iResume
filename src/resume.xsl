@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <xsl:stylesheet version="1.0"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://www.w3.org/1999/xhtml"
-	xmlns:r="http://jman.rocketssdhosting.com/xsd/resume"
+	xmlns:r="http://jman.socialis.dev/xsd/resume"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	exclude-result-prefixes="xsl h r">
 	<xsl:preserve-space elements="*"/>
@@ -1049,10 +1049,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:value-of select="($skill-level div $max-level)"/>
 			</xsl:attribute>
 			<xsl:attribute name="data-since">
-				<xsl:value-of select="$experience-since-year"/>
+				<xsl:value-of select="$experience-first"/>
 			</xsl:attribute>
 			<xsl:attribute name="data-until">
-				<xsl:value-of select="$experience-until-year"/>
+				<xsl:value-of select="$experience-last"/>
 			</xsl:attribute>
 			<xsl:attribute name="data-experience-precision">
 				<xsl:if test="string-length($skill/r:experience/@precision) > 0">
@@ -1238,7 +1238,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="normalize-space(text())"/>
-				<xsl:message terminate="no">
+				<xsl:message>
 					<xsl:text disable-output-escaping="yes">&lt;duration&gt; using fallback value: </xsl:text>
 					<xsl:value-of select="concat('&quot;', normalize-space(text()), '&quot;')"/>
 				</xsl:message>

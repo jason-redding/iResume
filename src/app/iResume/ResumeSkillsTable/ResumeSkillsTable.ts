@@ -482,7 +482,7 @@ export default class ResumeSkillsTable {
                     if (firstExperience === null || firstExperience.getTime() > since.getTime()) {
                         firstExperience = since;
                     }
-                    totalSkillExperienceRaw += (until.getTime() - since.getTime())
+                    totalSkillExperienceRaw += Math.abs(until.getTime() - since.getTime())
                 });
                 props[skillPropertyName].duration = Duration.getDuration(totalSkillExperienceRaw);
                 props[skillPropertyName].duration.text = Duration.text.bind(props[skillPropertyName].duration, props[skillPropertyName].duration, props[skillPropertyName].precision);

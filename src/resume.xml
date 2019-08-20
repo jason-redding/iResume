@@ -16,11 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resume xmlns="http://jman.rocketssdhosting.com/xsd/resume"
+<resume xmlns="http://jman.socialis.dev/xsd/resume"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:h="http://www.w3.org/1999/xhtml"
-	xmlns:r="http://jman.rocketssdhosting.com/xsd/resume"
-	xsi:schemaLocation="http://jman.rocketssdhosting.com/xsd/resume  resume.xsd"
+	xmlns:r="http://jman.socialis.dev/xsd/resume"
+	xsi:schemaLocation="http://jman.socialis.dev/xsd/resume resume.xsd"
 	last-modified="2019-08-17T11:13:00">
 	<meta>
 		<skill>
@@ -605,7 +605,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill>
 			<name>NetBeans IDE</name>
 			<level value="4"/>
-			<experience>
+			<experience precision="years">
 				<spanning from="2001-01" to="2019-04"/>
 			</experience>
 			<categories>
@@ -639,7 +639,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Perl</name>
 			<level value="3"/>
 			<experience precision="years">
-				<spanning from="2005-01" to="2011-01"/>
+				<spanning from="2005-01" to="2007-01"/>
 			</experience>
 			<categories>
 				<category value="dev-lang"/>
@@ -920,7 +920,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<location>Laurel, MD</location>
 			<positions>
 				<position>
-					<title>Full-Stack Developer</title>
+					<title>Full Stack Developer</title>
 					<timeline>
 						<start-date format="M/yyyy">2018-01-08</start-date>
 						<end-date format="M/yyyy">2019-04-29</end-date>
@@ -942,7 +942,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<location>Baltimore, MD</location>
 			<positions>
 				<position>
-					<title>IT Computer Technician (Student Aid)</title>
+					<title>IT Computer Technician</title>
 					<department>Support Center</department>
 					<timeline>
 						<start-date format="M/yyyy">2000-07-01</start-date>

@@ -1,4 +1,6 @@
 import ResumeLoader, {ResumeResponse, ResumeResponseBundle} from '../ResumeLoader/ResumeLoader';
+import XPath from "../../XPath/XPath";
+import {Duration, DurationResult} from "../../Env/Env";
 
 interface ResumeViewportProperties {
     latestModifiedDate: Date;
@@ -10,8 +12,28 @@ export default class ResumeComponent {
     private _viewportProperties: Partial<ResumeViewportProperties>;
     private _responseBundle: ResumeResponseBundle = null;
     private _transformedDocument: Document = null;
+    private _xpath: XPath;
     private _runBefore: Array<(response?: ResumeResponseBundle) => any | void> = [];
     private _runAfter: Array<() => any | void> = [];
+
+    constructor(loader: ResumeLoader, viewport: JQuery) {
+        this.viewport = viewport;
+        this.viewportProperties = {};
+        this._xpath = new XPath();
+        this._loader = loader;
+        this._loader.catch(responses => {
+            this.viewport.text('Failed to render résumé!');
+        });
+        this._loader.then(response => {
+            if (Object.keys(response).length < 2) {
+                console.debug('ERROR!');
+                return;
+            }
+            this._xpath.initNamespaceFrom(response.xml.document);
+            this._responseBundle = response;
+            this._applyTransform();
+        });
+    }
 
     get xmlPath() {
         return this._loader.getDataPath();
@@ -69,25 +91,22 @@ export default class ResumeComponent {
         this.getLoader().then(callback);
     }
 
-    get xmlDocument() {
+    get xmlDocument(): XMLDocument {
+        if (this._responseBundle !== null) {
+            return this._responseBundle.xml.document;
+        }
         return null;
     }
 
-    constructor(loader: ResumeLoader, viewport: JQuery) {
-        this.viewport = viewport;
-        this.viewportProperties = {};
-        this._loader = loader;
-        this._loader.catch(responses => {
-            this.viewport.text('Failed to render résumé!');
-        });
-        this._loader.then(response => {
-            if (Object.keys(response).length < 2) {
-                console.debug('ERROR!');
-                return;
-            }
-            this._responseBundle = response;
-            this._applyTransform();
-        });
+    get xslDocument(): XMLDocument {
+        if (this._responseBundle !== null) {
+            return this._responseBundle.xsl.document;
+        }
+        return null;
+    }
+
+    get transformedDocument(): XMLDocument {
+        return this._transformedDocument;
     }
 
     onBeforeRender(callback: (response: ResumeResponseBundle) => any | void) {
@@ -158,6 +177,42 @@ export default class ResumeComponent {
                         $lastUpdated.text(Date.format(latestModifiedDate, dateFormat));
                     });
                 }
+                $viewportElement.find('.skill').each((skillIndex, skillElement) => {
+                    let $skill: JQuery = $(skillElement);
+                    let skillName: string = $skill.attr('data-name');
+                    let $experienceNodes: JQuery<Element> = this._xpath.evaluate(this._responseBundle.xml.document, '/r:resume/r:skills/r:skill[r:name = "' + skillName.replace('"', '') + '"]/r:experience/*', 'nodeset');
+                    let totalSkillExperience: number = 0;
+                    $experienceNodes.each((experienceNodeIndex, experienceNode) => {
+                        let $experienceNode: JQuery<Element> = $(experienceNode);
+                        let experienceType: string = $experienceNode.prop('nodeName');
+                        let since: Date = null;
+                        let until: Date = null;
+                        if (experienceType === 'spanning') {
+                            since = Date.from(this._xpath.evaluate(experienceNode, '@from', 'string'));
+                            until = Date.from(this._xpath.evaluate(experienceNode, '@to', 'string'));
+                        } else if (experienceType === 'since') {
+                            since = Date.from(this._xpath.evaluate(experienceNode, 'text()', 'string'));
+                            until = new Date();
+                        } else {
+                            return;
+                        }
+                        totalSkillExperience += Math.abs(until.getTime() - since.getTime());
+                    });
+                    let skillDuration: DurationResult = Duration.getDuration(totalSkillExperience);
+                    let skillDurationISO: string = '';
+                    if (skillDuration.years > 0) {
+                        skillDurationISO += skillDuration.years + 'Y';
+                    }
+                    if (skillDuration.months > 0) {
+                        skillDurationISO += skillDuration.months + 'M';
+                    }
+                    if (skillDuration.days > 0) {
+                        skillDurationISO += skillDuration.days + 'D';
+                    }
+                    if (skillDurationISO.length > 0) {
+                        $skill.attr('data-experience-duration', 'P' + skillDurationISO);
+                    }
+                });
                 if (('enhanceWithin' in $.fn) && typeof $.fn.enhanceWithin === 'function') {
                     $viewportElement.enhanceWithin();
                 }
