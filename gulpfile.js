@@ -50,7 +50,7 @@ function browserReload(cb) {
 }
 
 function deployLive(cb) {
-    var isLocal = (('HOSTNAME' in CONTEXT) && CONTEXT['HOSTNAME'] === 'purple.atonal.org');
+    var isLocal = (('HOSTNAME' in CONTEXT) && CONTEXT['HOSTNAME'] === 'tessa.socialis.dev');
     if (isLocal) {
         return gulp.src(CONTEXT.DEST + '/**/*', {
             base: CONTEXT.DEST
