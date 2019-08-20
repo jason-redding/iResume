@@ -30,7 +30,6 @@ $certificationPrintColumns: 2;
     break-after: page;
   }
   .section-heading {
-    margin-bottom: 0;
     &[data-section="skills"],
     &[data-section="employers"] {
       page-break-before: always;
@@ -55,14 +54,6 @@ $certificationPrintColumns: 2;
   .position-header {
     &::before, &::after {
       content: none;
-    }
-  }
-  .position-description {
-    ul, ol {
-      margin-top: 0;
-      margin-bottom: 0;
-      margin-block-start: 0;
-      margin-block-end: 0;
     }
   }
   .project-description {
