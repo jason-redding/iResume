@@ -50,19 +50,10 @@ function browserReload(cb) {
 }
 
 function deployLive(cb) {
-    var isLocal = (('HOSTNAME' in CONTEXT) && CONTEXT['HOSTNAME'] === 'tessa.socialis.dev');
-    if (isLocal) {
-        return gulp.src(CONTEXT.DEST + '/**/*', {
-            base: CONTEXT.DEST
-        })
-        //.pipe(preprocess({
-        //	context: CONTEXT
-        //}))
-        .pipe(gulp.dest(CONTEXT.DEPLOY_PATH, {}));
-    } else {
-        exec('echo -e "git pull && npx gulp deploy" | ssh jman');
-        cb();
-    }
+    return gulp.src(CONTEXT.DEST + '/**/*', {
+        base: CONTEXT.DEST
+    })
+    .pipe(gulp.dest(CONTEXT.DEPLOY_PATH, {}));
 }
 
 function concat() {
