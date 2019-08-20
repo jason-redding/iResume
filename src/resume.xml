@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jman.socialis.dev/xsd/resume"
-	xsi:schemaLocation="http://jman.socialis.dev/xsd/resume resume.xsd"
+	xsi:schemaLocation="http://jman.socialis.dev/xsd/resume"
 	last-modified="2019-08-17T11:13:00">
 	<meta>
 		<skill>
@@ -67,13 +67,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		continued to support this system, he worked with colleagues and independently to create and enhance in-house
 		software as well as install, configure, customize, enhance, and maintain various third-party software. He used
 		Full-Stack development technology including <skill>Java</skill>, <skill>SQL</skill>, <skill>JSP</skill>,
-		<skill>HTML</skill>, <skill>SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>,
-		<skill>XSLT</skill>, <skill>XPath</skill>, and <skill>LDAP</skill>. At Booz Allen, Jason supported
-		a distributed cross-domain solution using Full-Stack development technology including <skill>Java</skill>,
-		<skill>SQL</skill>, <skill>JSP</skill>, <skill>AngularJS</skill>, <skill>Angular Materials</skill>,
-		<skill>HTML</skill>, <skill>SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>,
-		<skill>XSLT</skill>, <skill>XPath</skill>, <skill name="apache-maven">Maven</skill>, <skill>SaltStack</skill>, and
-		<skill>Python</skill>.
+		<skill>HTML</skill>, <skill>SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>, <skill>XSLT</skill>,
+		and <skill>XPath</skill>. At Booz Allen, Jason supported a distributed cross-domain solution using
+		Full-Stack development technology including <skill>Java</skill>, <skill>SQL</skill>, <skill>JSP</skill>,
+		<skill>AngularJS</skill>, <skill>Angular Materials</skill>, <skill>HTML</skill>, <skill>SCSS</skill>,
+		<skill>jQuery</skill>, <skill>XML</skill>, <skill>XSLT</skill>, <skill>XPath</skill>,
+		<skill name="apache-maven">Maven</skill>, <skill>SaltStack</skill>, and <skill>Python</skill>.
 	</description>
 	<competencies>
 		<competency>
@@ -192,16 +191,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="server"/>
 			</categories>
 		</skill>
-    <skill>
-      <name>Apache Storm</name>
-      <level value="2"/>
-      <experience>
-        <spanning from="2018-01-08" to="2019-04-29"/>
-      </experience>
-      <categories>
-        <category value="server"/>
-      </categories>
-    </skill>
+		<skill>
+			<name>Apache Storm</name>
+			<level value="2"/>
+			<experience>
+				<spanning from="2018-01-08" to="2019-04-29"/>
+			</experience>
+			<categories>
+				<category value="server"/>
+			</categories>
+		</skill>
 		<skill>
 			<name>Apache Tomcat</name>
 			<level value="4"/>
@@ -927,11 +926,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					</timeline>
 					<description>
 						<h:ul>
-							<h:li>Develop and improve Web Interfaces using <skill>AngularJS</skill>, <skill>Angular Materials</skill>, <skill>jQuery</skill>, <skill>SCSS</skill>, <skill>XSLT</skill>, and <skill>Responsive Design</skill>.</h:li>
-							<h:li>Design and develop software in <skill>Java</skill> and <skill>Apache Tomcat</skill> to query <skill>MySQL</skill> databases.</h:li>
-							<h:li>Integrate various components and test end-to-end capability using <skill>Python</skill>, <skill>SaltStack</skill>, and <skill>Apache Storm</skill>.</h:li>
+							<h:li>Develop and improve Web Interfaces using <skill>AngularJS</skill>, <skill>Angular Materials</skill>, <skill>jQuery</skill>, <skill>SCSS</skill>, <skill>XSLT</skill>, and <skill>Responsive Design</skill>.
+							</h:li>
+							<h:li>Design and develop software in <skill>Java</skill> and <skill>Apache Tomcat</skill> to query <skill>MySQL</skill> databases.
+							</h:li>
+							<h:li>Integrate various components and test end-to-end capability using <skill>Python</skill>, <skill>SaltStack</skill>, and <skill>Apache Storm</skill>.
+							</h:li>
 							<h:li>Collaborate with and assist team members.</h:li>
-              <h:li>Participate in code reviews.</h:li>
+							<h:li>Participate in code reviews.</h:li>
 						</h:ul>
 					</description>
 				</position>
