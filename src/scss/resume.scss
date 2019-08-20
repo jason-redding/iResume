@@ -191,13 +191,57 @@ pre.code-container {
   content: 'Category: ';
 }
 
-#select-code-container {
+.select-code-container {
   /*display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: baseline;*/
   label {
     margin-right: 0.5em;
+  }
+}
+
+#tab-panel-code {
+  .code-container {
+    position: relative;
+    &::before {
+      transition-property: background-color;
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-radius: inherit;
+      margin: -1px;
+    }
+  }
+  &:not(.data-loading) {
+    .code-container::before {
+      transition-duration: 0.6s;
+      background-color: hsla(0, 0%, 0%, 0);
+    }
+  }
+  &.data-loading {
+    .code-container {
+      &::before {
+        transition-duration: 0s;
+        background-color: hsla(0, 0%, 0%, 0.8);
+      }
+
+      &::after {
+        content: 'Loading...';
+        position: absolute;
+        display: block;
+        width: 100%;
+        text-align: center;
+        top: 1rem;
+        color: $textColorDarkTheme;
+        text-shadow: 0 1px 0 $textColorLightTheme;
+        font-size: 3em;
+      }
+    }
   }
 }
 

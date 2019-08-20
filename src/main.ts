@@ -3,7 +3,7 @@ import './app/Env/Env';
 import ResumeSkillsTable from './app/iResume/ResumeSkillsTable/ResumeSkillsTable';
 import ResumeComponent from './app/iResume/ResumeComponent/ResumeComponent';
 import ResumeLoader from './app/iResume/ResumeLoader/ResumeLoader';
-import * as hljs from './js/highlight.pack';
+import CodeViewer from "./app/CodeViewer/CodeViewer";
 
 onReady();
 
@@ -56,6 +56,28 @@ function initResumeComponent(resumeLoader: ResumeLoader) {
     resumeComponent.onAfterRender(() => {
         $.mobile.loading('hide');
     });
+}
+
+function initCodeSelector() {
+    console.debug('Initializing code selector...');
+
+    const codeViewer: CodeViewer = new CodeViewer('#code-viewer');
+    codeViewer
+    .addFile('/main.ts')
+    .addFile('/app/Namespace/Namespace.ts')
+    .addFile('/app/Env/Env.ts')
+    .addFile('/app/iResume/ResumeLoader/ResumeLoader.ts')
+    .addFile('/app/iResume/ResumeComponent/ResumeComponent.ts')
+    .addFile('/app/iResume/ResumeSkillsTable/ResumeSkillsTable.ts')
+    .addFile('/app/XPath/XPath.ts')
+    .addFile('/index.html')
+    .addFile('/resume.xml', true)
+    .addFile('/xsd/resume.xsd')
+    .addFile('/resume.xsl')
+    .addFile('/scss/resume.scss')
+    .addFile('/scss/resume-print.scss')
+    .addFile('/scss/_common.scss')
+    .init();
 }
 
 function initTooltips(resumeSkillsTable?: ResumeSkillsTable) {
@@ -268,41 +290,6 @@ function initHighlightThemePicker() {
     .on('change', function (event) {
         $('#highlight-theme').attr('href', '/css/highlight/' + $(this).val());
     });
-}
-
-function initCodeSelector() {
-    console.debug('Initializing code selector...');
-
-    $('#select-code')
-    .on('change', function (event) {
-        let $this: JQuery = $(this);
-        let path: string = $.trim('' + $this.val());
-        let $codeView: JQuery = $('pre#view-code > code');
-        let originalClasses;
-        if ($codeView.is('[data-original-classes]')) {
-            originalClasses = $.trim($codeView.attr('data-original-classes'));
-        } else {
-            $codeView.attr('data-original-classes', originalClasses = $.trim($codeView.attr('class')));
-        }
-        loadSourceFile(path)
-        .always(function (data, status, xhr) {
-            let v: any = data;
-            if (typeof v === 'string' || v instanceof String) {
-                v = $.trim(xhr.responseText);
-            } else {
-                v = '';
-            }
-            $codeView.text(v);
-            $codeView.attr('class', originalClasses);
-            try {
-                hljs.highlightBlock($codeView[0]);
-            } catch (ex) {
-                console.error(ex);
-            }
-            $codeView.closest('.tab-panel')[v.length > 0 ? 'addClass' : 'removeClass']('data-loaded');
-        });
-    })
-    .triggerHandler('change');
 }
 
 function initPreferences() {
