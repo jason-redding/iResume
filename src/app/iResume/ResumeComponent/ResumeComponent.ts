@@ -180,10 +180,10 @@ export default class ResumeComponent {
                 $viewportElement.find('.skill').each((skillIndex, skillElement) => {
                     let $skill: JQuery = $(skillElement);
                     let skillName: string = $skill.attr('data-name');
-                    let $experienceNodes: JQuery<Element> = this._xpath.evaluate(this._responseBundle.xml.document, '/r:resume/r:skills/r:skill[r:name = "' + skillName.replace('"', '') + '"]/r:experience/*', 'nodeset');
+                    let $experienceNodes: JQuery<Node> = this._xpath.evaluate(this._responseBundle.xml.document, '/r:resume/r:skills/r:skill[r:name = "' + skillName.replace('"', '') + '"]/r:experience/*', 'nodeset');
                     let totalSkillExperience: number = 0;
                     $experienceNodes.each((experienceNodeIndex, experienceNode) => {
-                        let $experienceNode: JQuery<Element> = $(experienceNode);
+                        let $experienceNode: JQuery<Node> = $(experienceNode);
                         let experienceType: string = $experienceNode.prop('nodeName');
                         let since: Date = null;
                         let until: Date = null;

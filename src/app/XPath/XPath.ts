@@ -1,3 +1,13 @@
+type XPathResultValue<T> =
+    T extends 'string' ? string :
+    T extends 'number' ? number :
+    T extends 'boolean' ? boolean :
+    T extends 'node' ? JQuery<Node> :
+    T extends 'nodeset' ? JQuery<Node> :
+    T extends 'nodes' ? JQuery<Node> :
+    T extends 'any' ? string | number | boolean | JQuery<Node> :
+    any;
+
 export default class XPath {
     private _namespace: Namespace;
 
@@ -19,18 +29,11 @@ export default class XPath {
 
     evaluate
     <T extends 'string' | 'number' | 'boolean' | 'node' | 'nodeset' | 'nodes' | 'any'>
-    (context: Node | Node[] | Element | Element[] | JQuery<Element>, expression: string, type: T):
-        T extends 'string' ? string :
-        T extends 'number' ? number :
-        T extends 'boolean' ? boolean :
-        T extends 'node' ? JQuery<Element> :
-        T extends 'nodeset' ? JQuery<Element> :
-        T extends 'nodes' ? JQuery<Element> :
-        T extends 'any' ? string | number | boolean | JQuery<Element> :
-        any
+    (context: Node | Node[] | JQuery<Node>, expression: string, type: T):
+        XPathResultValue<T>
     {
-        let rv: string | number | boolean | Node | JQuery<Element> = null;
-        let cv: Node[] = [];
+        let rv: XPathResultValue<T> = null;
+        let cv: Set<Node> = new Set();
         let resultType: number = XPathResult.ANY_TYPE;
         if (typeof type === 'string') {
             if (type === 'any') {
@@ -47,9 +50,9 @@ export default class XPath {
                 resultType = XPathResult.ORDERED_NODE_ITERATOR_TYPE;
             }
         }
-        let $context: JQuery<Element>;
+        let $context: JQuery<Node>;
         if (context instanceof Node || Array.isArray(context)) {
-            $context = $(<any[]>context);
+            $context = $(<Node>context);
         } else {
             $context = context;
         }
@@ -71,20 +74,20 @@ export default class XPath {
             }
             let t: number = r.resultType;
             if (t === XPathResult.BOOLEAN_TYPE) {
-                rv = r.booleanValue;
+                rv = <XPathResultValue<T>>r.booleanValue;
                 return false;
             } else if (t === XPathResult.NUMBER_TYPE) {
-                rv = r.numberValue;
+                rv = <XPathResultValue<T>>r.numberValue;
                 return false;
             } else if (t === XPathResult.STRING_TYPE) {
-                rv = r.stringValue;
+                rv = <XPathResultValue<T>>r.stringValue;
                 return false;
             } else if (t === XPathResult.ORDERED_NODE_ITERATOR_TYPE || t === XPathResult.UNORDERED_NODE_ITERATOR_TYPE) {
                 try {
                     let node: Node;
                     while ((node = r.iterateNext()) !== null) {
-                        if ((cv).indexOf(node) < 0) {
-                            (cv).push(node);
+                        if (!cv.has(node)) {
+                            cv.add(node);
                         }
                     }
                 } catch (ex) {
@@ -95,30 +98,31 @@ export default class XPath {
             } else if (t === XPathResult.ORDERED_NODE_SNAPSHOT_TYPE || t === XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE) {
                 for (let snapShotIndex = 0; snapShotIndex < r.snapshotLength; snapShotIndex++) {
                     let snapshot: Node = r.snapshotItem(snapShotIndex);
-                    if ((cv).indexOf(snapshot) < 0) {
-                        (cv).push(snapshot);
+                    if (!cv.has(snapshot)) {
+                        cv.add(snapshot);
                     }
                 }
             } else if (t === XPathResult.ANY_UNORDERED_NODE_TYPE || t === XPathResult.FIRST_ORDERED_NODE_TYPE) {
                 if (r.singleNodeValue !== null) {
-                    cv = [r.singleNodeValue];
+                    cv.clear();
+                    cv.add(r.singleNodeValue);
                 } else {
-                    cv = [];
+                    cv.clear();
                 }
                 return false;
             }
         });
 
-        if (($context.length === 0) || (rv === null && cv.length === 0)) {
+        if (($context.length === 0) || (rv === null && cv.size === 0)) {
             if (resultType === XPathResult.STRING_TYPE || resultType === XPathResult.NUMBER_TYPE || resultType === XPathResult.BOOLEAN_TYPE) {
                 return null;
             }
         }
 
-        if (rv === null && Array.isArray(cv)) {
-            rv = <JQuery<any>>$(cv);
+        if (rv === null) {
+            rv = <XPathResultValue<T>>$([...cv]);
         }
-        return <any>rv;
+        return rv;
     }
 }
 
