@@ -8,12 +8,34 @@ import CodeViewer from "./app/CodeViewer/CodeViewer";
 onReady();
 
 function onReady() {
+    initHashHandling();
     loadResume();
     initThemeUI();
     initHighlightThemePicker();
     initCodeSelector();
     initTabs();
     initPreferences();
+}
+
+function initHashHandling() {
+    $(window).on('pagecontainerbeforechange.iresume', function (event, ui) {
+        if (typeof ui.toPage === 'string' || ui.toPage instanceof String) {
+            const url: ParsedPath = $.mobile.path.parseUrl(ui.toPage);
+            const m: RegExpExecArray = /^#(position-.+)$/.exec(url.hash);
+            if (m !== null && m.length > 0) {
+                const $anchor: JQuery = $('a[name="' + m[1] + '"]', ui.prevPage);
+                if ($anchor.length > 0) {
+                    event.preventDefault();
+                    const headerAdjustment: number = $('.ui-page.ui-page-active > .ui-header-fixed', ui.prevPage).height() || 0;
+                    $('html, body').animate({
+                        scrollTop: $anchor.offset().top - headerAdjustment
+                    }, {
+                        duration: 1500
+                    });
+                }
+            }
+        }
+    });
 }
 
 function loadResume() {

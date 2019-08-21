@@ -10,6 +10,13 @@ body {
   display: none;
 }
 
+.ui-page.ui-page-active > .ui-header.ui-header-fixed {
+  a[name]:not([href]) {
+    position: relative;
+    top: -3.5rem;
+  }
+}
+
 @media screen {
   .ui-page.ui-page-active {
     &.ui-page-theme-b {

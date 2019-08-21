@@ -378,6 +378,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xsl:sort select="r:timeline/r:start-date" data-type="text" order="{$position-sort}"/>
 					<xsl:sort select="r:timeline/r:end-date" data-type="text" order="{$position-sort}"/>
 					<div class="position-container">
+						<a name="{concat('position-', normalize-space(r:timeline/r:start-date))}"></a>
 						<div class="position-header">
 							<div class="position-employer">
 								<h3 class="employer-title">

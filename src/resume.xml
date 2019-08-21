@@ -60,15 +60,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<last-updated label="Last Updated" format="M/d/yyyy"/>
 	</author>
 	<description title="Experience Summary">
-		Jason is an experienced <skill>Java</skill> Developer with front-end experience in an agile development team.
-		Prior to joining Booz Allen, Jason worked at the Community College of Baltimore County.
-		During the first year, he joined as an IT Computer Technician and then transitioned to a developer role on a team
-		tasked with building a Content Management System allowing faculty and staff to publish their own content to the college website.
+		Jason is an experienced, self-taught <skill>Java</skill> developer with a successful track record
+		delivering across a Full Stack of development technology within Agile and traditional project frameworks.
+		Prior to joining <h:a href="#position-2018-01-08">Booz Allen</h:a>, Jason worked at the Community College of Baltimore County.
+		During the first year, he joined as an <h:a href="#position-2000-07-01">IT Computer Technician</h:a> and then transitioned to a
+		<h:a href="#position-2001-07-01">Developer role</h:a> on a team tasked with building a Content Management System allowing faculty and staff to publish their own content to the college website.
 		As he continued to support this system, he worked with colleagues and independently to create and enhance in-house software
 		as well as install, configure, customize, enhance, and maintain various third-party software.
-		He used Full-Stack development technology including <skill>Java</skill>, <skill>SQL</skill>, <skill>JSP</skill>, <skill>HTML</skill>,
+		He used Full Stack development technology including <skill>Java</skill>, <skill>SQL</skill>, <skill>JSP</skill>, <skill>HTML</skill>,
 		<skill>SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>, <skill>XSLT</skill>, and <skill>XPath</skill>.
-		At Booz Allen, Jason supported a distributed cross-domain solution using Full-Stack development technology including
+		At <h:a href="#position-2018-01-08">Booz Allen</h:a>, Jason supported a distributed cross-domain solution using Full Stack development technology including
 		<skill>Java</skill>, <skill>SQL</skill>, <skill>JSP</skill>, <skill>AngularJS</skill>, <skill>Angular Materials</skill>,
 		<skill>HTML</skill>, <skill>SCSS</skill>, <skill>jQuery</skill>, <skill>XML</skill>, <skill>XSLT</skill>, <skill>XPath</skill>,
 		<skill name="apache-maven">Maven</skill>, <skill>SaltStack</skill>, and <skill>Python</skill>.
@@ -984,7 +985,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					</description>
 				</position>
 				<position>
-					<title>Programmer</title>
+					<title>Developer</title>
 					<timeline>
 						<start-date format="M/yyyy">2001-07-01</start-date>
 						<end-date format="M/yyyy">2017-12-31</end-date>

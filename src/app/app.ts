@@ -8,11 +8,9 @@ require.config({
     }
 });
 
-require(['jquery', 'jqueryui'], () => {
+require(['jquery', 'jqueryui'], ($) => {
     // $(document).on('mobileinit', () => {
-    //     $.extend($.mobile, {
-    //         autoInitializePage: false
-    //     });
+    //     console.debug('jQueryMobile finished loading!');
     // });
     require(['jquerymobile'], () => {
         require(['../main']);
