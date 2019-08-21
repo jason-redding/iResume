@@ -87,7 +87,10 @@ export default class ResumeLoader implements Promise<ResumeResponseBundle | JQue
         let jobs: string[] = [xmlPath, xslPath];
         let xhrList: JQuery.jqXHR[] = [];
         for (let job of jobs) {
-            this._jobs[job] = $.get(job);
+            this._jobs[job] = $.get({
+                cache: false,
+                url: job
+            });
             xhrList.push(this._jobs[job]);
         }
         this._triggerBefore(this._jobs);
