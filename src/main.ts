@@ -26,9 +26,9 @@ function initHashHandling() {
                 const $anchor: JQuery = $('a[name="' + m[1] + '"]', ui.prevPage);
                 if ($anchor.length > 0) {
                     event.preventDefault();
-                    const headerAdjustment: number = $('.ui-page.ui-page-active > .ui-header-fixed', ui.prevPage).height() || 0;
+                    const headerAdjustment: number = $('> .ui-header-fixed', ui.prevPage).outerHeight(true) || 0;
                     $('html, body').animate({
-                        scrollTop: $anchor.offset().top - headerAdjustment
+                        scrollTop: $anchor.offset().top - 8 - headerAdjustment
                     }, {
                         duration: 1500
                     });
