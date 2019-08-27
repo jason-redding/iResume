@@ -303,7 +303,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xs:complexType name="type-technology-stack">
 		<xs:sequence>
-			<xs:element name="skill" maxOccurs="unbounded" type="type-skill-reference"/>
+			<xs:element name="skill" maxOccurs="unbounded" type="type-skill-pointer"/>
 		</xs:sequence>
 		<!--<xs:attribute name="hidden" use="optional" type="type-boolean"/>-->
 	</xs:complexType>
@@ -374,6 +374,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xs:element name="duration" type="type-duration"/>
 
 	<xs:element name="skill" type="type-skill-reference"/>
+
+	<xs:complexType name="type-skill-pointer">
+		<xs:attribute name="name" type="xs:normalizedString" use="required"/>
+	</xs:complexType>
 
 	<xs:complexType name="type-skill-reference" mixed="true">
 		<xs:simpleContent>

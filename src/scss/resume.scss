@@ -10,7 +10,7 @@ body {
   display: none;
 }
 
-.ui-page.ui-page-active > .ui-header.ui-header-fixed {
+.ui-page.ui-page-active.ui-page-header-fixed {
   a[name]:not([href]) {
     position: relative;
     top: -3.5rem;
@@ -161,10 +161,18 @@ span.github-link {
 
 code {
   &.snippet {
-    background-color: #ececec;
-    border: 1px solid #444444;
+    border-width: 1px;
+    border-style: solid;
     border-radius: 0.5em;
     padding: 1px 0.4em 2px;
+    .ui-page-theme-a & {
+      background-color: #ececec;
+      border-color: #444444;
+    }
+    .ui-page-theme-b & {
+      background-color: #929292;
+      border-color: #dedede;
+    }
   }
 }
 
@@ -306,14 +314,25 @@ pre.code-container {
 
 }
 
+.ui-header, .ui-footer {
+  .ui-title {
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+}
+
 .ui-header {
-  &, .ui-footer {
-    .ui-title {
-      margin-left: 1em;
-      margin-right: 1em;
+  &.ui-header-fixed {
+    .ui-page-theme-a &, .ui-page-theme-b & {
+      @include prefix(backdrop-filter, blur(3px));
+    }
+    .ui-page-theme-a & {
+      background-color: rgba(233, 233, 233, 0.4);
+    }
+    .ui-page-theme-b & {
+      background-color: rgba(29, 29, 29, 0.4);
     }
   }
-
   .ui-title[data-short-text] {
     > .text {
       display: none;

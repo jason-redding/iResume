@@ -26,12 +26,12 @@ function initHashHandling() {
                 const $anchor: JQuery = $('a[name="' + m[1] + '"]', ui.prevPage);
                 if ($anchor.length > 0) {
                     event.preventDefault();
-                    const headerAdjustment: number = $('> .ui-header-fixed', ui.prevPage).outerHeight() || 0;
+                    // const headerAdjustment: number = ($('> .ui-header-fixed', ui.prevPage).outerHeight() || 0) + 8;
                     $('html, body').animate({
-                        scrollTop: $anchor.offset().top - 8 - headerAdjustment
+                        scrollTop: $anchor.offset().top
                     }, {
                         easing: 'easeInOutBack',
-                        duration: 2000
+                        duration: 1800
                     });
                 }
             }

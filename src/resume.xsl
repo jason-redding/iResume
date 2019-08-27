@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xsl:param name="projects-layout" select="''"/>
 	<xsl:key name="level" match="/r:resume/r:meta/r:skill/r:levels/r:level" use="@value"/>
 	<xsl:key name="category" match="/r:resume/r:meta/r:skill/r:categories/r:category" use="@value"/>
-	<xsl:key name="skill" match="/r:resume/r:skills/r:skill" use="r:name"/>
+	<xsl:key name="skill" match="/r:resume/r:skills/r:skill" use="translate(normalize-space(r:name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-')"/>
 	<xsl:variable name="max-level">
 		<xsl:for-each select="/r:resume/r:meta/r:skill/r:levels/r:level">
 			<xsl:sort select="@value" data-type="number" order="descending"/>
@@ -573,6 +573,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				</span>
 				<span class="technology-stack">
 					<xsl:for-each select="$stack/r:skill">
+						<xsl:sort select="key('skill', translate(normalize-space(@name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-'))/r:name" order="ascending" data-type="text"/>
 						<xsl:if test="position() > 1">
 							<xsl:text>, </xsl:text>
 						</xsl:if>

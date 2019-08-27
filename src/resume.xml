@@ -902,23 +902,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						</h:ul>
 					</description>
 					<stack>
-						<skill>AngularJS</skill>
-						<skill>Angular Materials</skill>
-						<skill>HTML</skill>
-						<skill>Java</skill>
-						<skill>JBoss</skill>
-						<skill>Apache Storm</skill>
-						<skill>SaltStack</skill>
-						<skill>SQL</skill>
-						<skill>MySQL</skill>
-						<skill>Python</skill>
-						<skill>JavaScript</skill>
-						<skill>jQuery</skill>
-						<skill>jQuery UI</skill>
-						<skill>SCSS</skill>
-						<skill>XML</skill>
-						<skill>XSLT</skill>
-						<skill>Responsive Design</skill>
+						<skill name="AngularJS"/>
+						<skill name="Angular Materials"/>
+						<skill name="HTML"/>
+						<skill name="Java"/>
+						<skill name="JBoss"/>
+						<skill name="Apache Storm"/>
+						<skill name="SaltStack"/>
+						<skill name="SQL"/>
+						<skill name="MySQL"/>
+						<skill name="Python"/>
+						<skill name="JavaScript"/>
+						<skill name="jQuery"/>
+						<skill name="jQuery UI"/>
+						<skill name="SCSS"/>
+						<skill name="XML"/>
+						<skill name="XSLT"/>
+						<skill name="Responsive Design"/>
 					</stack>
 				</position>
 			</positions>
@@ -987,11 +987,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</h:ul>
 							</description>
 							<stack>
-								<skill>Oracle DBMS</skill>
-								<skill>Oracle PL/SQL</skill>
-								<skill>SQL</skill>
-								<skill>JavaScript</skill>
-								<skill>jQuery</skill>
+								<skill name="Oracle DBMS"/>
+								<skill name="Oracle PL/SQL"/>
+								<skill name="SQL"/>
+								<skill name="JavaScript"/>
+								<skill name="jQuery"/>
 							</stack>
 						</project>
 						<project>
@@ -1013,13 +1013,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</h:ul>
 							</description>
 							<stack>
-								<skill>Java</skill>
-								<skill name="command-line-interface"/>
-								<skill>REST</skill>
-								<skill>HTML</skill>
-								<skill>XML</skill>
-								<skill>XPath</skill>
-								<skill>XSLT</skill>
+								<skill name="Java"/>
+								<skill name="Command Line Interface"/>
+								<skill name="REST"/>
+								<skill name="HTML"/>
+								<skill name="XML"/>
+								<skill name="XPath"/>
+								<skill name="XSLT"/>
 							</stack>
 						</project>
 						<project>
@@ -1036,25 +1036,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 										Created a page from scratch that relied heavily on <skill name="rest">Web Services</skill>, <skill>AJAX</skill>, <skill>jQuery</skill>, and <skill>jQuery UI</skill>. This page enabled users to search for spaces matching a wide variety of criteria, and check the availability for specific dates/times before scheduling an event in that space.
 									</h:li>
 									<h:li>
-										Collected and associated latitude/longitude data with all spaces defined in system, then integrated with <skill name="google-maps-javascript-api-v3">Google Maps</skill> to show location of space and allow for 1-click access to directions.
+										Collected and associated latitude/longitude data with all spaces defined in system, then integrated with <skill name="google-maps-javascript-api">Google Maps</skill> to show location of space and allow for 1-click access to directions.
 									</h:li>
 								</h:ul>
 							</description>
 							<stack>
-								<skill>Active Directory</skill>
-								<skill>Apache Tomcat</skill>
-								<skill>Oracle DBMS</skill>
-								<skill>JavaScript</skill>
-								<skill>AJAX</skill>
-								<skill>REST</skill>
-								<skill>HTML</skill>
-								<skill>CSS</skill>
-								<skill>jQuery</skill>
-								<skill>jQuery UI</skill>
-								<skill>XML</skill>
-								<skill>XPath</skill>
-								<skill>XSLT</skill>
-								<skill name="google-maps-javascript-api-v3"/>
+								<skill name="Active Directory"/>
+								<skill name="Apache Tomcat"/>
+								<skill name="Oracle DBMS"/>
+								<skill name="JavaScript"/>
+								<skill name="AJAX"/>
+								<skill name="REST"/>
+								<skill name="HTML"/>
+								<skill name="CSS"/>
+								<skill name="jQuery"/>
+								<skill name="jQuery UI"/>
+								<skill name="XML"/>
+								<skill name="XPath"/>
+								<skill name="XSLT"/>
+								<skill name="Google Maps JavaScript API"/>
 							</stack>
 						</project>
 						<project>
@@ -1071,20 +1071,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</h:ul>
 							</description>
 							<stack>
-								<skill>Active Directory</skill>
-								<skill>Apache Tomcat</skill>
-								<skill>Java</skill>
-								<skill>SQL</skill>
-								<skill>Oracle DBMS</skill>
-								<skill>Oracle PL/SQL</skill>
-								<skill>JavaScript</skill>
-								<skill>AJAX</skill>
-								<skill>HTML</skill>
-								<skill>CSS</skill>
-								<skill>jQuery</skill>
-								<skill>jQuery UI</skill>
-								<skill>jQuery Mobile</skill>
-								<skill>Responsive Design</skill>
+								<skill name="Active Directory"/>
+								<skill name="Apache Tomcat"/>
+								<skill name="Java"/>
+								<skill name="SQL"/>
+								<skill name="Oracle DBMS"/>
+								<skill name="Oracle PL/SQL"/>
+								<skill name="JavaScript"/>
+								<skill name="AJAX"/>
+								<skill name="HTML"/>
+								<skill name="CSS"/>
+								<skill name="jQuery"/>
+								<skill name="jQuery UI"/>
+								<skill name="jQuery Mobile"/>
+								<skill name="Responsive Design"/>
 							</stack>
 						</project>
 						<project>
@@ -1102,21 +1102,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</h:ul>
 							</description>
 							<stack>
-								<skill>Active Directory</skill>
-								<skill>Apache Tomcat</skill>
-								<skill>Java</skill>
-								<skill>JSP</skill>
-								<skill>SQL</skill>
-								<skill>Oracle DBMS</skill>
-								<skill>Oracle PL/SQL</skill>
-								<skill>Microsoft SQL Server</skill>
-								<skill>HTML</skill>
-								<skill>CSS</skill>
-								<skill>JavaScript</skill>
-								<skill>AJAX</skill>
-								<skill>jQuery</skill>
-								<skill>jQuery UI</skill>
-								<skill>REST</skill>
+								<skill name="Active Directory"/>
+								<skill name="Apache Tomcat"/>
+								<skill name="Java"/>
+								<skill name="JSP"/>
+								<skill name="SQL"/>
+								<skill name="Oracle DBMS"/>
+								<skill name="Oracle PL/SQL"/>
+								<skill name="Microsoft SQL Server"/>
+								<skill name="HTML"/>
+								<skill name="CSS"/>
+								<skill name="JavaScript"/>
+								<skill name="AJAX"/>
+								<skill name="jQuery"/>
+								<skill name="jQuery UI"/>
+								<skill name="REST"/>
 							</stack>
 						</project>
 						<project hidden="true">
@@ -1151,15 +1151,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</h:ul>
 							</description>
 							<stack>
-								<skill>Apache Tomcat</skill>
-								<skill>Java</skill>
-								<skill>JSP</skill>
-								<skill>HTML</skill>
-								<skill>CSS</skill>
-								<skill>JavaScript</skill>
-								<skill>AJAX</skill>
-								<skill>jQuery</skill>
-								<skill>XML</skill>
+								<skill name="Apache Tomcat"/>
+								<skill name="Java"/>
+								<skill name="JSP"/>
+								<skill name="HTML"/>
+								<skill name="CSS"/>
+								<skill name="JavaScript"/>
+								<skill name="AJAX"/>
+								<skill name="jQuery"/>
+								<skill name="XML"/>
 							</stack>
 						</project>
 						<project>
@@ -1178,14 +1178,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</h:ul>
 							</description>
 							<stack>
-								<skill>Active Directory</skill>
-								<skill>Apache Tomcat</skill>
-								<skill>Java</skill>
-								<skill name="command-line-interface"/>
-								<skill>HTML</skill>
-								<skill>CSS</skill>
-								<skill>JavaScript</skill>
-								<skill>jQuery</skill>
+								<skill name="Active Directory"/>
+								<skill name="Apache Tomcat"/>
+								<skill name="Java"/>
+								<skill name="Command Line Interface"/>
+								<skill name="HTML"/>
+								<skill name="CSS"/>
+								<skill name="JavaScript"/>
+								<skill name="jQuery"/>
 							</stack>
 						</project>
 						<project hidden="true">
@@ -1207,16 +1207,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</h:ul>
 							</description>
 							<stack>
-								<skill>Active Directory</skill>
-								<skill>Apache Tomcat</skill>
-								<skill>Java</skill>
-								<skill>SQL</skill>
-								<skill>Oracle DBMS</skill>
-								<skill>Oracle PL/SQL</skill>
-								<skill>JDBC</skill>
-								<skill>HTML</skill>
-								<skill>JavaScript</skill>
-								<skill>CSS</skill>
+								<skill name="Active Directory"/>
+								<skill name="Apache Tomcat"/>
+								<skill name="Java"/>
+								<skill name="SQL"/>
+								<skill name="Oracle DBMS"/>
+								<skill name="Oracle PL/SQL"/>
+								<skill name="JDBC"/>
+								<skill name="HTML"/>
+								<skill name="JavaScript"/>
+								<skill name="CSS"/>
 							</stack>
 						</project>
 						<project hidden="true">
@@ -1258,17 +1258,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</h:ul>
 							</description>
 							<stack>
-								<skill>Active Directory</skill>
-								<skill>Apache Tomcat</skill>
-								<skill>Java</skill>
-								<skill>SQL</skill>
-								<skill>Oracle DBMS</skill>
-								<skill>Oracle PL/SQL</skill>
-								<skill>JDBC</skill>
-								<skill>HTML</skill>
-								<skill>JavaScript</skill>
-								<skill>CSS</skill>
-								<skill>NSIS</skill>
+								<skill name="Active Directory"/>
+								<skill name="Apache Tomcat"/>
+								<skill name="Java"/>
+								<skill name="SQL"/>
+								<skill name="Oracle DBMS"/>
+								<skill name="Oracle PL/SQL"/>
+								<skill name="JDBC"/>
+								<skill name="HTML"/>
+								<skill name="JavaScript"/>
+								<skill name="CSS"/>
+								<skill name="NSIS"/>
 							</stack>
 						</project>
 					</projects>
