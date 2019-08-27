@@ -718,13 +718,13 @@ String.format = function(context: string, properties: object = {}, defaultProper
     return stringFormatter.format();
 };
 Number.getSuffix = function(value: number, includeNumber: boolean = false): string {
-    var suffix = '';
-    var sNum = ('' + value);
-    var lastDigit = parseInt(sNum.substring(sNum.length - 1));
+    let suffix: string = '';
+    const sNum: string = ('' + value);
+    const lastDigit: number = parseInt(sNum.substring(sNum.length - 1));
     while (true) {
-        var di = sNum.indexOf('.');
+        const di: number = sNum.indexOf('.');
         if (di >= 0) {
-            var columnValuesRight = [
+            const columnValuesRight: string[] = [
                 'Tenth',
                 'Hundredth',
                 'Thousandth',
@@ -756,20 +756,20 @@ Number.getSuffix = function(value: number, includeNumber: boolean = false): stri
                 'Hundred-octillionth',
                 'Nonillionth'
             ];
-            var columnPos = (sNum.length - 1) - di - 1;
+            const columnPos: number = (sNum.length - 1) - di - 1;
             if (columnPos >= 0 && columnPos < columnValuesRight.length) {
                 if (includeNumber) {
                     suffix += ' ';
                 }
                 suffix += columnValuesRight[columnPos].toLowerCase();
-                var rightQuantity = parseInt(sNum.substring(di + 1));
+                const rightQuantity: number = parseInt(sNum.substring(di + 1));
                 if (rightQuantity > 1) {
                     suffix += 's';
                 }
             }
             break;
         }
-        var lastTwoDigits = (sNum.length > 1 ? parseInt(sNum.substring(sNum.length - 2)) : lastDigit);
+        const lastTwoDigits: number = (sNum.length > 1 ? parseInt(sNum.substring(sNum.length - 2)) : lastDigit);
         if (lastTwoDigits > 10 && lastTwoDigits < 20) {
             suffix = 'th';
         } else if (lastDigit === 1) {
@@ -786,19 +786,19 @@ Number.getSuffix = function(value: number, includeNumber: boolean = false): stri
     return ((includeNumber ? sNum : '') + suffix);
 };
 Date.prototype.relativeToNow = function(): string {
-    let dSelf = this;
-    let date = new Date();
+    let dSelf: Date = this;
+    let date: Date = new Date();
 
-    let r = '';
-    let sTime = parseInt(('' + (dSelf.getTime() / 1000)));
-    let dTime = parseInt(('' + (date.getTime() / 1000)));
-    let td = (sTime - dTime);
-    let as = Math.abs(td);
-    let am = parseInt(('' + (as / 60)));
-    let ah = parseInt(('' + (as / 60 / 60)));
-    let ad = parseInt(('' + (as / 60 / 60 / 24)));
-    let aM = parseInt(('' + (as / 60 / 60 / 24 / 30)));
-    let ay = parseInt(('' + (as / 60 / 60 / 24 / 365)));
+    let r: string = '';
+    let sTime: number = parseInt(('' + (dSelf.getTime() / 1000)));
+    let dTime: number = parseInt(('' + (date.getTime() / 1000)));
+    let td: number = (sTime - dTime);
+    let as: number = Math.abs(td);
+    let am: number = parseInt(('' + (as / 60)));
+    let ah: number = parseInt(('' + (as / 60 / 60)));
+    let ad: number = parseInt(('' + (as / 60 / 60 / 24)));
+    let aM: number = parseInt(('' + (as / 60 / 60 / 24 / 30)));
+    let ay: number = parseInt(('' + (as / 60 / 60 / 24 / 365)));
 
     if (ay > 0) {
         r = ay + ' year' + (ay === 1 ? '' : 's');
@@ -824,104 +824,94 @@ Date.prototype.relativeToNow = function(): string {
     return r;
 };
 Date.format = function(date: Date, format: string, useUTC: boolean = false): string {
-    let ampm: string = 'AM';
-    let utcWedge: string = (useUTC === true ? 'UTC' : '');
-    let y: number = date['get' + utcWedge + 'FullYear']();
-    let M: number = (date['get' + utcWedge + 'Month']() + 1);
-    let d: number = date['get' + utcWedge + 'Date']();
-    let diw: number = (date['get' + utcWedge + 'Day']() + 1);
-    let H: number = date['get' + utcWedge + 'Hours']();
-    let h: number = H;
-    let m: number = date['get' + utcWedge + 'Minutes']();
-    let s: number = date['get' + utcWedge + 'Seconds']();
-    let S: number = date['get' + utcWedge + 'Milliseconds']();
-    if (H >= 12) {
-        if (H > 12) {
-            h = H - 12;
-        }
-        ampm = 'PM';
-    }
-    if (h === 0) {
-        h = 12;
-    }
+    const utcWedge: string = (useUTC === true ? 'UTC' : '');
+    const y: number = date['get' + utcWedge + 'FullYear']();
+    const M: number = (date['get' + utcWedge + 'Month']() + 1);
+    const d: number = date['get' + utcWedge + 'Date']();
+    const diw: number = (date['get' + utcWedge + 'Day']() + 1);
+    const H: number = date['get' + utcWedge + 'Hours']();
+    const h: number = (H > 12 ? (H - 12) : (H === 0 ? 12 : H));
+    const m: number = date['get' + utcWedge + 'Minutes']();
+    const s: number = date['get' + utcWedge + 'Seconds']();
+    const S: number = date['get' + utcWedge + 'Milliseconds']();
+    const ampm: string = (H >= 12 ? 'PM' : 'AM');
     let out: string;
-    if (('' + format).length === 0) {
+    if (typeof format !== 'string' || ('' + format).length === 0) {
         format = 'M/d/yyyy h:mm:ss aa';
     }
     let PATTERN_ALL_SYMBOLS: RegExp = /('[^']*'|'[^']*$|(y|M|d|F|E|a|H|k|K|h|m|s|S)+(\{[^}]*\})?)/gm;
-    let regexReplace = (match: string, ...args: any[]) => {
-        let lastChar: string = match.substring(match.length - 1);
-        let mm: string = match.substring(0, 1);
-        let mods: string[] = [];
+    let regexReplace: (substring: string, ...args: any[]) => string = (match: string, ...args: any[]) => {
+        const lastChar: string = match.substring(match.length - 1);
+        const mm: string = match.substring(0, 1);
+        const mods: string[] = [];
         if (match.length >= 3 && lastChar === '}') {
-            let modStart = match.lastIndexOf('{');
+            let modStart: number = match.lastIndexOf('{');
             if (modStart > 0) {
-                mods = match.substring(modStart + 1, match.length - 1).split(/[,|;]+/);
+                for (let mod of match.substring(modStart + 1, match.length - 1).split(/[,|;]+/)) {
+                    mods.push(mod);
+                }
                 match = match.substring(0, modStart);
             }
         }
         let rv: string = '';
-        while (true) {
-            if (mm === '\'') {
-                if (lastChar === '\'') {
-                    if (match.length > 1) {
-                        if (match.length === 2) {
-                            rv = '\'';
-                        } else {
-                            rv = match.substring(1, match.length - 1);
-                        }
-                    } else {
+        if (mm === '\'') {
+            if (lastChar === '\'') {
+                if (match.length > 1) {
+                    if (match.length === 2) {
                         rv = '\'';
+                    } else {
+                        rv = match.substring(1, match.length - 1);
                     }
                 } else {
-                    rv = match.substring(1);
+                    rv = '\'';
                 }
-            } else if (mm === 'y') {
-                let sy: string = ('' + y);
-                rv = String.padLeft(sy.substring(Math.max(0, sy.length - match.length)), match.length, '0');
-            } else if (mm === 'M') {
-                if (match.length >= 4) {
-                    rv = calendar_month_names[M - 1];
-                } else if (match.length >= 3) {
-                    rv = calendar_month_names[M - 1].substring(0, 3);
-                } else {
-                    rv = String.padLeft(M, match.length, '0');
-                }
-            } else if (mm === 'd') {
-                rv = String.padLeft(d, match.length, '0');
-            } else if (mm === 'F') {
-                rv = String.padLeft(diw, match.length, '0');
-            } else if (mm === 'E') {
-                if (match.length >= 4) {
-                    rv = calendar_day_names[diw - 1];
-                } else if (match.length >= 2) {
-                    rv = calendar_day_names[diw - 1].substring(0, match.length);
-                } else {
-                    rv = calendar_day_names_compact[diw - 1];
-                }
-            } else if (mm === 'a') {
-                rv = ampm.substring(0, Math.min(match.length, 2));
-            } else if (mm === 'H') {
-                rv = String.padLeft(H, match.length, '0');
-            } else if (mm === 'k') {
-                rv = String.padLeft((H + 1), match.length, '0');
-            } else if (mm === 'K') {
-                rv = String.padLeft((h - 1), match.length, '0');
-            } else if (mm === 'h') {
-                rv = String.padLeft(h, match.length, '0');
-            } else if (mm === 'm') {
-                rv = String.padLeft(m, match.length, '0');
-            } else if (mm === 's') {
-                rv = String.padLeft(s, match.length, '0');
-            } else if (mm === 'S') {
-                rv = String.padLeft(S, match.length, '0');
             } else {
-                rv = match;
+                rv = match.substring(1);
             }
-            break;
+        } else if (mm === 'y') {
+            const sy: string = ('' + y);
+            rv = String.padLeft(sy.substring(Math.max(0, sy.length - match.length)), match.length, '0');
+        } else if (mm === 'M') {
+            if (match.length >= 4) {
+                rv = calendar_month_names[M - 1];
+            } else if (match.length >= 3) {
+                rv = calendar_month_names[M - 1].substring(0, 3);
+            } else {
+                rv = String.padLeft(M, match.length, '0');
+            }
+        } else if (mm === 'd') {
+            rv = String.padLeft(d, match.length, '0');
+        } else if (mm === 'F') {
+            rv = String.padLeft(diw, match.length, '0');
+        } else if (mm === 'E') {
+            if (match.length >= 4) {
+                rv = calendar_day_names[diw - 1];
+            } else if (match.length >= 2) {
+                rv = calendar_day_names[diw - 1].substring(0, match.length);
+            } else {
+                rv = calendar_day_names_compact[diw - 1];
+            }
+        } else if (mm === 'a') {
+            rv = ampm.substring(0, Math.min(match.length, 2));
+        } else if (mm === 'H') {
+            rv = String.padLeft(H, match.length, '0');
+        } else if (mm === 'k') {
+            rv = String.padLeft((H + 1), match.length, '0');
+        } else if (mm === 'K') {
+            rv = String.padLeft((h - 1), match.length, '0');
+        } else if (mm === 'h') {
+            rv = String.padLeft(h, match.length, '0');
+        } else if (mm === 'm') {
+            rv = String.padLeft(m, match.length, '0');
+        } else if (mm === 's') {
+            rv = String.padLeft(s, match.length, '0');
+        } else if (mm === 'S') {
+            rv = String.padLeft(S, match.length, '0');
+        } else {
+            rv = match;
         }
-        let num: number = parseInt(rv);
-        let isNum: boolean = !isNaN(num);
+        const num: number = parseInt(rv);
+        const isNum: boolean = !isNaN(num);
         for (let mod of mods) {
             if (/^(st|nd|rd|th)$/i.test(mod) && isNum) {
                 rv += Number.getSuffix(num);
