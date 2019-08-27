@@ -1,7 +1,7 @@
 import * as $ from 'jquery';
 import './app/Env/Env';
 import ResumeSkillsTable from './app/iResume/ResumeSkillsTable/ResumeSkillsTable';
-import ResumeComponent from './app/iResume/ResumeComponent/ResumeComponent';
+import ResumeComponent, {ResumeTransformParameters} from './app/iResume/ResumeComponent/ResumeComponent';
 import ResumeLoader from './app/iResume/ResumeLoader/ResumeLoader';
 import CodeViewer from "./app/CodeViewer/CodeViewer";
 
@@ -30,7 +30,8 @@ function initHashHandling() {
                     $('html, body').animate({
                         scrollTop: $anchor.offset().top - 8 - headerAdjustment
                     }, {
-                        duration: 1500
+                        easing: 'easeInOutBack',
+                        duration: 2000
                     });
                 }
             }
@@ -40,44 +41,51 @@ function initHashHandling() {
 
 function loadResume() {
     const resumeLoader: ResumeLoader = new ResumeLoader('/resume');
-    resumeLoader.onBefore(() => {
+    resumeLoader.onLoadStart(() => {
         $.mobile.loading('show', {
             text: 'Loading and transforming résumé XML...',
             textVisible: true
         });
     });
-    resumeLoader.onAfter(() => {
-        $.mobile.loading('hide');
-    });
     resumeLoader
     .load()
     .then(response => {
+        $.mobile.loading('hide');
         const resumeSkillsTable: ResumeSkillsTable = initSkillsTable(resumeLoader);
         initTooltips(resumeSkillsTable);
-        initResumeComponent(resumeLoader);
+        initResumeComponent(resumeLoader)
+        .onRenderStart(response => {
+            $.mobile.loading('show', {
+                text: 'Transforming résumé XML...',
+                textVisible: true
+            });
+        })
+        .onRenderComplete(() => {
+            $.mobile.loading('hide');
+        });
     });
 }
 
-function initSkillsTable(resumeLoader: ResumeLoader) {
+function initSkillsTable(resumeLoader: ResumeLoader): ResumeSkillsTable {
     console.debug('Initializing skills table...');
 
     const resumeSkillsTable: ResumeSkillsTable = new ResumeSkillsTable(resumeLoader, $('#skills-table'));
     return resumeSkillsTable;
 }
 
-function initResumeComponent(resumeLoader: ResumeLoader) {
+function initResumeComponent(resumeLoader: ResumeLoader): ResumeComponent {
     console.debug('Initializing component...');
-
-    const resumeComponent: ResumeComponent = new ResumeComponent(resumeLoader, $('.resume-xslt'));
-    resumeComponent.onBeforeRender(response => {
-        $.mobile.loading('show', {
-            text: 'Transforming résumé XML...',
-            textVisible: true
-        });
-    });
-    resumeComponent.onAfterRender(() => {
-        $.mobile.loading('hide');
-    });
+    const transformParameters: ResumeTransformParameters = {
+        'author-name': '0',
+        'employer-sort': 'descending',
+        'position-sort': 'descending',
+        'show-projects': '1',
+        'skills-layout': 'categories',
+        'projects-layout': 'list',
+        'system-date': Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")
+    };
+    const resumeComponent: ResumeComponent = new ResumeComponent(resumeLoader, $('.resume-xslt'), transformParameters);
+    return resumeComponent;
 }
 
 function initCodeSelector() {

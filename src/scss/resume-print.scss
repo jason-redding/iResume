@@ -3,6 +3,9 @@
 $competencyPrintColumns: 2;
 $skillPrintColumns: 2;
 $certificationPrintColumns: 2;
+$break-positions: (before after);
+$page-break-values: (auto left right avoid always);
+$break-values: (auto avoid avoid-page page left right recto verso avoid-column column avoid-region region);
 
 @media print {
   @page {
@@ -10,6 +13,18 @@ $certificationPrintColumns: 2;
     margin-left: 0;
     margin-right: 0;
   }
+  //* {
+  //  position: relative;
+  //  &::before {
+  //    content: '';
+  //    position: absolute;
+  //    border: 1px solid black;
+  //    top: 0;
+  //    bottom: 0;
+  //    left: 0;
+  //    right: 0;
+  //  }
+  //}
   .hide-when-print {
     display: none;
   }
@@ -21,24 +36,46 @@ $certificationPrintColumns: 2;
       break-after: auto;
     }
   }
-  .page-break-before {
-    page-break-before: always;
-    break-before: page;
-  }
-  .page-break-after {
-    page-break-after: always;
-    break-after: page;
-  }
-  .section-heading {
-    &[data-section="skills"],
-    &[data-section="employers"] {
-      page-break-before: always;
-      break-before: page;
+
+  @each $break-position in $break-positions {
+    @each $break-value in $page-break-values {
+      .page-break-#{$break-position}-#{$break-value} {
+        page-break-#{$break-position}: $break-value;
+        @if index(auto left right, $break-value) {
+          break-#{$break-position}: $break-value;
+        } @else if $break-value == avoid {
+          break-#{$break-position}: avoid-page;
+        } @else if $break-value == always {
+          break-#{$break-position}: page;
+        }
+      }
     }
-    &, .project-title {
-      page-break-after: avoid;
-      break-after: avoid;
+  }
+
+  @each $break-position in $break-positions {
+    @each $break-value in $break-values {
+      .break-#{$break-position}-#{$break-value} {
+        break-#{$break-position}: $break-value;
+        @if index(auto left right, $break-value) {
+          page-break-#{$break-position}: $break-value;
+        } @else if $break-value == avoid-page {
+          page-break-#{$break-position}: avoid;
+        } @else if $break-value == page {
+          page-break-#{$break-position}: always;
+        }
+      }
     }
+  }
+
+  code {
+    &.snippet {
+      border-style: none;
+    }
+  }
+
+  .section-heading, .project-heading, .project-title {
+    page-break-after: avoid;
+    break-after: avoid;
   }
   .section-content:last-child {
     margin-bottom: 0;
@@ -56,16 +93,11 @@ $certificationPrintColumns: 2;
       content: none;
     }
   }
-  .project-description {
-    page-break-before: avoid;
-    break-before: avoid;
-
-    span.project-link {
-      text-align: left;
-    }
-  }
   .project-item {
     border-radius: 0 !important;
+
+    page-break-inside: avoid;
+    break-inside: avoid;
 
     .ui-collapsible-content {
       border-bottom-width: 0;
@@ -129,6 +161,14 @@ $certificationPrintColumns: 2;
   }
   *[role="log"] {
     display: none;
+  }
+  abbr[title][data-expanded] {
+    > .text {
+      display: none;
+    }
+    &::after {
+      content: attr(title);
+    }
   }
   body {
     > .ui-page.ui-page-active {
@@ -211,8 +251,13 @@ $certificationPrintColumns: 2;
     }
   }
 
+  .technology-stack-container {
+    page-break-before: avoid;
+    break-before: avoid;
+  }
+
   ul, ol {
-    &.skills {
+    &.skills.as-list {
       -webkit-column-count: $skillPrintColumns;
       -moz-column-count: $skillPrintColumns;
       column-count: $skillPrintColumns;

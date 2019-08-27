@@ -159,6 +159,15 @@ span.github-link {
   }
 }
 
+code {
+  &.snippet {
+    background-color: #ececec;
+    border: 1px solid #444444;
+    border-radius: 0.5em;
+    padding: 1px 0.4em 2px;
+  }
+}
+
 .code-container {
   .ui-page-theme-a & {
     box-shadow: 0px 0px 0.4em 0px hsla(0, 0%, 0%, 0.7);
@@ -362,6 +371,7 @@ pre.code-container {
 }
 
 ul, ol {
+  padding-left: 2em;
   &.skills {
     .skill-item {
     }
@@ -376,7 +386,15 @@ ul, ol {
   }
 }
 
+.skill-category-name {
+  font-weight: bold;
+}
+
 h1, h2, h3, h4, h5, h6 {
+  &.projects-heading {
+    margin-top: 0.33em;
+    margin-bottom: 0.33em;
+  }
   &.author-name {
     text-align: center;
     margin-top: 0.5em;
@@ -445,11 +463,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .competency-list,
-ul.skills, ol.skills,
+ul.skills.as-list, ol.skills.as-list,
 .certificate-list {
-  -webkit-column-width: 20em;
-  -moz-column-widows: 20em;
-  column-width: 20em;
+  -webkit-column-width: $columnWidth;
+  -moz-column-width: $columnWidth;
+  column-width: $columnWidth;
   list-style-type: square;
 }
 
@@ -476,12 +494,14 @@ ul.skills, ol.skills,
 }
 
 .competency {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
+  break-inside: avoid;
 
   > * {
     margin-left: 0.25em;
     margin-right: 0.25em;
+    flex: 0 1 auto;
   }
 
   .competency-duration {
@@ -497,9 +517,21 @@ ul.skills, ol.skills,
   }
 }
 
+.technology-stack-container {
+  margin-top: 0.3em;
+  margin-bottom: 0.2em;
+  .position-container > & {
+    margin-left: 0.8em;
+  }
+}
+
+.technology-stack-title {
+  font-weight: bold;
+}
+
 .position-container {
   margin-top: 1em;
-  margin-bottom: 1.5em;
+  margin-bottom: 1em;
 }
 
 .position-header {
@@ -575,72 +607,73 @@ ul.skills, ol.skills,
 }
 
 .projects-container {
-  margin-top: 0.3em;
-
-  .project-item {
-    margin-left: -2em;
-    margin-right: -2em;
-  }
-}
-
-.project-description {
-  span.project-link {
-    font-size: 0.8em;
-  }
-}
-
-@media (min-width: 45em) {
-  .projects-container:not(.ui-collapsible-set) {
-    margin-left: 1.5em;
-  }
-  .project-description {
-    span.project-link {
-      display: block;
-      text-align: right;
+  .project-link {
+    display: inline-block;
+    .project-link-label {
+      font-weight: bold;
     }
   }
-}
 
-@media (min-width: 30em) {
-  .projects-container {
-    border-radius: 0.3125em;
+  .project-heading {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    > .project-title {
+      margin-right: 1em;
+    }
+    > .project-link {
+      font-size: 0.95em;
+    }
+  }
 
-    .project-item {
-      margin: -1px 0 0;
-      border-radius: 0;
+  &.ui-collapsible-set {
+    margin-top: 0.3em;
 
-      &.ui-first-child {
-        border-top-right-radius: inherit;
-        border-top-left-radius: inherit;
-      }
+    @media (min-width: 30em) {
+      border-radius: 0.3125em;
+    }
 
-      &.ui-last-child {
-        border-bottom-left-radius: inherit;
-        border-bottom-right-radius: inherit;
-      }
+    .project-item.ui-collapsible {
+      margin-left: -2em;
+      margin-right: -2em;
 
-      .ui-collapsible-heading .ui-btn {
-        border-left-width: 1px;
-        border-right-width: 1px;
-      }
+      @media (min-width: 30em) {
+        margin: -1px 0 0;
+        border-radius: 0;
 
-      .ui-collapsible-content {
-        border-left-width: 1px;
-        border-right-width: 1px;
+        &.ui-first-child {
+          border-top-right-radius: inherit;
+          border-top-left-radius: inherit;
+        }
+
+        &.ui-last-child {
+          border-bottom-left-radius: inherit;
+          border-bottom-right-radius: inherit;
+        }
+
+        .ui-collapsible-heading .ui-btn {
+          border-left-width: 1px;
+          border-right-width: 1px;
+        }
+
+        .ui-collapsible-content {
+          border-left-width: 1px;
+          border-right-width: 1px;
+        }
       }
     }
   }
-}
-
-.project-item {
-  :not(.ui-collapsible-set) > &.ui-collapsible {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  .projects-container, &:not(.ui-collapsible) {
-    margin-top: 0.25em;
-    margin-bottom: 1em;
+  &:not(.ui-collapsible-set) {
+    margin-left: 1.2em;
+    > .project-item:not(.ui-collapsible) {
+      margin-top: 0.25em;
+      margin-bottom: 1em;
+      padding-left: 1.2em;
+    }
+    > .project-item.ui-collapsible {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -662,7 +695,7 @@ ul.skills, ol.skills,
   }
 }
 
-.project-link.use-brackets a.project-link {
+span.project-link.use-brackets a.project-link {
   &::before {
     content: '[';
   }

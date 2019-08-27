@@ -97,7 +97,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								<div class="text">Full List of Skills</div>
 							</caption>
 							<thead>
-								<tr data-render-title="${level} (${level.percentage#percent}) ${level.preposition#default(levels.preposition)} ${name} with ${experience.duration} of experience${experience.last#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}"
+								<!--<tr data-render-title="${level} (${level.percentage#percent}) ${level.preposition#default(levels.preposition)} ${name} with ${experience.duration} of experience${experience.last#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}"-->
+								<tr data-render-title="${level} ${level.preposition#default(levels.preposition)} ${name} with ${experience.duration} of experience${experience.last#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}"
 										data-render-data-name="${name}"
 										data-render-data-level="${level}"
 										data-render-data-level-value="${level.originalValue}"

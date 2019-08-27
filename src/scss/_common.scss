@@ -1,3 +1,4 @@
+$columnWidth: 20em;
 $tableBackgroundColor: hsl(210, 100%, 80%);
 $tableBackgroundColorLighter: change-color($tableBackgroundColor, $saturation: 25%, $lightness: 30%, $alpha: 1);
 $tableBackgroundColorDarker: change-color($tableBackgroundColor, $saturation: 25%, $lightness: 20%, $alpha: 1);

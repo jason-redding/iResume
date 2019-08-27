@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jman.socialis.dev/xsd/resume"
 	xsi:schemaLocation="http://jman.socialis.dev/xsd/resume"
-	last-modified="2019-08-21T11:13:00">
+	last-modified="2019-08-23T11:13:13">
 	<meta>
 		<skill>
 			<levels preposition="at">
@@ -33,26 +33,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<level value="5">Expert</level>
 			</levels>
 			<categories>
-				<category value="api">API</category>
-				<category value="app-server">Application Server</category>
-				<category value="client">Client-Side</category>
-				<category value="db">Database</category>
-				<category value="dev-lib">Development Framework/Library</category>
+				<category value="front-end">Front End</category>
+				<category value="back-end">Back End</category>
+				<category value="dev-language">Language</category>
 				<category value="dev-tool">Development Tool</category>
-				<category value="dev-format">Format</category>
-				<category value="dev-lang">Language</category>
-				<category value="os">Operating System</category>
+				<category value="api" hidden="true">API</category>
+				<category value="app-server" hidden="true">Application Server</category>
+				<category value="db" hidden="0">Database</category>
+				<category value="os" hidden="0">Operating System</category>
 				<category value="relevant">Relevant Skill</category>
-				<category value="server">Server-Side</category>
-				<category value="web">Web</category>
 			</categories>
 		</skill>
 	</meta>
-	<author name="Jason Redding">
+	<author name="Jason Redding" layout="split">
 		<name/>
 		<seeking label="Seeking">Commercial, mid-level positions</seeking>
 		<email label="Email">jason.redding@gmail.com</email>
 		<phone label="Cell">410-428-8522</phone>
+		<split/>
 		<clearance label="Clearance">None</clearance>
 		<address label="Residence">Washington, DC</address>
 		<willing-to-travel label="% Willing to Travel">20%</willing-to-travel>
@@ -64,7 +62,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		delivering across a Full Stack of development technology within Agile and traditional project frameworks.
 		Prior to joining <h:a href="#position-2018-01-08">Booz Allen</h:a>, Jason worked at the Community College of Baltimore County.
 		During the first year, he joined as an <h:a href="#position-2000-07-01">IT Computer Technician</h:a> and then transitioned to a
-		<h:a href="#position-2001-07-01">Developer role</h:a> on a team tasked with building a Content Management System allowing faculty and staff to publish their own content to the college website.
+		<h:a href="#position-2001-07-01">Developer role</h:a>
+		on a team tasked with building a Content Management System allowing faculty and staff to publish their own content to the college website.
 		As he continued to support this system, he worked with colleagues and independently to create and enhance in-house software
 		as well as install, configure, customize, enhance, and maintain various third-party software.
 		He used Full Stack development technology including <skill>Java</skill>, <skill>SQL</skill>, <skill>JSP</skill>, <skill>HTML</skill>,
@@ -105,7 +104,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<issue-date>2015-04-02</issue-date>
 		</certificate>
 	</certifications>
-	<skills title="Skills, Tools &amp; Technologies">
+	<skills title="Skills, Tools &amp; Technologies" layout="categories">
 		<skill>
 			<name>Active Directory</name>
 			<level value="3"/>
@@ -113,7 +112,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<spanning from="2010-01" to="2017-12"/>
 			</experience>
 			<categories>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -123,8 +122,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2008-01</since>
 			</experience>
 			<categories>
-				<category value="client"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -135,10 +133,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2016-01</since>
 			</experience>
 			<categories>
-				<category value="client"/>
-				<category value="dev-lib"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -146,13 +142,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<version>1.x</version>
 			<level value="3"/>
 			<experience>
-				<spanning from="2018-01" to="2019-04"/>
+				<spanning from="2018-01" to="2019-05"/>
 			</experience>
 			<categories>
-				<category value="client"/>
-				<category value="dev-lib"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill hidden="true">
@@ -163,21 +157,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="api"/>
-				<category value="server"/>
-				<category value="web"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
 			<name>Apache Derby</name>
 			<level value="3"/>
 			<experience precision="years">
-				<since>2013-01</since>
+				<spanning from="2013-01" to="2015-01"/>
 			</experience>
 			<categories>
-				<category value="api"/>
 				<category value="db"/>
-				<category value="server"/>
-				<category value="web"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -189,8 +180,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="app-server"/>
 				<category value="relevant"/>
-				<category value="server"/>
-				<category value="web"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -201,17 +191,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
 			<name>Apache Storm</name>
 			<level value="2"/>
 			<experience>
-				<spanning from="2018-01-08" to="2019-04-29"/>
+				<spanning from="2018-01" to="2019-05"/>
 			</experience>
 			<categories>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -223,8 +213,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="app-server"/>
 				<category value="relevant"/>
-				<category value="server"/>
-				<category value="web"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -235,19 +224,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
 			<name>Bootstrap</name>
 			<level value="1"/>
 			<experience>
-				<spanning from="2018-01-08" to="2019-04-29"/>
+				<spanning from="2018-01" to="2019-05"/>
 			</experience>
 			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
-				<category value="web"/>
+				<category value="dev-language"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -257,9 +245,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<spanning from="2010-01" to="2011-01"/>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -270,7 +258,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="os"/>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -280,9 +268,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2008-01</since>
 			</experience>
 			<categories>
-				<category value="client"/>
 				<category value="dev-tool"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -293,7 +280,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -303,10 +290,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2002-01</since>
 			</experience>
 			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -316,10 +302,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2004-01</since>
 			</experience>
 			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -330,7 +315,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -341,8 +326,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="api"/>
-				<category value="client"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -352,9 +336,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2005-01</since>
 			</experience>
 			<categories>
-				<category value="client"/>
 				<category value="dev-tool"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -365,7 +348,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -377,9 +360,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="api"/>
-				<category value="client"/>
-				<category value="dev-lib"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -389,10 +370,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2017-08</since>
 			</experience>
 			<categories>
-				<category value="api"/>
-				<category value="client"/>
-				<category value="dev-lib"/>
-				<category value="web"/>
+				<category value="dev-tool"/>
 			</categories>
 		</skill>
 		<skill>
@@ -403,10 +381,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2011-01</since>
 			</experience>
 			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -420,28 +397,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</categories>
 		</skill>
 		<skill>
-			<name>J2EE</name>
-			<level value="3"/>
-			<experience precision="years">
-				<since>2007-01</since>
-			</experience>
-			<categories>
-				<category value="app-server"/>
-				<category value="server"/>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
 			<name>Java</name>
 			<level value="4"/>
 			<experience precision="years">
 				<since>2002-01</since>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 				<category value="relevant"/>
-				<category value="server"/>
-				<category value="web"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -451,10 +415,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2000-01</since>
 			</experience>
 			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
+			</categories>
+		</skill>
+		<skill>
+			<name>JBoss</name>
+			<level value="2"/>
+			<experience>
+				<spanning from="2018-01" to="2019-05"/>
+			</experience>
+			<categories>
+				<category value="relevant"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -465,8 +439,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="api"/>
-				<category value="db"/>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -477,8 +450,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="api"/>
-				<category value="db"/>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -489,10 +461,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="api"/>
-				<category value="client"/>
-				<category value="dev-lib"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -503,10 +473,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="api"/>
-				<category value="client"/>
-				<category value="dev-lib"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -517,10 +485,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="api"/>
-				<category value="client"/>
-				<category value="dev-lib"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -530,9 +496,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2008-01</since>
 			</experience>
 			<categories>
-				<category value="client"/>
-				<category value="dev-format"/>
-				<category value="web"/>
+				<category value="dev-language"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -543,7 +508,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -553,22 +518,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<spanning from="2014-01" to="2016-06"/>
 			</experience>
 			<categories>
-				<category value="web"/>
-			</categories>
-		</skill>
-		<skill>
-			<name>LAMP</name>
-			<level value="3"/>
-			<experience precision="years">
-				<since>2010-01</since>
-			</experience>
-			<categories>
-				<category value="app-server"/>
-				<category value="db"/>
-				<category value="dev-lang"/>
-				<category value="os"/>
-				<category value="server"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -579,14 +529,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="os"/>
-				<category value="server"/>
+				<category value="back-end"/>
+			</categories>
+		</skill>
+		<skill>
+			<name>macOS</name>
+			<level value="3"/>
+			<experience>
+				<spanning from="1993-01" to="1996-01"/>
+				<since>2016-01</since>
+			</experience>
+			<categories>
+				<category value="os"/>
 			</categories>
 		</skill>
 		<skill>
 			<name>Microsoft SQL Server</name>
 			<level value="3"/>
 			<experience precision="years">
-				<since>2013-01</since>
+				<spanning from="2013-01" to="2018-01"/>
 			</experience>
 			<categories>
 				<category value="db"/>
@@ -597,7 +558,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Microsoft Windows</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>1999-01</since>
+				<spanning from="1999-01" to="2016-07"/>
 			</experience>
 			<categories>
 				<category value="os"/>
@@ -632,8 +593,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="api"/>
-				<category value="client"/>
-				<category value="dev-lang"/>
+				<category value="back-end"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
 		<skill>
@@ -654,30 +615,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<spanning from="2005-01" to="2007-01"/>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="back-end"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
-		<skill>
+		<skill hidden="true">
 			<name>PHP</name>
 			<level value="2"/>
 			<experience precision="years">
-				<spanning from="2016-01" to="2017-01"/>
+				<spanning from="2016-06" to="2016-07"/>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
-			<name>PL/SQL</name>
+			<name>Oracle PL/SQL</name>
 			<level value="4"/>
 			<experience precision="years">
 				<spanning from="2003-01" to="2017-12"/>
 			</experience>
 			<categories>
-				<category value="db"/>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 				<category value="relevant"/>
 			</categories>
 		</skill>
@@ -688,20 +649,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<spanning from="2017-07" to="2017-08"/>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
-				<category value="db"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
 		<skill>
 			<name>Python</name>
 			<level value="2.75"/>
 			<experience>
-				<spanning from="2018-01" to="2019-04"/>
+				<spanning from="2018-01" to="2019-05"/>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 				<category value="relevant"/>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -711,7 +671,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2001-01</since>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
 		<skill>
@@ -721,33 +681,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2012-01</since>
 			</experience>
 			<categories>
-				<category value="client"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
-			<name>RESTful</name>
+			<name>REST</name>
 			<level value="3.5"/>
 			<experience precision="years">
 				<since>2010-01</since>
 			</experience>
 			<categories>
-				<category value="api"/>
-				<category value="client"/>
 				<category value="relevant"/>
-				<category value="server"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
 			<name>SaltStack</name>
 			<level value="2"/>
 			<experience>
-				<spanning from="2018-01" to="2019-04"/>
+				<spanning from="2018-01" to="2019-05"/>
 			</experience>
 			<categories>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -757,10 +713,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2014-01</since>
 			</experience>
 			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -770,8 +725,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2004-01</since>
 			</experience>
 			<categories>
-				<category value="db"/>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 				<category value="relevant"/>
 			</categories>
 		</skill>
@@ -782,7 +736,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<spanning from="2013-01" to="2017-12"/>
 			</experience>
 			<categories>
-				<category value="db"/>
 				<category value="dev-tool"/>
 			</categories>
 		</skill>
@@ -794,7 +747,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="db"/>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
 		<skill>
@@ -805,7 +758,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
-				<category value="server"/>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -826,9 +779,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2019-08</since>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 				<category value="relevant"/>
-				<category value="web"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -838,7 +791,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<spanning from="2001-01" to="2006-01"/>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
 		<skill>
@@ -848,7 +801,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<spanning from="2000-01" to="2010-01"/>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
 		<skill>
@@ -858,18 +811,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<spanning from="2010-01" to="2012-01"/>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
 		<skill>
 			<name>WordPress</name>
-			<level value="2"/>
+			<level value="1.5"/>
 			<experience>
 				<spanning from="2015-01" to="2016-07"/>
 			</experience>
 			<categories>
-				<category value="server"/>
-				<category value="web"/>
+				<category value="back-end"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -879,9 +832,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2004-01</since>
 			</experience>
 			<categories>
-				<category value="client"/>
-				<category value="dev-lang"/>
-				<category value="web"/>
+				<category value="dev-language"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -891,8 +843,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2004-01</since>
 			</experience>
 			<categories>
-				<category value="dev-format"/>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
 		<skill>
@@ -902,7 +853,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2004-01</since>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
 		<skill>
@@ -912,7 +863,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2014-01</since>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
 		<skill>
@@ -922,11 +873,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<since>2004-01</since>
 			</experience>
 			<categories>
-				<category value="dev-lang"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
 	</skills>
-	<employers title="Experience Details">
+	<employers title="Experience Details" break-before="always">
 		<employer>
 			<title>Booz Allen Hamilton</title>
 			<location>Laurel, MD</location>
@@ -935,34 +886,393 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<title>Full Stack Developer</title>
 					<timeline>
 						<start-date format="M/yyyy">2018-01-08</start-date>
-						<end-date format="M/yyyy">2019-04-29</end-date>
+						<end-date format="M/yyyy">2019-05</end-date>
 					</timeline>
 					<description>
 						<h:ul>
 							<h:li>
-								Develop and improve Web Interfaces using <skill>AngularJS</skill>, <skill>Angular Materials</skill>, <skill>jQuery</skill>, <skill>SCSS</skill>, <skill>XSLT</skill>, and <skill>Responsive Design</skill>.
+								Supported a distributed cross-domain solution in an Agile environment.
 							</h:li>
 							<h:li>
-								Design and develop software in <skill>Java</skill> and <skill>Apache Tomcat</skill> to query <skill>MySQL</skill> databases.
+								Regarded as team <h:abbr title="Subject Matter Expert" data-expanded="true"><h:span class="text">SME</h:span></h:abbr> for <skill>SQL</skill> and <h:abbr title="User Interface"><h:span class="text">UI</h:span></h:abbr>/<h:abbr title="User Experience"><h:span class="text">UX</h:span></h:abbr>.
 							</h:li>
 							<h:li>
-								Integrate various components and test end-to-end capability using <skill>Python</skill>, <skill>SaltStack</skill>, and <skill>Apache Storm</skill>.
-							</h:li>
-							<h:li>
-								Collaborate with and assist team members.
-							</h:li>
-							<h:li>
-								Participate in code reviews.
+								Collaborated with and assisted team members with development, testing, and <h:abbr title="Development Operations"><h:span class="text">DevOps</h:span></h:abbr>.
 							</h:li>
 						</h:ul>
 					</description>
+					<stack>
+						<skill>AngularJS</skill>
+						<skill>Angular Materials</skill>
+						<skill>HTML</skill>
+						<skill>Java</skill>
+						<skill>JBoss</skill>
+						<skill>Apache Storm</skill>
+						<skill>SaltStack</skill>
+						<skill>SQL</skill>
+						<skill>MySQL</skill>
+						<skill>Python</skill>
+						<skill>JavaScript</skill>
+						<skill>jQuery</skill>
+						<skill>jQuery UI</skill>
+						<skill>SCSS</skill>
+						<skill>XML</skill>
+						<skill>XSLT</skill>
+						<skill>Responsive Design</skill>
+					</stack>
 				</position>
 			</positions>
 		</employer>
 		<employer>
-			<title>Community College of Baltimore County</title>
+			<title>The Community College of Baltimore County</title>
 			<location>Baltimore, MD</location>
 			<positions>
+				<position>
+					<title>Developer</title>
+					<timeline>
+						<start-date format="M/yyyy">2001-07-01</start-date>
+						<end-date format="M/yyyy">2017-12-31</end-date>
+					</timeline>
+					<description hidden="true">
+						<h:ul>
+							<h:li>
+								Integrated Banner&#8482; <h:abbr title="Student Information System" data-expanded="true"><h:span class="text">SIS</h:span></h:abbr> with Barnes &amp; Noble's <skill name="rest">REST</skill> API to insert web <h:abbr title="User Interface"><h:span class="text">UI</h:span></h:abbr> elements allowing users to navigate to required course material.
+							</h:li>
+							<h:li>
+								Developed, enhanced, and maintained a custom in-house Content Management System for the college website using <skill>Java</skill>, <skill>Oracle PL/SQL</skill>, <skill>REST</skill>, <skill>HTML</skill>, <skill>CSS</skill>, <skill>jQuery</skill>, and <skill>Apache Tomcat</skill>.
+							</h:li>
+							<h:li>
+								Worked with a team to create a custom in-house Content Management System for the college website. After launch, was responsible for maintenance, enhancements, and new features.
+							</h:li>
+							<h:li>
+								Designed and developed an <skill>Apache Tomcat</skill> web application and its <skill>HTML</skill>/<skill>JavaScript</skill> front-end counterpart providing and Online Orientation experience for new students.
+							</h:li>
+							<h:li>
+								Designed, developed, enhanced, and maintained the entire stack for an <skill>Apache Tomcat</skill> web application interfacing with <skill>Active Directory</skill> to provide and Online Phone Directory with advanced search capabilities.
+							</h:li>
+							<h:li>
+								Designed and developed an interactive, reusable, and highly versatile and customizable Web Calendar designed to consume event data in custom <skill>XML</skill> schemas using <skill>JSP</skill>, <skill>HTML</skill>, <skill>CSS</skill>, <skill>JavaScript</skill>, and <skill>jQuery</skill>.
+							</h:li>
+							<h:li>
+								Developed, enhanced, and maintained the entire stack for an <skill>Apache Tomcat</skill> web application interfacing with <skill>Active Directory</skill>, <skill>Oracle DBMS</skill>, and <skill>Microsoft SQL Server</skill> to provide Technical Support personnel with indispensable information dashboards and tools that they can use to manage and troubleshoot account issues.
+							</h:li>
+							<h:li>
+								Designed and developed a <skill>Java</skill> <skill name="command-line interface">CLI</skill> which uses <skill>XML</skill>, <skill>XSLT</skill>, and <skill>XPath</skill> to consume a third-party <skill>REST</skill> API and automate the importing, processing, and exporting of Academic Catalog information.
+							</h:li>
+							<h:li>
+								Designed, developed, enhanced, and maintained the entire stack for an <skill>Apache Tomcat</skill> web application interfacing with <skill>Active Directory</skill> and <skill>Oracle DBMS</skill> to provide students a way to recover their account and reset their password.
+							</h:li>
+							<h:li>
+								Installed, configured, customized, augmented, and maintained a third-party multi-tier Event Scheduling software package using <skill>JavaScript</skill>, <skill>jQuery</skill>, <skill>jQuery UI</skill>, <skill>HTML</skill>, <skill>CSS</skill>, <skill>XSLT</skill>, <skill>XPath</skill>, and <skill>SQL</skill>.
+							</h:li>
+						</h:ul>
+					</description>
+					<projects layout="list">
+						<project>
+							<title>Barnes &amp; Noble Bookstore Integration</title>
+							<description>
+								<h:p>
+									Integrated Banner&#8482; <h:abbr title="Student Information System" data-expanded="true"><h:span class="text">SIS</h:span></h:abbr> with Barnes &amp; Noble's <skill name="rest">REST</skill> API to insert web <h:abbr title="User Interface"><h:span class="text">UI</h:span></h:abbr> elements allowing users to navigate to required course material.
+								</h:p>
+								<h:ul>
+									<h:li>
+										Using <skill name="oracle-pl/sql">PL/SQL</skill> in an <skill name="oracle-dbms">Oracle database</skill>, created custom bookstore API and modified existing Banner&#8482; packages to use it.
+									</h:li>
+									<h:li>
+										Designed custom API to be as flexible and versatile as possible, allowing links to be generated from any number of courses.
+									</h:li>
+									<h:li>
+										Because Barnes &amp; Noble's <skill name="rest">REST</skill> API responds only to POST requests, an embedded form was required, causing the inherent limitation that the generated button/link could not be nested anywhere inside an existing form (which was most places). I overcame this limitation using <skill>jQuery</skill>.
+									</h:li>
+								</h:ul>
+							</description>
+							<stack>
+								<skill>Oracle DBMS</skill>
+								<skill>Oracle PL/SQL</skill>
+								<skill>SQL</skill>
+								<skill>JavaScript</skill>
+								<skill>jQuery</skill>
+							</stack>
+						</project>
+						<project>
+							<title>Acalog Extract</title>
+							<description>
+								<h:p>
+									Created a <skill>Java</skill> <skill name="command-line-interface">CLI</skill> solution from scratch to streamline and automate the importing, processing, and exporting of Academic Catalog information for use on the college website.
+								</h:p>
+								<h:ul>
+									<h:li>
+										Interfaced with third-party <skill>REST</skill> API to import <skill>XML</skill> data, splitting requested data into smaller chunks to avoid HTTP timeouts.
+									</h:li>
+									<h:li>
+										Applied custom <skill name="xslt">XSL Transform</skill> to produce final <skill>XML</skill>.
+									</h:li>
+									<h:li>
+										Allowed for customization of output format, and processing rules/logic via an <skill>XML</skill> properties file.
+									</h:li>
+								</h:ul>
+							</description>
+							<stack>
+								<skill>Java</skill>
+								<skill name="command-line-interface"/>
+								<skill>REST</skill>
+								<skill>HTML</skill>
+								<skill>XML</skill>
+								<skill>XPath</skill>
+								<skill>XSLT</skill>
+							</stack>
+						</project>
+						<project>
+							<title>R25/WebViewer/WebServices</title>
+							<description>
+								<h:p>
+									Sole lead for installation, configuration, customization, and augmentation of third-party event scheduling software package.
+								</h:p>
+								<h:ul>
+									<h:li>
+										Augmented WebViewer's <skill>HTML</skill> template files using <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill>, adding new capabilities and features unavailable in the original product.
+									</h:li>
+									<h:li>
+										Created a page from scratch that relied heavily on <skill name="rest">Web Services</skill>, <skill>AJAX</skill>, <skill>jQuery</skill>, and <skill>jQuery UI</skill>. This page enabled users to search for spaces matching a wide variety of criteria, and check the availability for specific dates/times before scheduling an event in that space.
+									</h:li>
+									<h:li>
+										Collected and associated latitude/longitude data with all spaces defined in system, then integrated with <skill name="google-maps-javascript-api-v3">Google Maps</skill> to show location of space and allow for 1-click access to directions.
+									</h:li>
+								</h:ul>
+							</description>
+							<stack>
+								<skill>Active Directory</skill>
+								<skill>Apache Tomcat</skill>
+								<skill>Oracle DBMS</skill>
+								<skill>JavaScript</skill>
+								<skill>AJAX</skill>
+								<skill>REST</skill>
+								<skill>HTML</skill>
+								<skill>CSS</skill>
+								<skill>jQuery</skill>
+								<skill>jQuery UI</skill>
+								<skill>XML</skill>
+								<skill>XPath</skill>
+								<skill>XSLT</skill>
+								<skill name="google-maps-javascript-api-v3"/>
+							</stack>
+						</project>
+						<project>
+							<title>Student Self-Help</title>
+							<link label="Project Link" href="https://shwa.ccbcmd.edu">shwa.ccbcmd.edu</link>
+							<description>
+								<h:p>
+									Sole lead creating a mobile-friendly <skill>Apache Tomcat</skill> web application used by students to retrieve their account information and/or reset their password.
+								</h:p>
+								<h:ul>
+									<h:li>
+										Used <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>jQuery Mobile</skill> to deliver a <skill name="responsive-design">Responsive</skill> experience.
+									</h:li>
+								</h:ul>
+							</description>
+							<stack>
+								<skill>Active Directory</skill>
+								<skill>Apache Tomcat</skill>
+								<skill>Java</skill>
+								<skill>SQL</skill>
+								<skill>Oracle DBMS</skill>
+								<skill>Oracle PL/SQL</skill>
+								<skill>JavaScript</skill>
+								<skill>AJAX</skill>
+								<skill>HTML</skill>
+								<skill>CSS</skill>
+								<skill>jQuery</skill>
+								<skill>jQuery UI</skill>
+								<skill>jQuery Mobile</skill>
+								<skill>Responsive Design</skill>
+							</stack>
+						</project>
+						<project>
+							<title>Administrator Account Assist</title>
+							<description>
+								<h:p>
+									Sole lead creating an <skill>Apache Tomcat</skill> web application, used by 100+ support personnel to manage and troubleshoot over 800,000 user accounts, to interface with <skill>Oracle DBMS</skill>, <skill>Microsoft SQL Server</skill>, and <skill>Active Directory</skill> in an effort to consolidate support functions in one place.
+
+
+								</h:p>
+								<h:ul>
+									<h:li>
+										Integrated with <skill>Active Directory</skill> for authentication and group membership authorization.
+									</h:li>
+								</h:ul>
+							</description>
+							<stack>
+								<skill>Active Directory</skill>
+								<skill>Apache Tomcat</skill>
+								<skill>Java</skill>
+								<skill>JSP</skill>
+								<skill>SQL</skill>
+								<skill>Oracle DBMS</skill>
+								<skill>Oracle PL/SQL</skill>
+								<skill>Microsoft SQL Server</skill>
+								<skill>HTML</skill>
+								<skill>CSS</skill>
+								<skill>JavaScript</skill>
+								<skill>AJAX</skill>
+								<skill>jQuery</skill>
+								<skill>jQuery UI</skill>
+								<skill>REST</skill>
+							</stack>
+						</project>
+						<project hidden="true">
+							<title>USPS Gateway</title>
+							<description>
+								<h:p>
+									Used during the student application process to verify submitted street addresses' location inside or outside county boundaries.
+								</h:p>
+								<h:ul>
+									<h:li>
+										Created from scratch a standalone <skill>Java</skill> <skill name="command-line-interface">command-line</skill> application, the <skill>PL/SQL</skill> package, and <skill>Java</skill> code within the <skill name="oracle-dbms">Oracle</skill> database.
+									</h:li>
+								</h:ul>
+							</description>
+						</project>
+						<project>
+							<title>Web Calendar</title>
+							<description>
+								<h:p>
+									Built from scratch an interactive, highly customizable user-facing web calendar displaying college event data loaded from custom <skill>XML</skill> schemas.
+								</h:p>
+								<h:div>
+									Another project, <h:a href="https://github.com/jason-redding/jFormat/" target="_blank" title="Created by Jason Redding">jFormat</h:a> (a formatting API), was born from this effort, written in <skill>JavaScript</skill> for highly versatile text, date, and number formatting.
+								</h:div>
+								<h:ul>
+									<h:li>
+										Tokens are expressed in the form of <h:code class="snippet">${object.property#format(arg1, arg2)}</h:code>.
+									</h:li>
+									<h:li>
+										Date objects can be formatted using most of the patterns available for use by the <skill>Java</skill> class <h:a href="http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html" target="_blank">SimpleDateFormat</h:a>.
+									</h:li>
+								</h:ul>
+							</description>
+							<stack>
+								<skill>Apache Tomcat</skill>
+								<skill>Java</skill>
+								<skill>JSP</skill>
+								<skill>HTML</skill>
+								<skill>CSS</skill>
+								<skill>JavaScript</skill>
+								<skill>AJAX</skill>
+								<skill>jQuery</skill>
+								<skill>XML</skill>
+							</stack>
+						</project>
+						<project>
+							<title>Online Phone Directory</title>
+							<description>
+								<h:p>
+									Sole lead creating from scratch an interactive, searchable phone directory, backed by <skill>Active Directory</skill>, and running on <skill>Apache Tomcat</skill>.
+								</h:p>
+								<h:ul>
+									<h:li>
+										Created supplemental <skill>Java</skill> <skill name="command-line-interface">CLI</skill> that uses the <skill>Java</skill> Excel API to generate and publish a downloadable spreadsheet containing the entire phone directory. Also configured <h:abbr title="Unix utility for scheduling jobs">CRON</h:abbr> to automate its execution.
+									</h:li>
+									<h:li>
+										Designed <h:abbr title="Web User Interface">Web UI</h:abbr> to provide Simple and Advanced search modes, with advanced mode allowing a combination of multiple user-specified criteria with an advanced set of comparators.
+									</h:li>
+								</h:ul>
+							</description>
+							<stack>
+								<skill>Active Directory</skill>
+								<skill>Apache Tomcat</skill>
+								<skill>Java</skill>
+								<skill name="command-line-interface"/>
+								<skill>HTML</skill>
+								<skill>CSS</skill>
+								<skill>JavaScript</skill>
+								<skill>jQuery</skill>
+							</stack>
+						</project>
+						<project hidden="true">
+							<title>Online Orientation</title>
+							<description>
+								<h:p>
+									<skill name="java">Java EE</skill> Web Application and its <skill>HTML</skill>/<skill>JavaScript</skill> front-end counterpart providing an online orientation for new students.
+								</h:p>
+								<h:ul>
+									<h:li>
+										Includes custom-developed supporting <skill name="oracle-dbms">Oracle</skill> database schema and all tables, views, triggers, sequences, etc.
+									</h:li>
+									<h:li>
+										Integrates with <skill>Active Directory</skill> for authentication and group membership authorization.
+									</h:li>
+									<h:li>
+										Administration portal built with <skill>jQuery</skill> and <skill>jQuery UI</skill> allows authorized academic advisors to customize the orientation pages and assessments, track student progress, and manage the list of authorized advisors.
+									</h:li>
+								</h:ul>
+							</description>
+							<stack>
+								<skill>Active Directory</skill>
+								<skill>Apache Tomcat</skill>
+								<skill>Java</skill>
+								<skill>SQL</skill>
+								<skill>Oracle DBMS</skill>
+								<skill>Oracle PL/SQL</skill>
+								<skill>JDBC</skill>
+								<skill>HTML</skill>
+								<skill>JavaScript</skill>
+								<skill>CSS</skill>
+							</stack>
+						</project>
+						<project hidden="true">
+							<title>WebCT Language Manager</title>
+							<description>
+								<h:p>
+									Robust <skill>Java</skill> <skill name="command-line-interface">CLI</skill> tool for managing language strings for a proprietary online virtual learning environment (WebCT).
+								</h:p>
+								<h:ul>
+									<h:li>
+										Applies a compiled set of preferred language strings to a <h:abbr title="Web Application Archive">WAR</h:abbr> file.
+									</h:li>
+									<h:li>
+										Provided options to search for text to change, making the initial compilation process much easier.
+									</h:li>
+								</h:ul>
+							</description>
+						</project>
+						<project>
+							<title>CMS (Content Management System)</title>
+							<description>
+								<h:p>
+									Worked with a team to create a custom in-house Content Management System and its various <h:abbr title="User Interface"><h:span class="text">UI</h:span></h:abbr> components for the college website.
+									After launch, responsibilities included maintenance, enhancements, and new features.
+								</h:p>
+								<h:ul>
+									<h:li>
+										Sole developer of <skill name="java">Java Applet (Swing)</skill> <h:abbr title="What You See Is What You Get">WYSIWYG</h:abbr> <skill>HTML</skill> Editor with Dreamweaver-like capabilities.
+									</h:li>
+									<h:li>
+										Implemented powerful table-specific editor dialogs for inserting/modifying tables, splitting/merging rows, columns, and cells with features lacking from Dreamweaver.
+									</h:li>
+									<h:li>
+										Created from scratch a custom Spellchecker service (powered by <h:strong>Aspell</h:strong> on back-end) supporting global and per-user dictionaries.
+									</h:li>
+									<h:li>
+										Developed a custom Win32 installer using <skill name="nsis">NSIS (Nullsoft Scriptable Install System)</skill> for end-user installation of files necessary for certain features of the <skill>HTML</skill> Editor <skill name="java">Java Applet</skill>.
+									</h:li>
+								</h:ul>
+							</description>
+							<stack>
+								<skill>Active Directory</skill>
+								<skill>Apache Tomcat</skill>
+								<skill>Java</skill>
+								<skill>SQL</skill>
+								<skill>Oracle DBMS</skill>
+								<skill>Oracle PL/SQL</skill>
+								<skill>JDBC</skill>
+								<skill>HTML</skill>
+								<skill>JavaScript</skill>
+								<skill>CSS</skill>
+								<skill>NSIS</skill>
+							</stack>
+						</project>
+					</projects>
+				</position>
 				<position>
 					<title>IT Computer Technician</title>
 					<department>Support Center</department>
@@ -983,295 +1293,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							</h:li>
 						</h:ul>
 					</description>
-				</position>
-				<position>
-					<title>Developer</title>
-					<timeline>
-						<start-date format="M/yyyy">2001-07-01</start-date>
-						<end-date format="M/yyyy">2017-12-31</end-date>
-					</timeline>
-					<description>
-						<h:ul>
-							<h:li>
-								Develop, enhance, and maintain a custom in-house Content Management System for the college website using <skill>Java</skill>, <skill>PL/SQL</skill>, <skill name="restful">REST</skill>,
-								<skill>HTML</skill>, <skill>CSS</skill>, <skill>jQuery</skill>, and <skill>Apache Tomcat</skill>.
-							</h:li>
-							<h:li>
-								Design and develop a <skill>J2EE</skill> web application and its
-								<skill>HTML</skill>/<skill>Javascript</skill> front-end counterpart providing and Online Orientation for new students.
-							</h:li>
-							<h:li>
-								Design, develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application interfacing with <skill>Active Directory</skill> to provide and Online Phone Directory with advanced search capabilities.
-							</h:li>
-							<h:li>
-								Design and develop an interactive, reusable, and highly versatile and customizable Web Calendar designed to consume event data in <skill>XML</skill> form using <skill>JSP</skill>, <skill>HTML</skill>,
-								<skill>CSS</skill>, <skill>Javascript</skill>, and <skill>jQuery</skill>.
-							</h:li>
-							<h:li>
-								Develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application interfacing with <skill>Active Directory</skill> and multiple RDBMS to provide Technical Support personnel with indispensable information dashboards and tools that they can use to manage and troubleshoot account issues.
-							</h:li>
-							<h:li>Design and develop a <skill name="command-line interface">CLI</skill> which uses
-								<skill>Java</skill>, <skill>XML</skill>, <skill>XSLT</skill>, and
-								<skill>XPath</skill>
-								while interfacing with third-party <skill name="restful">REST API</skill> to automate the importing, processing, and exporting of Academic Catalog information.
-							</h:li>
-							<h:li>
-								Design, develop, enhance, and maintain the entire stack for <skill>J2EE</skill> web application interfacing with <skill>Active Directory</skill> and <skill name="oracle-dbms">RDBMS</skill> to provide students a way to recover their account and reset their password.
-							</h:li>
-							<h:li>
-								Install, configure, customize, augment, and maintain a third-party multi-tier Event Scheduling software package using <skill>Javascript</skill>, <skill>jQuery</skill>, <skill>jQuery UI</skill>,
-								<skill>HTML</skill>, <skill>CSS</skill>, <skill>XSLT</skill>, <skill>XPath</skill>, and <skill>SQL</skill>.
-							</h:li>
-						</h:ul>
-					</description>
-					<projects>
-						<project type="web">
-							<title>Student Self-Help</title>
-							<link>https://shwa.ccbcmd.edu</link>
-							<description>
-								<h:p>Used by students to retrieve their account information and reset their password.</h:p>
-								<h:ul>
-									<h:li>
-										Site uses <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>jQuery Mobile</skill> to deliver a <skill name="responsive-design">responsive</skill> experience.
-									</h:li>
-									<h:li>
-										<skill>Javascript</skill>
-										and <skill>CSS</skill> assets are bundled into a <skill name="J2EE">Java EE</skill> Web Application.
-									</h:li>
-									<h:li>
-										<skill name="J2EE">Java EE</skill>
-										Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project type="cli">
-							<title>AcalogExtract</title>
-							<description>
-								<h:p>Automates the importing, processing, and exporting of Academic Catalog information.</h:p>
-								<h:ul>
-									<h:li>
-										Interfaces with 3rd-party <skill>RESTful</skill> API to import <skill>XML</skill> data.
-									</h:li>
-									<h:li>
-										Requests data in chunks to mitigate timeouts.
-									</h:li>
-									<h:li>
-										Applies custom <skill name="xslt">XSL Transform</skill> to produce final <skill>XML</skill>.
-									</h:li>
-									<h:li>
-										Allows for customization of output format, and processing rules/logic via an <skill>XML</skill> properties file.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>R25/WebViewer/WebServices (CollegeNet products)</title>
-							<description>
-								<h:p>
-									Event Scheduling software package (with 700+ users) follows institution-defined rules to match a collection of locations with a collection of events.
-								</h:p>
-								<h:ul>
-									<h:li>
-										Install, configure, customize, and augment front-end; maintain product front- and back-end, interfacing with an <skill name="oracle-dbms">Oracle</skill>-backed
-										<skill>RESTful</skill>
-										<skill name="J2EE">Java EE</skill>
-										Web Application.
-									</h:li>
-									<h:li>
-										Augmented WebViewer's <skill>HTML</skill> pages (notably the Event Request Form) with <skill>
-										jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill>, adding features unavailable in the original product.
-									</h:li>
-									<h:li>
-										Via <skill name="restful">Web Services</skill>, developed page with capability to search for spaces matching a wide range of space/location attributes. Allows users to check availability for specific dates/times and schedule an event in that space. Integrates with
-										<skill name="google-maps-javascript-api-v3">Google Maps</skill>
-										to show location of space and allows for 1-click access to directions.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>Administrator AccountAssist</title>
-							<description>
-								<h:p>
-									Used by 100+ support personnel to manage/troubleshoot over 800,000 accounts.
-								</h:p>
-								<h:ul>
-									<h:li>
-										<skill>Javascript</skill>
-										and <skill>CSS</skill> assets are bundled into a <skill name="J2EE">Java EE</skill> Web Application.
-									</h:li>
-									<h:li>
-										Site uses <skill>jQuery</skill>, <skill>jQuery UI</skill>, and <skill>AJAX</skill> to deliver an interactive experience.
-									</h:li>
-									<h:li>
-										Integrates with <skill>Active Directory</skill> for authentication and group membership authorization.
-									</h:li>
-									<h:li>
-										<skill name="J2EE">Java EE</skill>
-										Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill> and <skill>Active Directory</skill>.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project hidden="false">
-							<title>USPS Gateway</title>
-							<description>
-								<h:p>
-									Used during the student application process to verify submitted street addresses' location inside or outside county boundaries.
-								</h:p>
-								<h:ul>
-									<h:li>
-										Developed a standalone
-										<skill>Java</skill>
-										<skill name="command-line-interface">command-line</skill>
-										application, the <skill>PL/SQL</skill> package, and
-										<skill>Java</skill>
-										code within the <skill name="oracle-dbms">Oracle</skill> database.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>Web Calendar</title>
-							<description>
-								<h:p>
-									Interactive, highly customizable web calendar designed to parse an <skill>XML</skill> file of event data.
-								</h:p>
-								<h:ul>
-									<h:li>
-										Uses an extremely customizable
-										<h:a href="https://github.com/jason-redding/jFormat/" target="_blank" title="Created by Jason Redding">Formatting Engine
-										</h:a>
-										written in <skill>JavaScript</skill> for highly versatile text, date, and number formatting.
-									</h:li>
-									<h:li>
-										Parses tokens in the form of "${property.name#format(arg1, arg2)}".
-									</h:li>
-									<h:li>
-										Formats Date objects using most of the patterns available for use by the <skill>Java</skill> class
-										<h:a href="http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html" target="_blank">SimpleDateFormat</h:a>.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>Online Phone Directory</title>
-							<description>
-								<h:p>
-									Used by the community to search for faculty and staff by name, email, phone, office, campus, title, and department.
-								</h:p>
-								<h:ul>
-									<h:li>
-										<skill name="J2EE">Java EE</skill>
-										Web Application runs on <skill name="apache-tomcat">Tomcat</skill> and exposes servlets to communicate with <skill>Oracle DBMS</skill>.
-									</h:li>
-									<h:li>
-										Uses <skill>jQuery</skill> to deliver an interactive, flexible experience.
-									</h:li>
-									<h:li>
-										Provides Simple and Advanced search modes. Advanced mode allows a combination of up to 20 user-specified criteria using conditions including: "is", "is not", "starts with", "ends with", "contains", "excludes", "does not start with", "does not end with".
-									</h:li>
-									<h:li>
-										Supplimental
-										<skill>Java</skill>
-										<skill name="command-line-interface">CLI</skill>
-										that uses the <skill>Java</skill> Excel API to generate and publish a downloadable spreadsheet containing the entire phone directory.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>Online Orientation</title>
-							<description>
-								<h:p>
-									<skill name="J2EE">Java EE</skill>
-									Web Application and its <skill>HTML</skill>/<skill>Javascript</skill> front-end counterpart providing an online orientation for new students.
-								</h:p>
-								<h:ul>
-									<h:li>
-										Includes custom-developed supporting <skill name="oracle-dbms">Oracle</skill> database schema and all tables, views, triggers, sequences, etc.
-									</h:li>
-									<h:li>
-										Integrates with <skill>Active Directory</skill> for authentication and group membership authorization.
-									</h:li>
-									<h:li>
-										Administration portal built with <skill>jQuery</skill> and <skill>jQuery UI</skill> allows authorized academic advisors to customize the orientation pages and assessments, track student progress, and manage the list of authorized advisors.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>WebCT Language Modifier</title>
-							<description>
-								<h:p>
-									Robust
-									<skill>Java</skill>
-									<skill name="command-line-interface">CLI</skill>
-									tool for managing language strings for a proprietary online virtual learning environment (WebCT).
-								</h:p>
-								<h:ul>
-									<h:li>
-										Applies a compiled set of preferred language strings to a <h:abbr title="Web Application Archive">WAR</h:abbr> file.
-									</h:li>
-									<h:li>
-										Provided options to search for text to change, making the initial compilation process much easier.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-						<project>
-							<title>CMS (Content Management System)</title>
-							<description>
-								<h:p>
-									Homegrown Content Management System allowing faculty and staff to create, publish, and manage their own pages and content for the external-facing college website of over 12,000 pages.
-								</h:p>
-								<h:ul>
-									<h:li>
-										Developed custom framework using <skill>Java</skill> in a <skill>Linux</skill> server environment to facilitate communication between service objects, even when distributed among several servers.
-									</h:li>
-									<h:li>
-										<skill name="java">Java Applet</skill>
-										used to visualize and navigate the Website's hierarchy of pages - as represented in the database.
-									</h:li>
-									<h:li>
-										<skill name="java">Java Applet</skill>
-										<h:abbr title="What You See Is What You Get">WYSIWYG</h:abbr> Advanced <skill>HTML</skill> Editor with Dreamweaver-like capabilities including:
-										<h:ul>
-											<h:li>
-												Spellchecker (integrated with aspell on <skill>Linux</skill> server) – added custom implementation to support a global dictionary in addition to user-editable per-user dictionaries.
-											</h:li>
-											<h:li>
-												Table-specific editor dialogs for inserting/modifying tables, and inserting/splitting table cells; includes features not found in Dreamweaver:
-												<h:ul>
-													<h:li>
-														Element "breadcrumb" Bar with shortcut modification menu.
-													</h:li>
-													<h:li>
-														Attribute Explorer dialog for direct modification of element attributes.
-													</h:li>
-													<h:li>
-														Undo/Redo History panel; Design/Code View; Find/Replace.
-													</h:li>
-												</h:ul>
-											</h:li>
-										</h:ul>
-									</h:li>
-									<h:li>
-										Developed <skill name="J2EE">Java EE</skill> Web Application responsible for handling file uploads and interfaced with <skill name="oracle-dbms">Oracle</skill> database to register files with CMS.
-									</h:li>
-									<h:li>
-										Developed a standalone <skill>Java</skill> application to batch upload the existing website content into the appropriate CMS database tables.
-									</h:li>
-									<h:li>
-										Developed a custom Win32 installer using
-										<skill name="nsis">NSIS (Nullsoft Scriptable Install System)</skill> to install the <skill>Java</skill> policy file necessary for certain features of the
-										<skill>HTML</skill> Editor <skill name="java">Java Applet</skill>.
-									</h:li>
-								</h:ul>
-							</description>
-						</project>
-					</projects>
 				</position>
 			</positions>
 		</employer>
