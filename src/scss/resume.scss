@@ -490,6 +490,10 @@ ul.skills.as-list, ol.skills.as-list,
   -moz-column-width: $columnWidth;
   column-width: $columnWidth;
   list-style-type: square;
+  > * {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
 }
 
 .certificate {
@@ -517,7 +521,6 @@ ul.skills.as-list, ol.skills.as-list,
 .competency {
   display: inline-flex;
   flex-wrap: wrap;
-  break-inside: avoid;
 
   > * {
     margin-left: 0.25em;
