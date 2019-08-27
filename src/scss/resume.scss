@@ -849,8 +849,10 @@ ul, ol, .project-description, .project-description > *:first-child {
 #theme-toggle-button {
   padding-left: 0.5em;
   padding-right: 0.5em;
-  height: 100%;
+  height: auto;
+  margin-top: 0;
   top: 0;
+  bottom: 0;
   box-sizing: border-box;
   width: 2.75em;
   right: 0;
