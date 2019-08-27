@@ -115,15 +115,18 @@ function clean() {
 
 function watchFiles(cb) {
     const watchResponse = gulp.series(clean, build, browserReload);
-    gulp.watch(CONTEXT.SRC + '/**/*.html', watchResponse);
-    gulp.watch(CONTEXT.SRC + '/**/*.ts', watchResponse);
-    gulp.watch(CONTEXT.SRC + '/index.js', watchResponse);
-    gulp.watch(CONTEXT.SRC + '/js/**/*.js', watchResponse);
-    gulp.watch(CONTEXT.SRC + '/**/*.scss', watchResponse);
-    gulp.watch(CONTEXT.SRC + '/**/*.xml', watchResponse);
-    gulp.watch(CONTEXT.SRC + '/**/*.xsl', watchResponse);
-    gulp.watch(CONTEXT.SRC + '/**/*.xsd', watchResponse);
-    gulp.watch(CONTEXT.SRC + '/gulpfile.js', watchResponse);
+    const files = [
+        CONTEXT.SRC + '/**/*.html',
+        CONTEXT.SRC + '/**/*.ts',
+        CONTEXT.SRC + '/index.js',
+        CONTEXT.SRC + '/js/**/*.js',
+        CONTEXT.SRC + '/**/*.scss',
+        CONTEXT.SRC + '/**/*.xml',
+        CONTEXT.SRC + '/**/*.xsl',
+        CONTEXT.SRC + '/**/*.xsd',
+        CONTEXT.SRC + '/gulpfile.js'
+    ];
+    gulp.watch(files, watchResponse);
     cb();
 }
 
