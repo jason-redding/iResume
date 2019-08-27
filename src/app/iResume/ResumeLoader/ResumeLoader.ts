@@ -20,10 +20,12 @@ interface jqXHRBundle {
     [key: string]: JQuery.jqXHR;
 }
 
-export default class ResumeLoader implements Promise<ResumeResponseBundle | JQuery.jqXHR[]> {
+export default class ResumeLoader {
     [Symbol.toStringTag]: string;
 
     private _job: JQueryDeferred<any>;
+    private _onLoadStart: JQuery.Callbacks;
+    private _onLoadComplete: JQuery.Callbacks;
     private _file: string;
     private _jobs: jqXHRBundle;
     private _runBefore: Array<(jobs?: jqXHRBundle) => any | void> = [];
@@ -41,6 +43,8 @@ export default class ResumeLoader implements Promise<ResumeResponseBundle | JQue
 
     constructor(file: string) {
         this.file = file;
+        this._onLoadStart = $.Callbacks('memory unique');
+        this._onLoadComplete = $.Callbacks('memory unique');
         this._job = $.Deferred();
         this._jobs = {};
     }
@@ -93,38 +97,18 @@ export default class ResumeLoader implements Promise<ResumeResponseBundle | JQue
             });
             xhrList.push(this._jobs[job]);
         }
-        this._triggerBefore(this._jobs);
+        this._onLoadStart.fireWith(this, [this._jobs]);
         $.when.apply($.when, xhrList)
         .fail((xhr, type, ex) => {
-            this._triggerAfter(null);
+            this._onLoadComplete.fireWith(this, [null]);
             this._job.reject(jobs);
         })
         .done(() => {
             const responseBundle: ResumeResponseBundle = ResumeLoader._responsesToBundle(ResumeLoader._xhrToResponse(this._jobs));
-            this._triggerAfter(responseBundle);
+            this._onLoadComplete.fireWith(this, [responseBundle]);
             this._job.resolve(responseBundle);
         });
         return this;
-    }
-
-    _triggerBefore(jobs: jqXHRBundle) {
-        for (let run of this._runBefore) {
-            try {
-                run.call(this, jobs);
-            } catch (ex) {
-                console.error(ex);
-            }
-        }
-    }
-
-    _triggerAfter(response: ResumeResponseBundle) {
-        for (let run of this._runAfter) {
-            try {
-                run.call(this, response);
-            } catch (ex) {
-                console.error(ex);
-            }
-        }
     }
 
     getDataPath() {
@@ -139,26 +123,28 @@ export default class ResumeLoader implements Promise<ResumeResponseBundle | JQue
         return ResumeLoader._constructPathFor(this.file, ResumeFileType.DEFINITION);
     }
 
-    onBefore(callback: (jobs?: jqXHRBundle) => any | void) {
-        this._runBefore.push(callback);
+    onLoadStart(callback: (jobs?: jqXHRBundle) => any | void): ResumeLoader {
+        this._onLoadStart.add(callback);
+        return this;
     }
 
-    onAfter(callback: (response?: ResumeResponseBundle) => any | void) {
-        this._runAfter.push(callback);
+    onLoadComplete(callback: (response?: ResumeResponseBundle) => any | void): ResumeLoader {
+        this._onLoadComplete.add(callback);
+        return this;
     }
 
-    then<TResult1 = ResumeResponseBundle, TResult2 = never>(onfulfilled?: ((response: ResumeResponseBundle) => (PromiseLike<TResult1> | TResult1)) | undefined | null, onrejected?: ((reason: any) => (PromiseLike<TResult2> | TResult2)) | undefined | null): Promise<TResult1 | TResult2> {
+    then<TResult1 = ResumeResponseBundle, TResult2 = never>(onfulfilled?: ((response: ResumeResponseBundle) => (PromiseLike<TResult1> | TResult1)) | undefined | null, onrejected?: ((reason: any) => (PromiseLike<TResult2> | TResult2)) | undefined | null): ResumeLoader {
         this._job.then(onfulfilled, onrejected);
-        return;
+        return this;
     }
 
-    catch<TResult = never>(onrejected?: ((reason: any) => (PromiseLike<TResult> | TResult)) | undefined | null): Promise<JQuery.jqXHR[] | TResult> {
+    catch<TResult = never>(onrejected?: ((reason: any) => (PromiseLike<TResult> | TResult)) | undefined | null): ResumeLoader {
         this._job.fail(onrejected);
-        return;
+        return this;
     }
 
-    finally(onfinally?: () => void): Promise<ResumeResponseBundle> {
+    finally(onfinally?: () => void): ResumeLoader {
         this._job.always(onfinally);
-        return;
+        return this;
     }
 }

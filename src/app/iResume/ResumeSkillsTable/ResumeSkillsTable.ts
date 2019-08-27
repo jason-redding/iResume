@@ -8,17 +8,17 @@ declare global {
     }
 }
 
-interface ResumeFieldValue {
+export interface ResumeFieldValue {
     originalValue?: string;
     value?: string;
 }
 
-interface AttributeRenderer {
+export interface AttributeRenderer {
     template: string;
     attr: string;
 }
 
-interface SortingProperties {
+export interface SortingProperties {
     field: string,
     sortDirection: string
 }
@@ -148,24 +148,29 @@ export default class ResumeSkillsTable {
     private _initCategories($categories: JQuery, $xml: JQuery<Node>): ResumeSkillsTable {
         $categories.html('');
         const relevantKey: string = 'relevant';
-        const $xmlCategories: JQuery<Node> = this._xpath.evaluate($xml, 'r:meta/r:skill/r:categories/r:category', 'nodeset');
-        Array.prototype.sort.call($xmlCategories, function (a, b) {
-            const $a: JQuery = $(a);
-            const $b: JQuery = $(b);
-            const aName: string = $.trim($a.text());
-            const bName: string = $.trim($b.text());
-            if ($a.attr('value') === relevantKey) {
-                return -1;
-            } else if ($b.attr('value') === relevantKey) {
-                return 1;
-            }
-            if (aName < bName) {
-                return -1;
-            } else if (aName > bName) {
-                return 1;
-            }
-            return 0;
+        const $xmlCategories: JQuery<Node> = this._xpath.evaluate($xml, 'r:meta/r:skill/r:categories/r:category', 'nodeset')
+        .filter((nodeIndex, node) => {
+            const $node: JQuery<Node> = $(node);
+            const isVisible: boolean = !/^true|yes|on|1$/.test($.trim($node.attr('hidden')));
+            return isVisible;
         });
+        // Array.prototype.sort.call($xmlCategories, function (a, b) {
+        //     const $a: JQuery = $(a);
+        //     const $b: JQuery = $(b);
+        //     const aName: string = $.trim($a.text());
+        //     const bName: string = $.trim($b.text());
+        //     if ($a.attr('value') === relevantKey) {
+        //         return -1;
+        //     } else if ($b.attr('value') === relevantKey) {
+        //         return 1;
+        //     }
+        //     if (aName < bName) {
+        //         return -1;
+        //     } else if (aName > bName) {
+        //         return 1;
+        //     }
+        //     return 0;
+        // });
 
         const relevantText: string = $.trim(this._xpath.evaluate($xmlCategories, 'self::*[@value = "' + relevantKey + '"]', 'node').text());
 

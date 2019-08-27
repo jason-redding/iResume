@@ -2,24 +2,50 @@ import ResumeLoader, {ResumeResponse, ResumeResponseBundle} from '../ResumeLoade
 import XPath from "../../XPath/XPath";
 import {Duration, DurationResult} from "../../Env/Env";
 
-interface ResumeViewportProperties {
+type StringAsBoolean = 'true' | 'yes' | 'on' | '1' | 'false' | 'no' | 'off' | '0';
+type SortOrder = 'ascending' | 'descending';
+
+export interface ResumeViewportProperties {
     latestModifiedDate: Date;
+}
+
+export interface ResumeTransformParameters {
+    'author-name'?: StringAsBoolean;
+    'employer-sort'?: SortOrder;
+    'position-sort'?: SortOrder;
+    'show-projects'?: StringAsBoolean;
+    'skills-layout'?: 'list' | 'categories';
+    'projects-layout'?: 'list' | 'collapsible';
+    'system-date': string;
 }
 
 export default class ResumeComponent {
     private _loader: ResumeLoader;
+    private _callbacksBefore: JQuery.Callbacks;
+    private _callbacksAfter: JQuery.Callbacks;
     private _viewport: JQuery = null;
     private _viewportProperties: Partial<ResumeViewportProperties>;
     private _responseBundle: ResumeResponseBundle = null;
     private _transformedDocument: Document = null;
+    private _transformProperties: ResumeTransformParameters = null;
     private _xpath: XPath;
     private _runBefore: Array<(response?: ResumeResponseBundle) => any | void> = [];
     private _runAfter: Array<() => any | void> = [];
 
-    constructor(loader: ResumeLoader, viewport: JQuery) {
+    constructor(loader: ResumeLoader, viewport: JQuery, transformParameters?: ResumeTransformParameters) {
         this.viewport = viewport;
         this.viewportProperties = {};
         this._xpath = new XPath();
+        this._callbacksBefore = $.Callbacks('memory unique')
+        this._callbacksAfter = $.Callbacks('memory unique');
+        const systemDate = Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
+        this._transformProperties = $.extend(false, {
+            'author-name': '0',
+            'position-sort': 'descending',
+            'show-projects': '0',
+            'skills-layout': 'categories',
+            'system-date': systemDate
+        }, {}, transformParameters);
         this._loader = loader;
         this._loader.catch(responses => {
             this.viewport.text('Failed to render résumé!');
@@ -87,10 +113,6 @@ export default class ResumeComponent {
         return this._loader;
     }
 
-    then(callback) {
-        this.getLoader().then(callback);
-    }
-
     get xmlDocument(): XMLDocument {
         if (this._responseBundle !== null) {
             return this._responseBundle.xml.document;
@@ -109,32 +131,25 @@ export default class ResumeComponent {
         return this._transformedDocument;
     }
 
-    onBeforeRender(callback: (response: ResumeResponseBundle) => any | void) {
-        this._runBefore.push(callback);
+    onRenderStart(callback: (response: ResumeResponseBundle) => any | void): ResumeComponent {
+        this._callbacksBefore.add(callback);
+        return this;
     }
 
-    onAfterRender(callback: () => any | void) {
-        this._runAfter.push(callback);
+    onRenderComplete(callback: () => any | void): ResumeComponent {
+        this._callbacksAfter.add(callback);
+        return this;
     }
 
     private _applyTransform() {
         const response: ResumeResponseBundle = this._responseBundle;
-        for (let run of this._runBefore) {
-            try {
-                run.call(response, response);
-            } catch (ex) {
-                console.error(ex);
-            }
-        }
+        this._callbacksBefore.fireWith(response, [response]);
         let resultDoc: XMLDocument = null;
         const systemDate = Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
         const latestModifiedDate = this._getLatestModifiedDate(response);
-        const transformParameters = {
-            'author-name': '0',
-            'position-sort': 'descending',
-            'factor-relevance': '1',
+        const transformParameters: Partial<ResumeTransformParameters> = $.extend(false, this._transformProperties, {
             'system-date': systemDate
-        };
+        });
         try {
             let xslTransformer: XSLTProcessor = new XSLTProcessor();
             xslTransformer.importStylesheet(response.xsl.document);
@@ -149,42 +164,36 @@ export default class ResumeComponent {
             latestModifiedDate: latestModifiedDate
         };
         this._applyToViewport();
-        for (let run of this._runAfter) {
-            try {
-                run.call(this._transformedDocument, this._transformedDocument, response.xml.document, response.xsl.document);
-            } catch (ex) {
-                console.error(ex);
-            }
-        }
+        this._callbacksAfter.fireWith(this._transformedDocument, [this._transformedDocument, response.xml.document, response.xsl.document]);
     }
 
     private _applyToViewport(properties: Partial<ResumeViewportProperties> = this.viewportProperties) {
         if ($.isXMLDoc(this._transformedDocument)) {
-            let latestModifiedDate: Date = properties.latestModifiedDate;
+            const latestModifiedDate: Date = properties.latestModifiedDate;
             this.viewport.each((viewportIndex, viewportElement) => {
-                let $viewportElement: JQuery = $(viewportElement);
+                const $viewportElement: JQuery = $(viewportElement);
                 $viewportElement
                 .closest('.tab-panel')
                 .addClass('transform-applied')
                 .addClass('final-rendering');
-                let $pageContent: any = $('body > .page-wrapper > *', this._transformedDocument);
+                const $pageContent: any = $('body > .page-wrapper > *', this._transformedDocument);
                 $viewportElement.html($pageContent);
                 if (latestModifiedDate instanceof Date) {
                     $viewportElement.find('.author-contact-info-value.author-last-updated').each((lastUpdatedIndex, lastUpdatedElement) => {
-                        let $lastUpdated = $(lastUpdatedElement);
-                        let dateFormat = $.trim($lastUpdated.attr('data-date-format'));
+                        const $lastUpdated = $(lastUpdatedElement);
+                        const dateFormat = $.trim($lastUpdated.attr('data-date-format'));
                         $lastUpdated.attr('data-detected-date', Date.format(latestModifiedDate, "yyyy-MM-dd'T'HH:mm:ss"));
                         $lastUpdated.text(Date.format(latestModifiedDate, dateFormat));
                     });
                 }
                 $viewportElement.find('.skill').each((skillIndex, skillElement) => {
-                    let $skill: JQuery = $(skillElement);
-                    let skillName: string = $skill.attr('data-name');
-                    let $experienceNodes: JQuery<Node> = this._xpath.evaluate(this._responseBundle.xml.document, '/r:resume/r:skills/r:skill[r:name = "' + skillName.replace('"', '') + '"]/r:experience/*', 'nodeset');
+                    const $skill: JQuery = $(skillElement);
+                    const skillName: string = $skill.attr('data-name');
+                    const $experienceNodes: JQuery<Node> = this._xpath.evaluate(this._responseBundle.xml.document, '/r:resume/r:skills/r:skill[r:name = "' + skillName.replace('"', '') + '"]/r:experience/*', 'nodeset');
                     let totalSkillExperience: number = 0;
                     $experienceNodes.each((experienceNodeIndex, experienceNode) => {
-                        let $experienceNode: JQuery<Node> = $(experienceNode);
-                        let experienceType: string = $experienceNode.prop('nodeName');
+                        const $experienceNode: JQuery<Node> = $(experienceNode);
+                        const experienceType: string = $experienceNode.prop('nodeName');
                         let since: Date = null;
                         let until: Date = null;
                         if (experienceType === 'spanning') {
@@ -198,7 +207,7 @@ export default class ResumeComponent {
                         }
                         totalSkillExperience += Math.abs(until.getTime() - since.getTime());
                     });
-                    let skillDuration: DurationResult = Duration.getDuration(totalSkillExperience);
+                    const skillDuration: DurationResult = Duration.getDuration(totalSkillExperience);
                     let skillDurationISO: string = '';
                     if (skillDuration.years > 0) {
                         skillDurationISO += skillDuration.years + 'Y';
