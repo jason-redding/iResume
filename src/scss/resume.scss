@@ -424,7 +424,12 @@ ul, ol {
           &:not(:last-child) {
             &::after {
               content: ', ';
-              color: initial;
+              .ui-page-theme-a & {
+                color: $textColorLightTheme;
+              }
+              .ui-page-theme-b & {
+                color: $textColorDarkTheme;
+              }
             }
           }
         }
