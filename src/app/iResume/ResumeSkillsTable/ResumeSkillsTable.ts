@@ -1,6 +1,7 @@
 import ResumeLoader, {ResumeResponseBundle} from '../ResumeLoader/ResumeLoader';
 import XPath from '../../XPath/XPath';
 import {Duration, DurationResult, TemporalUnit} from "../../Env/Env";
+import GA from "../../GA/GA";
 
 declare global {
     interface JQuery {
@@ -97,7 +98,7 @@ export default class ResumeSkillsTable {
                 }
             }
         });
-        $element.on('click.iresume', 'th[data-order-by]', function (event) {
+        $element.on('click.iresume', 'th[data-order-by]', function (event, options) {
             const $this: JQuery = $(this);
             const orderBy: string[] = $.trim($this.attr('data-order-by')).split(/\s*,+\s*/);
             const fieldName: string = $.trim($this.attr('data-field'));
@@ -116,23 +117,27 @@ export default class ResumeSkillsTable {
             $this.attr('data-sort-order', sortOrder);
             if (fieldName.length > 0) {
                 self._sortSkills(fieldName);
+                if (typeof options !== 'object' || options.simulated !== true) {
+                    GA.fireEvent('UX', 'click', 'Sort Skills Table: ' + fieldName + ':' + sortOrder);
+                }
             }
         });
         this._loader.then(response => {
-            // const $initTableContainer: JQuery = $('#init-table-container');
-            // $initTableContainer.remove();
             const $xmlRoot: JQuery<Node> = this._xpath.evaluate(response.xml.document, '/r:resume', 'node');
             const authorName: string = $.trim(this._xpath.evaluate($xmlRoot, 'r:author/@name', 'string'));
             $('.author-name').text(authorName);
             this._buildSkillsTable();
             const defaultSortColumn: string = $.trim(this._element.attr('data-default-sort-column') || this._element.children('thead:first').children('tr:first').children('th[data-field]:first').attr('data-field'));
-            this._element.find('> thead > tr > th[data-field="' + defaultSortColumn + '"]').first().trigger('click');
+            this._element.find('> thead > tr > th[data-field="' + defaultSortColumn + '"]').first().trigger('click', {
+                simulated: true
+            });
             this._element.closest('.tab-panel').addClass('final-rendering');
 
             if (this._categoriesContainer !== null && this._categoriesContainer.length > 0) {
-                const defaultCategory: string = $.trim(this._categoriesContainer.attr('data-default-category'));
                 this._initCategories(this._categoriesContainer, $xmlRoot);
+                const defaultCategory: string = $.trim(this._categoriesContainer.attr('data-default-category'));
                 $('#is-relevant-category').trigger('change', {
+                    simulated: true,
                     checked: (defaultCategory === 'relevant')
                 });
                 if (defaultCategory.length > 0) {
@@ -145,7 +150,9 @@ export default class ResumeSkillsTable {
                         } catch (ex) {
                             console.error(ex);
                         }
-                        $select.triggerHandler('change');
+                        $select.triggerHandler('change', {
+                            simulated: true
+                        });
                     }
                 }
             }
@@ -248,7 +255,10 @@ export default class ResumeSkillsTable {
             } catch (ex) {
                 console.error(ex);
             }
-            $select.trigger('change');
+            const selectChangeEventOptions: object = {
+                simulated: (options && options.simulated)
+            };
+            $select.trigger('change', selectChangeEventOptions);
         })
         .appendTo($categories);
 
@@ -279,23 +289,26 @@ export default class ResumeSkillsTable {
             .appendTo($select);
         });
 
-        $select.on('change', (event) => {
+        $select.on('change', (event, options) => {
             const $rows: JQuery = this._element.find('> tbody > tr');
             const $this: JQuery = $(event.target);
-            const skillKey: string = $.trim(('' + $this.val()));
-            const skillName: string = $.trim($this.find('option[value="' + skillKey + '"]').text());
+            const categoryKey: string = $.trim(('' + $this.val()));
+            const categoryName: string = $.trim($this.find('option[value="' + categoryKey + '"]').text());
             const $captionAttributes = this._element
             .children('caption')
             .children('.text')
             .addBack();
-            if (skillKey === '*') {
+            if (categoryKey === '*') {
                 $rows.removeClass('ui-screen-hidden');
                 $captionAttributes.removeAttr('data-filter');
             } else {
-                let $filteredRows: JQuery = $rows.filter('.category-' + skillKey);
+                let $filteredRows: JQuery = $rows.filter('.category-' + categoryKey);
                 $filteredRows.removeClass('ui-screen-hidden');
                 $rows.not($filteredRows).addClass('ui-screen-hidden');
-                $captionAttributes.attr('data-filter', skillName);
+                $captionAttributes.attr('data-filter', categoryName);
+            }
+            if (typeof options !== 'object' || options.simulated !== true) {
+                GA.fireEvent('UX', 'click', 'Filter Skills Table: ' + categoryName);
             }
             this._refreshTable(this._element);
         })

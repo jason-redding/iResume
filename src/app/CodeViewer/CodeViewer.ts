@@ -1,5 +1,6 @@
 import * as $ from "jquery";
 import * as hljs from '../../js/highlight.pack';
+import GA from "../GA/GA";
 
 const FILE_TYPES: {
     [key: string]: string
@@ -97,7 +98,7 @@ export default class CodeViewer {
             $element.enhanceWithin();
         }
 
-        $select.on('change.code-viewer', function (event) {
+        $select.on('change.code-viewer', function (event, options) {
             let $this: JQuery = $(this);
             let path: string = $.trim('' + $this.val());
             let $codeView: JQuery = $codeViewport.children('code');
@@ -109,6 +110,9 @@ export default class CodeViewer {
             }
             let $codePanel: JQuery = $codeView.closest('.tab-panel');
             $codePanel.addClass('data-loading');
+            if (typeof options !== 'object' || options.simulated !== true) {
+                GA.fireEvent('UX', 'click', 'View Code: ' + path);
+            }
             $.ajax({
                 dataType: 'text',
                 url: path
@@ -130,7 +134,9 @@ export default class CodeViewer {
                 $codePanel.removeClass('data-loading');
                 $codePanel[v.length > 0 ? 'addClass' : 'removeClass']('data-loaded');
             });
-        }).triggerHandler('change');
+        }).triggerHandler('change', {
+            simulated: true
+        });
 
         return this;
     }

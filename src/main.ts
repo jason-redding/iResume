@@ -4,10 +4,12 @@ import ResumeSkillsTable from './app/iResume/ResumeSkillsTable/ResumeSkillsTable
 import ResumeComponent, {ResumeTransformParameters} from './app/iResume/ResumeComponent/ResumeComponent';
 import ResumeLoader from './app/iResume/ResumeLoader/ResumeLoader';
 import CodeViewer from "./app/CodeViewer/CodeViewer";
+import GA from "./app/GA/GA";
 
 onReady();
 
 function onReady() {
+    initPrintHandler();
     initHashHandling();
     initThemeUI();
     initPreferences();
@@ -38,14 +40,21 @@ function initHashHandling() {
                         easing: 'easeInOutBack',
                         always: function (animation, jumpedToEnd) {
                             const $highlightElement: JQuery = (isAnchor ? $targetElement.parent() : $targetElement);
-                            $highlightElement.effect('highlight', {
-
-                            });
+                            $highlightElement.effect('highlight');
                         },
                         duration: 1800
                     });
                 }
             }
+        }
+    });
+}
+
+function initPrintHandler() {
+    const mediaQuery: MediaQueryList = window.matchMedia('print');
+    mediaQuery.addEventListener('change', (event) => {
+        if (event.matches) {
+            GA.fireEvent('UX', 'print', 'Print Resume');
         }
     });
 }
@@ -309,6 +318,10 @@ function initThemeUI() {
         });
 
         $body.pagecontainer('option', 'theme', newPageTheme);
+
+        if (typeof options !== 'object' || options.simulated !== true) {
+            GA.fireEvent('UX', 'click', 'Change Theme: ' + (newPageTheme === 'a' ? 'Light' : 'Dark'));
+        }
     });
 }
 
@@ -346,7 +359,8 @@ function initPreferences() {
         }
         if (theme !== null) {
             $('#theme-toggle-button').trigger('click', {
-                theme: theme
+                theme: theme,
+                simulated: true
             });
         }
     }
@@ -356,22 +370,27 @@ function initTabs() {
     console.debug('Initializing tabs...');
 
     let $defaultSelected: JQuery = $();
-    let $tabsNav: JQuery = $('#tabs-nav');
-    let $tabsNavRadios: JQuery = $tabsNav.find(':radio');
+    const $tabsNav: JQuery = $('#tabs-nav');
+    const $tabsNavRadios: JQuery = $tabsNav.find(':radio');
     $tabsNavRadios
-    .on('click', function (event) {
-        let $this: JQuery = $(this);
+    .on('click', function (event, options) {
+        const $this: JQuery = $(this);
         $(document.activeElement).trigger('blur');
-        let tooltipInstance: any = $(document).tooltip('instance');
+        const tooltipInstance: any = $(document).tooltip('instance');
         if (typeof tooltipInstance !== 'undefined' && ('tooltips' in tooltipInstance)) {
-            let allTooltips: { element: JQuery }[] = tooltipInstance.tooltips;
+            let allTooltips: {element: JQuery}[] = tooltipInstance.tooltips;
             $.each(tooltipInstance.tooltips, function (id, tooltipData) {
                 tooltipData.element.trigger('focusout').trigger('mouseleave');
             });
         }
-        let $selectedPanel = $('.tab-panel[data-panel="' + $this.val() + '"]');
+        const selectedTabText: string = $.trim($this.closest('.ui-radio').find('label[for="' + $this.attr('id') + '"]').text());
+        const $selectedPanel: JQuery = $('.tab-panel[data-panel="' + $this.val() + '"]');
         $('.tab-panel').not($selectedPanel).addClass('ui-screen-hidden');
         $selectedPanel.removeClass('ui-screen-hidden');
+
+        if (typeof options !== 'object' || options.simulated !== true) {
+            GA.fireEvent('UX', 'click', 'Change Main Tab: ' + selectedTabText);
+        }
     });
     $tabsNavRadios.each(function () {
         let $this: JQuery = $(this);
@@ -384,7 +403,7 @@ function initTabs() {
         $tabsNavRadios
         .each(function () {
             let $this: JQuery = $(this);
-            let ds = ($.trim($this.attr('data-default-selected')) === 'true');
+            let ds: boolean = ($.trim($this.attr('data-default-selected')) === 'true');
             if (ds) {
                 $defaultSelected = $this;
                 return false;
@@ -395,7 +414,9 @@ function initTabs() {
         }
     }
     if ($defaultSelected.length > 0) {
-        $defaultSelected.trigger('click');
+        $defaultSelected.trigger('click', {
+            simulated: true
+        });
         if (('checkboxradio' in $defaultSelected)) {
             $defaultSelected.checkboxradio('refresh');
         }
