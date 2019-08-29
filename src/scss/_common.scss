@@ -28,3 +28,15 @@ $linkColorDarkHover: hsl(196, 100%, 37%);
 		@content;
 	}
 }
+
+@mixin supports-backdrop {
+	@supports (-webkit-backdrop-filter: none) or (-moz-backdrop-filter: none) or (-ms-backdrop-filter: none) or (-o-backdrop-filter: none) or (backdrop-filter: none) {
+		@content;
+	}
+}
+
+@mixin backdrop-blur($value) {
+	@include supports-backdrop {
+		@include prefix(backdrop-filter, blur($value));
+	}
+}

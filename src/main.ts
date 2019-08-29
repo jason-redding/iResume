@@ -9,12 +9,12 @@ onReady();
 
 function onReady() {
     initHashHandling();
-    loadResume();
     initThemeUI();
+    initPreferences();
+    loadResume();
     initHighlightThemePicker();
     initCodeSelector();
     initTabs();
-    initPreferences();
 }
 
 function initHashHandling() {

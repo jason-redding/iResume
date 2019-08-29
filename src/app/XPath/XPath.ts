@@ -106,10 +106,8 @@ export default class XPath {
                 if (r.singleNodeValue !== null) {
                     cv.clear();
                     cv.add(r.singleNodeValue);
-                } else {
-                    cv.clear();
+                    return false;
                 }
-                return false;
             }
         });
 

@@ -521,7 +521,15 @@ export default class ResumeSkillsTable {
                     value: text
                 });
                 if (skillPropertyName === 'level') {
-                    this._xpath.evaluate($xmlSkillLevels, 'self::*[@value = "' + Math.floor(parseFloat($skillProperty.attr('value'))) + '"]', 'nodeset')
+                    let levelValue: number = parseFloat($skillProperty.attr('value'));
+                    let $metaSkillLevel: JQuery<Node> = $();
+                    if (levelValue === 0) {
+                        $metaSkillLevel = this._xpath.evaluate($xmlSkillLevels, 'self::*[@value = "-1"]', 'nodeset');
+                    }
+                    if ($metaSkillLevel.length === 0) {
+                        $metaSkillLevel = this._xpath.evaluate($xmlSkillLevels, 'self::*[@value = "' + Math.floor(levelValue) + '"]', 'nodeset');
+                    }
+                    $metaSkillLevel
                     .each(function () {
                         $.each((<Element>this).attributes, function (attrIndex, attr) {
                             const attrName: string = attr.localName;
@@ -536,8 +544,8 @@ export default class ResumeSkillsTable {
                 $.each(element.attributes, function (attrIndex, attr) {
                     const attrName: string = attr.localName;
                     let attrValue: string | number = attr.nodeValue;
-                    if (!isNaN(parseFloat(<string>attrValue))) {
-                        attrValue = parseFloat(<string>attrValue);
+                    if (!isNaN(parseFloat(attrValue))) {
+                        attrValue = parseFloat(attrValue);
                     }
                     props[skillPropertyName][attrName] = attrValue;
                 });
@@ -572,7 +580,14 @@ export default class ResumeSkillsTable {
                 });
                 return true;
             } else if (propName === 'level') {
-                adjustedValue = $.trim((<JQuery>this._xpath.evaluate($xmlSkillLevels, 'self::*[@value = "' + Math.floor(originalValue) + '"]', 'nodeset')).text());
+                let $metaSkillLevel: JQuery<Node> = $();
+                if (originalValue === 0) {
+                    $metaSkillLevel = this._xpath.evaluate($xmlSkillLevels, 'self::*[@value = "-1"]', 'nodeset');
+                }
+                if ($metaSkillLevel.length === 0) {
+                    $metaSkillLevel = this._xpath.evaluate($xmlSkillLevels, 'self::*[@value = "' + Math.floor(originalValue) + '"]', 'nodeset');
+                }
+                adjustedValue = $.trim((<JQuery>$metaSkillLevel).text());
                 $.extend(true, propValue, {
                     percentage: (parseFloat(originalValue) / parseFloat(('' + maxSkillLevel)))
                 });

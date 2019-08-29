@@ -211,7 +211,7 @@ export class ArgumentTokenizer {
     private _char: string;
     private _token: string;
     private _typeStack: string[];
-    private _depthMap: Partial<DepthMap>
+    private _depthMap: Partial<DepthMap>;
     private _withinString: boolean | string;
     private _tokens: any[];
 
@@ -483,14 +483,16 @@ export class StringFormatter {
                 mod = 'raw';
             }
         }
-        const rexArguments: RegExp = /^([a-z-][.a-z0-9-]*)(?:\(\s*([^,]*(,[^,]*)*)\s*\))?$/;
+        const rexArguments: RegExp = /^;*([a-z-][.a-z0-9-]*)(?:\(\s*([^),]*(,[^),]*)*)\s*\))?/;
         let matcher: RegExpExecArray = null;
+        let appendMatcher: RegExpExecArray = null;
         if (!rexArguments.test(mod)) {
             if (value instanceof Date) {
                 mod = 'date("' + mod + '")';
             }
         }
-        if ((matcher = rexArguments.exec(mod)) !== null && matcher.length > 0) {
+        while ((matcher = rexArguments.exec(mod)) !== null && matcher.length > 0) {
+            mod = matcher.input.substring(matcher[0].length);
             let fName = matcher[1];
             this._argumentTokenizer.reset(matcher[2], properties);
             let fArgs: any[] = this._argumentTokenizer.parse();
@@ -525,7 +527,9 @@ export class StringFormatter {
             } else if (fName === 'round') {
                 value = Number.prototype.toFixed.call((parseFloat(value) * 100), parseFloat(fArgs[0] || 0));
             } else if (fName === 'instead') {
-                value = fArgs[0];
+                if (value === null || typeof value === 'undefined') {
+                    value = fArgs[0];
+                }
             } else if (fName === 'join') {
                 if (Array.isArray(value)) {
                     value = Array.prototype.join.apply(value, fArgs);
@@ -534,13 +538,22 @@ export class StringFormatter {
                 if (fArgs.length === 0) {
                     fArgs.push('');
                 }
-                if (value === null) {
-                    value = fArgs[0];
+                if (value === null || typeof value === 'undefined') {
+                    value = fArgs.join('');
                 }
             } else if (/^uppper(case)?$/.test(fName)) {
                 value = ('' + value).toUpperCase();
             } else if (/^lower(case)?$/.test(fName)) {
                 value = ('' + value).toLowerCase();
+            } else if ((appendMatcher = /^((?:ap|pre)pend)(-if)?$/.exec(fName)) !== null && appendMatcher.length > 0) {
+                if ((value === null || typeof value === 'undefined' || value === '') && appendMatcher.length > 2 && appendMatcher[2] === '-if') {
+                    continue;
+                }
+                if (appendMatcher[1] === 'append') {
+                    value = ('' + value) + fArgs.join('');
+                } else if (appendMatcher[1] === 'prepend') {
+                    value = fArgs.join('') + ('' + value);
+                }
             }
         }
         if (value === null) {

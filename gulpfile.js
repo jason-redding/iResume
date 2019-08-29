@@ -124,6 +124,7 @@ function watchFiles(cb) {
         CONTEXT.SRC + '/**/*.xml',
         CONTEXT.SRC + '/**/*.xsl',
         CONTEXT.SRC + '/**/*.xsd',
+        CONTEXT.SRC + '/tsconfig.json',
         CONTEXT.SRC + '/gulpfile.js'
     ];
     gulp.watch(files, watchResponse);

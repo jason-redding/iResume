@@ -21,12 +21,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jman.socialis.dev/xsd/resume"
 	xsi:schemaLocation="http://jman.socialis.dev/xsd/resume"
-	last-modified="2019-08-27T11:13:13">
+	last-modified="2019-08-28T11:13:13">
 	<meta>
 		<skill>
 			<levels preposition="at">
-				<level value="0" preposition="of">None</level>
-				<level value="1" preposition="to">Exposure</level>
+				<level value="-1" preposition="of">None</level>
+				<level value="0" preposition="to">Exposure</level>
+				<level value="1" preposition="">Learning</level>
 				<level value="2">Beginner</level>
 				<level value="3">Skilled</level>
 				<level value="4">Advanced</level>
@@ -229,7 +230,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill>
 			<name>Bootstrap</name>
-			<level value="1"/>
+			<level value="0.5"/>
 			<experience>
 				<spanning from="2018-01" to="2019-05"/>
 			</experience>
@@ -644,7 +645,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill>
 			<name>Pro*C</name>
-			<level value="1"/>
+			<level value="0.5"/>
 			<experience>
 				<spanning from="2017-07" to="2017-08"/>
 			</experience>
@@ -662,6 +663,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="dev-language"/>
 				<category value="relevant"/>
 				<category value="back-end"/>
+			</categories>
+		</skill>
+		<skill>
+			<name>React</name>
+			<level value="1"/>
+			<experience>
+				<since>2019-08-27</since>
+			</experience>
+			<categories>
+				<category value="relevant"/>
+				<category value="front-end"/>
 			</categories>
 		</skill>
 		<skill>
@@ -698,7 +710,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill>
 			<name>SaltStack</name>
-			<level value="2"/>
+			<level value="1.5"/>
 			<experience>
 				<spanning from="2018-01" to="2019-05"/>
 			</experience>
@@ -816,7 +828,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill>
 			<name>WordPress</name>
-			<level value="1.5"/>
+			<level value="2"/>
 			<experience>
 				<spanning from="2015-01" to="2016-07"/>
 			</experience>
@@ -904,6 +916,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<stack>
 						<skill name="AngularJS"/>
 						<skill name="Angular Materials"/>
+						<skill name="Bootstrap"/>
 						<skill name="HTML"/>
 						<skill name="Java"/>
 						<skill name="JBoss"/>
@@ -1170,7 +1183,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</h:p>
 								<h:ul>
 									<h:li>
-										Created supplemental <skill>Java</skill> <skill name="command-line-interface">CLI</skill> that uses the <skill>Java</skill> Excel API to generate and publish a downloadable spreadsheet containing the entire phone directory. Also configured <h:abbr title="Unix utility for scheduling jobs">CRON</h:abbr> to automate its execution.
+										Created supplemental <skill>Java</skill> <skill name="command-line-interface">CLI</skill> that used the <skill>Java</skill> Excel API to generate and publish a downloadable spreadsheet containing the entire phone directory. Also configured <h:abbr title="Unix utility for scheduling jobs">CRON</h:abbr> to automate its execution.
 									</h:li>
 									<h:li>
 										Designed <h:abbr title="Web User Interface">Web UI</h:abbr> to provide Simple and Advanced search modes, with advanced mode allowing a combination of multiple user-specified criteria with an advanced set of comparators.

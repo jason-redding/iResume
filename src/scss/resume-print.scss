@@ -25,8 +25,8 @@ $break-values: (auto avoid avoid-page page left right recto verso avoid-column c
   //    right: 0;
   //  }
   //}
-  .hide-when-print {
-    display: none;
+  .hide-on-print {
+    display: none !important;
   }
   thead {
     > tr {
