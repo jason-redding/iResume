@@ -26,6 +26,7 @@ export interface SortingProperties {
 export default class ResumeSkillsTable {
     private _loader: ResumeLoader;
     private _element: JQuery;
+    private _categoriesContainer: JQuery;
     private _options: object;
     private _xpath: XPath;
     private _response: ResumeResponseBundle;
@@ -33,7 +34,7 @@ export default class ResumeSkillsTable {
     private static DEFAULT_SORT_COLUMN = 'level';
     private static PATTERN_DATA_RENDER_PREFIX = /^data-render-(.+)$/i;
 
-    constructor(loader: ResumeLoader, element: JQuery, options: object = {}) {
+    constructor(loader: ResumeLoader, element: JQuery | HTMLElement | string, categoriesContainer: JQuery | HTMLElement | string = null, options: object = {}) {
         this._loader = loader;
         this._options = options;
         this._xpath = new XPath();
@@ -41,19 +42,21 @@ export default class ResumeSkillsTable {
             this._response = response;
             this._xpath.initNamespaceFrom(response.xml.document);
         }));
-        this.element = element;
+        if (element instanceof HTMLElement || typeof element === 'string' || element instanceof String) {
+            this._element = $(<any>element);
+        } else {
+            this._element = element;
+        }
+        if (categoriesContainer instanceof HTMLElement || typeof categoriesContainer === 'string' || categoriesContainer instanceof String) {
+            this._categoriesContainer = $(<any>categoriesContainer);
+        } else {
+            this._categoriesContainer = categoriesContainer;
+        }
+        this._initElement();
     }
 
     get element(): JQuery {
         return this._element;
-    }
-
-    set element(element: JQuery) {
-        if (this._element instanceof jQuery) {
-            this._element.off('.iresume');
-        }
-        this._element = element;
-        this._initElement();
     }
 
     private _initElement(): ResumeSkillsTable {
@@ -116,31 +119,36 @@ export default class ResumeSkillsTable {
             }
         });
         this._loader.then(response => {
-            const $initTableContainer: JQuery = $('#init-table-container');
-            $initTableContainer.remove();
-            const $skillsTable: JQuery = $('#skills-table');
+            // const $initTableContainer: JQuery = $('#init-table-container');
+            // $initTableContainer.remove();
             const $xmlRoot: JQuery<Node> = this._xpath.evaluate(response.xml.document, '/r:resume', 'node');
             const authorName: string = $.trim(this._xpath.evaluate($xmlRoot, 'r:author/@name', 'string'));
             $('.author-name').text(authorName);
-            const $skillCategories: JQuery = $('#skill-categories');
-            const defaultCategory: string = $.trim($skillCategories.attr('data-default-category'));
-            this._initCategories($skillCategories, $xmlRoot);
             this._buildSkillsTable();
-            $skillsTable.find('> thead > tr > th[data-field="' + ResumeSkillsTable.DEFAULT_SORT_COLUMN + '"]').trigger('click');
-            $skillsTable.closest('.tab-panel').addClass('final-rendering');
-            if (defaultCategory.length > 0) {
-                let $select: JQuery = $skillCategories.find('select#categories');
-                $select.find('option[value="' + defaultCategory + '"]').prop('selected', true);
-                try {
-                    $select.selectmenu('refresh');
-                } catch (ex) {
-                    console.error(ex);
+            const defaultSortColumn: string = $.trim(this._element.attr('data-default-sort-column') || this._element.children('thead:first').children('tr:first').children('th[data-field]:first').attr('data-field'));
+            this._element.find('> thead > tr > th[data-field="' + defaultSortColumn + '"]').first().trigger('click');
+            this._element.closest('.tab-panel').addClass('final-rendering');
+
+            if (this._categoriesContainer !== null && this._categoriesContainer.length > 0) {
+                const defaultCategory: string = $.trim(this._categoriesContainer.attr('data-default-category'));
+                this._initCategories(this._categoriesContainer, $xmlRoot);
+                $('#is-relevant-category').trigger('change', {
+                    checked: (defaultCategory === 'relevant')
+                });
+                if (defaultCategory.length > 0) {
+                    const $select: JQuery = this._categoriesContainer.find('select#categories');
+                    const $defaultCategory: JQuery = $select.find('option[value="' + defaultCategory + '"]');
+                    if ($defaultCategory.length > 0) {
+                        $defaultCategory.prop('selected', true);
+                        try {
+                            $select.selectmenu('refresh');
+                        } catch (ex) {
+                            console.error(ex);
+                        }
+                        $select.triggerHandler('change');
+                    }
                 }
-                $select.triggerHandler('change');
             }
-            $('#is-relevant-category').trigger('change', {
-                checked: true
-            });
         });
         return this;
     }
@@ -272,12 +280,11 @@ export default class ResumeSkillsTable {
         });
 
         $select.on('change', (event) => {
-            const $table: JQuery = $('#skills-table');
-            const $rows: JQuery = $table.find('> tbody > tr');
+            const $rows: JQuery = this._element.find('> tbody > tr');
             const $this: JQuery = $(event.target);
             const skillKey: string = $.trim(('' + $this.val()));
             const skillName: string = $.trim($this.find('option[value="' + skillKey + '"]').text());
-            const $captionAttributes = $table
+            const $captionAttributes = this._element
             .children('caption')
             .children('.text')
             .addBack();
@@ -290,7 +297,7 @@ export default class ResumeSkillsTable {
                 $rows.not($filteredRows).addClass('ui-screen-hidden');
                 $captionAttributes.attr('data-filter', skillName);
             }
-            this._refreshTable($table);
+            this._refreshTable(this._element);
         })
         .appendTo($categoriesSelectContainer);
         if (('enhanceWithin' in $.fn) && typeof $.fn.enhanceWithin === 'function') {
@@ -311,8 +318,7 @@ export default class ResumeSkillsTable {
     }
 
     private _sortSkills(sortBy: string): ResumeSkillsTable {
-        const $table: JQuery = this._element;
-        const $columnHeader: JQuery = $table.find('> thead > tr > th[data-field="' + sortBy + '"]');
+        const $columnHeader: JQuery = this._element.find('> thead > tr > th[data-field="' + sortBy + '"]');
         if ($columnHeader.length > 0) {
             $columnHeader
             .addClass('sort-by')
@@ -339,7 +345,7 @@ export default class ResumeSkillsTable {
             } else {
                 sorting = [sortBy];
             }
-            const $rows: JQuery = $table.find('> tbody > tr');
+            const $rows: JQuery = this._element.find('> tbody > tr');
             if ($rows.length === 0) {
                 this._buildSkillsTable();
                 this._sortTableRows(sorting, sortOrder);
