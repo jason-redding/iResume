@@ -23,14 +23,25 @@ function initHashHandling() {
             const url: ParsedPath = $.mobile.path.parseUrl(ui.toPage);
             const m: RegExpExecArray = /^#(position-.+)$/.exec(url.hash);
             if (m !== null && m.length > 0) {
-                const $anchor: JQuery = $('a[name="' + m[1] + '"]', ui.prevPage);
-                if ($anchor.length > 0) {
+                let $targetElement: JQuery = $('a[name="' + m[1] + '"]', ui.prevPage);
+                if ($targetElement.length === 0) {
+                    $targetElement = $('[id="' + m[1] + '"', ui.prevPage);
+                }
+                if ($targetElement.length > 0) {
                     event.preventDefault();
-                    // const headerAdjustment: number = ($('> .ui-header-fixed', ui.prevPage).outerHeight() || 0) + 8;
+                    const isAnchor = $targetElement.is('a');
+                    const headerAdjustment: number = (isAnchor ? 0 : (($('> .ui-header-fixed', ui.prevPage).outerHeight() || 0) + 8));
+
                     $('html, body').animate({
-                        scrollTop: $anchor.offset().top
+                        scrollTop: $targetElement.offset().top - headerAdjustment
                     }, {
                         easing: 'easeInOutBack',
+                        always: function (animation, jumpedToEnd) {
+                            const $highlightElement: JQuery = (isAnchor ? $targetElement.parent() : $targetElement);
+                            $highlightElement.effect('highlight', {
+
+                            });
+                        },
                         duration: 1800
                     });
                 }
@@ -69,7 +80,7 @@ function loadResume() {
 function initSkillsTable(resumeLoader: ResumeLoader): ResumeSkillsTable {
     console.debug('Initializing skills table...');
 
-    const resumeSkillsTable: ResumeSkillsTable = new ResumeSkillsTable(resumeLoader, $('#skills-table'));
+    const resumeSkillsTable: ResumeSkillsTable = new ResumeSkillsTable(resumeLoader, $('#skills-table'), $('#skill-categories'));
     return resumeSkillsTable;
 }
 
@@ -82,6 +93,8 @@ function initResumeComponent(resumeLoader: ResumeLoader): ResumeComponent {
         'show-projects': '1',
         'skills-layout': 'categories',
         'projects-layout': 'list',
+        'skill-level-print-min': 2,
+        'skill-level-screen-min': 1,
         'system-date': Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")
     };
     const resumeComponent: ResumeComponent = new ResumeComponent(resumeLoader, $('.resume-xslt'), transformParameters);

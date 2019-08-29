@@ -166,12 +166,12 @@ code {
     border-radius: 0.5em;
     padding: 1px 0.4em 2px;
     .ui-page-theme-a & {
-      background-color: #ececec;
-      border-color: #444444;
+      background-color: hsl(0, 0%, 93%);
+      border-color: hsl(0, 0%, 27%);
     }
     .ui-page-theme-b & {
-      background-color: #929292;
-      border-color: #dedede;
+      background-color: hsl(0, 0%, 48%);
+      border-color: hsl(0, 0%, 75%);
     }
   }
 }

@@ -16,6 +16,8 @@ export interface ResumeTransformParameters {
     'show-projects'?: StringAsBoolean;
     'skills-layout'?: 'list' | 'categories';
     'projects-layout'?: 'list' | 'collapsible';
+    'skill-level-print-min'?: number | string;
+    'skill-level-screen-min'?: number | string;
     'system-date': string;
 }
 

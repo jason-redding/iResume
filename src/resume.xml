@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	last-modified="2019-08-28T11:13:13">
 	<meta>
 		<skill>
-			<levels preposition="at">
+			<levels preposition="at" screen-min="1" print-min="2">
 				<level value="-1" preposition="of">None</level>
 				<level value="0" preposition="to">Exposure</level>
 				<level value="1" preposition="">Learning</level>
@@ -906,7 +906,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								Supported a distributed cross-domain solution in an Agile environment.
 							</h:li>
 							<h:li>
-								Regarded as team <h:abbr title="Subject Matter Expert" data-expanded="true"><h:span class="text">SME</h:span></h:abbr> for <skill>SQL</skill> and <h:abbr title="User Interface"><h:span class="text">UI</h:span></h:abbr>/<h:abbr title="User Experience"><h:span class="text">UX</h:span></h:abbr>.
+								Regarded as team <h:abbr title="Subject Matter Expert" data-expanded="true"><h:span class="text">SME</h:span></h:abbr> for <skill>SQL</skill> and web front-end (<h:abbr title="User Interface"><h:span class="text">UI</h:span></h:abbr>/<h:abbr title="User Experience"><h:span class="text">UX</h:span></h:abbr>).
 							</h:li>
 							<h:li>
 								Collaborated with and assisted team members with development, testing, and <h:abbr title="Development Operations"><h:span class="text">DevOps</h:span></h:abbr>.
@@ -1104,7 +1104,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<title>Administrator Account Assist</title>
 							<description>
 								<h:p>
-									Sole lead creating an <skill>Apache Tomcat</skill> web application, used by 100+ support personnel to manage and troubleshoot over 800,000 user accounts, to interface with <skill>Oracle DBMS</skill>, <skill>Microsoft SQL Server</skill>, and <skill>Active Directory</skill> in an effort to consolidate support functions in one place.
+									Sole lead creating an <skill>Apache Tomcat</skill> web application, used by 100+ support personnel to manage and troubleshoot over 800,000 user accounts, that interfaced with <skill>Oracle DBMS</skill>, <skill>Microsoft SQL Server</skill>, and <skill>Active Directory</skill> to consolidate support functions in one place.
 
 
 								</h:p>
