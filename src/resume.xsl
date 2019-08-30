@@ -1361,7 +1361,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				</xsl:if>
 			</xsl:attribute>
 			<xsl:attribute name="title">
-				<!--<xsl:text>${level} ${level.preposition#default(levels.preposition)} ${name} with </xsl:text>-->
+				<xsl:text>${level} (${level.percentage#percent})${level.preposition#default(levels.preposition);prepend-if(' ')} ${name} with </xsl:text>
 				<xsl:text>${experience.duration} of experience${experience.last#date("'&lt;br/>&lt;br/>Last used: 'MMMM' of 'yyyy")}</xsl:text>
 			</xsl:attribute>
 			<!--<xsl:attribute name="title">-->

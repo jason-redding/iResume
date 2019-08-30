@@ -59,7 +59,7 @@ function initPrintHandler() {
     });
 }
 
-function loadResume() {
+function loadResume(): ResumeLoader {
     const resumeLoader: ResumeLoader = new ResumeLoader('/resume');
     resumeLoader.onLoadStart(() => {
         $.mobile.loading('show', {
@@ -72,7 +72,7 @@ function loadResume() {
     .then(response => {
         $.mobile.loading('hide');
         const resumeSkillsTable: ResumeSkillsTable = initSkillsTable(resumeLoader);
-        initTooltips(resumeSkillsTable);
+        initTooltips(resumeLoader);
         initResumeComponent(resumeLoader)
         .onRenderStart(response => {
             $.mobile.loading('show', {
@@ -84,6 +84,7 @@ function loadResume() {
             $.mobile.loading('hide');
         });
     });
+    return resumeLoader;
 }
 
 function initSkillsTable(resumeLoader: ResumeLoader): ResumeSkillsTable {
@@ -132,7 +133,7 @@ function initCodeSelector() {
     .init();
 }
 
-function initTooltips(resumeSkillsTable?: ResumeSkillsTable) {
+function initTooltips(resumeLoader?: ResumeLoader) {
     console.debug('Initializing tooltips...');
 
     $(document).tooltip({
@@ -217,8 +218,8 @@ function initTooltips(resumeSkillsTable?: ResumeSkillsTable) {
                 let skillVersion: string = $.trim($this.attr('data-version'));
                 let skillVersionHint: string = $.trim($this.attr('data-version-hint'));
                 let skillName: string = $.trim($this.attr('data-name'));
-                let skillKey: string = (skillName.length > 0 ? skillName : $.trim($this.text())).toLowerCase().replace(/\s+/gi, '-');
-                let skillProperties: object = (resumeSkillsTable ? resumeSkillsTable.getSkillProperties(skillKey) : {});
+                let skillKey: string = (skillName.length > 0 ? skillName : $.trim($this.text()));
+                let skillProperties: object = (resumeLoader ? resumeLoader.getSkillProperties(skillKey) : {});
                 let r: string = '<div class="header" style="font-size: 1.3em; text-align: center;">';
                 if (skillName.length > 0) {
                     r += skillName;
@@ -320,7 +321,7 @@ function initThemeUI() {
         $body.pagecontainer('option', 'theme', newPageTheme);
 
         if (typeof options !== 'object' || options.simulated !== true) {
-            GA.fireEvent('UX', 'click', 'Change Theme: ' + (newPageTheme === 'a' ? 'Light' : 'Dark'));
+            GA.fireEvent('UX', 'Change Theme: ' + (newPageTheme === 'a' ? 'Light' : 'Dark'));
         }
     });
 }
@@ -389,7 +390,7 @@ function initTabs() {
         $selectedPanel.removeClass('ui-screen-hidden');
 
         if (typeof options !== 'object' || options.simulated !== true) {
-            GA.fireEvent('UX', 'click', 'Change Main Tab: ' + selectedTabText);
+            GA.fireEvent('UX', 'Change Main Tab: ' + selectedTabText);
         }
     });
     $tabsNavRadios.each(function () {

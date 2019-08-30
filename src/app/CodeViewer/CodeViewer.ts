@@ -111,7 +111,7 @@ export default class CodeViewer {
             let $codePanel: JQuery = $codeView.closest('.tab-panel');
             $codePanel.addClass('data-loading');
             if (typeof options !== 'object' || options.simulated !== true) {
-                GA.fireEvent('UX', 'click', 'View Code: ' + path);
+                GA.fireEvent('UX', 'View Code: ' + path);
             }
             $.ajax({
                 dataType: 'text',

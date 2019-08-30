@@ -1,4 +1,4 @@
-type XPathResultValue<T> =
+export type XPathResultValue<T> =
     T extends 'string' ? string :
     T extends 'number' ? number :
     T extends 'boolean' ? boolean :
@@ -11,8 +11,15 @@ type XPathResultValue<T> =
 export default class XPath {
     private _namespace: Namespace;
 
-    constructor(namespace: Namespace = new Namespace()) {
-        this._namespace = namespace;
+    constructor(namespaceOrDocument?: Namespace | XMLDocument) {
+        if (namespaceOrDocument instanceof Namespace) {
+            this._namespace = namespaceOrDocument;
+        } else {
+            this._namespace = new Namespace();
+            if (namespaceOrDocument instanceof XMLDocument) {
+                this._namespace.reset(namespaceOrDocument);
+            }
+        }
     }
 
     get namespace(): Namespace {
@@ -129,10 +136,13 @@ export class Namespace {
     private _prefixMap: object;
     private _nsResolver: XPathNSResolver;
 
-    constructor() {
+    constructor(document?: XMLDocument) {
         const self = this;
         this._uriMap = {};
         this._prefixMap = {};
+        if (document instanceof XMLDocument) {
+            this.reset(document);
+        }
     }
 
     lookupNamespace(prefix: string): string {
@@ -152,7 +162,7 @@ export class Namespace {
         return this._nsResolver;
     }
 
-    reset(document: XMLDocument): void {
+    reset(document?: XMLDocument): Namespace {
         this._uriMap = {};
         this._prefixMap = {};
         if (document instanceof XMLDocument) {
@@ -173,6 +183,7 @@ export class Namespace {
                 }
             }
         }
+        return this;
     }
 
     prefixes(): object {
@@ -183,7 +194,7 @@ export class Namespace {
         return Object.assign({}, this._uriMap);
     }
 
-    addNamespace(prefix: string, uri: string): void {
+    addNamespace(prefix: string, uri: string): Namespace {
         let prefixList: string[];
         if (uri in this._uriMap) {
             prefixList = this._uriMap[uri];
@@ -196,9 +207,10 @@ export class Namespace {
         if (!(prefix in this._prefixMap)) {
             this._prefixMap[prefix] = uri;
         }
+        return this;
     }
 
-    removePrefix(prefix: string): void {
+    removePrefix(prefix: string): Namespace {
         let uri: string = this._prefixMap[prefix];
         let prefixList: string[] = this._uriMap[uri];
         delete this._prefixMap[prefix];
@@ -206,13 +218,15 @@ export class Namespace {
         if (prefixIndex >= 0) {
             delete prefixList[prefixIndex];
         }
+        return this;
     }
 
-    removeURI(uri: string): void {
+    removeURI(uri: string): Namespace {
         let prefixList: string[] = this._uriMap[uri];
         for (let prefix of prefixList) {
             delete this._prefixMap[prefix];
         }
         delete this._uriMap[uri];
+        return this;
     }
 }
