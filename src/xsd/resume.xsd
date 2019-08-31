@@ -353,18 +353,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xs:complexType name="type-experience">
 		<xs:choice>
 			<xs:sequence>
-				<xs:element ref="spanning" maxOccurs="unbounded"/>
-				<xs:element ref="since" minOccurs="0"/>
+				<xs:element name="spanning" type="type-experience-spanning" maxOccurs="unbounded"/>
+				<xs:element name="since" type="type-experience-since" minOccurs="0"/>
 			</xs:sequence>
-			<xs:element ref="spanning"/>
-			<xs:element ref="since"/>
+			<xs:element name="spanning" type="type-experience-spanning"/>
+			<xs:element name="since" type="type-experience-since"/>
 		</xs:choice>
 		<xs:attribute name="precision" use="optional" type="type-experience-precision"/>
 	</xs:complexType>
-
-	<xs:element name="spanning" type="type-experience-spanning"/>
-	<xs:element name="since" type="type-date"/>
-	<xs:element name="until" type="type-date"/>
 
 	<xs:simpleType name="type-experience-precision">
 		<xs:restriction base="xs:string">
@@ -375,8 +371,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</xs:simpleType>
 
 	<xs:complexType name="type-experience-spanning">
-		<xs:attribute name="from" type="type-date" use="required"/>
-		<xs:attribute name="to" type="type-date" use="required"/>
+		<xs:attribute name="from-date" type="type-date" use="required"/>
+		<xs:attribute name="to-date" type="type-date" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="type-experience-since">
+		<xs:attribute name="date" type="type-date" use="required"/>
 	</xs:complexType>
 
 	<xs:element name="duration" type="type-duration"/>

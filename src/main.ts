@@ -67,22 +67,16 @@ function loadResume(): ResumeLoader {
             textVisible: true
         });
     });
+    resumeLoader.onLoadEnd(response => {
+        $.mobile.loading('hide');
+    });
     resumeLoader
     .load()
-    .then(response => {
+    .onLoadComplete(response => {
         $.mobile.loading('hide');
-        const resumeSkillsTable: ResumeSkillsTable = initSkillsTable(resumeLoader);
+        initSkillsTable(resumeLoader);
         initTooltips(resumeLoader);
-        initResumeComponent(resumeLoader)
-        .onRenderStart(response => {
-            $.mobile.loading('show', {
-                text: 'Transforming résumé XML...',
-                textVisible: true
-            });
-        })
-        .onRenderComplete(() => {
-            $.mobile.loading('hide');
-        });
+        initResumeComponent(resumeLoader);
     });
     return resumeLoader;
 }
@@ -108,6 +102,16 @@ function initResumeComponent(resumeLoader: ResumeLoader): ResumeComponent {
         'system-date': Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")
     };
     const resumeComponent: ResumeComponent = new ResumeComponent(resumeLoader, $('.resume-xslt'), transformParameters);
+    resumeComponent
+    .onRenderStart(response => {
+        $.mobile.loading('show', {
+            text: 'Transforming résumé XML...',
+            textVisible: true
+        });
+    })
+    .onRenderComplete(() => {
+        $.mobile.loading('hide');
+    });
     return resumeComponent;
 }
 

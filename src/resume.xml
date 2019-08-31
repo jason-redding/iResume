@@ -16,12 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resume xmlns="http://jman.socialis.dev/xsd/resume"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:h="http://www.w3.org/1999/xhtml"
-	xmlns:r="http://jman.socialis.dev/xsd/resume"
-	xsi:schemaLocation="http://jman.socialis.dev/xsd/resume"
-	last-modified="2019-08-29T11:13:13">
+<resume xmlns="http://jman.socialis.dev/xsd/resume" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:r="http://jman.socialis.dev/xsd/resume" xsi:schemaLocation="http://jman.socialis.dev/xsd/resume" last-modified="2019-08-29T11:13:13">
 	<meta>
 		<skill>
 			<levels preposition="at" screen-min="1" print-min="2">
@@ -110,7 +105,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Active Directory</name>
 			<level value="3"/>
 			<experience precision="years">
-				<spanning from="2010-01" to="2017-12"/>
+				<spanning from-date="2010-01" to-date="2017-12"/>
 			</experience>
 			<categories>
 				<category value="back-end"/>
@@ -120,7 +115,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>AJAX</name>
 			<level value="4.5"/>
 			<experience precision="years">
-				<since>2008-01</since>
+				<since date="2008-01"/>
 			</experience>
 			<categories>
 				<category value="front-end"/>
@@ -131,7 +126,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<version hint="not 2+">1.x</version>
 			<level value="3"/>
 			<experience>
-				<since>2016-01</since>
+				<since date="2016-01"/>
 			</experience>
 			<categories>
 				<category value="relevant"/>
@@ -143,7 +138,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<version>1.x</version>
 			<level value="3"/>
 			<experience>
-				<spanning from="2018-01" to="2019-05"/>
+				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
 			<categories>
 				<category value="relevant"/>
@@ -154,7 +149,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Apache Commons</name>
 			<level value="3"/>
 			<experience precision="years">
-				<since>2005-01</since>
+				<since date="2005-01"/>
 			</experience>
 			<categories>
 				<category value="api"/>
@@ -165,7 +160,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Apache Derby</name>
 			<level value="3"/>
 			<experience precision="years">
-				<spanning from="2013-01" to="2015-01"/>
+				<spanning from-date="2013-01" to-date="2015-01"/>
 			</experience>
 			<categories>
 				<category value="db"/>
@@ -176,7 +171,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Apache HTTP Server</name>
 			<level value="3"/>
 			<experience precision="years">
-				<since>2003-01</since>
+				<since date="2003-01"/>
 			</experience>
 			<categories>
 				<category value="app-server"/>
@@ -188,7 +183,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Apache Maven</name>
 			<level value="3"/>
 			<experience precision="years">
-				<since>2014-01</since>
+				<since date="2014-01"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -199,7 +194,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Apache Storm</name>
 			<level value="2"/>
 			<experience>
-				<spanning from="2018-01" to="2019-05"/>
+				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
 			<categories>
 				<category value="back-end"/>
@@ -209,7 +204,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Apache Tomcat</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2003-01</since>
+				<since date="2003-01"/>
 			</experience>
 			<categories>
 				<category value="app-server"/>
@@ -221,7 +216,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Bash</name>
 			<level value="3.5"/>
 			<experience precision="years">
-				<since>2001-01</since>
+				<since date="2001-01"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -232,7 +227,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Bootstrap</name>
 			<level value="0.5"/>
 			<experience>
-				<spanning from="2018-01" to="2019-05"/>
+				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -243,7 +238,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>C#</name>
 			<level value="2.25"/>
 			<experience>
-				<spanning from="2010-01" to="2011-01"/>
+				<spanning from-date="2010-01" to-date="2011-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -255,7 +250,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>CentOS</name>
 			<level value="3"/>
 			<experience>
-				<spanning from="2014-01" to="2017-01"/>
+				<spanning from-date="2014-01" to-date="2017-01"/>
 			</experience>
 			<categories>
 				<category value="os"/>
@@ -266,7 +261,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Chrome Developer Tools</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2008-01</since>
+				<since date="2008-01"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -277,7 +272,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Command-line Interface</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>1999-01</since>
+				<since date="1999-01"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -288,7 +283,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>CSS</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2002-01</since>
+				<since date="2002-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -300,7 +295,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>CSS3</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2004-01</since>
+				<since date="2004-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -312,7 +307,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Cygwin</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2005-01</since>
+				<since date="2005-01"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -323,7 +318,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Facebook SDK (XFBML)</name>
 			<level value="3"/>
 			<experience>
-				<spanning from="2014-01" to="2015-01"/>
+				<spanning from-date="2014-01" to-date="2015-01"/>
 			</experience>
 			<categories>
 				<category value="api"/>
@@ -334,7 +329,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Firebug (for Firefox)</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2005-01</since>
+				<since date="2005-01"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -345,7 +340,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Git</name>
 			<level value="3"/>
 			<experience precision="years">
-				<since>2014-01</since>
+				<since date="2014-01"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -357,7 +352,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<version>V3</version>
 			<level value="3.5"/>
 			<experience>
-				<spanning from="2013-01" to="2015-06"/>
+				<spanning from-date="2013-01" to-date="2015-06"/>
 			</experience>
 			<categories>
 				<category value="api"/>
@@ -368,7 +363,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Gulp</name>
 			<level value="3"/>
 			<experience>
-				<since>2017-08</since>
+				<since date="2017-08"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -379,7 +374,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<version>5</version>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2011-01</since>
+				<since date="2011-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -391,7 +386,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>IntelliJ IDEA</name>
 			<level value="3.75"/>
 			<experience>
-				<since>2018-01</since>
+				<since date="2018-01"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -401,7 +396,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Java</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2002-01</since>
+				<since date="2002-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -413,7 +408,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>JavaScript</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2000-01</since>
+				<since date="2000-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -425,7 +420,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>JBoss</name>
 			<level value="2"/>
 			<experience>
-				<spanning from="2018-01" to="2019-05"/>
+				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
 			<categories>
 				<category value="relevant"/>
@@ -436,7 +431,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>JDBC</name>
 			<level value="3"/>
 			<experience precision="years">
-				<since>2007-01</since>
+				<since date="2007-01"/>
 			</experience>
 			<categories>
 				<category value="api"/>
@@ -447,7 +442,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>JNDI</name>
 			<level value="3"/>
 			<experience precision="years">
-				<since>2007-01</since>
+				<since date="2007-01"/>
 			</experience>
 			<categories>
 				<category value="api"/>
@@ -458,7 +453,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>jQuery</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2008-01</since>
+				<since date="2008-01"/>
 			</experience>
 			<categories>
 				<category value="api"/>
@@ -470,7 +465,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>jQuery Mobile</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2011-01</since>
+				<since date="2011-01"/>
 			</experience>
 			<categories>
 				<category value="api"/>
@@ -482,7 +477,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>jQuery UI</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2008-01</since>
+				<since date="2008-01"/>
 			</experience>
 			<categories>
 				<category value="api"/>
@@ -494,7 +489,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>JSON</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2008-01</since>
+				<since date="2008-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -505,7 +500,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>JSP</name>
 			<level value="3"/>
 			<experience precision="years">
-				<since>2010-01</since>
+				<since date="2010-01"/>
 			</experience>
 			<categories>
 				<category value="relevant"/>
@@ -516,7 +511,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>JSTL</name>
 			<level value="3"/>
 			<experience precision="years">
-				<spanning from="2014-01" to="2016-06"/>
+				<spanning from-date="2014-01" to-date="2016-06"/>
 			</experience>
 			<categories>
 				<category value="front-end"/>
@@ -526,7 +521,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Linux</name>
 			<level value="3"/>
 			<experience precision="years">
-				<since>2001-01</since>
+				<since date="2001-01"/>
 			</experience>
 			<categories>
 				<category value="os"/>
@@ -537,8 +532,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>macOS</name>
 			<level value="3"/>
 			<experience>
-				<spanning from="1993-01" to="1996-01"/>
-				<since>2016-01</since>
+				<spanning from-date="1993-01" to-date="1996-01"/>
+				<since date="2016-01"/>
 			</experience>
 			<categories>
 				<category value="os"/>
@@ -548,7 +543,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Microsoft SQL Server</name>
 			<level value="3"/>
 			<experience precision="years">
-				<spanning from="2013-01" to="2018-01"/>
+				<spanning from-date="2013-01" to-date="2018-01"/>
 			</experience>
 			<categories>
 				<category value="db"/>
@@ -559,7 +554,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Microsoft Windows</name>
 			<level value="4"/>
 			<experience precision="years">
-				<spanning from="1999-01" to="2016-07"/>
+				<spanning from-date="1999-01" to-date="2016-07"/>
 			</experience>
 			<categories>
 				<category value="os"/>
@@ -569,7 +564,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>MySQL</name>
 			<level value="3"/>
 			<experience precision="years">
-				<since>2013-01</since>
+				<since date="2013-01"/>
 			</experience>
 			<categories>
 				<category value="db"/>
@@ -580,7 +575,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>NetBeans IDE</name>
 			<level value="4"/>
 			<experience precision="years">
-				<spanning from="2001-01" to="2019-04"/>
+				<spanning from-date="2001-01" to-date="2019-04"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -590,7 +585,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>NSIS</name>
 			<level value="3.75"/>
 			<experience precision="years">
-				<spanning from="2004-01-01" to="2012-01-01"/>
+				<spanning from-date="2004-01-01" to-date="2012-01-01"/>
 			</experience>
 			<categories>
 				<category value="api"/>
@@ -602,7 +597,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Oracle DBMS</name>
 			<level value="3.5"/>
 			<experience precision="years">
-				<spanning from="2003-01" to="2017-12"/>
+				<spanning from-date="2003-01" to-date="2017-12"/>
 			</experience>
 			<categories>
 				<category value="db"/>
@@ -613,7 +608,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Perl</name>
 			<level value="3"/>
 			<experience precision="years">
-				<spanning from="2005-01" to="2007-01"/>
+				<spanning from-date="2005-01" to-date="2007-01"/>
 			</experience>
 			<categories>
 				<category value="back-end"/>
@@ -624,7 +619,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>PHP</name>
 			<level value="2"/>
 			<experience precision="years">
-				<spanning from="2016-06" to="2016-07"/>
+				<spanning from-date="2016-06" to-date="2016-07"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -636,7 +631,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Oracle PL/SQL</name>
 			<level value="4"/>
 			<experience precision="years">
-				<spanning from="2003-01" to="2017-12"/>
+				<spanning from-date="2003-01" to-date="2017-12"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -647,7 +642,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Pro*C</name>
 			<level value="0.5"/>
 			<experience>
-				<spanning from="2017-07" to="2017-08"/>
+				<spanning from-date="2017-07" to-date="2017-08"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -657,7 +652,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Python</name>
 			<level value="2.75"/>
 			<experience>
-				<spanning from="2018-01" to="2019-05"/>
+				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -669,7 +664,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>React</name>
 			<level value="1"/>
 			<experience>
-				<since>2019-08-27</since>
+				<since date="2019-08-27"/>
 			</experience>
 			<categories>
 				<category value="relevant"/>
@@ -680,7 +675,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Regular Expressions</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2001-01</since>
+				<since date="2001-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -690,7 +685,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Responsive Design</name>
 			<level value="3.75"/>
 			<experience precision="years">
-				<since>2012-01</since>
+				<since date="2012-01"/>
 			</experience>
 			<categories>
 				<category value="relevant"/>
@@ -701,7 +696,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>REST</name>
 			<level value="3.5"/>
 			<experience precision="years">
-				<since>2010-01</since>
+				<since date="2010-01"/>
 			</experience>
 			<categories>
 				<category value="relevant"/>
@@ -712,7 +707,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>SaltStack</name>
 			<level value="1.5"/>
 			<experience>
-				<spanning from="2018-01" to="2019-05"/>
+				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
 			<categories>
 				<category value="back-end"/>
@@ -722,7 +717,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>SCSS</name>
 			<level value="4.5"/>
 			<experience precision="years">
-				<since>2014-01</since>
+				<since date="2014-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -734,7 +729,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>SQL</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2004-01</since>
+				<since date="2004-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -745,7 +740,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>SQL Developer</name>
 			<level value="3"/>
 			<experience precision="years">
-				<spanning from="2013-01" to="2017-12"/>
+				<spanning from-date="2013-01" to-date="2017-12"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -755,7 +750,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>SQLite</name>
 			<level value="3"/>
 			<experience precision="years">
-				<spanning from="2011-01" to="2014-01"/>
+				<spanning from-date="2011-01" to-date="2014-01"/>
 			</experience>
 			<categories>
 				<category value="db"/>
@@ -766,7 +761,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>SSH</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2001-01</since>
+				<since date="2001-01"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -777,7 +772,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Toad for Oracle</name>
 			<level value="3"/>
 			<experience>
-				<spanning from="2011-01" to="2017-12"/>
+				<spanning from-date="2011-01" to-date="2017-12"/>
 			</experience>
 			<categories>
 				<category value="dev-tool"/>
@@ -788,7 +783,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<version>3.5.3</version>
 			<level value="3.5"/>
 			<experience>
-				<since>2019-08</since>
+				<since date="2019-08"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -800,7 +795,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>VBA</name>
 			<level value="4"/>
 			<experience precision="years">
-				<spanning from="2001-01" to="2006-01"/>
+				<spanning from-date="2001-01" to-date="2006-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -810,7 +805,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Visual Basic</name>
 			<level value="4"/>
 			<experience precision="years">
-				<spanning from="2000-01" to="2010-01"/>
+				<spanning from-date="2000-01" to-date="2010-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -820,7 +815,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>Visual Basic .Net</name>
 			<level value="3"/>
 			<experience precision="years">
-				<spanning from="2010-01" to="2012-01"/>
+				<spanning from-date="2010-01" to-date="2012-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -830,7 +825,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>WordPress</name>
 			<level value="2"/>
 			<experience>
-				<spanning from="2015-01" to="2016-07"/>
+				<spanning from-date="2015-01" to-date="2016-07"/>
 			</experience>
 			<categories>
 				<category value="back-end"/>
@@ -841,7 +836,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>XHTML</name>
 			<level value="4.25"/>
 			<experience precision="years">
-				<since>2004-01</since>
+				<since date="2004-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -852,7 +847,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>XML</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2004-01</since>
+				<since date="2004-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -862,7 +857,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>XPath</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2004-01</since>
+				<since date="2004-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -872,7 +867,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>XSD</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2014-01</since>
+				<since date="2014-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -882,7 +877,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>XSLT</name>
 			<level value="4"/>
 			<experience precision="years">
-				<since>2004-01</since>
+				<since date="2004-01"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>

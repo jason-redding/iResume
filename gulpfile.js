@@ -32,6 +32,23 @@ function showContext(cb) {
     cb();
 }
 
+function watchFiles(cb) {
+    const watchResponse = gulp.series(clean, build, browserReload);
+    const files = [
+        CONTEXT.SRC + '/**/*.html',
+        CONTEXT.SRC + '/**/*.ts',
+        CONTEXT.SRC + '/index.js',
+        CONTEXT.SRC + '/js/**/*.js',
+        CONTEXT.SRC + '/**/*.scss',
+        CONTEXT.SRC + '/**/*.xml',
+        CONTEXT.SRC + '/**/*.xsl',
+        CONTEXT.SRC + '/**/*.xsd',
+        'tsconfig.json'
+    ];
+    gulp.watch(files, watchResponse);
+    cb();
+}
+
 function browserInit(cb) {
     browserSync.init({
         open: false,
@@ -54,6 +71,14 @@ function deployLive(cb) {
         base: CONTEXT.DEST
     })
     .pipe(gulp.dest(CONTEXT.DEPLOY_PATH, {}));
+}
+
+function preBuild(cb) {
+    cb();
+}
+
+function postBuild(cb) {
+    cb();
 }
 
 function concat() {
@@ -104,31 +129,13 @@ function copyStatic() {
 }
 
 function build(cb) {
-    return new Promise(gulp.series(copyStatic, compile, concat)).then(cb);
+    return new Promise(gulp.series(preBuild, copyStatic, compile, concat, postBuild)).then(cb);
 }
 
 function clean() {
     return del([
         CONTEXT.DEST + '/**/*'
     ]);
-}
-
-function watchFiles(cb) {
-    const watchResponse = gulp.series(clean, build, browserReload);
-    const files = [
-        CONTEXT.SRC + '/**/*.html',
-        CONTEXT.SRC + '/**/*.ts',
-        CONTEXT.SRC + '/index.js',
-        CONTEXT.SRC + '/js/**/*.js',
-        CONTEXT.SRC + '/**/*.scss',
-        CONTEXT.SRC + '/**/*.xml',
-        CONTEXT.SRC + '/**/*.xsl',
-        CONTEXT.SRC + '/**/*.xsd',
-        CONTEXT.SRC + '/tsconfig.json',
-        CONTEXT.SRC + '/gulpfile.js'
-    ];
-    gulp.watch(files, watchResponse);
-    cb();
 }
 
 function setProduction(cb) {
@@ -149,7 +156,6 @@ function padLeft(input, char, size) {
     }
     return input;
 }
-
 
 exports.cleanBuild = gulp.series(showContext, clean, build);
 exports.cleanBuild.displayName = 'clean-build';

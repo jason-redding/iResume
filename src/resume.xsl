@@ -467,7 +467,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:for-each select="$skills-in-category">
 					<xsl:sort select="r:name" order="ascending"/>
 					<xsl:sort select="r:level/@value" data-type="number" order="descending"/>
-					<xsl:sort select="concat(r:experience/r:spanning[1]/@from, '_', r:experience/r:spanning[last()]/@to, '_', r:experience/r:since)" data-type="text" order="ascending"/>
+					<xsl:sort select="concat(r:experience/r:spanning[1]/@from-date, '_', r:experience/r:spanning[last()]/@to-date, '_', r:experience/r:since)" data-type="text" order="ascending"/>
 					<xsl:variable name="hide-on-print" select="r:level/@value &lt; $final-skill-level-print-min"/>
 					<xsl:call-template name="list-skill">
 						<xsl:with-param name="show-details" select="$show-details"/>
@@ -532,7 +532,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xsl:for-each select="r:skill[not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = '1')]">
 				<xsl:sort select="r:name" order="ascending"/>
 				<xsl:sort select="r:level/@value" data-type="number" order="descending"/>
-				<xsl:sort select="concat(r:experience/r:spanning[1]/@from, '_', r:experience/r:spanning[last()]/@to, '_', r:experience/r:since)" data-type="text" order="ascending"/>
+				<xsl:sort select="concat(r:experience/r:spanning[1]/@from-date, '_', r:experience/r:spanning[last()]/@to-date, '_', r:experience/r:since)" data-type="text" order="ascending"/>
 				<xsl:variable name="skill-hidden-value" select="translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
 				<li class="skill-item">
 					<xsl:call-template name="list-skill">
@@ -995,7 +995,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xsl:call-template name="date-format">
 						<xsl:with-param name="format" select="'yyyy-MM-dd'"/>
 						<xsl:with-param name="date">
-							<xsl:value-of select="normalize-space($node/@from)"/>
+							<xsl:value-of select="normalize-space($node/@from-date)"/>
 						</xsl:with-param>
 					</xsl:call-template>
 				</xsl:when>
@@ -1003,7 +1003,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xsl:call-template name="date-format">
 						<xsl:with-param name="format" select="'yyyy-MM-dd'"/>
 						<xsl:with-param name="date">
-							<xsl:value-of select="normalize-space($node)"/>
+							<xsl:value-of select="normalize-space($node/@date)"/>
 						</xsl:with-param>
 					</xsl:call-template>
 				</xsl:when>
@@ -1016,7 +1016,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xsl:call-template name="date-format">
 						<xsl:with-param name="format" select="'yyyy-MM-dd'"/>
 						<xsl:with-param name="date">
-							<xsl:value-of select="normalize-space($node/@to)"/>
+							<xsl:value-of select="normalize-space($node/@to-date)"/>
 						</xsl:with-param>
 					</xsl:call-template>
 				</xsl:when>
@@ -1229,9 +1229,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xsl:variable name="experience-span-count" select="count($skill/r:experience/r:spanning)"/>
 		<xsl:variable name="earliest-span">
 			<xsl:for-each select="$skill/r:experience/r:spanning">
-				<xsl:sort data-type="text" select="@from" order="ascending"/>
+				<xsl:sort data-type="text" select="@from-date" order="ascending"/>
 				<xsl:if test="position() = 1">
-					<xsl:value-of select="@from"/>
+					<xsl:value-of select="@from-date"/>
 				</xsl:if>
 			</xsl:for-each>
 		</xsl:variable>
@@ -1270,9 +1270,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:for-each select="$skill/r:experience/r:spanning">
-						<xsl:sort data-type="text" select="@to" order="descending"/>
+						<xsl:sort data-type="text" select="@to-date" order="descending"/>
 						<xsl:if test="position() = 1">
-							<xsl:value-of select="@to"/>
+							<xsl:value-of select="@to-date"/>
 						</xsl:if>
 					</xsl:for-each>
 				</xsl:otherwise>

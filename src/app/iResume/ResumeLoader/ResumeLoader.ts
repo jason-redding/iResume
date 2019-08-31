@@ -3,6 +3,7 @@ import XPath, {XPathResultValue} from "../../XPath/XPath";
 
 export interface ResumeResponse {
     id: string;
+    type: string;
     xhr: JQuery.jqXHR<any> | XMLHttpRequest;
     document: XMLDocument;
     text: string;
@@ -23,11 +24,11 @@ export interface jqXHRBundle {
 }
 
 export default class ResumeLoader {
-    private _job: JQueryDeferred<any>;
     private _onLoadStart: JQuery.Callbacks;
     private _onLoadComplete: JQuery.Callbacks;
+    private _onLoadFail: JQuery.Callbacks;
+    private _onLoadEnd: JQuery.Callbacks;
     private _file: string;
-    private _jobs: jqXHRBundle;
     private _xpath: XPath;
     private _response: ResumeResponseBundle;
 
@@ -37,45 +38,37 @@ export default class ResumeLoader {
         this.file = file;
         this._onLoadStart = $.Callbacks('memory unique');
         this._onLoadComplete = $.Callbacks('memory unique');
-        this._job = $.Deferred();
-        this._jobs = {};
+        this._onLoadFail = $.Callbacks('memory unique');
+        this._onLoadEnd = $.Callbacks('memory unique');
         this._xpath = new XPath();
     }
 
     private static _constructPathFor(file_path: string, type: ResumeFileType) {
-        let pm = this.PATTERN_PATH.exec(file_path);
-        if (pm && pm.length > 0) {
-            return `${pm[1]}${pm[2]}.${type}`;
+        let matcher: RegExpExecArray = this.PATTERN_PATH.exec(file_path);
+        if (matcher && matcher.length > 0) {
+            return `${matcher[1]}${matcher[2]}.${type}`;
         }
         return '';
     }
 
-    private static _responsesToBundle(responses: ResumeResponse[]): ResumeResponseBundle {
+    private static _xhrToBundle(xhrs: jqXHRBundle): ResumeResponseBundle {
         const responseBundle: ResumeResponseBundle = {};
-        for (let response of responses) {
-            let match: RegExpMatchArray = /\.([^.]+)$/.exec(response.id);
-            if (match && match.length > 0) {
-                responseBundle[match[1]] = response;
-            }
-        }
-        return responseBundle;
-    }
-
-    private static _xhrToResponse(xhrs: jqXHRBundle): ResumeResponse[] {
-        const responses: ResumeResponse[] = [];
-        if (xhrs) {
-            if (Object.isPlainObject(xhrs)) {
-                for (let responseId in xhrs) {
-                    responses.push({
+        if (typeof xhrs === 'object') {
+            for (let responseId in xhrs) {
+                let matcher: RegExpMatchArray = /\.([^.]+)$/.exec(responseId);
+                if (matcher && matcher.length > 0) {
+                    let xhr: JQuery.jqXHR = xhrs[responseId];
+                    responseBundle[matcher[1]] = {
                         id: responseId,
-                        xhr: xhrs[responseId],
-                        document: xhrs[responseId].responseXML,
-                        text: xhrs[responseId].responseText || ''
-                    });
+                        type: matcher[1],
+                        xhr: xhr,
+                        document: xhr.responseXML,
+                        text: xhr.responseText || ''
+                    };
                 }
             }
         }
-        return responses;
+        return responseBundle;
     }
 
     get file(): string {
@@ -91,26 +84,27 @@ export default class ResumeLoader {
         let xslPath = this.getTransformPath();
         let jobs: string[] = [xmlPath, xslPath];
         let xhrList: JQuery.jqXHR[] = [];
+        let _jobs: jqXHRBundle = {};
         for (let job of jobs) {
-            this._jobs[job] = $.get({
+            _jobs[job] = $.get({
                 cache: false,
                 url: job
             });
-            xhrList.push(this._jobs[job]);
+            xhrList.push(_jobs[job]);
         }
-        this._onLoadStart.fireWith(this, [this._jobs]);
+        this._onLoadStart.fireWith(this, [_jobs]);
         $.when.apply($.when, xhrList)
         .fail((xhr, type, ex) => {
             this._response = null;
             this._xpath.namespace.reset();
-            this._onLoadComplete.fireWith(this, [null]);
-            this._job.reject(jobs);
+            this._onLoadFail.fireWith(this, [null]);
+            this._onLoadEnd.fireWith(this, [null]);
         })
         .done(() => {
-            this._response = ResumeLoader._responsesToBundle(ResumeLoader._xhrToResponse(this._jobs));
+            this._response = ResumeLoader._xhrToBundle(_jobs);
             this._xpath.initNamespaceFrom(this._response.xml.document);
             this._onLoadComplete.fireWith(this, [this._response]);
-            this._job.resolve(this._response);
+            this._onLoadEnd.fireWith(this, [this._response]);
         });
         return this;
     }
@@ -132,8 +126,18 @@ export default class ResumeLoader {
         return this;
     }
 
-    onLoadComplete(callback: (response?: ResumeResponseBundle) => any | void): ResumeLoader {
+    onLoadComplete(callback: (response: ResumeResponseBundle) => any | void): ResumeLoader {
         this._onLoadComplete.add(callback);
+        return this;
+    }
+
+    onLoadFail(callback: (response: null) => any | void): ResumeLoader {
+        this._onLoadFail.add(callback);
+        return this;
+    }
+
+    onLoadEnd(callback: (response: ResumeResponseBundle | null) => any | void): ResumeLoader {
+        this._onLoadEnd.add(callback);
         return this;
     }
 
@@ -189,13 +193,13 @@ export default class ResumeLoader {
                     let since: Date = null;
                     let until: Date = null;
                     if (experienceType === 'spanning') {
-                        since = Date.from(this._xpath.evaluate(experienceChild, '@from', 'string'));
-                        until = Date.from(this._xpath.evaluate(experienceChild, '@to', 'string'));
+                        since = Date.from($experienceChild.attr('from-date'));
+                        until = Date.from($experienceChild.attr('to-date'));
                         if (lastExperience === null || lastExperience.getTime() < until.getTime()) {
                             lastExperience = until;
                         }
                     } else if (experienceType === 'since') {
-                        since = Date.from(this._xpath.evaluate(experienceChild, 'text()', 'string'));
+                        since = Date.from($experienceChild.attr('date'));
                         until = new Date();
                         foundSince = true;
                     } else {
@@ -233,10 +237,10 @@ export default class ResumeLoader {
                     let levelValue: number = parseFloat($skillProperty.attr('value'));
                     let $metaSkillLevel: JQuery<Node> = $();
                     if (levelValue === 0) {
-                        $metaSkillLevel = this._xpath.evaluate($xmlSkillLevels, 'self::*[@value = "-1"]', 'nodeset');
+                        $metaSkillLevel = $xmlSkillLevels.filter('[value="-1"]');
                     }
                     if ($metaSkillLevel.length === 0) {
-                        $metaSkillLevel = this._xpath.evaluate($xmlSkillLevels, 'self::*[@value = "' + Math.floor(levelValue) + '"]', 'nodeset');
+                        $metaSkillLevel = $xmlSkillLevels.filter('[value="' + Math.floor(levelValue) + '"]');
                     }
                     $metaSkillLevel.each((levelIndex, levelNode) => {
                         $.each((<Element>levelNode).attributes, function (attrIndex, attr) {
@@ -290,10 +294,10 @@ export default class ResumeLoader {
             } else if (propName === 'level') {
                 let $metaSkillLevel: JQuery<Node> = $();
                 if (originalValue === 0) {
-                    $metaSkillLevel = this._xpath.evaluate($xmlSkillLevels, 'self::*[@value = "-1"]', 'nodeset');
+                    $metaSkillLevel = $xmlSkillLevels.filter('[value="-1"]');
                 }
                 if ($metaSkillLevel.length === 0) {
-                    $metaSkillLevel = this._xpath.evaluate($xmlSkillLevels, 'self::*[@value = "' + Math.floor(originalValue) + '"]', 'nodeset');
+                    $metaSkillLevel = $xmlSkillLevels.filter('[value="' + Math.floor(originalValue) + '"]');
                 }
                 adjustedValue = $.trim((<JQuery>$metaSkillLevel).text());
                 $.extend(true, propValue, {
@@ -319,17 +323,26 @@ export default class ResumeLoader {
     }
 
     then<TResult1 = ResumeResponseBundle, TResult2 = never>(onfulfilled?: ((response: ResumeResponseBundle) => (PromiseLike<TResult1> | TResult1)) | undefined | null, onrejected?: ((reason: any) => (PromiseLike<TResult2> | TResult2)) | undefined | null): ResumeLoader {
-        this._job.then(onfulfilled, onrejected);
+        if (typeof onfulfilled !== 'undefined') {
+            this._onLoadComplete.add(onfulfilled);
+        }
+        if (typeof onrejected !== 'undefined') {
+            this._onLoadFail.add(onrejected);
+        }
         return this;
     }
 
     catch<TResult = never>(onrejected?: ((reason: any) => (PromiseLike<TResult> | TResult)) | undefined | null): ResumeLoader {
-        this._job.fail(onrejected);
+        if (typeof onrejected !== 'undefined') {
+            this._onLoadFail.add(onrejected);
+        }
         return this;
     }
 
     finally(onfinally?: () => void): ResumeLoader {
-        this._job.always(onfinally);
+        if (typeof onfinally !== 'undefined') {
+            this._onLoadEnd.add(onfinally);
+        }
         return this;
     }
 }

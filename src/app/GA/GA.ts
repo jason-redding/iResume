@@ -23,11 +23,6 @@ export default class GA {
                 'value': value
             });
         }
-        // return $.ajax({
-        //     method: 'POST',
-        //     data: $.param(parameters).replace(/\+/g, '%20'),
-        //     url: 'https://www.google-analytics.com/collect'
-        // });
         (<any>window).gtag('event', action, eventProperties);
     }
 }

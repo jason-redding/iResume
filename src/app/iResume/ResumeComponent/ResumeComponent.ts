@@ -31,8 +31,6 @@ export default class ResumeComponent {
     private _transformedDocument: Document = null;
     private _transformProperties: ResumeTransformParameters = null;
     private _xpath: XPath;
-    private _runBefore: Array<(response?: ResumeResponseBundle) => any | void> = [];
-    private _runAfter: Array<() => any | void> = [];
 
     constructor(loader: ResumeLoader, viewport: JQuery, transformParameters?: ResumeTransformParameters) {
         this.viewport = viewport;
@@ -43,9 +41,11 @@ export default class ResumeComponent {
         const systemDate = Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
         this._transformProperties = $.extend(false, {
             'author-name': '0',
+            'employer-sort': 'descending',
             'position-sort': 'descending',
-            'show-projects': '0',
+            'show-projects': '1',
             'skills-layout': 'categories',
+            'projects-layout': 'list',
             'system-date': systemDate
         }, {}, transformParameters);
         this._loader = loader;
@@ -162,24 +162,28 @@ export default class ResumeComponent {
         } catch (ex) {
             console.error(ex);
         }
+
+        this.viewport
+        .closest('.tab-panel')
+        .addClass('transform-applied')
+        .addClass('final-rendering');
+        this.viewport.html(<any>$('body > .page-wrapper > *', this._transformedDocument));
         this.viewportProperties = {
             latestModifiedDate: latestModifiedDate
         };
         this._applyToViewport();
+        if (('enhanceWithin' in $.fn) && typeof $.fn.enhanceWithin === 'function') {
+            this.viewport.enhanceWithin();
+        }
         this._callbacksAfter.fireWith(this._transformedDocument, [this._transformedDocument, response.xml.document, response.xsl.document]);
     }
 
     private _applyToViewport(properties: Partial<ResumeViewportProperties> = this.viewportProperties) {
         if ($.isXMLDoc(this._transformedDocument)) {
             const latestModifiedDate: Date = properties.latestModifiedDate;
+            const now = new Date();
             this.viewport.each((viewportIndex, viewportElement) => {
                 const $viewportElement: JQuery = $(viewportElement);
-                $viewportElement
-                .closest('.tab-panel')
-                .addClass('transform-applied')
-                .addClass('final-rendering');
-                const $pageContent: any = $('body > .page-wrapper > *', this._transformedDocument);
-                $viewportElement.html($pageContent);
                 if (latestModifiedDate instanceof Date) {
                     $viewportElement.find('.author-contact-info-value.author-last-updated').each((lastUpdatedIndex, lastUpdatedElement) => {
                         const $lastUpdated = $(lastUpdatedElement);
@@ -191,7 +195,7 @@ export default class ResumeComponent {
                 $viewportElement.find('.skill').each((skillIndex, skillElement) => {
                     const $skill: JQuery = $(skillElement);
                     const skillName: string = $skill.attr('data-name');
-                    const $experienceNodes: JQuery<Node> = this._xpath.evaluate(this._responseBundle.xml.document, '/r:resume/r:skills/r:skill[r:name = "' + skillName.replace('"', '') + '"]/r:experience/*', 'nodeset');
+                    const $experienceNodes: JQuery<Node> = this._xpath.evaluate(this._responseBundle.xml.document, '/r:resume/r:skills/r:skill[translate(normalize-space(r:name), "ABCDEFGHIJKLMNOPQRSTUVWXYZ ", "abcdefghijklmnopqrstuvwxyz-") = "' + skillName.toLowerCase().replace('"', '') + '"]/r:experience/*', 'nodeset');
                     let totalSkillExperience: number = 0;
                     $experienceNodes.each((experienceNodeIndex, experienceNode) => {
                         const $experienceNode: JQuery<Node> = $(experienceNode);
@@ -199,11 +203,11 @@ export default class ResumeComponent {
                         let since: Date = null;
                         let until: Date = null;
                         if (experienceType === 'spanning') {
-                            since = Date.from(this._xpath.evaluate(experienceNode, '@from', 'string'));
-                            until = Date.from(this._xpath.evaluate(experienceNode, '@to', 'string'));
+                            since = Date.from($experienceNode.attr('from-date'));
+                            until = Date.from($experienceNode.attr('to-date'));
                         } else if (experienceType === 'since') {
-                            since = Date.from(this._xpath.evaluate(experienceNode, 'text()', 'string'));
-                            until = new Date();
+                            since = Date.from($experienceNode.attr('date'));
+                            until = now;
                         } else {
                             return;
                         }
@@ -224,9 +228,6 @@ export default class ResumeComponent {
                         $skill.attr('data-experience-duration', 'P' + skillDurationISO);
                     }
                 });
-                if (('enhanceWithin' in $.fn) && typeof $.fn.enhanceWithin === 'function') {
-                    $viewportElement.enhanceWithin();
-                }
             });
         }
     }
