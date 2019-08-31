@@ -1,9 +1,9 @@
-import * as $ from "jquery";
+import * as $ from 'jquery';
 
 export default class GA {
     private static readonly TRACKING_ID: string = 'UA-106877989-1';
 
-    static fireEvent(category: string, action: string, label?: string, value?: number): JQuery.jqXHR | void {
+    static fireEvent(category: string, action: string, label?: string, value?: number): void {
         const gaData: any[][] = (<any>window).dataLayer;
         if (!Array.isArray(gaData)) {
             return;
@@ -21,26 +21,25 @@ export default class GA {
             return;
         }
         const parameters: object = {
-            v: 1,
-            tid: GA.TRACKING_ID,
-            t: 'event',
-            ec: category,
-            ea: action
+            hitType: 'event',
+            eventCategory: category,
+            eventAction: action
         };
         if (typeof label !== 'undefined' && label.length > 0) {
             $.extend(true, parameters, {
-                el: label
+                eventLabel: label
             });
         }
         if (typeof value === 'number' && value >= 0) {
             $.extend(true, parameters, {
-                ev: value
+                eventValue: value
             });
         }
-        return $.ajax({
-            method: 'POST',
-            data: $.param(parameters).replace(/\+/g, '%20'),
-            url: 'https://www.google-analytics.com/collect'
-        });
+        // return $.ajax({
+        //     method: 'POST',
+        //     data: $.param(parameters).replace(/\+/g, '%20'),
+        //     url: 'https://www.google-analytics.com/collect'
+        // });
+        (<any>window).ga('send', parameters);
     }
 }
