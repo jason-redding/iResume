@@ -39,7 +39,7 @@ export default class GA {
         }
         return $.ajax({
             method: 'POST',
-            data: parameters,
+            data: $.param(parameters).replace(/\+/g, '%20'),
             url: 'https://www.google-analytics.com/collect'
         });
     }
