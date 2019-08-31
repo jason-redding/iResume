@@ -4,35 +4,23 @@ export default class GA {
     private static readonly TRACKING_ID: string = 'UA-106877989-1';
 
     static fireEvent(category: string, action: string, label?: string, value?: number): void {
-        const gaData: any[][] = (<any>window).dataLayer;
-        if (!Array.isArray(gaData)) {
-            return;
-        }
-        if (gaData.length < 2) {
-            return;
-        }
-        if (gaData[1].length < 2) {
-            return;
-        }
-        if (gaData[1][0] !== 'config' || gaData[1][1] !== GA.TRACKING_ID) {
+        if (!('gtag' in window)) {
             return;
         }
         if (category.length === 0 || action.length === 0) {
             return;
         }
-        const parameters: object = {
-            hitType: 'event',
-            eventCategory: category,
-            eventAction: action
+        const eventProperties: object = {
+            'event_category': category
         };
         if (typeof label !== 'undefined' && label.length > 0) {
-            $.extend(true, parameters, {
-                eventLabel: label
+            $.extend(true, eventProperties, {
+                'event_label': label
             });
         }
         if (typeof value === 'number' && value >= 0) {
-            $.extend(true, parameters, {
-                eventValue: value
+            $.extend(true, eventProperties, {
+                'value': value
             });
         }
         // return $.ajax({
@@ -40,6 +28,6 @@ export default class GA {
         //     data: $.param(parameters).replace(/\+/g, '%20'),
         //     url: 'https://www.google-analytics.com/collect'
         // });
-        (<any>window).ga('send', parameters);
+        (<any>window).gtag('event', action, eventProperties);
     }
 }
