@@ -34,15 +34,26 @@ function initHashHandling() {
                     const isAnchor = $targetElement.is('a');
                     const headerAdjustment: number = (isAnchor ? 0 : (($('> .ui-header-fixed', ui.prevPage).outerHeight() || 0) + 8));
 
-                    $('html, body').animate({
+                    $('html, body')
+                    .animate({
                         scrollTop: $targetElement.offset().top - headerAdjustment
                     }, {
                         easing: 'easeInOutBack',
-                        always: function (animation, jumpedToEnd) {
-                            const $highlightElement: JQuery = (isAnchor ? $targetElement.parent() : $targetElement);
-                            $highlightElement.effect('highlight');
-                        },
                         duration: 1800
+                    })
+                    .promise()
+                    .always(($elements) => {
+                        const $highlightElement: JQuery = (isAnchor ? $targetElement.parent() : $targetElement);
+                        const originalBackgroundColor: string = $highlightElement.css('background-color');
+                        $highlightElement.stop(true, true).css({
+                            'background-color': 'hsl(60, 100%, 80%)'
+                        })
+                        .delay(200)
+                        .animate({
+                            'background-color': originalBackgroundColor
+                        }, {
+                            duration: 1600
+                        });
                     });
                 }
             }
