@@ -52,11 +52,21 @@ function initHashHandling() {
 
 function initPrintHandler() {
     const mediaQuery: MediaQueryList = window.matchMedia('print');
-    mediaQuery.addEventListener('change', (event) => {
+    const printHandler: Function = (event) => {
         if (event.matches) {
             GA.fireEvent('UX', 'print', 'Print Resume');
         }
-    });
+    };
+    for (let methodName of ['addListener', 'addEventListener']) {
+        if ((methodName in mediaQuery)) {
+            if (methodName === 'addListener') {
+                (<Function>mediaQuery[methodName])(printHandler);
+            } else if (methodName === 'addEventListener') {
+                (<Function>mediaQuery[methodName])('change', printHandler);
+            }
+            break;
+        }
+    }
 }
 
 function loadResume(): ResumeLoader {
