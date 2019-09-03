@@ -892,49 +892,50 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<ul class="certificate-list">
 				<xsl:for-each select="r:certificate">
 					<li class="certificate-item">
-						<span class="certificate">
+						<span class="certificate" tabindex="0">
 							<xsl:attribute name="data-name">
 								<xsl:value-of select="normalize-space(r:name)"/>
 							</xsl:attribute>
 							<xsl:attribute name="data-issuer">
 								<xsl:value-of select="normalize-space(r:issuer)"/>
 							</xsl:attribute>
-							<xsl:attribute name="data-issue-date">
-								<xsl:value-of select="normalize-space(r:issue-date)"/>
-							</xsl:attribute>
-							<xsl:attribute name="data-issue-year">
-								<xsl:call-template name="date-format">
-									<xsl:with-param name="date" select="r:issue-date"/>
-									<xsl:with-param name="format" select="'yyyy'"/>
-								</xsl:call-template>
-							</xsl:attribute>
-							<xsl:if test="count(r:expire-date) > 0">
-								<xsl:attribute name="data-expire-date">
-									<xsl:value-of select="normalize-space(r:expire-date)"/>
+							<xsl:if test="string-length(r:issuer/@issue-date) > 0">
+								<xsl:attribute name="data-issue-date">
+									<xsl:value-of select="normalize-space(r:issuer/@issue-date)"/>
 								</xsl:attribute>
-								<xsl:attribute name="data-expire-year">
+								<xsl:attribute name="data-issue-year">
 									<xsl:call-template name="date-format">
-										<xsl:with-param name="date" select="r:expire-date"/>
+										<xsl:with-param name="date" select="r:issuer/@issue-date"/>
 										<xsl:with-param name="format" select="'yyyy'"/>
 									</xsl:call-template>
 								</xsl:attribute>
 							</xsl:if>
-							<xsl:if test="count(r:score) > 0">
-								<xsl:attribute name="data-score">
-									<xsl:value-of select="normalize-space(r:score)"/>
+							<xsl:if test="string-length(r:issuer/@expire-date) > 0">
+								<xsl:attribute name="data-expire-date">
+									<xsl:value-of select="normalize-space(r:issuer/@expire-date)"/>
+								</xsl:attribute>
+								<xsl:attribute name="data-expire-year">
+									<xsl:call-template name="date-format">
+										<xsl:with-param name="date" select="r:issuer/@expire-date"/>
+										<xsl:with-param name="format" select="'yyyy'"/>
+									</xsl:call-template>
 								</xsl:attribute>
 							</xsl:if>
-							<xsl:if test="count(r:max-score) > 0">
+							<xsl:if test="string-length(r:score/@value) > 0">
+								<xsl:attribute name="data-score">
+									<xsl:value-of select="normalize-space(r:score/@value)"/>
+								</xsl:attribute>
+							</xsl:if>
+							<xsl:if test="string-length(r:score/@max) > 0">
 								<xsl:attribute name="data-max-score">
-									<xsl:value-of select="normalize-space(r:max-score)"/>
+									<xsl:value-of select="normalize-space(r:score/@max)"/>
 								</xsl:attribute>
 							</xsl:if>
 							<xsl:attribute name="title">
 								<xsl:value-of select="normalize-space(r:name)"/>
 							</xsl:attribute>
 							<span class="text">
-								<xsl:if
-									test="count(r:issuer) > 0 and not(starts-with(normalize-space(r:name), normalize-space(r:issuer)))">
+								<xsl:if test="count(r:issuer) > 0 and not(starts-with(normalize-space(r:name), normalize-space(r:issuer)))">
 									<xsl:value-of select="normalize-space(r:issuer)"/>
 									<xsl:text> </xsl:text>
 								</xsl:if>
@@ -1235,7 +1236,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				</xsl:if>
 			</xsl:for-each>
 		</xsl:variable>
-		<xsl:variable name="experience-since" select="normalize-space($skill/r:experience/r:since)"/>
+		<xsl:variable name="experience-since" select="normalize-space($skill/r:experience/r:since/@date)"/>
 		<xsl:variable name="experience-first">
 			<xsl:choose>
 				<xsl:when test="$experience-ongoing and $experience-span-count = 0">
@@ -1352,7 +1353,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:if test="not($skill-level = floor($skill-level))">
 					<xsl:value-of select="concat(' level-', $skill-level)"/>
 				</xsl:if>
-				<xsl:value-of select="concat(' experience-years-', $experience-years)"/>
 				<xsl:for-each select="$skill/r:categories/r:category">
 					<xsl:value-of select="concat(' category-', @value)"/>
 				</xsl:for-each>
@@ -1412,22 +1412,43 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xsl:attribute name="data-level-percentage">
 				<xsl:value-of select="($skill-level div $max-level)"/>
 			</xsl:attribute>
-			<xsl:attribute name="data-since">
-				<xsl:value-of select="$experience-first"/>
-			</xsl:attribute>
-			<xsl:attribute name="data-until">
-				<xsl:value-of select="$experience-last"/>
-			</xsl:attribute>
 			<xsl:attribute name="data-experience-precision">
 				<xsl:if test="string-length($skill/r:experience/@precision) > 0">
 					<xsl:value-of select="normalize-space($skill/r:experience/@precision)"/>
 				</xsl:if>
 			</xsl:attribute>
+			<!--<xsl:attribute name="data-since">-->
+			<!--	<xsl:value-of select="$experience-first"/>-->
+			<!--</xsl:attribute>-->
+			<!--<xsl:attribute name="data-until">-->
+			<!--	<xsl:value-of select="$experience-last"/>-->
+			<!--</xsl:attribute>-->
 			<xsl:attribute name="data-experience-years">
 				<xsl:value-of select="$experience-years"/>
 			</xsl:attribute>
 			<xsl:attribute name="data-experience-duration">
 				<xsl:value-of select="concat('P', $experience-years, 'Y')"/>
+			</xsl:attribute>
+			<xsl:attribute name="data-experience">
+				<xsl:value-of select="'{'"/>
+				<xsl:if test="count($skill/r:experience/r:spanning) > 0">
+					<xsl:value-of select="'&quot;spanning&quot;:['"/>
+					<xsl:for-each select="$skill/r:experience/r:spanning">
+						<xsl:sort select="concat(@from-date, '_', @to-date)" data-type="text" order="ascending"/>
+						<xsl:if test="position() > 1">
+							<xsl:value-of select="','"/>
+						</xsl:if>
+						<xsl:value-of select="concat('{&quot;from-date&quot;:&quot;', @from-date, '&quot;,&quot;to-date&quot;:&quot;', @to-date, '&quot;}')"/>
+					</xsl:for-each>
+					<xsl:value-of select="']'"/>
+				</xsl:if>
+				<xsl:if test="count($skill/r:experience/r:since) > 0">
+					<xsl:if test="count($skill/r:experience/r:spanning) > 0">
+						<xsl:value-of select="','"/>
+					</xsl:if>
+					<xsl:value-of select="concat('&quot;since&quot;:{&quot;date&quot;:&quot;', $skill/r:experience/r:since/@date, '&quot;}')"/>
+				</xsl:if>
+				<xsl:value-of select="'}'"/>
 			</xsl:attribute>
 			<xsl:if test="string-length($skill-version) > 0">
 				<xsl:attribute name="data-version">
@@ -1474,6 +1495,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:with-param name="text" select="."/>
 			</xsl:call-template>
 		</xsl:if>
+	</xsl:template>
+
+	<xsl:template name="handle-abbr" match="h:abbr[@title]" mode="html">
+		<xsl:element name="{local-name()}">
+			<xsl:attribute name="tabindex">
+				<xsl:value-of select="0"/>
+			</xsl:attribute>
+			<xsl:apply-templates mode="html" select="@*"/>
+			<xsl:apply-templates mode="html"/>
+		</xsl:element>
 	</xsl:template>
 
 	<xsl:template name="get-duration" match="r:duration" mode="html">

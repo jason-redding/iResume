@@ -195,24 +195,30 @@ export default class ResumeComponent {
                 $viewportElement.find('.skill').each((skillIndex, skillElement) => {
                     const $skill: JQuery = $(skillElement);
                     const skillName: string = $skill.attr('data-name');
-                    const $experienceNodes: JQuery<Node> = this._xpath.evaluate(this._responseBundle.xml.document, '/r:resume/r:skills/r:skill[translate(normalize-space(r:name), "ABCDEFGHIJKLMNOPQRSTUVWXYZ ", "abcdefghijklmnopqrstuvwxyz-") = "' + skillName.toLowerCase().replace('"', '') + '"]/r:experience/*', 'nodeset');
                     let totalSkillExperience: number = 0;
-                    $experienceNodes.each((experienceNodeIndex, experienceNode) => {
-                        const $experienceNode: JQuery<Node> = $(experienceNode);
-                        const experienceType: string = $experienceNode.prop('nodeName');
-                        let since: Date = null;
-                        let until: Date = null;
-                        if (experienceType === 'spanning') {
-                            since = Date.from($experienceNode.attr('from-date'));
-                            until = Date.from($experienceNode.attr('to-date'));
-                        } else if (experienceType === 'since') {
-                            since = Date.from($experienceNode.attr('date'));
-                            until = now;
-                        } else {
-                            return;
+                    let since: Date;
+                    let until: Date;
+                    let experienceAttr: string = $.trim($skill.attr('data-experience'));
+                    if (experienceAttr.length === 0) {
+                        experienceAttr = '{}';
+                    }
+                    const experienceJson: JQuery.PlainObject = JSON.parse(experienceAttr);
+                    if (('spanning' in experienceJson)) {
+                        for (let span of experienceJson.spanning) {
+                            since = Date.from(span['from-date']);
+                            until = Date.from(span['to-date']);
+                            if (since instanceof Date && until instanceof Date) {
+                                totalSkillExperience += Math.abs(until.getTime() - since.getTime());
+                            }
                         }
-                        totalSkillExperience += Math.abs(until.getTime() - since.getTime());
-                    });
+                    }
+                    if (('since' in experienceJson)) {
+                        since = Date.from(experienceJson.since.date);
+                        until = now;
+                        if (since instanceof Date && until instanceof Date) {
+                            totalSkillExperience += Math.abs(until.getTime() - since.getTime());
+                        }
+                    }
                     const skillDuration: DurationResult = Duration.getDuration(totalSkillExperience);
                     let skillDurationISO: string = '';
                     if (skillDuration.years > 0) {

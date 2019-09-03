@@ -90,14 +90,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<certifications>
 		<certificate>
 			<name>Security+</name>
-			<issuer>CompTIA</issuer>
-			<issue-date>2018-02-23</issue-date>
-			<expire-date>2021-02-23</expire-date>
+			<issuer issue-date="2018-02-23" expire-date="2021-02-23">CompTIA</issuer>
 		</certificate>
 		<certificate>
 			<name>Sitecore XP 8.0 Certified Professional Developer</name>
-			<issuer>Sitecore</issuer>
-			<issue-date>2015-04-02</issue-date>
+			<issuer issue-date="2015-04-02">Sitecore</issuer>
 		</certificate>
 	</certifications>
 	<skills title="Skills, Tools &amp; Technologies" layout="categories">
