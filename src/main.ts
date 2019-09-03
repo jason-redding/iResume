@@ -33,8 +33,8 @@ function initHashHandling() {
                     event.preventDefault();
                     const isAnchor = $targetElement.is('a');
                     const headerAdjustment: number = (isAnchor ? 0 : (($('> .ui-header-fixed', ui.prevPage).outerHeight() || 0) + 8));
-
-                    $('html, body')
+                    const $htmlBody = $('html, body');
+                    $htmlBody
                     .animate({
                         scrollTop: $targetElement.offset().top - headerAdjustment
                     }, {
@@ -44,15 +44,38 @@ function initHashHandling() {
                     .promise()
                     .always(($elements) => {
                         const $highlightElement: JQuery = (isAnchor ? $targetElement.parent() : $targetElement);
-                        const originalBackgroundColor: string = $highlightElement.css('background-color');
-                        $highlightElement.stop(true, true).css({
-                            'background-color': 'hsl(60, 100%, 80%)'
-                        })
-                        .delay(200)
-                        .animate({
-                            'background-color': originalBackgroundColor
-                        }, {
-                            duration: 1600
+                        const scrollTop = $htmlBody.prop('scrollTop');
+                        console.debug(scrollTop);
+
+                        $highlightElement.trigger('focus');
+                        if (!$highlightElement.is(':focus')) {
+                            $highlightElement.attr('tabindex', '-1');
+                            $highlightElement.trigger('focus');
+                        }
+                        $htmlBody.prop('scrollTop', scrollTop);
+                        const beginState: JQuery.PlainObject = {};
+                        const endState: JQuery.PlainObject = {};
+                        if ($highlightElement.closest('.ui-page-theme-b').length > 0) {
+                            $.extend(beginState, {
+                                'background-color': 'hsl(196, 40%, 60%)'
+                            });
+                        } else {
+                            $.extend(beginState, {
+                                'background-color': 'hsl(60, 100%, 80%)'
+                            });
+                        }
+                        for (let property in beginState) {
+                            endState[property] = $highlightElement.css(property);
+                        }
+                        $highlightElement.stop(true, true).css(beginState)
+                        .delay(400)
+                        .animate(endState, {
+                            always: (animation, jumpedToEnd) => {
+                                for (let property in endState) {
+                                    $highlightElement.css(property, '');
+                                }
+                            },
+                            duration: 2000
                         });
                     });
                 }
@@ -68,13 +91,10 @@ function initPrintHandler() {
             GA.fireEvent('UX', 'print', 'Print Resume');
         }
     };
-    for (let methodName of ['addListener', 'addEventListener']) {
+    for (let method of [{name: 'addListener', arguments: [printHandler]}, {name: 'addEventListener', arguments: ['change', printHandler]}]) {
+        const methodName: string = method.name;
         if ((methodName in mediaQuery)) {
-            if (methodName === 'addListener') {
-                (<Function>mediaQuery[methodName])(printHandler);
-            } else if (methodName === 'addEventListener') {
-                (<Function>mediaQuery[methodName])('change', printHandler);
-            }
+            (<Function>mediaQuery[methodName]).apply(mediaQuery, method.arguments);
             break;
         }
     }

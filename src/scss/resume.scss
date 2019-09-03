@@ -784,8 +784,8 @@ ul, ol, .project-description, .project-description > *:first-child {
   margin-bottom: 0.25em;
 }
 
-*[title], span.skill, a, time {
-  @media screen {
+@media screen {
+  *[title], *[aria-describedby], span.skill, a, time {
     &:not(table):not(thead):not(tbody):not(tfoot):not(tr):not(th):not(td):not(button):not(input):not(select):not(.ui-btn) {
       cursor: pointer;
       /*&:hover, &:focus {
