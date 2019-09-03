@@ -33,8 +33,16 @@ function initHashHandling() {
                     event.preventDefault();
                     const isAnchor = $targetElement.is('a');
                     const headerAdjustment: number = (isAnchor ? 0 : (($('> .ui-header-fixed', ui.prevPage).outerHeight() || 0) + 8));
-                    const $htmlBody = $('html, body');
-                    $htmlBody
+                    let $scrollableRoot = $('html, body');
+                    let scrollOffset: number = $scrollableRoot.filter((index, element) => {
+                        return ($(element).prop('scrollTop') > 0);
+                    }).prop('scrollTop') || 0;
+                    $scrollableRoot.prop('scrollTop', 1);
+                    $scrollableRoot = $scrollableRoot.filter((index, element) => {
+                        return ($(element).prop('scrollTop') > 0);
+                    });
+                    $scrollableRoot.prop('scrollTop', scrollOffset);
+                    $scrollableRoot
                     .animate({
                         scrollTop: $targetElement.offset().top - headerAdjustment
                     }, {
@@ -44,13 +52,13 @@ function initHashHandling() {
                     .promise()
                     .always(($elements) => {
                         const $highlightElement: JQuery = (isAnchor ? $targetElement.parent() : $targetElement);
-                        const scrollTop = $htmlBody.prop('scrollTop');
+                        scrollOffset = $scrollableRoot.prop('scrollTop');
                         $highlightElement.trigger('focus');
                         if (!$highlightElement.is(':focus')) {
                             $highlightElement.attr('tabindex', '-1');
                             $highlightElement.trigger('focus');
                         }
-                        $htmlBody.prop('scrollTop', scrollTop);
+                        $scrollableRoot.prop('scrollTop', scrollOffset);
                         const beginState: JQuery.PlainObject = {};
                         const endState: JQuery.PlainObject = {};
                         if ($highlightElement.closest('.ui-page-theme-b').length > 0) {
