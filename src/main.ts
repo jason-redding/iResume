@@ -45,8 +45,6 @@ function initHashHandling() {
                     .always(($elements) => {
                         const $highlightElement: JQuery = (isAnchor ? $targetElement.parent() : $targetElement);
                         const scrollTop = $htmlBody.prop('scrollTop');
-                        console.debug(scrollTop);
-
                         $highlightElement.trigger('focus');
                         if (!$highlightElement.is(':focus')) {
                             $highlightElement.attr('tabindex', '-1');
