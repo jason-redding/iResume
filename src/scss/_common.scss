@@ -29,8 +29,14 @@ $linkColorDarkHover: hsl(196, 100%, 37%);
 	}
 }
 
+@mixin supports($property, $value) {
+	@supports (-webkit-#{$property}: $value) or ($property: $value) {
+		@content;
+	}
+}
+
 @mixin supports-backdrop {
-	@supports (-webkit-backdrop-filter: none) or (-moz-backdrop-filter: none) or (-ms-backdrop-filter: none) or (-o-backdrop-filter: none) or (backdrop-filter: none) {
+	@include supports(backdrop-filter, blur(2px)) {
 		@content;
 	}
 }
