@@ -40,26 +40,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<xs:element name="skill">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="levels" minOccurs="0">
+										<xs:element name="experience">
 											<xs:complexType>
 												<xs:sequence>
 													<xs:element name="level" maxOccurs="unbounded">
 														<xs:complexType>
 															<xs:simpleContent>
 																<xs:extension base="xs:string">
-																	<xs:attribute name="value" type="type-skill-level-value"/>
+																	<xs:attribute name="value" type="type-skill-level-value" use="required"/>
+																	<xs:attribute name="type" type="type-skill-level-type" default="experience" use="optional"/>
 																	<xs:attribute name="preposition" type="xs:string" use="optional"/>
 																</xs:extension>
 															</xs:simpleContent>
 														</xs:complexType>
 													</xs:element>
 												</xs:sequence>
-												<xs:attribute name="preposition" type="xs:string" use="required"/>
+												<xs:attribute name="type" type="xs:string" use="optional"/>
+												<xs:attribute name="preposition" type="xs:string" use="optional"/>
 												<xs:attribute name="print-min" type="xs:decimal" use="optional"/>
 												<xs:attribute name="screen-min" type="xs:decimal" use="optional"/>
 											</xs:complexType>
 										</xs:element>
-										<xs:element name="categories" minOccurs="0">
+										<xs:element name="categories">
 											<xs:complexType>
 												<xs:sequence>
 													<xs:element name="category" maxOccurs="unbounded">
@@ -240,12 +242,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</xs:complexType>
 
 		<xs:key name="key-skill-level">
-			<xs:selector xpath="r:meta/r:skill/r:levels/r:level"/>
+			<xs:selector xpath="r:meta/r:skill/r:experience/r:level"/>
 			<xs:field xpath="@value"/>
 		</xs:key>
 		<!--<xs:keyref name="keyref-skill-level" refer="key-skill-level">
-			<xs:selector xpath="r:skills/r:skill/r:level"/>
-			<xs:field xpath="@value"/>
+			<xs:selector xpath="r:skills/r:skill/r:experience"/>
+			<xs:field xpath="@level"/>
 		</xs:keyref>-->
 		<xs:key name="key-category">
 			<xs:selector xpath="r:meta/r:skill/r:categories/r:category"/>
@@ -260,6 +262,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xs:simpleType name="type-skill-level-value">
 		<xs:restriction base="xs:decimal">
 			<xs:minInclusive value="-1"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type-skill-level-type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="exposure"/>
+			<xs:enumeration value="experience"/>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -320,11 +329,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="level">
-				<xs:complexType>
-					<xs:attribute name="value" use="required" type="nonNegativeDecimal"/>
-				</xs:complexType>
-			</xs:element>
 			<xs:element name="experience" type="type-experience"/>
 			<xs:element name="categories" minOccurs="0">
 				<xs:complexType>
@@ -350,7 +354,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xs:element name="spanning" type="type-experience-spanning"/>
 			<xs:element name="since" type="type-experience-since"/>
 		</xs:choice>
-		<xs:attribute name="precision" use="optional" type="type-experience-precision"/>
+		<xs:attribute name="level" type="nonNegativeDecimal" use="required"/>
+		<xs:attribute name="precision" type="type-experience-precision" use="optional"/>
 	</xs:complexType>
 
 	<xs:simpleType name="type-experience-precision">

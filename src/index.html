@@ -99,13 +99,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div class="text">Full List of Skills</div>
                     </caption>
                     <thead>
-                    <tr data-render-title="${level} (${level.percentage#percent})${level.preposition#default(levels.preposition);prepend-if(' ')} ${name} with ${experience.duration} of experience${experience.last#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}"
+                    <tr data-render-title="${experience.level} (${experience.level.percentage#percent})${experience.level.preposition#default(experience.preposition);prepend-if(' ')} ${name} with ${experience.duration} of ${experience.type}${experience.last#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}"
                         data-render-data-name="${name}"
-                        data-render-data-level="${level}"
-                        data-render-data-level-value="${level.originalValue}"
-                        data-render-data-level-percentage="${level.percentage}"
-                        data-render-data-since="${experience.first.value}"
-                        data-render-data-until="${experience.last.value}"
+                        data-render-data-level="${experience.level}"
+                        data-render-data-level-value="${experience.level.originalValue}"
+                        data-render-data-level-percentage="${experience.level.percentage}"
+                        data-render-data-experience-first="${experience.first.value}"
+                        data-render-data-experience-last="${experience.last.value}"
+                        data-render-data-experience-type="${experience.type}"
                         data-render-data-experience-years="${experience.duration.years}"
                         data-render-data-experience-duration="P${experience.duration.years}Y"
                         data-render-data-version="${version}"
@@ -117,17 +118,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             data-field="name"
                             title="Skill name"
                             data-sort-order="asc"
-                            data-order-by="name, level.originalValue:desc">
+                            data-order-by="name, experience.level.originalValue:desc">
                             <span class="data">Name</span>
                         </th>
                         <th class="ui-widget-header"
                             tabindex="0"
                             data-header="Level"
-                            data-field="level"
-                            title="Self-Assessment"
-                            data-render="${level} (${level.percentage#percent})"
+                            data-field="experience.level"
+                            title="Self-assessment"
+                            data-render="${experience.level} (${experience.level.percentage#percent})"
                             data-sort-order="desc"
-                            data-order-by="level.originalValue, name">
+                            data-order-by="experience.level.originalValue, name">
                             <span class="data">Level</span>
                         </th>
                         <th class="ui-widget-header"
@@ -137,7 +138,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             title="Years of experience"
                             data-render="${experience.duration}"
                             data-sort-order="desc"
-                            data-order-by="experience.duration.totalMilliseconds, experience.first:desc, level.originalValue:desc, name">
+                            data-order-by="experience.duration.totalMilliseconds, experience.first:desc, experience.level.originalValue:desc, name">
                             <span class="data">Experience</span>
                         </th>
                     </tr>

@@ -37,11 +37,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xsl:param name="projects-layout" select="''"/>
 	<xsl:param name="skill-level-print-min" select="''"/>
 	<xsl:param name="skill-level-screen-min" select="''"/>
-	<xsl:key name="level" match="/r:resume/r:meta/r:skill/r:levels/r:level" use="@value"/>
+	<xsl:key name="level" match="/r:resume/r:meta/r:skill/r:experience/r:level" use="@value"/>
 	<xsl:key name="category" match="/r:resume/r:meta/r:skill/r:categories/r:category" use="@value"/>
 	<xsl:key name="skill" match="/r:resume/r:skills/r:skill" use="translate(normalize-space(r:name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-')"/>
 	<xsl:variable name="max-level">
-		<xsl:for-each select="/r:resume/r:meta/r:skill/r:levels/r:level">
+		<xsl:for-each select="/r:resume/r:meta/r:skill/r:experience/r:level">
 			<xsl:sort select="@value" data-type="number" order="descending"/>
 			<xsl:if test="position() = 1">
 				<xsl:value-of select="@value"/>
@@ -427,8 +427,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xsl:param name="skills" select="/r:resume/r:skills/r:skill"/>
 		<xsl:param name="category-code" select="''"/>
 		<xsl:param name="show-details" select="false()"/>
-		<xsl:variable name="xml-skill-level-print-min" select="/r:resume/r:meta/r:skill/r:levels/@print-min"/>
-		<xsl:variable name="xml-skill-level-screen-min" select="/r:resume/r:meta/r:skill/r:levels/@screen-min"/>
+		<xsl:variable name="xml-skill-level-print-min" select="/r:resume/r:meta/r:skill/r:experience/@print-min"/>
+		<xsl:variable name="xml-skill-level-screen-min" select="/r:resume/r:meta/r:skill/r:experience/@screen-min"/>
 		<xsl:variable name="final-skill-level-print-min">
 			<xsl:choose>
 				<xsl:when test="string-length($skill-level-print-min) > 0">
@@ -456,7 +456,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="category-name" select="normalize-space(/r:resume/r:meta/r:skill/r:categories/r:category[@value = $category-code])"/>
-		<xsl:variable name="skills-in-category" select="$skills[(r:level/@value >= $final-skill-level-screen-min) and count(r:categories/r:category[@value = $category-code]) > 0 and not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = '1')]"/>
+		<xsl:variable name="skills-in-category" select="$skills[(r:experience/@level >= $final-skill-level-screen-min) and count(r:categories/r:category[@value = $category-code]) > 0 and not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = '1')]"/>
 		<xsl:variable name="skill-count" select="count($skills-in-category)"/>
 		<xsl:variable name="is-category-visible" select="0 = count(/r:resume/r:meta/r:skill/r:categories/r:category[@value = $category-code and (translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = '1')])"/>
 		<xsl:if test="$is-category-visible and $skill-count > 0">
@@ -466,9 +466,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<span class="skills-grouped-by-category">
 				<xsl:for-each select="$skills-in-category">
 					<xsl:sort select="r:name" order="ascending"/>
-					<xsl:sort select="r:level/@value" data-type="number" order="descending"/>
+					<xsl:sort select="r:experience/@level" data-type="number" order="descending"/>
 					<xsl:sort select="concat(r:experience/r:spanning[1]/@from-date, '_', r:experience/r:spanning[last()]/@to-date, '_', r:experience/r:since)" data-type="text" order="ascending"/>
-					<xsl:variable name="hide-on-print" select="r:level/@value &lt; $final-skill-level-print-min"/>
+					<xsl:variable name="hide-on-print" select="r:experience/@level &lt; $final-skill-level-print-min"/>
 					<xsl:call-template name="list-skill">
 						<xsl:with-param name="show-details" select="$show-details"/>
 						<xsl:with-param name="hide-on-print" select="$hide-on-print"/>
@@ -481,8 +481,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xsl:template name="render-skills-as-categories" match="r:skills" mode="categories">
 		<xsl:param name="skills" select="r:skill"/>
 		<xsl:param name="show-details" select="false()"/>
-		<xsl:variable name="xml-skill-level-print-min" select="/r:resume/r:meta/r:skill/r:levels/@print-min"/>
-		<xsl:variable name="xml-skill-level-screen-min" select="/r:resume/r:meta/r:skill/r:levels/@screen-min"/>
+		<xsl:variable name="xml-skill-level-print-min" select="/r:resume/r:meta/r:skill/r:experience/@print-min"/>
+		<xsl:variable name="xml-skill-level-screen-min" select="/r:resume/r:meta/r:skill/r:experience/@screen-min"/>
 		<xsl:variable name="final-skill-level-print-min">
 			<xsl:choose>
 				<xsl:when test="string-length($skill-level-print-min) > 0">
@@ -512,7 +512,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<ul class="skills as-categories">
 			<xsl:for-each select="/r:resume/r:meta/r:skill/r:categories/r:category[not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = '1')]">
 				<xsl:variable name="category-code" select="@value"/>
-				<xsl:variable name="skills-in-category" select="$skills[r:level/@value >= $final-skill-level-screen-min and count(r:categories/r:category[@value = $category-code and not(@value = 'relevant')]) > 0 and not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = '1')]"/>
+				<xsl:variable name="skills-in-category" select="$skills[r:experience/@level >= $final-skill-level-screen-min and count(r:categories/r:category[@value = $category-code and not(@value = 'relevant')]) > 0 and not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = '1')]"/>
 				<xsl:variable name="skill-count" select="count($skills-in-category)"/>
 				<xsl:if test="$skill-count > 0">
 					<li>
@@ -531,7 +531,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<ul class="skills as-list">
 			<xsl:for-each select="r:skill[not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = '1')]">
 				<xsl:sort select="r:name" order="ascending"/>
-				<xsl:sort select="r:level/@value" data-type="number" order="descending"/>
+				<xsl:sort select="r:experience/@level" data-type="number" order="descending"/>
 				<xsl:sort select="concat(r:experience/r:spanning[1]/@from-date, '_', r:experience/r:spanning[last()]/@to-date, '_', r:experience/r:since)" data-type="text" order="ascending"/>
 				<xsl:variable name="skill-hidden-value" select="translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
 				<li class="skill-item">
@@ -950,7 +950,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsl:template name="handle-skills-legend" match="r:skills-legend">
 		<div class="skills-legend">
-			<xsl:for-each select="/r:resume/r:meta/r:skill/r:levels/r:level">
+			<xsl:for-each select="/r:resume/r:meta/r:skill/r:experience/r:level">
 				<div class="skills-legend-level">
 					<div class="skills-legend-level-percentage">
 						<xsl:value-of select="concat((@value div $max-level) * 100, '%')"/>
@@ -1313,30 +1313,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				</xsl:with-param>
 			</xsl:call-template>
 		</xsl:variable>
-		<xsl:variable name="skill-level" select="$skill/r:level/@value"/>
-		<xsl:variable name="meta-skill-level">
+		<xsl:variable name="skill-level" select="$skill/r:experience/@level"/>
+		<xsl:variable name="skill-level-key">
 			<xsl:choose>
-				<xsl:when test="$skill-level = 0 and count(key('level', -1)) > 0">
-					<xsl:value-of select="normalize-space(key('level', -1))"/>
+				<xsl:when test="$skill-level = 0 and count(key('level', $skill-level-key)) > 0">
+					<xsl:value-of select="-1"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:value-of select="normalize-space(key('level', floor($skill-level)))"/>
+					<xsl:value-of select="floor($skill-level)"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="meta-skill-level" select="normalize-space(key('level', $skill-level-key))"/>
+		<xsl:variable name="meta-skill-type">
+			<xsl:choose>
+				<xsl:when test="count(key('level', $skill-level-key)[@type]) > 0">
+					<xsl:value-of select="key('level', $skill-level-key)/@type"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="'experience'"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="skill-level-preposition">
 			<xsl:choose>
-				<xsl:when test="$skill-level = 0 and count(key('level', -1)[@preposition]) > 0">
-					<xsl:value-of select="normalize-space(key('level', -1)/@preposition)"/>
+				<xsl:when test="count(key('level', $skill-level-key)[@preposition]) > 0">
+					<xsl:value-of select="normalize-space(key('level', $skill-level-key)/@preposition)"/>
 				</xsl:when>
-				<xsl:when test="$skill-level > 0 and count(key('level', floor($skill-level))[@preposition]) > 0">
-					<xsl:value-of select="normalize-space(key('level', floor($skill-level))/@preposition)"/>
-				</xsl:when>
-				<xsl:when test="count(/r:resume/r:meta/r:skill/r:levels[@preposition]) > 0">
-					<xsl:value-of select="normalize-space(/r:resume/r:meta/r:skill/r:levels/@preposition)"/>
+				<xsl:when test="count(/r:resume/r:meta/r:skill/r:experience[@preposition]) > 0">
+					<xsl:value-of select="normalize-space(/r:resume/r:meta/r:skill/r:experience/@preposition)"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:text>at</xsl:text>
+					<xsl:value-of select="'at'"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
@@ -1361,8 +1369,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				</xsl:if>
 			</xsl:attribute>
 			<xsl:attribute name="title">
-				<xsl:text>${level} (${level.percentage#percent})${level.preposition#default(levels.preposition);prepend-if(' ')} ${name} with </xsl:text>
-				<xsl:text>${experience.duration} of experience${experience.last#date("'&lt;br/>&lt;br/>Last used: 'MMMM' of 'yyyy")}</xsl:text>
+				<xsl:text>${experience.level} (${experience.level.percentage#percent})${experience.level.preposition#default(experience.preposition);prepend-if(' ')} ${name} with </xsl:text>
+				<xsl:text>${experience.duration} of ${experience.type}${experience.last#date("'&lt;br/>&lt;br/>Last used: 'MMMM' of 'yyyy")}</xsl:text>
 			</xsl:attribute>
 			<!--<xsl:attribute name="title">-->
 			<!--<xsl:value-of select="normalize-space($meta-skill-level)"/>-->
@@ -1417,12 +1425,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xsl:value-of select="normalize-space($skill/r:experience/@precision)"/>
 				</xsl:if>
 			</xsl:attribute>
-			<!--<xsl:attribute name="data-since">-->
-			<!--	<xsl:value-of select="$experience-first"/>-->
-			<!--</xsl:attribute>-->
-			<!--<xsl:attribute name="data-until">-->
-			<!--	<xsl:value-of select="$experience-last"/>-->
-			<!--</xsl:attribute>-->
+			<xsl:attribute name="data-experience-type">
+				<xsl:value-of select="$meta-skill-type"/>
+			</xsl:attribute>
+			<xsl:attribute name="data-experience-first">
+				<xsl:value-of select="$experience-first"/>
+			</xsl:attribute>
+			<xsl:attribute name="data-experience-last">
+				<xsl:value-of select="$experience-last"/>
+			</xsl:attribute>
 			<xsl:attribute name="data-experience-years">
 				<xsl:value-of select="$experience-years"/>
 			</xsl:attribute>

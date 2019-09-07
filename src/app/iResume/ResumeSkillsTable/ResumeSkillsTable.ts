@@ -98,6 +98,15 @@ export default class ResumeSkillsTable {
                 }
             }
         });
+        $element.find('> thead > tr > th[data-order-by]').on('keydown.iresume', function (event, options) {
+            const key: string = event.key;
+            if (key === 'Enter' || key === ' ' || key === 'Spacebar') {
+                event.preventDefault();
+                const $target: JQuery = $(event.target);
+                $target.trigger('click');
+                return false;
+            }
+        });
         $element.on('click.iresume', 'th[data-order-by]', function (event, options) {
             const $this: JQuery = $(this);
             const orderBy: string[] = $.trim($this.attr('data-order-by')).split(/\s*,+\s*/);
@@ -310,7 +319,7 @@ export default class ResumeSkillsTable {
             if (typeof options !== 'object' || options.simulated !== true) {
                 GA.fireEvent('UX', 'Filter Skills Table: ' + categoryName);
             }
-            this._refreshTable(this._element);
+            this._refreshTable();
         })
         .appendTo($categoriesSelectContainer);
         if (('enhanceWithin' in $.fn) && typeof $.fn.enhanceWithin === 'function') {
@@ -319,8 +328,8 @@ export default class ResumeSkillsTable {
         return this;
     }
 
-    private _refreshTable($table): ResumeSkillsTable {
-        $table.find('> tbody > tr:not(.ui-screen-hidden)').each(function (index) {
+    private _refreshTable(): ResumeSkillsTable {
+        this._element.find('> tbody > tr:not(.ui-screen-hidden)').each(function (index) {
             const $this: JQuery = $(this);
             const isOdd: boolean = (index % 2 === 0);
             $this
@@ -361,20 +370,20 @@ export default class ResumeSkillsTable {
             const $rows: JQuery = this._element.find('> tbody > tr');
             if ($rows.length === 0) {
                 this._buildSkillsTable();
-                this._sortTableRows(sorting, sortOrder);
+                this._sortTableRows(sortBy, sorting, sortOrder);
                 return;
             }
-            this._sortTableRows(sorting, sortOrder);
+            this._sortTableRows(sortBy, sorting, sortOrder);
         }
         return this;
     }
 
-    private _sortTableRows(sorting: string[], defaultSortOrder: string): ResumeSkillsTable {
+    private _sortTableRows(fieldName: string, sorting: string[], defaultSortOrder: string): ResumeSkillsTable {
         const $table: JQuery = this._element;
         const $rows: JQuery = $table.find('> tbody > tr');
         const sortOrder: string = $.trim(defaultSortOrder);
-        const sortingProperties: SortingProperties = this._getSortingProperties(sorting[0], sortOrder);
-        const firstSortBy: string = $.trim($table.find('> thead th[data-field="' + sortingProperties.field + '"]').attr('data-header'));
+        const sortingProperties: SortingProperties = this._getSortingProperties(fieldName, sorting[0], sortOrder);
+        const firstSortBy: string = $.trim($table.find('> thead th[data-field="' + fieldName + '"]').attr('data-header'));
         const $captionAttributeTargets: JQuery = $table
         .children('caption')
         .children('.text')
@@ -446,14 +455,13 @@ export default class ResumeSkillsTable {
             return sortReturn;
         });
         $rows.parent().append($rows);
-        this._refreshTable($table);
+        this._refreshTable();
         return this;
     }
 
-    private _getSortingProperties(rule: string, defaultSortOrder: string): SortingProperties {
+    private _getSortingProperties(fieldName: string, rule: string, defaultSortOrder: string): SortingProperties {
         const sortOrder: string = $.trim(defaultSortOrder);
         const sortRule: string[] = rule.split(':', 2);
-        const sortColumn: string = sortRule[0].split('.', 2)[0];
         let sortDirection;
         if (sortOrder.length > 0) {
             sortDirection = sortOrder;
@@ -463,7 +471,7 @@ export default class ResumeSkillsTable {
             sortDirection = 'asc';
         }
         return {
-            field: sortColumn,
+            field: fieldName,
             sortDirection: sortDirection
         };
     }
@@ -476,7 +484,7 @@ export default class ResumeSkillsTable {
         let $skillsTableHead: JQuery = $table.children('thead');
         let $skillsTableBody: JQuery = $table.children('tbody');
         $skillsTableBody.children().remove();
-        let $xmlSkillLevels: JQuery<Node> = self._xpath.evaluate($xml, 'r:meta/r:skill/r:levels/r:level', 'nodeset');
+        let $xmlSkillLevels: JQuery<Node> = self._xpath.evaluate($xml, 'r:meta/r:skill/r:experience/r:level', 'nodeset');
         let columnAttrRenderers: {
             [key: string]: AttributeRenderer[]
         } = {};
@@ -530,9 +538,10 @@ export default class ResumeSkillsTable {
             }
         });
         $table.attr('data-template-properties', JSON.stringify({
-            levels: {
+            experience: {
                 max: maxLevel,
-                preposition: self._xpath.evaluate($xml, 'r:meta/r:skill/r:levels/@preposition', 'string') || 'at'
+                type: self._xpath.evaluate($xml, 'r:meta/r:skill/r:experience/@type', 'string') || 'experience',
+                preposition: self._xpath.evaluate($xml, 'r:meta/r:skill/r:experience/@preposition', 'string') || 'at'
             }
         }));
 
@@ -567,13 +576,13 @@ export default class ResumeSkillsTable {
                     columnFieldRender = '${' + columnFieldName + '}';
                 }
                 let $cell: JQuery = $('<td/>')
-                .addClass('field-' + columnFieldName)
+                .addClass('field-' + columnFieldName.replace(/\./g, '-'))
                 .addClass('ui-widget-content')
                 .appendTo($skillRow);
                 let $cellData: JQuery = $('<span/>').addClass('data').appendTo($cell);
-                if (columnFieldName in props) {
-                    $cell.attr('data-value', props[columnFieldName].value);
-                    $cell.attr('data-original-value', props[columnFieldName].originalValue);
+                if (String.format('${' + columnFieldName + '}', props, ['value', 'originalValue']).length > 0) {
+                    $cell.attr('data-value', String.format('${' + columnFieldName + '.value}', props));
+                    $cell.attr('data-original-value', String.format('${' + columnFieldName + '.originalValue}', props));
                     if (Array.isArray(columnAttrRenderers[columnFieldName])) {
                         $.each(columnAttrRenderers[columnFieldName], function (renderIndex, render) {
                             $cell.attr(render.attr, String.format(render.template, renderProps, ['value', 'originalValue']));
