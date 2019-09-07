@@ -108,23 +108,23 @@ function initPrintHandler() {
 
 function loadResume(): ResumeLoader {
     const resumeLoader: ResumeLoader = new ResumeLoader('/resume');
-    resumeLoader.onLoadStart(() => {
+    resumeLoader
+    .onLoadStart(() => {
         $.mobile.loading('show', {
             text: 'Loading and transforming résumé XML...',
             textVisible: true
         });
-    });
-    resumeLoader.onLoadEnd(response => {
+    })
+    .onLoadFail(response => {
         $.mobile.loading('hide');
-    });
-    resumeLoader
-    .load()
+    })
     .onLoadComplete(response => {
         $.mobile.loading('hide');
         initSkillsTable(resumeLoader);
         initTooltips(resumeLoader);
         initResumeComponent(resumeLoader);
-    });
+    })
+    .load();
     return resumeLoader;
 }
 
