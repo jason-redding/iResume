@@ -98,15 +98,32 @@ export default class CodeViewer {
             $element.enhanceWithin();
         }
 
+        const handleLoadedResource = (data, status, xhr) => {
+            let v: any = data;
+            if (typeof v === 'string' || v instanceof String) {
+                v = $.trim((<JQuery.jqXHR>xhr).responseText);
+            } else {
+                v = '';
+            }
+            const $codeView: JQuery = $codeViewport.children('code');
+            $codeView.text(v);
+            $codeView.attr('class', $.trim($codeView.attr('data-original-classes')));
+            try {
+                hljs.highlightBlock($codeView[0]);
+            } catch (ex) {
+                console.error(ex);
+            }
+            $codeViewport.closest('.tab-panel')
+            .removeClass('data-loading')
+            [v.length > 0 ? 'addClass' : 'removeClass']('data-loaded');
+        };
+
         $select.on('change.code-viewer', function (event, options) {
             let $this: JQuery = $(this);
             let path: string = $.trim('' + $this.val());
             let $codeView: JQuery = $codeViewport.children('code');
-            let originalClasses;
-            if ($codeView.is('[data-original-classes]')) {
-                originalClasses = $.trim($codeView.attr('data-original-classes'));
-            } else {
-                $codeView.attr('data-original-classes', originalClasses = $.trim($codeView.attr('class')));
+            if (!$codeView.is('[data-original-classes]')) {
+                $codeView.attr('data-original-classes', $.trim($codeView.attr('class')));
             }
             let $codePanel: JQuery = $codeView.closest('.tab-panel');
             $codePanel.addClass('data-loading');
@@ -117,23 +134,7 @@ export default class CodeViewer {
                 dataType: 'text',
                 url: path
             })
-            .always((data, status, xhr) => {
-                let v: any = data;
-                if (typeof v === 'string' || v instanceof String) {
-                    v = $.trim((<JQuery.jqXHR>xhr).responseText);
-                } else {
-                    v = '';
-                }
-                $codeView.text(v);
-                $codeView.attr('class', originalClasses);
-                try {
-                    hljs.highlightBlock($codeView[0]);
-                } catch (ex) {
-                    console.error(ex);
-                }
-                $codePanel.removeClass('data-loading');
-                $codePanel[v.length > 0 ? 'addClass' : 'removeClass']('data-loaded');
-            });
+            .always(handleLoadedResource);
         }).triggerHandler('change', {
             simulated: true
         });
