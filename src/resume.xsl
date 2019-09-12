@@ -76,7 +76,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					</header>
 					<main>
 						<div class="main-inner">
-							<xsl:apply-templates select="*[not(local-name(self::*) = 'author' or local-name(self::*) = 'meta')]"/>
+							<xsl:apply-templates select="*[not(local-name(self::*) = 'author' or local-name(self::*) = 'meta') and not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = '1')]"/>
 						</div>
 					</main>
 				</div>
@@ -106,17 +106,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</h1>
 		</xsl:if>
 		<xsl:if test="count(r:*[not(local-name() = 'split')]) > 0">
-			<div class="author-contact">
-				<xsl:if test="$final-author-layout = 'list' or count(r:split) = 0 or count(r:split/preceding-sibling::r:*) > 0">
+			<div>
+				<xsl:attribute name="class">
+					<xsl:value-of select="'author-contact'"/>
+					<xsl:value-of select="concat(' author-contact-layout-', $final-author-layout)"/>
+				</xsl:attribute>
+				<xsl:if test="count(r:split) = 0 or count(r:split/preceding-sibling::r:*) > 0">
 					<div class="author-contact-left">
 						<xsl:choose>
-							<xsl:when test="$final-author-layout = 'list'">
-								<xsl:for-each select="r:*[not(local-name() = 'split')]">
-									<xsl:call-template name="list-author-info-item">
-										<xsl:with-param name="node" select="."/>
-									</xsl:call-template>
-								</xsl:for-each>
-							</xsl:when>
+							<!--							<xsl:when test="$final-author-layout = 'list'">-->
+							<!--								<xsl:for-each select="r:*[not(local-name() = 'split')]">-->
+							<!--									<xsl:call-template name="list-author-info-item">-->
+							<!--										<xsl:with-param name="node" select="."/>-->
+							<!--									</xsl:call-template>-->
+							<!--								</xsl:for-each>-->
+							<!--							</xsl:when>-->
 							<xsl:when test="count(r:split) > 0">
 								<xsl:for-each select="r:split/preceding-sibling::r:*">
 									<xsl:call-template name="list-author-info-item">
@@ -134,7 +138,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						</xsl:choose>
 					</div>
 				</xsl:if>
-				<xsl:if test="$final-author-layout = 'split' and count(r:split/following-sibling::r:*) > 0">
+				<xsl:if test="count(r:split) > 0 and not($final-author-layout = 'split')">
+					<hr class="author-contact-split"/>
+				</xsl:if>
+				<xsl:if test="count(r:split/following-sibling::r:*) > 0">
 					<div class="author-contact-right">
 						<xsl:for-each select="r:split/following-sibling::r:*">
 							<xsl:call-template name="list-author-info-item">
@@ -578,15 +585,63 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xsl:value-of select="concat(' page-break-after-', normalize-space(@break-after))"/>
 				</xsl:if>
 			</xsl:attribute>
+			<xsl:variable name="employer-count" select="count(r:employer)"/>
 			<xsl:for-each select="r:employer">
 				<xsl:sort select="r:positions/r:position/r:timeline/r:start-date" data-type="text" order="{$employer-sort}"/>
 				<xsl:sort select="r:positions/r:position/r:timeline/r:end-date" data-type="text" order="{$employer-sort}"/>
 				<xsl:variable name="employer" select="."/>
+				<xsl:variable name="employer-id" select="normalize-space(@id)"/>
+				<xsl:variable name="employer-position" select="position()"/>
 				<xsl:for-each select="r:positions/r:position[not(@hidden = 'true' or @hidden = 'yes' or @hidden = 'on' or @hidden = '1')]">
 					<xsl:sort select="r:timeline/r:start-date" data-type="text" order="{$position-sort}"/>
 					<xsl:sort select="r:timeline/r:end-date" data-type="text" order="{$position-sort}"/>
-					<div class="position-container">
-						<a name="{concat('position-', normalize-space(r:timeline/r:start-date))}"></a>
+					<xsl:variable name="position-id" select="normalize-space(@id)"/>
+					<xsl:variable name="break-before-position">
+						<xsl:choose>
+							<xsl:when test="string-length(normalize-space(@break-before)) > 0">
+								<xsl:value-of select="normalize-space(@break-before)"/>
+							</xsl:when>
+							<xsl:when test="string-length(normalize-space($employer/@break-before)) > 0 and position() = 1">
+								<xsl:value-of select="normalize-space($employer/@break-before)"/>
+							</xsl:when>
+						</xsl:choose>
+					</xsl:variable>
+					<xsl:variable name="break-after-position">
+						<xsl:choose>
+							<xsl:when test="string-length(normalize-space(@break-after)) > 0">
+								<xsl:value-of select="normalize-space(@break-after)"/>
+							</xsl:when>
+							<xsl:when test="string-length(normalize-space($employer/@break-after)) > 0 and position() = last()">
+								<xsl:value-of select="normalize-space($employer/@break-after)"/>
+							</xsl:when>
+						</xsl:choose>
+					</xsl:variable>
+					<div>
+						<xsl:attribute name="class">
+							<xsl:value-of select="'position-container'"/>
+							<xsl:if test="string-length($break-before-position) > 0">
+								<xsl:value-of select="concat(' page-break-before-', $break-before-position)"/>
+							</xsl:if>
+							<xsl:if test="string-length($break-after-position) > 0">
+								<xsl:value-of select="concat(' page-break-after-', $break-after-position)"/>
+							</xsl:if>
+						</xsl:attribute>
+						<xsl:element name="a">
+							<xsl:attribute name="name">
+								<xsl:value-of select="'position-'"/>
+								<xsl:if test="string-length($employer-id) > 0">
+									<xsl:value-of select="concat($employer-id, '.')"/>
+								</xsl:if>
+								<xsl:choose>
+									<xsl:when test="string-length($position-id) > 0">
+										<xsl:value-of select="$position-id"/>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="normalize-space(r:timeline/r:start-date)"/>
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:attribute>
+						</xsl:element>
 						<div class="position-header">
 							<div class="position-employer">
 								<h3 class="employer-title">
@@ -826,14 +881,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template name="handle-timeline" match="r:timeline">
+	<xsl:template name="handle-position-timeline" match="r:position/r:timeline">
+		<xsl:variable name="positions-start-format" select="ancestor::r:positions/@start-date-format"/>
+		<xsl:variable name="positions-end-format" select="ancestor::r:positions/@end-date-format"/>
+		<xsl:variable name="employers-start-format" select="ancestor::r:employers/@start-date-format"/>
+		<xsl:variable name="employers-end-format" select="ancestor::r:employers/@end-date-format"/>
 		<div class="timeline-container">
 			<span class="timeline-start">
 				<xsl:for-each select="r:start-date">
 					<xsl:call-template name="date-eval">
 						<xsl:with-param name="symbolic" select="@symbolic"/>
 						<xsl:with-param name="truncate-to" select="@truncate-to"/>
-						<xsl:with-param name="format" select="@format"/>
+						<xsl:with-param name="format">
+							<xsl:choose>
+								<xsl:when test="string-length(@format) > 0">
+									<xsl:value-of select="@format"/>
+								</xsl:when>
+								<xsl:when test="string-length($positions-start-format) > 0">
+									<xsl:value-of select="$positions-start-format"/>
+								</xsl:when>
+								<xsl:when test="string-length($employers-start-format) > 0">
+									<xsl:value-of select="$employers-start-format"/>
+								</xsl:when>
+							</xsl:choose>
+						</xsl:with-param>
 					</xsl:call-template>
 				</xsl:for-each>
 			</span>
@@ -845,7 +916,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<xsl:call-template name="date-eval">
 								<xsl:with-param name="symbolic" select="@symbolic"/>
 								<xsl:with-param name="truncate-to" select="@truncate-to"/>
-								<xsl:with-param name="format" select="@format"/>
+								<xsl:with-param name="format">
+									<xsl:choose>
+										<xsl:when test="string-length(@format) > 0">
+											<xsl:value-of select="@format"/>
+										</xsl:when>
+										<xsl:when test="string-length($positions-end-format) > 0">
+											<xsl:value-of select="$positions-end-format"/>
+										</xsl:when>
+										<xsl:when test="string-length($employers-end-format) > 0">
+											<xsl:value-of select="$employers-end-format"/>
+										</xsl:when>
+									</xsl:choose>
+								</xsl:with-param>
 							</xsl:call-template>
 						</xsl:for-each>
 					</xsl:when>
@@ -1316,7 +1399,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xsl:variable name="skill-level" select="$skill/r:experience/@level"/>
 		<xsl:variable name="skill-level-key">
 			<xsl:choose>
-				<xsl:when test="$skill-level = 0 and count(key('level', $skill-level-key)) > 0">
+				<xsl:when test="$skill-level = 0 and count(key('level', -1)) > 0">
 					<xsl:value-of select="-1"/>
 				</xsl:when>
 				<xsl:otherwise>
