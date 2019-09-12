@@ -3,9 +3,6 @@
 $competencyPrintColumns: 2;
 $skillPrintColumns: 2;
 $certificationPrintColumns: 2;
-$break-positions: (before after);
-$page-break-values: (auto left right avoid always);
-$break-values: (auto avoid avoid-page page left right recto verso avoid-column column avoid-region region);
 
 @media print {
   @page {
@@ -37,43 +34,13 @@ $break-values: (auto avoid avoid-page page left right recto verso avoid-column c
     }
   }
 
-  @each $break-position in $break-positions {
-    @each $break-value in $page-break-values {
-      .page-break-#{$break-position}-#{$break-value} {
-        page-break-#{$break-position}: $break-value;
-        @if index(auto left right, $break-value) {
-          break-#{$break-position}: $break-value;
-        } @else if $break-value == avoid {
-          break-#{$break-position}: avoid-page;
-        } @else if $break-value == always {
-          break-#{$break-position}: page;
-        }
-      }
-    }
-  }
-
-  @each $break-position in $break-positions {
-    @each $break-value in $break-values {
-      .break-#{$break-position}-#{$break-value} {
-        break-#{$break-position}: $break-value;
-        @if index(auto left right, $break-value) {
-          page-break-#{$break-position}: $break-value;
-        } @else if $break-value == avoid-page {
-          page-break-#{$break-position}: avoid;
-        } @else if $break-value == page {
-          page-break-#{$break-position}: always;
-        }
-      }
-    }
-  }
-
   code {
     &.snippet {
       border-style: none;
     }
   }
 
-  .section-heading, .project-heading, .project-title {
+  .section-heading, .projects-heading, .project-heading, .project-title {
     page-break-after: avoid;
     break-after: avoid;
   }

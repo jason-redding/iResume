@@ -1,5 +1,35 @@
 @import "_common";
 
+@each $break-position in $break-positions {
+  @each $break-value in $page-break-values {
+    .page-break-#{$break-position}-#{$break-value} {
+      page-break-#{$break-position}: $break-value;
+      @if index(auto left right, $break-value) {
+        break-#{$break-position}: $break-value;
+      } @else if $break-value == avoid {
+        break-#{$break-position}: avoid-page;
+      } @else if $break-value == always {
+        break-#{$break-position}: page;
+      }
+    }
+  }
+}
+
+@each $break-position in $break-positions {
+  @each $break-value in $break-values {
+    .break-#{$break-position}-#{$break-value} {
+      break-#{$break-position}: $break-value;
+      @if index(auto left right, $break-value) {
+        page-break-#{$break-position}: $break-value;
+      } @else if $break-value == avoid-page {
+        page-break-#{$break-position}: avoid;
+      } @else if $break-value == page {
+        page-break-#{$break-position}: always;
+      }
+    }
+  }
+}
+
 body {
   -o-tab-size: 2;
   -moz-tab-size: 2;
@@ -471,6 +501,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .author {
+  display: flex;
   a {
     &, &:visited {
       text-decoration: none;
@@ -528,6 +559,19 @@ h1, h2, h3, h4, h5, h6 {
 
   .author-contact-right {
 
+  }
+
+  &.author-contact-layout-list {
+    flex-direction: column;
+  }
+  &.author-contact-layout-split {
+    flex-direction: row;
+    flex: 1 1 auto;
+  }
+  &.author-contact-layout-center {
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -601,6 +645,8 @@ h1, h2, h3, h4, h5, h6 {
   flex-wrap: wrap;
   margin-top: 1em;
   margin-bottom: 0.5em;
+  page-break-after: avoid;
+  break-after: avoid;
 
   .position-employer {
     display: flex;
