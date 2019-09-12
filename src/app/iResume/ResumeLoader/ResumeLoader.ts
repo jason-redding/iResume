@@ -36,10 +36,10 @@ export default class ResumeLoader {
 
     constructor(file: string) {
         this.file = file;
-        this._onLoadStart = $.Callbacks('memory unique');
-        this._onLoadComplete = $.Callbacks('memory unique');
-        this._onLoadFail = $.Callbacks('memory unique');
-        this._onLoadEnd = $.Callbacks('memory unique');
+        this._onLoadStart = $.Callbacks('unique');
+        this._onLoadComplete = $.Callbacks('unique');
+        this._onLoadFail = $.Callbacks('unique');
+        this._onLoadEnd = $.Callbacks('unique');
         this._xpath = new XPath();
     }
 
@@ -81,8 +81,8 @@ export default class ResumeLoader {
 
     load(): ResumeLoader {
         let xmlPath = this.getDataPath();
-        let xslPath = this.getTransformPath();
-        let jobs: string[] = [xmlPath, xslPath];
+        // let xslPath = this.getTransformPath();
+        let jobs: string[] = [xmlPath];
         let xhrList: JQuery.jqXHR[] = [];
         let _jobs: jqXHRBundle = {};
         for (let job of jobs) {
@@ -103,6 +103,27 @@ export default class ResumeLoader {
         .done(() => {
             this._response = ResumeLoader._xhrToBundle(_jobs);
             this._xpath.initNamespaceFrom(this._response.xml.document);
+            // this._onLoadComplete.fireWith(this, [this._response]);
+            // this._onLoadEnd.fireWith(this, [this._response]);
+            this._loadTransform();
+        });
+        return this;
+    }
+
+    _loadTransform(): ResumeLoader {
+        const xslPath: string = this.getTransformPath();
+        $.get({
+            cache: false,
+            url: xslPath
+        })
+        .fail((xhr, type, ex) => {
+            this._onLoadFail.fireWith(this, [null]);
+            this._onLoadEnd.fireWith(this, [null]);
+        })
+        .done((data, status, xhr) => {
+            const jobsBundle: jqXHRBundle = {};
+            jobsBundle[xslPath] = xhr;
+            $.extend(true, this._response, ResumeLoader._xhrToBundle(jobsBundle));
             this._onLoadComplete.fireWith(this, [this._response]);
             this._onLoadEnd.fireWith(this, [this._response]);
         });
@@ -114,6 +135,22 @@ export default class ResumeLoader {
     }
 
     getTransformPath() {
+        if (this._response && this._response.xml && $.isXMLDoc(this._response.xml.document)) {
+            let referencedStylesheet: string = $.trim(this._xpath.evaluate(this._response.xml.document, '/processing-instruction("xml-stylesheet")', 'string'));
+            if (referencedStylesheet.length > 0) {
+                const xmlStylesheetAttributes: JQuery.PlainObject = {};
+                const REX_ATTRIBUTE: RegExp = /\s*([^=\s]+)="([^"]*)"/g;
+                let match: RegExpExecArray = null;
+                while ((match = REX_ATTRIBUTE.exec(referencedStylesheet)) != null) {
+                    xmlStylesheetAttributes[match[1]] = match[2];
+                }
+                if (('href' in xmlStylesheetAttributes) && $.trim(xmlStylesheetAttributes.href).length > 0) {
+                    let filePath: string = this.file;
+                    filePath = filePath.replace(/(\/?)[^/]+$/, '$1');
+                    return filePath + xmlStylesheetAttributes.href;
+                }
+            }
+        }
         return ResumeLoader._constructPathFor(this.file, ResumeFileType.TRANSFORM);
     }
 
