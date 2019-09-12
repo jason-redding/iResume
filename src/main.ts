@@ -19,6 +19,28 @@ function onReady() {
     initTabs();
 }
 
+function loadResume(): ResumeLoader {
+    const resumeLoader: ResumeLoader = new ResumeLoader('/resume');
+    resumeLoader
+    .onLoadStart(() => {
+        $.mobile.loading('show', {
+            text: 'Loading and transforming résumé XML...',
+            textVisible: true
+        });
+    })
+    .onLoadFail(response => {
+        $.mobile.loading('hide');
+    })
+    .onLoadComplete(response => {
+        $.mobile.loading('hide');
+        initSkillsTable(resumeLoader);
+        initTooltips(resumeLoader);
+        initResumeComponent(resumeLoader);
+    })
+    .load();
+    return resumeLoader;
+}
+
 function initHashHandling() {
     $(window).on('pagecontainerbeforechange.iresume', function (event, ui) {
         if (typeof ui.toPage === 'string' || ui.toPage instanceof String) {
@@ -27,7 +49,7 @@ function initHashHandling() {
             if (m !== null && m.length > 0) {
                 let $targetElement: JQuery = $('a[name="' + m[1] + '"]', ui.prevPage);
                 if ($targetElement.length === 0) {
-                    $targetElement = $('[id="' + m[1] + '"', ui.prevPage);
+                    $targetElement = $('[id="' + m[1] + '"]', ui.prevPage);
                 }
                 if ($targetElement.length > 0) {
                     event.preventDefault();
@@ -104,28 +126,6 @@ function initPrintHandler() {
             break;
         }
     }
-}
-
-function loadResume(): ResumeLoader {
-    const resumeLoader: ResumeLoader = new ResumeLoader('/resume');
-    resumeLoader
-    .onLoadStart(() => {
-        $.mobile.loading('show', {
-            text: 'Loading and transforming résumé XML...',
-            textVisible: true
-        });
-    })
-    .onLoadFail(response => {
-        $.mobile.loading('hide');
-    })
-    .onLoadComplete(response => {
-        $.mobile.loading('hide');
-        initSkillsTable(resumeLoader);
-        initTooltips(resumeLoader);
-        initResumeComponent(resumeLoader);
-    })
-    .load();
-    return resumeLoader;
 }
 
 function initSkillsTable(resumeLoader: ResumeLoader): ResumeSkillsTable {
