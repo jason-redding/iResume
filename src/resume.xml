@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jman.socialis.dev/xsd/resume"
 	xsi:schemaLocation="http://jman.socialis.dev/xsd/resume"
-	last-modified="2019-09-12T11:13:13">
+	last-modified="2019-11-18T11:13:13">
 	<meta>
 		<skill>
 			<experience type="experience" preposition="at" screen-min="1" print-min="2">
@@ -141,6 +141,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="relevant"/>
 				<category value="front-end"/>
+			</categories>
+		</skill>
+		<skill>
+			<name>ActiveMQ</name>
+			<experience level="1.5">
+				<since date="2019-09-16"/>
+			</experience>
+			<categories>
+				<category value="back-end"/>
 			</categories>
 		</skill>
 		<skill hidden="true">
@@ -295,6 +304,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="dev-tool"/>
 				<category value="back-end"/>
+			</categories>
+		</skill>
+		<skill>
+			<name>Eclipse IDE</name>
+			<experience level="2">
+				<since date="2019-09-16"/>
+			</experience>
+			<categories>
+				<category value="dev-tool"/>
 			</categories>
 		</skill>
 		<skill>
@@ -584,6 +602,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</categories>
 		</skill>
 		<skill>
+			<name>OpenMap</name>
+			<version>5.1</version>
+			<experience level="1.5">
+				<since date="2019-09-16"/>
+			</experience>
+			<categories>
+				<category value="api"/>
+			</categories>
+		</skill>
+		<skill>
 			<name>Oracle PL/SQL</name>
 			<experience level="4" precision="years">
 				<spanning from-date="2003-01" to-date="2017-12"/>
@@ -760,6 +788,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</categories>
 		</skill>
 		<skill>
+			<name>WildFly</name>
+			<experience level="2">
+				<since date="2019-09-16"/>
+			</experience>
+			<categories>
+				<category value="app-server"/>
+				<category value="relevant"/>
+				<category value="back-end"/>
+			</categories>
+		</skill>
+		<skill>
 			<name>WordPress</name>
 			<experience level="2">
 				<spanning from-date="2015-01" to-date="2016-07"/>
@@ -817,6 +856,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 	</skills>
 	<employers title="Experience Details" break-before="always" start-date-format="MMMM yyyy" end-date-format="MMMM yyyy">
+		<employer id="ve">
+			<title>Veracity Engineering</title>
+			<location>Washington, DC</location>
+			<positions>
+				<position id="senior-java-dev">
+					<title>Senior Java Developer</title>
+					<timeline>
+						<start-date>2019-09-16</start-date>
+					</timeline>
+					<description>
+						<h:p>Supported various components of an Airport Surveillance system.</h:p>
+						<h:ul>
+							<h:li>
+								Worked with team to modernize and enhance web front-end interface while maintaining legacy code.
+							</h:li>
+							<h:li>
+								Performed fixes and maintenance on thick <skill>Java</skill> client.
+							</h:li>
+						</h:ul>
+					</description>
+					<stack>
+						<skill name="ActiveMQ"/>
+						<skill name="CSS"/>
+						<skill name="HTML"/>
+						<skill name="JavaScript"/>
+						<skill name="Responsive Design"/>
+						<skill name="Java"/>
+						<skill name="SQL"/>
+						<skill name="MySQL"/>
+						<skill name="OpenMap"/>
+						<skill name="WildFly"/>
+						<skill name="XML"/>
+					</stack>
+				</position>
+			</positions>
+		</employer>
 		<employer id="bah">
 			<title>Booz Allen Hamilton</title>
 			<location>Laurel, MD</location>
