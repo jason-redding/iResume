@@ -16,7 +16,38 @@ export interface ResumeResponseBundle {
 export enum ResumeFileType {
     DATA = 'xml',
     TRANSFORM = 'xsl',
+    PRESENTATION = 'presentation.xml',
     DEFINITION = 'xsd'
+}
+
+export namespace ResumeFileType {
+    let _keys: Set<string> = null;
+    let _values: Set<string> = null;
+
+    function _buildFields() {
+        if (_keys === null) {
+            _keys = new Set();
+            _values = new Set();
+            let propValue: any;
+            for (let propName in ResumeFileType) {
+                propValue = ResumeFileType[propName];
+                if (typeof propValue === 'string' || propValue instanceof String) {
+                    _keys.add(propName);
+                    _values.add(<string>propValue);
+                }
+            }
+        }
+    }
+
+    export function keys() {
+        _buildFields();
+        return _keys;
+    }
+
+    export function values() {
+        _buildFields();
+        return _values;
+    }
 }
 
 export interface jqXHRBundle {
@@ -54,13 +85,27 @@ export default class ResumeLoader {
     private static _xhrToBundle(xhrs: jqXHRBundle): ResumeResponseBundle {
         const responseBundle: ResumeResponseBundle = {};
         if (typeof xhrs === 'object') {
+            let matchedExtension: string;
             for (let responseId in xhrs) {
-                let matcher: RegExpMatchArray = /\.([^.]+)$/.exec(responseId);
-                if (matcher && matcher.length > 0) {
+                matchedExtension = null;
+                for (let ending of ResumeFileType.values()) {
+                    if (responseId.endsWith('.' + ending)) {
+                        if (matchedExtension === null || matchedExtension.length < ending.length) {
+                            matchedExtension = ending;
+                        }
+                    }
+                }
+                if (typeof matchedExtension !== 'string') {
+                    let matcher: RegExpMatchArray = /\.([^.]+)$/.exec(responseId);
+                    if (matcher && matcher.length > 0) {
+                        matchedExtension = matcher[1];
+                    }
+                }
+                if (typeof matchedExtension === 'string') {
                     let xhr: JQuery.jqXHR = xhrs[responseId];
-                    responseBundle[matcher[1]] = {
+                    responseBundle[matchedExtension] = {
                         id: responseId,
-                        type: matcher[1],
+                        type: matchedExtension,
                         xhr: xhr,
                         document: xhr.responseXML,
                         text: xhr.responseText || ''
@@ -105,29 +150,74 @@ export default class ResumeLoader {
             this._xpath.initNamespaceFrom(this._response.xml.document);
             // this._onLoadComplete.fireWith(this, [this._response]);
             // this._onLoadEnd.fireWith(this, [this._response]);
-            this._loadTransform();
+            let supplementalJobs: JQuery.jqXHR[] = [];
+            supplementalJobs.push(this._loadTransform());
+            supplementalJobs.push(this._loadPresentation());
+            $.when.apply($.when, supplementalJobs)
+            .fail((xhr, type, ex) => {
+                console.error('Failed to get supplemental files!', ex);
+                this._onLoadFail.fireWith(this, [null]);
+                this._onLoadEnd.fireWith(this, [null]);
+            })
+            .done(() => {
+                this._onLoadComplete.fireWith(this, [this._response]);
+                this._onLoadEnd.fireWith(this, [this._response]);
+            });
         });
         return this;
     }
 
-    _loadTransform(): ResumeLoader {
-        const xslPath: string = this.getTransformPath();
-        $.get({
+    _loadTransform(): JQuery.jqXHR {
+        const jobPath: string = this.getTransformPath();
+        let xhr: JQuery.jqXHR = $.get({
             cache: false,
-            url: xslPath
-        })
-        .fail((xhr, type, ex) => {
-            this._onLoadFail.fireWith(this, [null]);
-            this._onLoadEnd.fireWith(this, [null]);
-        })
+            url: jobPath
+        });
+        xhr
+        // .fail((xhr, type, ex) => {
+        //     this._onLoadFail.fireWith(this, [null]);
+        //     this._onLoadEnd.fireWith(this, [null]);
+        // })
         .done((data, status, xhr) => {
             const jobsBundle: jqXHRBundle = {};
-            jobsBundle[xslPath] = xhr;
+            jobsBundle[jobPath] = xhr;
             $.extend(true, this._response, ResumeLoader._xhrToBundle(jobsBundle));
-            this._onLoadComplete.fireWith(this, [this._response]);
-            this._onLoadEnd.fireWith(this, [this._response]);
+            // this._onLoadComplete.fireWith(this, [this._response]);
+            // this._onLoadEnd.fireWith(this, [this._response]);
         });
-        return this;
+        return xhr;
+    }
+
+    _loadPresentation(): JQuery.jqXHR {
+        const presentationPath: string = this.getPresentationPath();
+        let xhr: JQuery.jqXHR = $.get({
+            cache: false,
+            url: presentationPath
+        });
+        xhr
+        // .fail((xhr, type, ex) => {
+        //     this._onLoadFail.fireWith(this, [null]);
+        //     this._onLoadEnd.fireWith(this, [null]);
+        // })
+        .done((data, status, xhr) => {
+            const jobsBundle: jqXHRBundle = {};
+            jobsBundle[presentationPath] = xhr;
+            $.extend(true, this._response, ResumeLoader._xhrToBundle(jobsBundle));
+        });
+        return xhr;
+    }
+
+    getPresentationPath() {
+        if (this._response && this._response.xml && $.isXMLDoc(this._response.xml.document)) {
+            let x: XPath = new XPath(this._response.xml.document);
+            let referencedPresentation: string = $.trim(x.evaluate(this._response.xml.document, '/r:resume/xi:include[@r:name = "presentation"][1]/@href', 'string'));
+            if (referencedPresentation.length > 0) {
+                let filePath: string = this.file;
+                filePath = filePath.replace(/(\/?)[^/]+$/, '$1');
+                return filePath + referencedPresentation;
+            }
+        }
+        return ResumeLoader._constructPathFor(this.file, ResumeFileType.PRESENTATION);
     }
 
     getDataPath() {

@@ -1,4 +1,9 @@
-import * as $ from 'jquery';
+
+declare global {
+    interface Window {
+        gtag: (command: string, ...parameters: any) => void | any;
+    }
+}
 
 export default class GA {
     private static readonly TRACKING_ID: string = 'UA-106877989-1';
@@ -23,6 +28,6 @@ export default class GA {
                 'value': value
             });
         }
-        (<any>window).gtag('event', action, eventProperties);
+        window.gtag('event', action, eventProperties);
     }
 }

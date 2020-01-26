@@ -1,9 +1,13 @@
 import ResumeLoader, {ResumeResponse, ResumeResponseBundle} from '../ResumeLoader/ResumeLoader';
-import XPath from "../../XPath/XPath";
-import {Duration, DurationResult} from "../../Env/Env";
+import XPath from '../../XPath/XPath';
+import {Duration, DurationResult} from '../../Env/Env';
+// import {Document, HeadingLevel, Packer, Paragraph, Table, TableRow, TableCell, TableOfContents, WidthType} from '../../../js/docx/index';
+// import {saveAs} from 'file-saver';
 
 type StringAsBoolean = 'true' | 'yes' | 'on' | '1' | 'false' | 'no' | 'off' | '0';
 type SortOrder = 'ascending' | 'descending';
+
+type ResumeAuthorLayout = 'split' | 'center' | 'list';
 
 export interface ResumeViewportProperties {
     latestModifiedDate: Date;
@@ -36,7 +40,7 @@ export default class ResumeComponent {
         this.viewport = viewport;
         this.viewportProperties = {};
         this._xpath = new XPath();
-        this._callbacksBefore = $.Callbacks('memory unique')
+        this._callbacksBefore = $.Callbacks('memory unique');
         this._callbacksAfter = $.Callbacks('memory unique');
         const systemDate = Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss");
         this._transformProperties = $.extend(false, {
@@ -69,6 +73,10 @@ export default class ResumeComponent {
 
     get xslPath(): string {
         return this._loader.getTransformPath();
+    }
+
+    get presentationPath(): string {
+        return this._loader.getPresentationPath();
     }
 
     get file(): string {
@@ -129,6 +137,18 @@ export default class ResumeComponent {
         return null;
     }
 
+    get presentationDocument(): XMLDocument {
+        let doc: XMLDocument = null;
+        if (this._responseBundle === null) {
+            return doc;
+        }
+        let response: ResumeResponse = this._responseBundle['presentation.xml'];
+        if ((typeof response !== 'undefined') && $.isXMLDoc(response.document)) {
+            doc = response.document;
+        }
+        return doc;
+    }
+
     get transformedDocument(): XMLDocument {
         return this._transformedDocument;
     }
@@ -143,6 +163,98 @@ export default class ResumeComponent {
         return this;
     }
 
+    exportToDocx(): void {
+        // const now: Date = new Date();
+        // let output: string = '';
+        // let authorName: string = this._xpath.evaluate(this.xmlDocument, '/r:resume/r:author/@name', 'string');
+        //
+        //
+        // let doc = new Document({
+        //     creator: authorName,
+        //     title: authorName + ' - Resume',
+        //     description: authorName + '\'s Resume'
+        // });
+        //
+        // const tocResume = new TableOfContents('Summary', {
+        //     hyperlink: true
+        // });
+        //
+        // let authorLayoutType: string = this._xpath.evaluate(this.xmlDocument, '/r:resume/r:author/@layout', 'string');
+        // let authorItems: JQuery<Node> = this._xpath.evaluate(this.xmlDocument, '/r:resume/r:author/*', 'nodes');
+        //
+        // let currentCell: TableCell;
+        // let currentRow: TableRow = new TableRow({
+        //     cantSplit: true,
+        //     children: [
+        //         currentCell = new TableCell({
+        //             children: []
+        //         })
+        //     ]
+        // });
+        // let authorTableRows: TableRow[] = [currentRow];
+        //
+        // for (let i = 0; i < authorItems.length; i++) {
+        //     let $authorNode: JQuery<Node> = $(authorItems[i]);
+        //     let nodeName: string = $authorNode.prop('nodeName');
+        //     if (nodeName === 'split') {
+        //         if (i > 0 && i < (authorItems.length - 1)) {
+        //
+        //         }
+        //         continue;
+        //     }
+        //     if (currentRow === null) {
+        //         currentRow = new TableRow({});
+        //         authorTableRows.push(currentRow);
+        //     }
+        //     if (currentCell === null) {
+        //         // Time moves *through* you.
+        //         currentCell = new TableCell({
+        //             children: []
+        //         });
+        //     }
+        //     if (nodeName === 'name') {
+        //         currentCell.addChildElement(new Paragraph({
+        //             heading: HeadingLevel.HEADING_
+        //         }));
+        //     } else if (nodeName === 'last-updated') {
+        //
+        //     } else {
+        //
+        //     }
+        // }
+        //
+        // let authorTable: Table = new Table({
+        //     cantSplit: true,
+        //     width: {
+        //         size: 100,
+        //         type: WidthType.PERCENTAGE
+        //     },
+        //     rows: authorTableRows
+        // });
+        //
+        // doc.addSection({
+        //     properties: {},
+        //     children: [
+        //         new Paragraph({
+        //             heading: HeadingLevel['HEADING_' + 1],
+        //             text: authorName
+        //         })
+        //     ]
+        // });
+        //
+        // doc.addTableOfContents(tocResume);
+        //
+        // Packer.toBlob(doc).then((blob) => {
+        //     saveAs(blob, Date.format(now, 'yyyy-MM-dd') + '_' + authorName.replace(/\s+/g, '_') + '_Resume.docx');
+        // });
+    }
+
+    private _applyPresentation() {
+        const response: ResumeResponseBundle = this._responseBundle;
+        const xp: XPath = new XPath(this.presentationDocument);
+
+    }
+
     private _applyTransform() {
         const response: ResumeResponseBundle = this._responseBundle;
         this._callbacksBefore.fireWith(response, [response]);
@@ -154,11 +266,17 @@ export default class ResumeComponent {
         });
         try {
             let xslTransformer: XSLTProcessor = new XSLTProcessor();
-            xslTransformer.importStylesheet(response.xsl.document);
+            xslTransformer.importStylesheet(this.xslDocument);
             for (let pName in transformParameters) {
                 xslTransformer.setParameter(null, pName, transformParameters[pName]);
             }
-            this._transformedDocument = xslTransformer.transformToDocument(response.xml.document);
+            this._transformedDocument = xslTransformer.transformToDocument(this.xmlDocument);
+        } catch (ex) {
+            console.error(ex);
+        }
+
+        try {
+            this._applyPresentation();
         } catch (ex) {
             console.error(ex);
         }
@@ -175,11 +293,11 @@ export default class ResumeComponent {
         if (('enhanceWithin' in $.fn) && typeof $.fn.enhanceWithin === 'function') {
             this.viewport.enhanceWithin();
         }
-        this._callbacksAfter.fireWith(this._transformedDocument, [this._transformedDocument, response.xml.document, response.xsl.document]);
+        this._callbacksAfter.fireWith(this.transformedDocument, [this.transformedDocument, this.xmlDocument, this.xslDocument]);
     }
 
     private _applyToViewport(properties: Partial<ResumeViewportProperties> = this.viewportProperties) {
-        if ($.isXMLDoc(this._transformedDocument)) {
+        if ($.isXMLDoc(this.transformedDocument)) {
             const latestModifiedDate: Date = properties.latestModifiedDate;
             const now = new Date();
             this.viewport.each((viewportIndex, viewportElement) => {
@@ -220,18 +338,8 @@ export default class ResumeComponent {
                         }
                     }
                     const skillDuration: DurationResult = Duration.getDuration(totalSkillExperience);
-                    let skillDurationISO: string = '';
-                    if (skillDuration.years > 0) {
-                        skillDurationISO += skillDuration.years + 'Y';
-                    }
-                    if (skillDuration.months > 0) {
-                        skillDurationISO += skillDuration.months + 'M';
-                    }
-                    if (skillDuration.days > 0) {
-                        skillDurationISO += skillDuration.days + 'D';
-                    }
-                    if (skillDurationISO.length > 0) {
-                        $skill.attr('data-experience-duration', 'P' + skillDurationISO);
+                    if (skillDuration.iso.length > 1) {
+                        $skill.attr('data-experience-duration', skillDuration.iso);
                     }
                 });
             });

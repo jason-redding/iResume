@@ -1,6 +1,6 @@
 import * as $ from "jquery";
 import * as hljs from '../../js/highlight.pack';
-import GA from "../GA/GA";
+import GA from "../metrics/GA";
 
 const FILE_TYPES: {
     [key: string]: string

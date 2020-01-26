@@ -1,17 +1,16 @@
 const gulp = require('gulp');
 const exec = require('gulp-exec');
-const sass = require('gulp-sass');
 const ts = require('gulp-typescript');
+const sass = require('gulp-sass');
 sass.compiler = require('node-sass');
 const useref = require('gulp-useref');
 const del = require('del');
 const browserSync = require('browser-sync').create();
 const preprocess = require('gulp-preprocess');
 const sourcemaps = require('gulp-sourcemaps');
-const fs = require('fs');
 const os = require('os');
 
-const tsConfig = ts.createProject('tsconfig.json');
+const tsProject = ts.createProject('tsconfig.json');
 
 const NOW = new Date();
 const CONTEXT = {
@@ -108,12 +107,15 @@ function compileSass() {
 }
 
 function compileTypeScript(cb) {
-    return gulp.src(CONTEXT.DEST + '/**/*.ts', {
-        base: CONTEXT.DEST
-    })
+    let tsResult =
+    gulp.src(CONTEXT.DEST + '/**/*.ts', {base: CONTEXT.DEST})
     // .pipe(sourcemaps.init())
-    .pipe(tsConfig())
+    // .pipe(tsProject())
+    .pipe(tsProject())
+    ;
+    return tsResult
     // .pipe(sourcemaps.write('.'))
+    .js
     .pipe(gulp.dest(CONTEXT.DEST, {}));
 }
 
@@ -157,11 +159,16 @@ function padLeft(input, char, size) {
     return input;
 }
 
-exports.cleanBuild = gulp.series(showContext, clean, build);
+function cleanBuild() {
+    return gulp.series(showContext, clean, build);
+}
+
+exports.cleanBuild = cleanBuild();
 exports.cleanBuild.displayName = 'clean-build';
 exports.cleanBuild.description = 'Clean, and build to project folder.';
 
-exports.default = exports.cleanBuild;
+exports.default = cleanBuild();
+exports.default.description = 'Alias for clean-build.';
 
 exports.build = build;
 

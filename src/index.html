@@ -70,12 +70,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <!-- @endif -->
     <!-- @endif -->
 
-    <script type="text/javascript" src="/js/require.js" data-main="app/app"></script>
+    <script type="text/javascript" src="/js/r.js" data-main="main"></script>
 </head>
 <body>
 <div data-role="page" data-theme="a">
     <header data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 data-short-text="Interactive Résumé"><span class="text">Jason Redding &ndash; Interactive Résumé</span></h1>
+        <!-- <button id="export-button" class="ui-btn ui-btn-left ui-btn-inline ui-btn-icon-notext ui-icon-action ui-shadow" type="button" title="Export...">Export...</button> -->
         <button id="theme-toggle-button" class="ui-btn ui-btn-right ui-btn-inline ui-btn-icon-notext ui-icon-eye ui-shadow" type="button" title="Toggle light/dark theme">Toggle light/dark theme</button>
     </header>
     <main data-role="main" class="ui-content">
@@ -108,7 +109,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         data-render-data-experience-last="${experience.last.value}"
                         data-render-data-experience-type="${experience.type}"
                         data-render-data-experience-years="${experience.duration.years}"
-                        data-render-data-experience-duration="P${experience.duration.years}Y"
+                        data-render-data-experience-months="${experience.duration.months}"
+                        data-render-data-experience-days="${experience.duration.days}"
+                        data-render-data-experience-duration="${experience.duration.iso}"
                         data-render-data-version="${version}"
                         data-render-data-version-hint="${version.hint}"
                         data-render-tabindex="0">

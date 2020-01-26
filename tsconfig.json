@@ -4,10 +4,30 @@
         "newLine": "LF",
         "module": "amd",
         "declaration": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "types": [
+            "file-saver",
+            "highlight.js",
+            "jquery",
+            "jquerymobile",
+            "jqueryui",
+            "requirejs",
+            "luxon"
+        ]
     },
-    "exclude": [
-        "node_modules",
-        "public_html"
+    "files": [
+        "public_html/app/CodeViewer/CodeViewer.ts",
+        "public_html/app/Env/Env.ts",
+        "public_html/app/iResume/iResumeComponent/iResumeComponent.ts",
+        "public_html/app/iResume/iResumeLoader/iResumeLoader.ts",
+        "public_html/app/iResume/iResumeSkillsTable/iResumeSkillsTable.ts",
+        "public_html/app/metrics/GA.ts",
+        "public_html/app/Namespace/Namespace.ts",
+        "public_html/app/XPath/XPath.ts",
+        "public_html/app.ts",
+        "public_html/main.ts"
+    ],
+    "include": [
+        "public_html/**/*.ts"
     ]
 }

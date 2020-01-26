@@ -18,10 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resume xmlns="http://jman.socialis.dev/xsd/resume"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xi="http://www.w3.org/2001/XInclude"
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jman.socialis.dev/xsd/resume"
 	xsi:schemaLocation="http://jman.socialis.dev/xsd/resume"
-	last-modified="2019-11-18T11:13:13">
+	last-modified="2020-01-26T11:13:13">
+	<xi:include r:name="presentation" href="resume.presentation.xml"/>
 	<meta>
 		<skill>
 			<experience type="experience" preposition="at" screen-min="1" print-min="2">
@@ -48,17 +50,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</meta>
 	<author name="Jason Redding" layout="split">
 		<name/>
-		<seeking label="Seeking">Commercial, mid-level positions</seeking>
+		<seeking label="Seeking">Commercial positions</seeking>
 		<email label="Email">jason.redding@gmail.com</email>
 		<phone label="Cell">410-428-8522</phone>
 		<split/>
 		<clearance label="Clearance">None</clearance>
-		<address label="Residence">Washington, DC</address>
-		<willing-to-travel label="% Willing to Travel">20%</willing-to-travel>
+		<address label="Location">Columbia, MD</address>
+		<willing-to-travel label="% Willing to Travel">15%</willing-to-travel>
 		<willing-to-relocate label="Willing to Relocate">Yes</willing-to-relocate>
 		<last-updated label="Last Updated" format="M/d/yyyy"/>
 	</author>
-	<description title="Experience Summary">
+	<description title="Experience Summary" hidden="true">
 		Jason is an experienced, self-taught <skill>Java</skill> developer with a successful track record
 		delivering across a Full Stack of development technology within Agile and traditional project frameworks.
 		Prior to joining <h:a href="#position-bah.full-stack-dev">Booz Allen</h:a>, Jason worked at the Community College of Baltimore County.
@@ -872,7 +874,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								Worked with team to modernize and enhance web front-end interface while maintaining legacy code.
 							</h:li>
 							<h:li>
-								Performed fixes and maintenance on thick <skill>Java</skill> client.
+								Performed fixes, maintenance, and feature implementation on back end server code in addition to thick <skill>Java</skill> client.
+							</h:li>
+							<h:li>
+								Regularly participated in code reviews, and helped shape approaches to critical solutions.
 							</h:li>
 						</h:ul>
 					</description>

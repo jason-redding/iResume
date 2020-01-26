@@ -1,7 +1,7 @@
 import ResumeLoader, {ResumeResponseBundle} from '../ResumeLoader/ResumeLoader';
 import XPath from '../../XPath/XPath';
 import {Duration, DurationResult, TemporalUnit} from "../../Env/Env";
-import GA from "../../GA/GA";
+import GA from "../../metrics/GA";
 
 declare global {
     interface JQuery {

@@ -89,10 +89,11 @@ export interface DurationResult {
     totalMonths: number;
     totalDays: number;
     totalMilliseconds: number;
+    iso: string;
 }
 
 export class Duration {
-    private _duration: Partial<DurationResult>;
+    private _duration: DurationResult;
 
     constructor(milliseconds: number) {
         const to: Date = new Date();
@@ -120,6 +121,9 @@ export class Duration {
     }
     get totalMilliseconds(): number {
         return this._duration.totalMilliseconds;
+    }
+    get iso(): string {
+        return this._duration.iso;
     }
 
     text(unit: TemporalUnit.YEARS | TemporalUnit.MONTHS | TemporalUnit.DAYS = null): string[] {
@@ -152,15 +156,6 @@ export class Duration {
     static getDuration(milliseconds: number): DurationResult;
     static getDuration(from: Date, to: Date): DurationResult;
     static getDuration(param1: number | Date, param2?: Date): DurationResult {
-        const rv: DurationResult = {
-            years: null,
-            months: null,
-            days: null,
-            totalYears: null,
-            totalMonths: null,
-            totalDays: null,
-            totalMilliseconds: null
-        };
         let from: Date;
         let to: Date;
         if (typeof param1 === 'number') {
@@ -190,15 +185,20 @@ export class Duration {
             monthSpan++;
         }
         let dayCount: number = (toDay - fromDay);
+        let years: number = Math.floor(monthSpan / 12);
+        let months: number = (monthSpan % 12);
+        let days: number = (dayCount > 0 ? dayCount : 0);
 
-        rv.years = Math.floor(monthSpan / 12);
-        rv.months = (monthSpan % 12);
-        rv.days = (dayCount > 0 ? dayCount : 0);
-
-        rv.totalYears = monthSpan / 12;
-        rv.totalMonths = monthSpan;
-        rv.totalDays = diffDays;
-        rv.totalMilliseconds = diffMilliseconds;
+        const rv: DurationResult = {
+            years: years,
+            months: months,
+            days: days,
+            totalYears: monthSpan / 12,
+            totalMonths: monthSpan,
+            totalDays: diffDays,
+            totalMilliseconds: diffMilliseconds,
+            iso: 'P' + (years > 0 ? years + 'Y' : '') + (months > 0 ? months + 'M' : '') + (days > 0 ? days + 'D' : '')
+        };
 
         return rv;
     }

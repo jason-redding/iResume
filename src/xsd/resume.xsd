@@ -28,6 +28,49 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xs:documentation></xs:documentation>
 	</xs:annotation>
 
+	<xs:attribute name="name" type="xs:string"/>
+
+	<xs:element name="presentation">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="author" minOccurs="0">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="split" minOccurs="0" type="type-author-split"/>
+							<xs:element name="name" minOccurs="0" type="type-presentation-author-info"/>
+							<xs:element name="seeking" minOccurs="0" type="type-presentation-author-info"/>
+							<xs:element name="company" minOccurs="0" type="type-presentation-author-info"/>
+							<xs:element name="email" minOccurs="0" type="type-presentation-author-info"/>
+							<xs:element name="phone" minOccurs="0" type="type-presentation-author-info"/>
+							<xs:element name="address" minOccurs="0" type="type-presentation-author-info"/>
+							<xs:element name="clearance" minOccurs="0" type="type-presentation-author-info"/>
+							<xs:element name="level" minOccurs="0" type="type-presentation-author-info"/>
+							<xs:element name="willing-to-travel" minOccurs="0" type="type-presentation-author-info"/>
+							<xs:element name="willing-to-relocate" minOccurs="0" type="type-presentation-author-info"/>
+							<xs:element name="last-updated" minOccurs="0" type="type-author-date-info"/>
+						</xs:all>
+						<xs:attribute name="layout" type="type-author-layout"/>
+						<xs:attributeGroup ref="group-resume-section-attrs"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="description" type="type-presentation-element" minOccurs="0"/>
+				<xs:element name="competencies" type="type-presentation-element" minOccurs="0"/>
+				<xs:element name="certifications" type="type-presentation-element" minOccurs="0"/>
+				<xs:element name="employers" type="type-presentation-element" minOccurs="0"/>
+				<xs:element name="skills" type="type-presentation-element" minOccurs="0"/>
+				<xs:element name="skills-legend" type="type-presentation-element" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="type-presentation-element">
+		<xs:attributeGroup ref="group-resume-section-attrs"/>
+	</xs:complexType>
+
+	<xs:complexType name="type-presentation-author-info">
+		<xs:attribute name="label" type="xs:string" use="optional"/>
+	</xs:complexType>
+
 	<xs:element name="resume">
 		<xs:annotation>
 			<xs:documentation></xs:documentation>
@@ -36,7 +79,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xs:all>
 				<xs:element name="meta">
 					<xs:complexType>
-						<xs:sequence>
+						<xs:all>
 							<xs:element name="skill">
 								<xs:complexType>
 									<xs:sequence>
@@ -80,11 +123,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
-						</xs:sequence>
+						</xs:all>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="author" type="type-author"/>
-				<xs:element name="description" type="type-profile-description"/>
+				<xs:element name="description" type="type-profile-description" minOccurs="0"/>
 				<xs:element name="competencies" minOccurs="0">
 					<xs:complexType>
 						<xs:sequence>
@@ -240,6 +283,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					</xs:complexType>
 				</xs:element>
 			</xs:all>
+			<xs:attribute name="presentation" use="optional"/>
 			<xs:attribute name="last-modified" type="type-date-time"/>
 		</xs:complexType>
 

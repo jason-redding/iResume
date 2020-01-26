@@ -19,8 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jman.socialis.dev/xsd/resume"
+	xmlns:xi="http://www.w3.org/2001/XInclude"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	exclude-result-prefixes="xsl h r">
+	exclude-result-prefixes="xsl xi h r">
 	<xsl:preserve-space elements="*"/>
 	<xsl:output method="xml" encoding="utf-8" indent="yes" omit-xml-declaration="yes"/>
 	<xsl:param name="author-name" select="'1'"/>
@@ -48,6 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</xsl:if>
 		</xsl:for-each>
 	</xsl:variable>
+	<xsl:variable name="presentation-xml" select="document(/r:resume/xi:include[@r:name = 'presentation']/@href)/r:presentation"/>
 
 	<xsl:template match="/r:resume">
 		<xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;&#10;</xsl:text>
@@ -71,7 +73,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<div class="page-wrapper ui-helper-clearfix">
 					<header class="header">
 						<div class="author">
-							<xsl:apply-templates select="r:author"/>
+							<xsl:choose>
+								<xsl:when test="count($presentation-xml/r:author) > 0">
+									<xsl:apply-templates select="r:author">
+										<xsl:with-param name="presentation-node" select="$presentation-xml/r:author"/>
+									</xsl:apply-templates>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:apply-templates select="r:author"/>
+								</xsl:otherwise>
+							</xsl:choose>
 						</div>
 					</header>
 					<main>
@@ -85,6 +96,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</xsl:template>
 
 	<xsl:template name="handle-profile-author" match="r:author">
+		<xsl:param name="presentation-node" select="."/>
+		<xsl:variable name="data-node" select="."/>
 		<xsl:variable name="author-name" select="$author-name"/>
 		<xsl:variable name="xml-author-layout" select="normalize-space(@layout)"/>
 		<xsl:variable name="final-author-layout">
@@ -102,16 +115,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</xsl:variable>
 		<xsl:if test="$author-name = '1' or $author-name = 'yes' or $author-name = 'true' or $author-name = 'on'">
 			<h1 class="author-name">
-				<xsl:value-of select="normalize-space(@name)"/>
+				<xsl:value-of select="normalize-space($presentation-node/@name)"/>
 			</h1>
 		</xsl:if>
-		<xsl:if test="count(r:*[not(local-name() = 'split')]) > 0">
+		<xsl:if test="count($presentation-node/*[not(local-name() = 'split')]) > 0">
 			<div>
 				<xsl:attribute name="class">
 					<xsl:value-of select="'author-contact'"/>
 					<xsl:value-of select="concat(' author-contact-layout-', $final-author-layout)"/>
 				</xsl:attribute>
-				<xsl:if test="count(r:split) = 0 or count(r:split/preceding-sibling::r:*) > 0">
+				<xsl:if test="count($presentation-node/*[local-name() = 'split']) = 0 or count($presentation-node/*[local-name() = 'split']/preceding-sibling::*) > 0">
 					<div class="author-contact-left">
 						<xsl:choose>
 							<!--							<xsl:when test="$final-author-layout = 'list'">-->
@@ -121,31 +134,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<!--									</xsl:call-template>-->
 							<!--								</xsl:for-each>-->
 							<!--							</xsl:when>-->
-							<xsl:when test="count(r:split) > 0">
-								<xsl:for-each select="r:split/preceding-sibling::r:*">
+							<xsl:when test="count($presentation-node/*[local-name() = 'split']) > 0">
+								<xsl:for-each select="$presentation-node/*[local-name() = 'split']/preceding-sibling::*">
+									<xsl:variable name="presentation-node-name" select="local-name()"/>
 									<xsl:call-template name="list-author-info-item">
-										<xsl:with-param name="node" select="."/>
+										<xsl:with-param name="node" select="$data-node/*[local-name() = $presentation-node-name]"/>
+										<xsl:with-param name="presentation-node" select="."/>
 									</xsl:call-template>
 								</xsl:for-each>
 							</xsl:when>
 							<xsl:otherwise>
-								<xsl:for-each select="r:*">
+								<xsl:for-each select="$presentation-node/*">
+									<xsl:variable name="presentation-node-name" select="local-name()"/>
 									<xsl:call-template name="list-author-info-item">
-										<xsl:with-param name="node" select="."/>
+										<xsl:with-param name="node" select="$data-node/*[local-name() = $presentation-node-name]"/>
+										<xsl:with-param name="presentation-node" select="."/>
 									</xsl:call-template>
 								</xsl:for-each>
 							</xsl:otherwise>
 						</xsl:choose>
 					</div>
 				</xsl:if>
-				<xsl:if test="count(r:split) > 0 and not($final-author-layout = 'split')">
+				<xsl:if test="count($presentation-node/*[local-name() = 'split']) > 0 and not($final-author-layout = 'split')">
 					<hr class="author-contact-split"/>
 				</xsl:if>
-				<xsl:if test="count(r:split/following-sibling::r:*) > 0">
+				<xsl:if test="count($presentation-node/*[local-name() = 'split']/following-sibling::*) > 0">
 					<div class="author-contact-right">
-						<xsl:for-each select="r:split/following-sibling::r:*">
+						<xsl:for-each select="$presentation-node/*[local-name() = 'split']/following-sibling::*">
+							<xsl:variable name="presentation-node-name" select="local-name()"/>
 							<xsl:call-template name="list-author-info-item">
-								<xsl:with-param name="node" select="."/>
+								<xsl:with-param name="node" select="$data-node/*[local-name() = $presentation-node-name]"/>
+								<xsl:with-param name="presentation-node" select="."/>
 							</xsl:call-template>
 						</xsl:for-each>
 					</div>
@@ -156,6 +175,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xsl:template name="list-author-info-item">
 		<xsl:param name="node" select="."/>
+		<xsl:param name="presentation-node" select="."/>
 		<xsl:for-each select="$node">
 			<xsl:variable name="element-type">
 				<xsl:choose>
@@ -167,6 +187,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
+			<xsl:variable name="info-label">
+				<xsl:choose>
+					<xsl:when test="string-length(normalize-space($presentation-node/@label)) > 0">
+						<xsl:value-of select="normalize-space($presentation-node/@label)"/>
+					</xsl:when>
+					<xsl:when test="string-length(normalize-space(@label)) > 0">
+						<xsl:value-of select="normalize-space(@label)"/>
+					</xsl:when>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:message>
+				<xsl:value-of select="concat('Node: &quot;', local-name(), '&quot; Label: &quot;', $info-label, '&quot;')"/>
+			</xsl:message>
 			<xsl:element name="div">
 				<xsl:attribute name="class">
 					<xsl:text>author-contact-info </xsl:text>
@@ -175,22 +208,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:attribute name="data-contact-info-key">
 					<xsl:value-of select="local-name()"/>
 				</xsl:attribute>
-				<xsl:if test="count(self::*[string-length(normalize-space(@label)) > 0]) > 0">
+				<xsl:if test="string-length($info-label) > 0">
 					<xsl:attribute name="data-contact-info-label">
-						<xsl:value-of select="normalize-space(@label)"/>
+						<xsl:value-of select="$info-label"/>
 					</xsl:attribute>
 				</xsl:if>
 				<xsl:choose>
-					<xsl:when test="count(self::*[@label]) > 0">
-						<xsl:if test="count(self::*[string-length(normalize-space(@label)) > 0]) > 0">
-							<xsl:element name="div">
-								<xsl:attribute name="class">
-									<xsl:text>author-contact-info-label </xsl:text>
-									<xsl:value-of select="concat('author-', local-name())"/>
-								</xsl:attribute>
-								<xsl:value-of select="normalize-space(@label)"/>
-							</xsl:element>
-						</xsl:if>
+					<xsl:when test="string-length($info-label) > 0">
+						<xsl:element name="div">
+							<xsl:attribute name="class">
+								<xsl:text>author-contact-info-label </xsl:text>
+								<xsl:value-of select="concat('author-', local-name())"/>
+							</xsl:attribute>
+							<xsl:value-of select="$info-label"/>
+						</xsl:element>
 					</xsl:when>
 				</xsl:choose>
 				<xsl:element name="{$element-type}">
@@ -204,9 +235,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xsl:attribute name="data-contact-info-key">
 						<xsl:value-of select="local-name()"/>
 					</xsl:attribute>
-					<xsl:if test="count(self::*[string-length(normalize-space(@label)) > 0]) > 0">
+					<xsl:if test="string-length($info-label) > 0">
 						<xsl:attribute name="data-contact-info-label">
-							<xsl:value-of select="normalize-space(@label)"/>
+							<xsl:value-of select="$info-label"/>
 						</xsl:attribute>
 					</xsl:if>
 					<xsl:choose>

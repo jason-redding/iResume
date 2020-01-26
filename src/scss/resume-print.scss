@@ -44,8 +44,16 @@ $certificationPrintColumns: 2;
     page-break-after: avoid;
     break-after: avoid;
   }
+
+  .section-heading {
+    margin: 1em 0 0.5em !important;
+  }
+
   .section-content:last-child {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
+    > .position-container:last-child {
+      margin-bottom: 0 !important;
+    }
   }
   .position-container {
     margin-bottom: 1em;
@@ -98,6 +106,9 @@ $certificationPrintColumns: 2;
     }
   }
   * {
+    &[role="log"], body > &.ui-loader {
+      display: none !important;
+    }
     &, &::before, &::after {
       background-image: none !important;
       background-color: initial !important;
@@ -126,9 +137,7 @@ $certificationPrintColumns: 2;
       }
     }
   }
-  *[role="log"] {
-    display: none;
-  }
+
   abbr[title][data-expanded] {
     > .text {
       display: none;
@@ -138,12 +147,15 @@ $certificationPrintColumns: 2;
     }
   }
   body {
+    height: auto;
     > .ui-page.ui-page-active {
-      position: static;
+      position: static !important;
       box-shadow: none;
+      min-height: 0 !important;
+      padding-bottom: 0 !important;
 
       > main {
-        padding-bottom: 0;
+        padding-bottom: 0 !important;
         > .main-inner {
           display: flex;
           flex-direction: column;
@@ -170,6 +182,13 @@ $certificationPrintColumns: 2;
             &#tab-panel-resume {
               order: 1;
               margin-top: 0;
+              margin: 0 !important;
+              padding-top: 0 !important;
+              padding-bottom: 0 !important;
+
+              > main {
+                padding-bottom: 0 !important;
+              }
             }
 
             &#tab-panel-skills {
@@ -224,6 +243,9 @@ $certificationPrintColumns: 2;
   }
 
   ul, ol {
+    margin-top: 0.25em !important;
+    margin-bottom: 0.25em !important;
+    padding-left: 2em !important;
     &.skills.as-list {
       -webkit-column-count: $skillPrintColumns;
       -moz-column-count: $skillPrintColumns;
