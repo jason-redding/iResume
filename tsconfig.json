@@ -6,7 +6,6 @@
         "declaration": true,
         "sourceMap": true,
         "types": [
-            "file-saver",
             "highlight.js",
             "jquery",
             "jquerymobile",
