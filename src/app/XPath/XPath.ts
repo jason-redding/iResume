@@ -10,6 +10,7 @@ export type XPathResultValue<T> =
 
 export default class XPath {
     private _namespace: Namespace;
+    private _lastContext: Node;
 
     constructor(namespaceOrDocument?: Namespace | XMLDocument) {
         if (namespaceOrDocument instanceof Namespace) {
@@ -17,6 +18,7 @@ export default class XPath {
         } else {
             this._namespace = new Namespace();
             if (namespaceOrDocument instanceof XMLDocument) {
+                this._lastContext = namespaceOrDocument;
                 this._namespace.reset(namespaceOrDocument);
             }
         }
@@ -30,15 +32,27 @@ export default class XPath {
     }
 
     initNamespaceFrom(document: XMLDocument): XPath {
+        this._lastContext = document;
         this.namespace.reset(document);
         return this;
     }
 
     evaluate
     <T extends 'string' | 'number' | 'boolean' | 'node' | 'nodeset' | 'nodes' | 'any'>
-    (context: Node | Node[] | JQuery<Node>, expression: string, type: T):
-        XPathResultValue<T>
+    (expression: string, type: T): XPathResultValue<T>;
+    evaluate
+    <T extends 'string' | 'number' | 'boolean' | 'node' | 'nodeset' | 'nodes' | 'any'>
+    (context: Node | Node[] | JQuery<Node>, expression: string, type: T): XPathResultValue<T>;
+    evaluate
+    <T extends 'string' | 'number' | 'boolean' | 'node' | 'nodeset' | 'nodes' | 'any'>
+    (context: Node | Node[] | JQuery<Node> | string, expression: string | T, type?: T): XPathResultValue<T>
     {
+        if (typeof context === 'string' || (context instanceof String)) {
+            type = arguments[1];
+            expression = arguments[0];
+            context = this._lastContext;
+        }
+
         let rv: XPathResultValue<T> = null;
         let cv: Set<Node> = new Set();
         let resultType: number = XPathResult.ANY_TYPE;
@@ -64,8 +78,9 @@ export default class XPath {
             $context = context;
         }
         $context.each((index, contextNode) => {
+            this._lastContext = contextNode;
             let ownerDoc: Document | Node = contextNode.ownerDocument;
-            if (ownerDoc === null) {
+            if (ownerDoc === null || typeof ownerDoc === 'undefined') {
                 ownerDoc = contextNode;
             }
             let r: XPathResult = null;

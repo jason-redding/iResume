@@ -62,6 +62,9 @@ $certificationPrintColumns: 2;
         margin-top: 0.5em;
       }
     }
+    &::after {
+      display: none;
+    }
   }
   .position-header {
     &::before, &::after {

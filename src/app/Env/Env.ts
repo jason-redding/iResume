@@ -622,6 +622,46 @@ export class StringFormatter {
     }
 }
 
+export const escapeAsAttributeValue = function(value: string): string {
+    return replaceUsingMap(value, /("+|\s+)/g, {
+        '"': '&quot;',
+        '': ''
+    });
+};
+
+export function escapeAsNodeText(value: string): string {
+    return replaceUsingMap(value, /([<>])/g, {
+        '<': '&lt;',
+        '>': '&gt;'
+    });
+}
+
+export function scrubClassNameForAttributeValue(value: string): string {
+    return replaceUsingMap(value, /("+|\s+)/g, {
+        '"': '',
+        '': ''
+    });
+}
+
+function replaceUsingMap(value: string, pattern: RegExp, map: {[key: string]: string}): string {
+    const defaultMapping: string = (('' in map) ? map[''] : null);
+    value = value.replace(pattern, (match, groups) => {
+        let replacement: string = '';
+        if (match !==  null) {
+            const m: string = (match.length > 0 ? match.charAt(0) : '');
+            if ((match in map)) {
+                replacement = map[match];
+            } else if ((m in map)) {
+                replacement = map[m];
+            } else if (defaultMapping !== null) {
+                replacement =  defaultMapping;
+            }
+        }
+        return replacement;
+    });
+    return value;
+}
+
 const calendar_days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const calendar_month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const calendar_day_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

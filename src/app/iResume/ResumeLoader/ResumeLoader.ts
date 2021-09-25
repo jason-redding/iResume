@@ -1,5 +1,6 @@
-import {Duration, TemporalUnit} from "../../Env/Env";
+import {escapeAsAttributeValue, Duration, escapeAsNodeText, scrubClassNameForAttributeValue, TemporalUnit} from "../../Env/Env";
 import XPath, {XPathResultValue} from "../../XPath/XPath";
+import {ResumeSkillNoteType} from "../ResumeComponent/ResumeComponent";
 
 export interface ResumeResponse {
     id: string;
@@ -60,6 +61,7 @@ export default class ResumeLoader {
     private _onLoadFail: JQuery.Callbacks;
     private _onLoadEnd: JQuery.Callbacks;
     private _file: string;
+    private _presentation: string = null;
     private _xpath: XPath;
     private _response: ResumeResponseBundle;
 
@@ -207,13 +209,35 @@ export default class ResumeLoader {
         return xhr;
     }
 
+    setPresentationName(name: string): ResumeLoader {
+        if ((typeof name) === 'string' || (<any>name instanceof String)) {
+            this._presentation = name + '.presentation.xml';
+        } else if (name === null) {
+            this._presentation = null;
+        }
+        return this;
+    }
+
+    getPresentationName(): string {
+        let presentationName: string = this._presentation;
+        if (((typeof presentationName) !== 'string') && !(<any>presentationName instanceof String)) {
+            const presentationPath: string = this.getPresentationPath();
+            presentationName = presentationPath.replace(/^.*\/?([^/]+)$/, '$1');
+        }
+        presentationName = presentationName.replace(/\.presentation\.xml$/, '');
+        return presentationName;
+    }
+
     getPresentationPath() {
+        const filePath: string = this.file.replace(/(\/?)[^/]+$/, '$1');
+        if ((typeof this._presentation) === 'string' || (<any>this._presentation instanceof String)) {
+            console.log('overiding presentation name!', filePath + this._presentation);
+            return filePath + this._presentation;
+        }
         if (this._response && this._response.xml && $.isXMLDoc(this._response.xml.document)) {
             let x: XPath = new XPath(this._response.xml.document);
             let referencedPresentation: string = $.trim(x.evaluate(this._response.xml.document, '/r:resume/xi:include[@r:name = "presentation"][1]/@href', 'string'));
             if (referencedPresentation.length > 0) {
-                let filePath: string = this.file;
-                filePath = filePath.replace(/(\/?)[^/]+$/, '$1');
                 return filePath + referencedPresentation;
             }
         }
@@ -242,6 +266,18 @@ export default class ResumeLoader {
             }
         }
         return ResumeLoader._constructPathFor(this.file, ResumeFileType.TRANSFORM);
+    }
+
+    getPresentationDocument() {
+        return this._response['presentation.xml'].document;
+    }
+
+    getTransformDocument() {
+        return this._response.xsl.document;
+    }
+
+    getDataDocument() {
+        return this._response.xml.document;
     }
 
     getDefinitionPath() {
@@ -302,65 +338,8 @@ export default class ResumeLoader {
             }
         };
 
-        const adjustValueOf: (propName: string, propValue: any) => any = (propName: string, propValue: any) => {
-            if (propValue === null || typeof propValue === 'undefined' || typeof propValue === 'number' || typeof propValue === 'boolean' || typeof propValue === 'string' || propValue instanceof String) {
-                propValue = {
-                    value: propValue
-                };
-            }
-            let originalValue: any = propValue.value;
-            let adjustedValue: any = originalValue;
-            if (propName === 'experience') {
-                if (typeof propValue.duration.text === 'function') {
-                    originalValue = propValue.duration.text();
-                    if (Array.isArray(originalValue)) {
-                        adjustedValue = originalValue.join(', ');
-                    } else {
-                        adjustedValue = originalValue;
-                    }
-                }
-                $.extend(true, propValue, {
-                    duration: {
-                        originalValue: originalValue,
-                        value: adjustedValue
-                    }
-                });
-            } else if (propName === 'level') {
-                let $metaSkillLevel: JQuery<Node> = $();
-                if (originalValue === 0) {
-                    $metaSkillLevel = $xmlSkillLevels.filter('[value="-1"]');
-                }
-                if ($metaSkillLevel.length === 0) {
-                    $metaSkillLevel = $xmlSkillLevels.filter('[value="' + Math.floor(originalValue) + '"]');
-                }
-                adjustedValue = $.trim((<JQuery>$metaSkillLevel).text());
-                $.extend(true, props, {
-                    experience: {
-                        type: $metaSkillLevel.attr('type') || $metaSkillLevel.parent().attr('type') || 'experience',
-                    }
-                });
-                $.extend(true, propValue, {
-                    max: maxSkillLevel,
-                    percentage: (parseFloat(originalValue) / parseFloat(('' + maxSkillLevel)))
-                });
-            } else if (propName === 'categories') {
-                let cv: string[] = [];
-                $.each(adjustedValue, function (index, id) {
-                    let value: string = $.trim($xmlCategories.filter('[value="' + id + '"]').text());
-                    if (value.length > 0) {
-                        cv.push(value);
-                    }
-                });
-                cv.sort();
-                adjustedValue = cv.join(', ');
-            }
-            $.extend(true, propValue, {
-                originalValue: originalValue,
-                value: adjustedValue
-            });
-        };
-
         let totalSkillExperienceRaw: number = 0;
+
         $.each($skill.children(), (index, skillChildElement: Element) => {
             const $skillProperty: JQuery<Node> = $(skillChildElement);
             const skillPropertyName: string = $skillProperty.prop('nodeName');
@@ -368,7 +347,21 @@ export default class ResumeLoader {
             if (!(skillPropertyName in props)) {
                 props[skillPropertyName] = {};
             }
-            if (skillPropertyName === 'experience') {
+
+            if (skillPropertyName === 'notes') {
+                let value: Array<object> = [];
+                $items.each((noteIndex: number, note) => {
+                    const $note: JQuery<Node> = $(note);
+                    const noteType: string = $.trim($note.attr('type'));
+                    value.push({
+                        type: noteType,
+                        value: $.trim($note.text())
+                    });
+                });
+                $.extend(true, props[skillPropertyName], {
+                    value: value
+                });
+            } else if (skillPropertyName === 'experience') {
                 let foundSince: boolean = false;
                 let firstExperience: Date = null;
                 let lastExperience: Date = null;
@@ -452,7 +445,18 @@ export default class ResumeLoader {
                     props[skillPropertyName][attrName] = attrValue;
                 });
                 // return true;
+            } else if (skillPropertyName === 'categories') {
+                const value: Array<string> = [];
+                $items.each((itemIndex, item) => {
+                    const $item: JQuery<Node> = $(item);
+                    const v: string = $.trim($item.attr('value'));
+                    value.push(v);
+                })
+                $.extend(true, props[skillPropertyName], {
+                    value: value
+                });
             }
+
             if ($items.length === 0) {
                 const text: string = $.trim($skillProperty.text());
                 $.extend(true, props[skillPropertyName], {
@@ -466,23 +470,107 @@ export default class ResumeLoader {
                     }
                     props[skillPropertyName][attrName] = attrValue;
                 });
-            } else {
-                let value: Array<string | number> = [];
-                $items.each((itemIndex, item) => {
-                    const $item: JQuery<Node> = $(item);
-                    let v: string | number = $item.attr('value');
-                    if (!isNaN(parseFloat(v))) {
-                        v = parseFloat(v);
-                    }
-                    value.push(v);
-                });
-                $.extend(true, props[skillPropertyName], {
-                    value: value
-                });
+            // } else {
+            //     let value: Array<string | number> = [];
+            //     $items.each((itemIndex, item) => {
+            //         const $item: JQuery<Node> = $(item);
+            //         let v: string | number = $item.attr('value');
+            //         if (!isNaN(parseFloat(v))) {
+            //             v = parseFloat(v);
+            //         }
+            //         value.push(v);
+            //     });
+            //     console.log('BEFORE:', props[skillPropertyName]);
+            //     $.extend(true, props[skillPropertyName], {
+            //         value: value
+            //     });
+            //     // console.log('AFTER:', props[skillPropertyName]);
             }
         });
+
+        const adjustValueOf: (propName: string, propValue: any) => any = (propName: string, propValue: any) => {
+            if (propValue === null || typeof propValue === 'undefined' || typeof propValue === 'number' || typeof propValue === 'boolean' || typeof propValue === 'string' || propValue instanceof String) {
+                propValue = {
+                    value: propValue
+                };
+            }
+            let originalValue: any = propValue.value;
+            let calculatedValue: any = originalValue;
+            if (propName === 'notes') {
+                if (Array.isArray(originalValue) && originalValue.length > 0) {
+                    let notes: string = '<div class="notes">';
+                    notes += '<div class="notes-header">';
+                    notes += 'Notes:'
+                    notes += '</div>';
+                    notes += '<div class="notes-content">';
+                    for (let note of originalValue) {
+                        const noteType: string = $.trim(note.type);
+                        const noteText: string = $.trim(note.value);
+                        const noteTypeText: string = noteType.charAt(0).toUpperCase() + noteType.substring(1);
+
+                        notes += '<div class="note note-type-' + scrubClassNameForAttributeValue(noteType) + '"';
+                        notes += ' data-note-type="' + escapeAsAttributeValue(noteTypeText) + '"'
+                        notes += '>';
+                        notes += escapeAsNodeText(noteText)
+                        notes += '</div>';
+                    }
+                    notes += '</div>';
+                    notes += '</div>';
+                    calculatedValue = notes;
+                }
+            } else if (propName === 'experience') {
+                if (typeof propValue.duration.text === 'function') {
+                    originalValue = propValue.duration.text();
+                    if (Array.isArray(originalValue)) {
+                        calculatedValue = originalValue.join(', ');
+                    } else {
+                        calculatedValue = originalValue;
+                    }
+                }
+                $.extend(true, propValue, {
+                    duration: {
+                        originalValue: originalValue,
+                        value: calculatedValue
+                    }
+                });
+            } else if (propName === 'level') {
+                let $metaSkillLevel: JQuery<Node> = $();
+                if (originalValue === 0) {
+                    $metaSkillLevel = $xmlSkillLevels.filter('[value="-1"]');
+                }
+                if ($metaSkillLevel.length === 0) {
+                    $metaSkillLevel = $xmlSkillLevels.filter('[value="' + Math.floor(originalValue) + '"]');
+                }
+                calculatedValue = $.trim((<JQuery>$metaSkillLevel).text());
+                $.extend(true, props, {
+                    experience: {
+                        type: $metaSkillLevel.attr('type') || $metaSkillLevel.parent().attr('type') || 'experience',
+                    }
+                });
+                $.extend(true, propValue, {
+                    max: maxSkillLevel,
+                    percentage: (parseFloat(originalValue) / parseFloat(('' + maxSkillLevel)))
+                });
+            } else if (propName === 'categories') {
+                let cv: string[] = [];
+                $.each(calculatedValue, function (index, id) {
+                    let value: string = $.trim($xmlCategories.filter('[value="' + id + '"]').text());
+                    if (value.length > 0) {
+                        cv.push(value);
+                    }
+                });
+                cv.sort();
+                calculatedValue = cv.join(', ');
+            }
+            $.extend(true, propValue, {
+                originalValue: originalValue,
+                value: calculatedValue
+            });
+        };
+
         $.each(props, adjustValueOf);
         $.each(props.experience, adjustValueOf);
+
         return props;
     }
 

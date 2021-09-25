@@ -64,6 +64,23 @@ abbr[title], acronym[title], a {
   }
 }
 
+html.r-explain .ui-page.ui-page-active::after {
+  box-sizing: border-box;
+  content: 'Mobile browsers often hide a panel here.';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  display: flex;
+  border-top: 1px dashed;
+  padding: 0.25rem 0.5rem;
+  flex: 1 1 auto;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: center;
+}
+
 #tabs-nav {
   display: flex;
   justify-content: center;
@@ -634,8 +651,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .position-container {
+  position: relative;
   margin-top: 1em;
   margin-bottom: 1em;
+
+  &:not(:last-child)::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-bottom: -0.5em;
+    border-bottom: 1px dashed hsla(0, 0%, 0%, 0.5);
+
+    .ui-page-theme-b & {
+        border-bottom-color: hsla(0, 0%, 100%, 0.5);
+    }
+  }
 }
 
 .position-header {
@@ -836,9 +869,54 @@ ul, ol, .project-description, .project-description > *:first-child {
   margin-bottom: 0.25em;
 }
 
+div.notes {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font-size: 0.85em;
+
+  > .notes-header {
+    font-weight: bold;
+  }
+  > .notes-content {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 25px;
+    > .note {
+      display: list-item;
+      position: relative;
+      //padding-top: 0.7em;
+      //font-size: 0.9em;
+      margin-top: 0.3em;
+      margin-bottom: 0.3em;
+      &[data-note-type] {
+        &::before {
+          content: '(' attr(data-note-type) ')';
+          margin-right: 0.5em;
+          font-style: italic;
+          font-size: 0.9em;
+          //font-family: monospace;
+          //position: absolute;
+          //top: 0;
+          //left: -12px;
+        }
+      }
+      &.note-type-personal {
+      }
+      &.note-type-technical {
+      }
+      &.note-type-clarity {
+      }
+    }
+  }
+}
+
 @media screen {
-  *[title], *[aria-describedby], span.skill, a, time {
-    &:not(table):not(thead):not(tbody):not(tfoot):not(tr):not(th):not(td):not(button):not(input):not(select):not(.ui-btn) {
+  *[title], *[aria-describedby], span.skill, a, time[datetime^="P"] {
+    &:not(table):not(thead):not(tbody):not(tfoot):not(tr):not(th):not(td):not(button):not(input):not(select):not(.ui-btn):not([data-no-tooltip]) {
       cursor: pointer;
       /*&:hover, &:focus {
         border-bottom: 1px dashed;
@@ -931,7 +1009,7 @@ ul, ol, .project-description, .project-description > *:first-child {
   }
 }
 
-#theme-toggle-button {
+.ui-header button.ui-btn.ui-btn-inline {
   padding-left: 0.5em;
   padding-right: 0.5em;
   height: auto;
@@ -940,8 +1018,13 @@ ul, ol, .project-description, .project-description > *:first-child {
   bottom: 0;
   box-sizing: border-box;
   width: 2.75em;
-  right: 0;
   border-style: none;
+  &.ui-btn-left {
+    left: 0;
+  }
+  &.ui-btn-right {
+    right: 0;
+  }
   @media print {
     display: none;
   }

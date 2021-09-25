@@ -1,13 +1,14 @@
-import ResumeLoader, {ResumeResponse, ResumeResponseBundle} from '../ResumeLoader/ResumeLoader';
+import ResumeLoader, {ResumeFileType, ResumeResponse, ResumeResponseBundle} from '../ResumeLoader/ResumeLoader';
 import XPath from '../../XPath/XPath';
 import {Duration, DurationResult} from '../../Env/Env';
 // import {Document, HeadingLevel, Packer, Paragraph, Table, TableRow, TableCell, TableOfContents, WidthType} from '../../../js/docx/index';
 // import {saveAs} from 'file-saver';
 
-type StringAsBoolean = 'true' | 'yes' | 'on' | '1' | 'false' | 'no' | 'off' | '0';
-type SortOrder = 'ascending' | 'descending';
+export type StringAsBoolean = 'true' | 'yes' | 'on' | '1' | 'false' | 'no' | 'off' | '0';
+export type SortOrder = 'ascending' | 'descending';
 
-type ResumeAuthorLayout = 'split' | 'center' | 'list';
+export type ResumeAuthorLayout = 'split' | 'center' | 'list';
+export type ResumeSkillNoteType = 'technical' | 'personal' | 'clarity';
 
 export interface ResumeViewportProperties {
     latestModifiedDate: Date;
@@ -18,6 +19,7 @@ export interface ResumeTransformParameters {
     'employer-sort'?: SortOrder;
     'position-sort'?: SortOrder;
     'show-projects'?: StringAsBoolean;
+    'show-expired-certifications'?: StringAsBoolean;
     'skills-layout'?: 'list' | 'categories';
     'projects-layout'?: 'list' | 'collapsible';
     'skill-level-print-min'?: number | string;
@@ -251,8 +253,141 @@ export default class ResumeComponent {
 
     private _applyPresentation() {
         const response: ResumeResponseBundle = this._responseBundle;
-        const xp: XPath = new XPath(this.presentationDocument);
+        const pDoc: XMLDocument = this.presentationDocument;
+        const xDoc: XMLDocument = this.xmlDocument;
+        const tDoc: JQuery = this.viewport;
+        const xp: {
+            xml: XPath,
+            presentation: XPath,
+            transformed: XPath
+        } = {
+            xml: new XPath(this.xmlDocument),
+            presentation: new XPath(this.presentationDocument),
+            transformed: new XPath(this.transformedDocument)
+        };
 
+        const pSectionMap: {
+            [key: string]: JQuery<Node>
+        } = {};
+        const dSectionMap: {
+            [key: string]: JQuery
+        } = {};
+        const pAuthorMap: {
+            [key: string]: JQuery<Node>
+        } = {};
+        const dAuthorMap: {
+            [key: string]: JQuery
+        } = {};
+
+        const processAuthorNode: Function = function processAuthorNode($parent: JQuery, $presentationNode: JQuery<Node>, $documentNode: JQuery) {
+            const nodeName: string = $presentationNode.prop('nodeName');
+            const label: string = ($presentationNode.is('[label]') ? $presentationNode.attr('label') : null);
+            const $valueNode: JQuery = ($documentNode ? $documentNode.find('> .author-contact-info-value') : null);
+
+            if (typeof label === 'string') {
+                $documentNode.find('> .author-contact-info-label').text(label);
+                $valueNode
+                .addBack()
+                .attr('data-contact-info-label', label);
+            }
+            if (nodeName === 'last-updated') {
+                if ($presentationNode.is('[format]')) {
+                    const pFormat: string = $presentationNode.attr('format');
+                    const originalDate: string = $valueNode.attr('data-original-date');
+                    const detectedDate: string = ($valueNode.is('[data-detected-date]') ? $valueNode.attr('data-detected-date') : null);
+                    const lastUpdated: Date = (detectedDate !== null ? Date.from(detectedDate) : Date.from(originalDate));
+                    $valueNode.attr('data-date-format', pFormat);
+                    let $lastUpdatedTime: JQuery = $valueNode.find('time');
+                    if ($lastUpdatedTime.length > 0) {
+                        $lastUpdatedTime.attr('datetime', lastUpdated.toISOString());
+                    } else {
+                        $lastUpdatedTime = $valueNode;
+                    }
+                    $lastUpdatedTime.attr({
+                        'data-no-tooltip': 'true',
+                        'title': Date.format(lastUpdated, 'MMMM d{th} yyyy')
+                    });
+                    $lastUpdatedTime.text(Date.format(lastUpdated, pFormat));
+                }
+            }
+            $parent.append($documentNode);
+        };
+
+        const $pageWrapper: JQuery = $('body > .page-wrapper', this.transformedDocument);
+        const $mainInner: JQuery = $('body > .page-wrapper > main > .main-inner', this.transformedDocument);
+        let $authorWrapper: JQuery = $('body > .page-wrapper > header > .author > .author-contact', this.transformedDocument);
+        let $authorItems: JQuery = $authorWrapper.find('.author-contact-info');
+        let authorLayout: string = xp.presentation.evaluate(pDoc, '/r:presentation/r:author/@layout', 'string');
+        const authorOrder: string[] = [];
+        const sectionOrder: string[] = [];
+
+        // Index author presentation nodes
+        $.each(xp.presentation.evaluate(pDoc, '/r:presentation/r:author/*', 'nodes'), function (index, node) {
+            const $node: JQuery<Node> = $(node);
+            const nodeName: string = $node.prop('nodeName');
+            authorOrder.push(nodeName);
+            pAuthorMap[nodeName] = $node;
+        });
+
+        // Index non-author presentation nodes
+        $.each(xp.presentation.evaluate(pDoc, '/r:presentation/*[not(local-name() = "author")]', 'nodes'), function (index, node) {
+            const $node: JQuery<Node> = $(node);
+            const nodeName: string = $node.prop('nodeName');
+            sectionOrder.push(nodeName);
+            pSectionMap[nodeName] = $node;
+        });
+
+        // Gather non-author document nodes
+        $pageWrapper.find('> main > .main-inner > .section-heading').each(function (index, element) {
+            const $element: JQuery = $(element);
+            const sectionKey: string = $.trim($element.attr('data-section'));
+            dSectionMap[sectionKey] = $element.add($element.next('.section-content[data-section="' + sectionKey + '"]')).detach();
+        });
+
+        // Gather author document nodes
+        $authorItems.each(function (index, element) {
+            const $element: JQuery = $(element);
+            const itemKey: string = $.trim($element.attr('data-contact-info-key'));
+            dAuthorMap[itemKey] = $element.detach();
+        });
+
+        // Now empty author section of document and repopulate using presentation.xml for guidance
+        $authorWrapper.html('');
+        $authorWrapper
+        .removeClass('author-contact-layout-' + ['split', 'center', 'list'].join(' author-contact-layout-'))
+        .addClass('author-contact-layout-' + authorLayout);
+
+        const hasSplit: boolean = ('split' in pAuthorMap);
+        const splitIndex: number = authorOrder.indexOf('split');
+        if (!hasSplit || splitIndex > 0) {
+            const $leftAuthor: JQuery = $('<div class="author-contact-left"/>').appendTo($authorWrapper);
+            $.each(authorOrder, function (index, key) {
+                if (key === 'split') {
+                    return false;
+                }
+                if ((key in pAuthorMap) && (key in dAuthorMap)) {
+                    processAuthorNode($leftAuthor, pAuthorMap[key], dAuthorMap[key]);
+                }
+            });
+            if (splitIndex > 0 && authorLayout !== 'split') {
+                $('<hr class="author-contact-split"/>').appendTo($authorWrapper);
+            }
+            if (hasSplit && splitIndex < (authorOrder.length - 1)) {
+                const $rightAuthor: JQuery = $('<div class="author-contact-right"/>').appendTo($authorWrapper);
+                for (let i = splitIndex + 1; i < authorOrder.length; i++) {
+                    const key: string = authorOrder[i];
+                    if ((key in pAuthorMap) && (key in dAuthorMap)) {
+                        processAuthorNode($rightAuthor, pAuthorMap[key], dAuthorMap[key]);
+                    }
+                }
+            }
+        }
+
+        // Now repopulate non-author document nodes using presentation.xml for guidance
+        for (let key of sectionOrder) {
+            let nodeName: string = pSectionMap[key].prop('nodeName');
+            $mainInner.append(dSectionMap[nodeName]);
+        }
     }
 
     private _applyTransform() {
@@ -272,13 +407,13 @@ export default class ResumeComponent {
             }
             this._transformedDocument = xslTransformer.transformToDocument(this.xmlDocument);
         } catch (ex) {
-            console.error(ex);
+            console.error('Failed to apply XSL transform!', ex);
         }
 
         try {
             this._applyPresentation();
         } catch (ex) {
-            console.error(ex);
+            console.error('Failed to apply presentation!', ex);
         }
 
         this.viewport
@@ -296,6 +431,27 @@ export default class ResumeComponent {
         this._callbacksAfter.fireWith(this.transformedDocument, [this.transformedDocument, this.xmlDocument, this.xslDocument]);
     }
 
+    private _updateTime(node: JQuery, date: Date, format: string, props?: object) {
+        let $time: JQuery = node.find('time');
+        if (typeof props === 'object') {
+            node.attr(props);
+        }
+        let oldTime: string = null;
+        if ($time.length > 0) {
+            oldTime = $time.attr('datetime');
+            $time.attr('datetime', date.toISOString());
+        } else {
+            $time = node;
+        }
+        if ($time.is('[title]') && oldTime !== null) {
+            let oldTitle: string = $.trim($time.attr('title'));
+            if (Date.format(Date.from(oldTime), 'MMMM d{th} yyyy') === oldTitle) {
+                $time.attr('title', Date.format(date, 'MMMM d{th} yyyy'));
+            }
+        }
+        $time.text(Date.format(date, format));
+    }
+
     private _applyToViewport(properties: Partial<ResumeViewportProperties> = this.viewportProperties) {
         if ($.isXMLDoc(this.transformedDocument)) {
             const latestModifiedDate: Date = properties.latestModifiedDate;
@@ -304,10 +460,12 @@ export default class ResumeComponent {
                 const $viewportElement: JQuery = $(viewportElement);
                 if (latestModifiedDate instanceof Date) {
                     $viewportElement.find('.author-contact-info-value.author-last-updated').each((lastUpdatedIndex, lastUpdatedElement) => {
-                        const $lastUpdated = $(lastUpdatedElement);
-                        const dateFormat = $.trim($lastUpdated.attr('data-date-format'));
-                        $lastUpdated.attr('data-detected-date', Date.format(latestModifiedDate, "yyyy-MM-dd'T'HH:mm:ss"));
-                        $lastUpdated.text(Date.format(latestModifiedDate, dateFormat));
+                        const $lastUpdated: JQuery = $(lastUpdatedElement);
+                        const dateFormat: string = $.trim($lastUpdated.attr('data-date-format'));
+                        const lastUpdatedISO: string = Date.format(latestModifiedDate, "yyyy-MM-dd'T'HH:mm:ss");
+                        this._updateTime($lastUpdated, latestModifiedDate, dateFormat, {
+                            'data-detected-date': lastUpdatedISO
+                        });
                     });
                 }
                 $viewportElement.find('.skill').each((skillIndex, skillElement) => {
@@ -346,9 +504,12 @@ export default class ResumeComponent {
         }
     }
 
-    private _getLatestModifiedDate(responseBundle: ResumeResponseBundle) {
+    private _getLatestModifiedDate(responseBundle: ResumeResponseBundle, includePresentation: boolean = true) {
         let lastModifiedDate: Date = null;
         for (let responseType in responseBundle) {
+            if (responseType === 'presentation.xml' && !includePresentation) {
+                continue;
+            }
             let response = responseBundle[responseType];
             if (('getResponseHeader' in response.xhr) && (response.xhr.getResponseHeader instanceof Function)) {
                 let lastModified = new Date(response.xhr.getResponseHeader('Last-Modified'));

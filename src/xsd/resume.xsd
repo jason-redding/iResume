@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright (C) 2017 Jason Redding
+Copyright (C) 2021 Jason Redding
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,13 +15,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<xs:schema xmlns="http://jman.socialis.dev/xsd/resume"
-	xmlns:r="http://jman.socialis.dev/xsd/resume"
+<xs:schema xmlns="http://jason-redding.com/xsd/resume"
+	xmlns:r="http://jason-redding.com/xsd/resume"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/2001/XMLSchema"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd"
-	targetNamespace="http://jman.socialis.dev/xsd/resume"
+	targetNamespace="http://jason-redding.com/xsd/resume"
 	elementFormDefault="qualified">
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/XML/1998/namespace"/>
 
 	<xs:annotation>
 		<xs:appinfo></xs:appinfo>
@@ -30,42 +32,58 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xs:attribute name="name" type="xs:string"/>
 
-	<xs:element name="presentation">
-		<xs:complexType>
-			<xs:all>
-				<xs:element name="author" minOccurs="0">
-					<xs:complexType>
-						<xs:all>
-							<xs:element name="split" minOccurs="0" type="type-author-split"/>
-							<xs:element name="name" minOccurs="0" type="type-presentation-author-info"/>
-							<xs:element name="seeking" minOccurs="0" type="type-presentation-author-info"/>
-							<xs:element name="company" minOccurs="0" type="type-presentation-author-info"/>
-							<xs:element name="email" minOccurs="0" type="type-presentation-author-info"/>
-							<xs:element name="phone" minOccurs="0" type="type-presentation-author-info"/>
-							<xs:element name="address" minOccurs="0" type="type-presentation-author-info"/>
-							<xs:element name="clearance" minOccurs="0" type="type-presentation-author-info"/>
-							<xs:element name="level" minOccurs="0" type="type-presentation-author-info"/>
-							<xs:element name="willing-to-travel" minOccurs="0" type="type-presentation-author-info"/>
-							<xs:element name="willing-to-relocate" minOccurs="0" type="type-presentation-author-info"/>
-							<xs:element name="last-updated" minOccurs="0" type="type-author-date-info"/>
-						</xs:all>
-						<xs:attribute name="layout" type="type-author-layout"/>
-						<xs:attributeGroup ref="group-resume-section-attrs"/>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="description" type="type-presentation-element" minOccurs="0"/>
-				<xs:element name="competencies" type="type-presentation-element" minOccurs="0"/>
-				<xs:element name="certifications" type="type-presentation-element" minOccurs="0"/>
-				<xs:element name="employers" type="type-presentation-element" minOccurs="0"/>
-				<xs:element name="skills" type="type-presentation-element" minOccurs="0"/>
-				<xs:element name="skills-legend" type="type-presentation-element" minOccurs="0"/>
-			</xs:all>
-		</xs:complexType>
-	</xs:element>
+	<xs:element name="presentation" type="type-presentation"/>
+
+	<xs:complexType name="type-presentation">
+		<xs:all>
+			<xs:element name="author" minOccurs="0">
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="split" minOccurs="0" type="type-author-split"/>
+						<xs:element name="name" minOccurs="0" type="type-presentation-author-info"/>
+						<xs:element name="seeking" minOccurs="0" type="type-presentation-author-info"/>
+						<xs:element name="company" minOccurs="0" type="type-presentation-author-info"/>
+						<xs:element name="email" minOccurs="0" type="type-presentation-author-info"/>
+						<xs:element name="phone" minOccurs="0" type="type-presentation-author-info"/>
+						<xs:element name="address" minOccurs="0" type="type-presentation-author-info"/>
+						<xs:element name="clearance" minOccurs="0" type="type-presentation-author-info"/>
+						<xs:element name="level" minOccurs="0" type="type-presentation-author-info"/>
+						<xs:element name="willing-to-travel" minOccurs="0" type="type-presentation-author-info"/>
+						<xs:element name="willing-to-relocate" minOccurs="0" type="type-presentation-author-info"/>
+						<xs:element name="last-updated" minOccurs="0" type="type-author-date-info"/>
+					</xs:all>
+					<xs:attribute name="layout" type="type-author-layout"/>
+					<xs:attributeGroup ref="group-resume-section-attrs"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="description" type="type-presentation-element" minOccurs="0"/>
+			<xs:element name="competencies" type="type-presentation-element" minOccurs="0"/>
+			<xs:element name="certifications" type="type-presentation-element" minOccurs="0"/>
+			<xs:element name="employers" type="type-presentation-employers" minOccurs="0"/>
+			<xs:element name="skills" type="type-presentation-element" minOccurs="0"/>
+			<xs:element name="skills-legend" type="type-presentation-element" minOccurs="0"/>
+		</xs:all>
+		<xs:attribute ref="xml:base" use="optional"/>
+	</xs:complexType>
 
 	<xs:complexType name="type-presentation-element">
 		<xs:attributeGroup ref="group-resume-section-attrs"/>
 	</xs:complexType>
+
+	<xs:complexType name="type-presentation-employers">
+		<xs:complexContent>
+			<xs:extension base="type-presentation-element">
+				<xs:attribute name="projects" use="optional" default="show" type="type-presentation-employers-projects"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="type-presentation-employers-projects">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="show"/>
+			<xs:enumeration value="hide"/>
+		</xs:restriction>
+	</xs:simpleType>
 
 	<xs:complexType name="type-presentation-author-info">
 		<xs:attribute name="label" type="xs:string" use="optional"/>
@@ -73,59 +91,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xs:element name="resume">
 		<xs:annotation>
-			<xs:documentation></xs:documentation>
+			<xs:documentation>Root Element for Resume.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:all>
-				<xs:element name="meta">
-					<xs:complexType>
-						<xs:all>
-							<xs:element name="skill">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="experience">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="level" maxOccurs="unbounded">
-														<xs:complexType>
-															<xs:simpleContent>
-																<xs:extension base="xs:string">
-																	<xs:attribute name="value" type="type-skill-level-value" use="required"/>
-																	<xs:attribute name="type" type="type-skill-level-type" default="experience" use="optional"/>
-																	<xs:attribute name="preposition" type="xs:string" use="optional"/>
-																</xs:extension>
-															</xs:simpleContent>
-														</xs:complexType>
-													</xs:element>
-												</xs:sequence>
-												<xs:attribute name="type" type="xs:string" use="optional"/>
-												<xs:attribute name="preposition" type="xs:string" use="optional"/>
-												<xs:attribute name="print-min" type="xs:decimal" use="optional"/>
-												<xs:attribute name="screen-min" type="xs:decimal" use="optional"/>
-											</xs:complexType>
-										</xs:element>
-										<xs:element name="categories">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="category" maxOccurs="unbounded">
-														<xs:complexType>
-															<xs:simpleContent>
-																<xs:extension base="xs:string">
-																	<xs:attribute name="value" use="required"/>
-																	<xs:attribute name="hidden" type="type-boolean" use="optional"/>
-																</xs:extension>
-															</xs:simpleContent>
-														</xs:complexType>
-													</xs:element>
-												</xs:sequence>
-											</xs:complexType>
-										</xs:element>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element>
-						</xs:all>
-					</xs:complexType>
-				</xs:element>
+				<xs:element name="presentation" type="type-presentation" minOccurs="0"/>
+				<xs:element name="meta" type="type-resume-meta"/>
 				<xs:element name="author" type="type-author"/>
 				<xs:element name="description" type="type-profile-description" minOccurs="0"/>
 				<xs:element name="competencies" minOccurs="0">
@@ -157,10 +128,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 										<xs:element name="issuer">
 											<xs:complexType>
 												<xs:simpleContent>
-													<xs:restriction base="xs:string">
+													<xs:extension base="xs:string">
 														<xs:attribute name="issue-date" type="type-date" use="required"/>
 														<xs:attribute name="expire-date" type="type-date" use="optional"/>
-													</xs:restriction>
+													</xs:extension>
 												</xs:simpleContent>
 											</xs:complexType>
 										</xs:element>
@@ -287,6 +258,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xs:attribute name="last-modified" type="type-date-time"/>
 		</xs:complexType>
 
+		<xs:key name="key-skill-name">
+			<xs:selector xpath="r:skills/r:skill"/>
+			<xs:field xpath="r:name"/>
+		</xs:key>
+		<xs:keyref name="keyref-skill-name" refer="key-skill-name">
+			<xs:selector xpath=".//r:skill"/>
+			<xs:field xpath="@ref"/>
+		</xs:keyref>
+
 		<xs:key name="key-skill-level">
 			<xs:selector xpath="r:meta/r:skill/r:experience/r:level"/>
 			<xs:field xpath="@value"/>
@@ -295,15 +275,64 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xs:selector xpath="r:skills/r:skill/r:experience"/>
 			<xs:field xpath="@level"/>
 		</xs:keyref>-->
+
 		<xs:key name="key-category">
 			<xs:selector xpath="r:meta/r:skill/r:categories/r:category"/>
 			<xs:field xpath="@value"/>
 		</xs:key>
-		<xs:keyref name="keyref-category" refer="key-category">
+		<xs:keyref name="keyref-category" refer="r:key-category">
 			<xs:selector xpath="r:skills/r:skill/r:categories/r:category"/>
 			<xs:field xpath="@value"/>
 		</xs:keyref>
 	</xs:element>
+
+	<xs:complexType name="type-resume-meta">
+		<xs:all>
+			<xs:element name="skill">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="experience">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="level" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="xs:string">
+													<xs:attribute name="value" type="type-skill-level-value" use="required"/>
+													<xs:attribute name="type" type="type-skill-level-type" default="experience" use="optional"/>
+													<xs:attribute name="preposition" type="xs:string" use="optional"/>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="type" type="xs:string" use="optional"/>
+								<xs:attribute name="preposition" type="xs:string" use="optional"/>
+								<xs:attribute name="print-min" type="xs:decimal" use="optional"/>
+								<xs:attribute name="screen-min" type="xs:decimal" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="categories">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="category" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:simpleContent>
+												<xs:extension base="xs:string">
+													<xs:attribute name="value" use="required" type="xs:string"/>
+													<xs:attribute name="hidden" type="type-boolean" use="optional"/>
+												</xs:extension>
+											</xs:simpleContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
 
 	<xs:simpleType name="type-skill-level-value">
 		<xs:restriction base="xs:decimal">
@@ -364,16 +393,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</xs:complexType>
 
 	<xs:complexType name="type-skill-definition">
+		<xs:annotation>
+			<xs:documentation>
+				Skill definition.
+			</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="name"/>
+			<xs:element name="name">
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString"/>
+				</xs:simpleType>
+			</xs:element>
 			<xs:element name="version" minOccurs="0">
 				<xs:complexType>
 					<xs:simpleContent>
-						<xs:restriction base="xs:string">
+						<xs:restriction base="type-skill-version">
 							<xs:minLength value="1"/>
-							<xs:attribute name="hint"/>
 						</xs:restriction>
 					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="long-name" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:normalizedString"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="notes" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="note" maxOccurs="unbounded">
+							<xs:complexType mixed="true">
+								<xs:complexContent>
+									<xs:extension base="type-text-with-html">
+										<xs:attribute name="type" type="type-skill-note-type" use="required"/>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="experience" type="type-experience"/>
@@ -382,15 +439,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xs:sequence>
 						<xs:element name="category" maxOccurs="unbounded">
 							<xs:complexType>
-								<xs:attribute name="value" use="required"/>
+								<xs:attribute name="value" use="required" type="xs:string"/>
 							</xs:complexType>
 						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
+				<xs:unique name="unique-category-ref">
+					<xs:selector xpath="r:category"/>
+					<xs:field xpath="@value"/>
+				</xs:unique>
 			</xs:element>
 		</xs:sequence>
+		<xs:attribute name="id" type="xs:NCName" use="required"/>
 		<xs:attribute name="hidden" type="type-boolean" default="false" use="optional"/>
 	</xs:complexType>
+
+	<xs:complexType name="type-skill-version">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="hint" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="type-skill-note-type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="technical"/>
+			<xs:enumeration value="personal"/>
+			<xs:enumeration value="clarity"/>
+		</xs:restriction>
+	</xs:simpleType>
 
 	<xs:attributeGroup name="group-position-date-format">
 		<xs:attribute name="start-date-format" default="M/yyyy" use="optional"/>
@@ -403,12 +481,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xs:element name="spanning" type="type-experience-spanning" maxOccurs="unbounded"/>
 				<xs:element name="since" type="type-experience-since" minOccurs="0"/>
 			</xs:sequence>
-			<xs:element name="spanning" type="type-experience-spanning"/>
 			<xs:element name="since" type="type-experience-since"/>
 		</xs:choice>
 		<xs:attribute name="level" type="nonNegativeDecimal" use="required"/>
 		<xs:attribute name="precision" type="type-experience-precision" use="optional"/>
 	</xs:complexType>
+
+	<xs:simpleType name="type-experience-weight">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
 
 	<xs:simpleType name="type-experience-precision">
 		<xs:restriction base="xs:string">
@@ -421,10 +505,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xs:complexType name="type-experience-spanning">
 		<xs:attribute name="from-date" type="type-date" use="required"/>
 		<xs:attribute name="to-date" type="type-date" use="required"/>
+		<xs:attribute name="weight" type="type-experience-weight" use="optional"/>
 	</xs:complexType>
 
 	<xs:complexType name="type-experience-since">
 		<xs:attribute name="date" type="type-date" use="required"/>
+		<xs:attribute name="weight" type="type-experience-weight" use="optional"/>
 	</xs:complexType>
 
 	<xs:element name="duration" type="type-duration"/>
@@ -432,13 +518,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xs:element name="skill" type="type-skill-reference"/>
 
 	<xs:complexType name="type-skill-pointer">
-		<xs:attribute name="name" type="xs:normalizedString" use="required"/>
+		<xs:attribute name="ref" type="xs:normalizedString" use="required"/>
 	</xs:complexType>
 
 	<xs:complexType name="type-skill-reference" mixed="true">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
-				<xs:attribute name="name" type="xs:string" use="optional"/>
+				<xs:attribute name="ref" type="xs:normalizedString" use="required"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -448,6 +534,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xs:attribute name="to" type="type-date-time"/>
 		<xs:attribute name="weight" type="type-duration-weight" default="1"/>
 		<xs:attribute name="unit" type="type-date-precision"/>
+	</xs:complexType>
+
+	<xs:complexType name="type-text-with-html" mixed="true">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
 	</xs:complexType>
 
 	<xs:complexType name="type-profile-description" mixed="true">
@@ -479,10 +571,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	<xs:complexType name="type-project-link">
 		<xs:simpleContent>
-			<xs:restriction base="xs:normalizedString">
+			<xs:extension base="xs:string">
 				<xs:attribute name="label" use="optional"/>
 				<xs:attribute name="href" use="optional"/>
-			</xs:restriction>
+			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
 

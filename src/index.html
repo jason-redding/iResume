@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-Copyright (C) 2017 Jason Redding
+Copyright (C) 2021 Jason Redding
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,17 +17,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta property="og:type" content="website"/>
     <meta property="og:title" content="Jason Redding - Interactive Résumé">
     <meta property="og:description" content="Jason Redding's Interactive Résumé"/>
-    <meta property="og:url" content="https://jman.socialis.dev/"/>
-    <meta property="og:image" content="http://jman.socialis.dev/images/ogp-image-resume.jpg"/>
+    <meta property="og:url" content="https://jason-redding.com/"/>
+    <meta property="og:image" content="http://jason-redding.com/images/ogp-image-resume.jpg"/>
     <meta property="og:image:alt" content="iRésumé preview"/>
-    <meta property="og:image:secure_url" content="https://jman.socialis.dev/images/ogp-image-resume.jpg"/>
+    <meta property="og:image:secure_url" content="https://jason-redding.com/images/ogp-image-resume.jpg"/>
     <meta property="og:image:type" content="image/jpeg"/>
     <title>Jason Redding - Interactive Résumé</title>
     <!-- @if NODE_ENV='production' -->
@@ -77,6 +77,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <header data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1 data-short-text="Interactive Résumé"><span class="text">Jason Redding &ndash; Interactive Résumé</span></h1>
         <!-- <button id="export-button" class="ui-btn ui-btn-left ui-btn-inline ui-btn-icon-notext ui-icon-action ui-shadow" type="button" title="Export...">Export...</button> -->
+        <button id="explain-button" class="ui-btn ui-btn-left ui-btn-inline ui-btn-icon-notext ui-icon-info ui-shadow" type="button" title="Explain">Explain</button>
         <button id="theme-toggle-button" class="ui-btn ui-btn-right ui-btn-inline ui-btn-icon-notext ui-icon-eye ui-shadow" type="button" title="Toggle light/dark theme">Toggle light/dark theme</button>
     </header>
     <main data-role="main" class="ui-content">
@@ -100,7 +101,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div class="text">Full List of Skills</div>
                     </caption>
                     <thead>
-                    <tr data-render-title="${experience.level} (${experience.level.percentage#percent})${experience.level.preposition#default(experience.preposition);prepend-if(' ')} ${name} with ${experience.duration} of ${experience.type}${experience.last#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}"
+                    <tr data-render-title="${experience.level} (${experience.level.percentage#percent})${experience.level.preposition#default(experience.preposition);prepend-if(' ')} ${name} with ${experience.duration} of ${experience.type}${experience.last#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}${notes}"
                         data-render-data-name="${name}"
                         data-render-data-level="${experience.level}"
                         data-render-data-level-value="${experience.level.originalValue}"

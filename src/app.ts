@@ -12,6 +12,8 @@ function onReady() {
     initPrintHandler();
     initHashHandling();
     initThemeUI();
+    initExplainUI();
+
     initPreferences();
     loadResume();
     initHighlightThemePicker();
@@ -41,6 +43,14 @@ function loadResume(): ResumeLoader {
     })
     .load();
     return resumeLoader;
+}
+
+function initExplainUI() {
+    console.debug('Initializing explaination UI...');
+    $('#explain-button').on('click', function (event, options) {
+        const $html: JQuery = $('html');
+        $html[($html.is('.r-explain') ? 'removeClass' : 'addClass')]('r-explain');
+    });
 }
 
 function initHashHandling() {
@@ -144,6 +154,7 @@ function initResumeComponent(resumeLoader: ResumeLoader): ResumeComponent {
         'employer-sort': 'descending',
         'position-sort': 'descending',
         'show-projects': '1',
+        'show-expired-certifications': '0',
         'skills-layout': 'categories',
         'projects-layout': 'list',
         'skill-level-print-min': 2,
@@ -172,12 +183,14 @@ function initCodeSelector() {
     .addFile('/main.ts')
     .addFile('/app/Namespace/Namespace.ts')
     .addFile('/app/Env/Env.ts')
+    .addFile('/app/CodeViewer/CodeViewer.ts')
     .addFile('/app/iResume/ResumeLoader/ResumeLoader.ts')
     .addFile('/app/iResume/ResumeComponent/ResumeComponent.ts')
     .addFile('/app/iResume/ResumeSkillsTable/ResumeSkillsTable.ts')
     .addFile('/app/XPath/XPath.ts')
     .addFile('/index.html')
     .addFile('/resume.xml', true)
+    .addFile('/resume.presentation.xml')
     .addFile('/xsd/resume.xsd')
     .addFile('/resume.xsl')
     .addFile('/scss/resume.scss')
@@ -190,7 +203,7 @@ function initTooltips(resumeLoader?: ResumeLoader) {
     console.debug('Initializing tooltips...');
 
     $(document).tooltip({
-        items: 'table.skills > tbody *[title], #tab-panel-resume *[title]',
+        items: 'table.skills > tbody *[title]:not([data-no-tooltip]), #tab-panel-resume *[title]:not([data-no-tooltip])',
         content: function () {
             let $this: JQuery = $(this);
             let title: string = $.trim($this.attr('title'));
@@ -273,6 +286,7 @@ function initTooltips(resumeLoader?: ResumeLoader) {
                 let skillName: string = $.trim($this.attr('data-name'));
                 let skillKey: string = (skillName.length > 0 ? skillName : $.trim($this.text()));
                 let skillProperties: object = (resumeLoader ? resumeLoader.getSkillProperties(skillKey) : {});
+                console.log(skillName, skillProperties);
                 let r: string = '<div class="header" style="font-size: 1.3em; text-align: center;">';
                 if (skillName.length > 0) {
                     r += skillName;
@@ -294,6 +308,7 @@ function initTooltips(resumeLoader?: ResumeLoader) {
                 }
                 r += '</div>';
                 r += '<div style="white-space:pre-wrap; margin-top: 0.8em;">' + String.format(title, skillProperties, ['value', 'originalValue']) + '</div>';
+                
                 return r;
             }
             return title;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright (C) 2017 Jason Redding
+Copyright (C) 2021 Jason Redding
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <xsl:stylesheet version="1.0"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://www.w3.org/1999/xhtml"
-	xmlns:r="http://jman.socialis.dev/xsd/resume"
+	xmlns:r="http://jason-redding.com/xsd/resume"
 	xmlns:xi="http://www.w3.org/2001/XInclude"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	exclude-result-prefixes="xsl xi h r">
@@ -32,6 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<xsl:value-of select="/r:resume/@last-modified"/>
 		</xsl:if>
 	</xsl:param>
+	<xsl:param name="show-expired-certifications" select="'0'"/>
 	<xsl:param name="show-projects" select="'0'"/>
 	<xsl:param name="skills-layout" select="''"/>
 	<xsl:param name="author-layout" select="''"/>
@@ -87,7 +88,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					</header>
 					<main>
 						<div class="main-inner">
-							<xsl:apply-templates select="*[not(local-name(self::*) = 'author' or local-name(self::*) = 'meta') and not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = '1')]"/>
+							<xsl:variable name="saved-context" select="."/>
+							<xsl:choose>
+								<xsl:when test="count($presentation-xml/*[not(local-name() = 'author' or local-name() = 'meta')]) > 0">
+									<xsl:for-each select="$presentation-xml/*[not(local-name() = 'author' or local-name() = 'meta')]">
+										<xsl:variable name="current-presentation" select="."/>
+										<xsl:apply-templates select="$saved-context/*[local-name() = local-name($current-presentation) and (not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = '1'))]"/>
+									</xsl:for-each>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:apply-templates select="*[not(local-name(self::*) = 'author' or local-name(self::*) = 'meta') and not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = '1')]"/>
+								</xsl:otherwise>
+							</xsl:choose>
 						</div>
 					</main>
 				</div>
@@ -197,9 +209,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					</xsl:when>
 				</xsl:choose>
 			</xsl:variable>
-			<xsl:message>
-				<xsl:value-of select="concat('Node: &quot;', local-name(), '&quot; Label: &quot;', $info-label, '&quot;')"/>
-			</xsl:message>
+			<!--<xsl:message>-->
+			<!--	<xsl:value-of select="concat('Node: &quot;', local-name(), '&quot; Label: &quot;', $info-label, '&quot;')"/>-->
+			<!--</xsl:message>-->
 			<xsl:element name="div">
 				<xsl:attribute name="class">
 					<xsl:text>author-contact-info </xsl:text>
@@ -292,10 +304,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 									<xsl:attribute name="data-date-format">
 										<xsl:value-of select="$last-modified-format"/>
 									</xsl:attribute>
-									<xsl:call-template name="date-format">
-										<xsl:with-param name="date" select="/r:resume/@last-modified"/>
-										<xsl:with-param name="format" select="$last-modified-format"/>
-									</xsl:call-template>
+									<xsl:attribute name="data-original-date">
+										<xsl:value-of select="/r:resume/@last-modified"/>
+									</xsl:attribute>
+									<xsl:element name="time">
+										<xsl:attribute name="datetime">
+											<xsl:value-of select="/r:resume/@last-modified"/>
+										</xsl:attribute>
+										<xsl:call-template name="date-format">
+											<xsl:with-param name="date" select="/r:resume/@last-modified"/>
+											<xsl:with-param name="format" select="$last-modified-format"/>
+										</xsl:call-template>
+									</xsl:element>
 								</xsl:when>
 							</xsl:choose>
 						</xsl:when>
@@ -695,8 +715,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							</div>
 						</xsl:for-each>
 						<xsl:apply-templates select="r:stack"/>
-						<xsl:if test="translate($show-projects, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate($show-projects, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate($show-projects, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate($show-projects, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = '1'">
-							<xsl:apply-templates select="r:projects[not(@hidden = 'true' or @hidden = 'yes' or @hidden = 'on' or @hidden = '1')]"/>
+						<xsl:if test="not(translate($show-projects, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'false' or translate($show-projects, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'no' or translate($show-projects, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'off' or translate($show-projects, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = '0')">
+							<xsl:variable name="presentation-projects" select="translate(normalize-space($presentation-xml/*[local-name() = 'employers']/@projects), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz')"/>
+							<xsl:if test="not($presentation-projects = 'hide')">
+								<xsl:apply-templates select="r:projects[not(@hidden = 'true' or @hidden = 'yes' or @hidden = 'on' or @hidden = '1')]"/>
+							</xsl:if>
 						</xsl:if>
 					</div>
 				</xsl:for-each>
@@ -972,94 +995,154 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</xsl:template>
 
 	<xsl:template name="handle-certifications" match="r:certifications[count(r:certificate) > 0]">
-		<h2>
-			<xsl:attribute name="data-section">
-				<xsl:value-of select="local-name()"/>
-			</xsl:attribute>
-			<xsl:attribute name="class">
-				<xsl:value-of select="'section-heading'"/>
-				<xsl:value-of select="' page-break-after-avoid'"/>
-				<xsl:if test="string-length(normalize-space(@break-before)) > 0">
-					<xsl:value-of select="concat(' page-break-before-', normalize-space(@break-before))"/>
-				</xsl:if>
-			</xsl:attribute>
+		<xsl:param name="show-expired-certifications" select="$show-expired-certifications"/>
+		<xsl:variable name="final-show-expired-certifications" select="boolean(translate($show-expired-certifications, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate($show-expired-certifications, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate($show-expired-certifications, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate($show-expired-certifications, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = '1')"/>
+		<xsl:variable name="today">
 			<xsl:choose>
-				<xsl:when test="string-length(normalize-space(@title)) > 0">
-					<xsl:value-of select="@title"/>
+				<xsl:when test="contains($system-date, 'T')">
+					<xsl:value-of select="substring-before($system-date, 'T')"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:text>Certifications</xsl:text>
+					<xsl:value-of select="$system-date"/>
 				</xsl:otherwise>
 			</xsl:choose>
-		</h2>
-		<div>
-			<xsl:attribute name="data-section">
-				<xsl:value-of select="local-name()"/>
-			</xsl:attribute>
-			<xsl:attribute name="class">
-				<xsl:value-of select="'section-content'"/>
-				<xsl:value-of select="' page-break-before-avoid'"/>
-				<xsl:if test="string-length(normalize-space(@break-after)) > 0">
-					<xsl:value-of select="concat(' page-break-after-', normalize-space(@break-after))"/>
+		</xsl:variable>
+		<xsl:variable name="today-date" select="number(translate($today, '-', ''))"/>
+
+		<xsl:variable name="non-expired-certifications">
+			<xsl:for-each select="r:certificate[r:issuer/@expire-date]">
+				<xsl:variable name="expiration">
+					<xsl:choose>
+						<xsl:when test="contains(r:issuer/@expire-date, 'T')">
+							<xsl:value-of select="substring-before(r:issuer/@expire-date, 'T')"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="r:issuer/@expire-date"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:variable name="expiration-date" select="number(translate($expiration, '-', ''))"/>
+				<xsl:if test="$expiration-date &gt;= $today-date">
+					<xsl:value-of select="'1'"/>
 				</xsl:if>
-			</xsl:attribute>
-			<ul class="certificate-list">
-				<xsl:for-each select="r:certificate">
-					<li class="certificate-item">
-						<span class="certificate" tabindex="0">
-							<xsl:attribute name="data-name">
-								<xsl:value-of select="normalize-space(r:name)"/>
-							</xsl:attribute>
-							<xsl:attribute name="data-issuer">
-								<xsl:value-of select="normalize-space(r:issuer)"/>
-							</xsl:attribute>
-							<xsl:if test="string-length(r:issuer/@issue-date) > 0">
-								<xsl:attribute name="data-issue-date">
-									<xsl:value-of select="normalize-space(r:issuer/@issue-date)"/>
-								</xsl:attribute>
-								<xsl:attribute name="data-issue-year">
-									<xsl:call-template name="date-format">
-										<xsl:with-param name="date" select="r:issuer/@issue-date"/>
-										<xsl:with-param name="format" select="'yyyy'"/>
-									</xsl:call-template>
-								</xsl:attribute>
-							</xsl:if>
-							<xsl:if test="string-length(r:issuer/@expire-date) > 0">
-								<xsl:attribute name="data-expire-date">
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="non-expired-certifications-count" select="string-length(translate($non-expired-certifications, '0', ''))"/>
+		<xsl:variable name="has-non-expired-certifications" select="$non-expired-certifications-count > 0"/>
+
+		<xsl:if test="$final-show-expired-certifications or (count(r:certificate[not(r:issuer/@expire-date)]) > 0 or $has-non-expired-certifications)">
+			<h2>
+				<xsl:attribute name="data-section">
+					<xsl:value-of select="local-name()"/>
+				</xsl:attribute>
+				<xsl:attribute name="class">
+					<xsl:value-of select="'section-heading'"/>
+					<xsl:value-of select="' page-break-after-avoid'"/>
+					<xsl:if test="string-length(normalize-space(@break-before)) > 0">
+						<xsl:value-of select="concat(' page-break-before-', normalize-space(@break-before))"/>
+					</xsl:if>
+				</xsl:attribute>
+				<xsl:choose>
+					<xsl:when test="string-length(normalize-space(@title)) > 0">
+						<xsl:value-of select="@title"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:text>Certifications</xsl:text>
+					</xsl:otherwise>
+				</xsl:choose>
+			</h2>
+			<div>
+				<xsl:attribute name="data-section">
+					<xsl:value-of select="local-name()"/>
+				</xsl:attribute>
+				<xsl:attribute name="class">
+					<xsl:value-of select="'section-content'"/>
+					<xsl:value-of select="' page-break-before-avoid'"/>
+					<xsl:if test="string-length(normalize-space(@break-after)) > 0">
+						<xsl:value-of select="concat(' page-break-after-', normalize-space(@break-after))"/>
+					</xsl:if>
+				</xsl:attribute>
+				<ul class="certificate-list">
+					<xsl:for-each select="r:certificate">
+						<xsl:variable name="expiration">
+							<xsl:choose>
+								<xsl:when test="contains(r:issuer/@expire-date, 'T')">
+									<xsl:value-of select="normalize-space(substring-before(r:issuer/@expire-date, 'T'))"/>
+								</xsl:when>
+								<xsl:otherwise>
 									<xsl:value-of select="normalize-space(r:issuer/@expire-date)"/>
-								</xsl:attribute>
-								<xsl:attribute name="data-expire-year">
-									<xsl:call-template name="date-format">
-										<xsl:with-param name="date" select="r:issuer/@expire-date"/>
-										<xsl:with-param name="format" select="'yyyy'"/>
-									</xsl:call-template>
-								</xsl:attribute>
-							</xsl:if>
-							<xsl:if test="string-length(r:score/@value) > 0">
-								<xsl:attribute name="data-score">
-									<xsl:value-of select="normalize-space(r:score/@value)"/>
-								</xsl:attribute>
-							</xsl:if>
-							<xsl:if test="string-length(r:score/@max) > 0">
-								<xsl:attribute name="data-max-score">
-									<xsl:value-of select="normalize-space(r:score/@max)"/>
-								</xsl:attribute>
-							</xsl:if>
-							<xsl:attribute name="title">
-								<xsl:value-of select="normalize-space(r:name)"/>
-							</xsl:attribute>
-							<span class="text">
-								<xsl:if test="count(r:issuer) > 0 and not(starts-with(normalize-space(r:name), normalize-space(r:issuer)))">
-									<xsl:value-of select="normalize-space(r:issuer)"/>
-									<xsl:text> </xsl:text>
-								</xsl:if>
-								<xsl:value-of select="normalize-space(r:name)"/>
-							</span>
-						</span>
-					</li>
-				</xsl:for-each>
-			</ul>
-		</div>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+						<xsl:variable name="expiration-date">
+							<xsl:choose>
+								<xsl:when test="string-length($expiration) > 0">
+									<xsl:value-of select="number(translate($expiration, '-', ''))"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="-1"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+
+						<xsl:if test="$final-show-expired-certifications or ($expiration-date = -1 or $expiration-date &gt;= $today-date)">
+							<li class="certificate-item">
+								<span class="certificate" tabindex="0">
+									<xsl:attribute name="data-name">
+										<xsl:value-of select="normalize-space(r:name)"/>
+									</xsl:attribute>
+									<xsl:attribute name="data-issuer">
+										<xsl:value-of select="normalize-space(r:issuer)"/>
+									</xsl:attribute>
+									<xsl:if test="string-length(r:issuer/@issue-date) > 0">
+										<xsl:attribute name="data-issue-date">
+											<xsl:value-of select="normalize-space(r:issuer/@issue-date)"/>
+										</xsl:attribute>
+										<xsl:attribute name="data-issue-year">
+											<xsl:call-template name="date-format">
+												<xsl:with-param name="date" select="r:issuer/@issue-date"/>
+												<xsl:with-param name="format" select="'yyyy'"/>
+											</xsl:call-template>
+										</xsl:attribute>
+									</xsl:if>
+									<xsl:if test="string-length(r:issuer/@expire-date) > 0">
+										<xsl:attribute name="data-expire-date">
+											<xsl:value-of select="normalize-space(r:issuer/@expire-date)"/>
+										</xsl:attribute>
+										<xsl:attribute name="data-expire-year">
+											<xsl:call-template name="date-format">
+												<xsl:with-param name="date" select="r:issuer/@expire-date"/>
+												<xsl:with-param name="format" select="'yyyy'"/>
+											</xsl:call-template>
+										</xsl:attribute>
+									</xsl:if>
+									<xsl:if test="string-length(r:score/@value) > 0">
+										<xsl:attribute name="data-score">
+											<xsl:value-of select="normalize-space(r:score/@value)"/>
+										</xsl:attribute>
+									</xsl:if>
+									<xsl:if test="string-length(r:score/@max) > 0">
+										<xsl:attribute name="data-max-score">
+											<xsl:value-of select="normalize-space(r:score/@max)"/>
+										</xsl:attribute>
+									</xsl:if>
+									<xsl:attribute name="title">
+										<xsl:value-of select="normalize-space(r:name)"/>
+									</xsl:attribute>
+									<span class="text">
+										<xsl:if test="count(r:issuer) > 0 and not(starts-with(normalize-space(r:name), normalize-space(r:issuer)))">
+											<xsl:value-of select="normalize-space(r:issuer)"/>
+											<xsl:text> </xsl:text>
+										</xsl:if>
+										<xsl:value-of select="normalize-space(r:name)"/>
+									</span>
+								</span>
+							</li>
+						</xsl:if>
+					</xsl:for-each>
+				</ul>
+			</div>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template name="handle-skills-legend" match="r:skills-legend">
@@ -1484,7 +1567,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</xsl:attribute>
 			<xsl:attribute name="title">
 				<xsl:text>${experience.level} (${experience.level.percentage#percent})${experience.level.preposition#default(experience.preposition);prepend-if(' ')} ${name} with </xsl:text>
-				<xsl:text>${experience.duration} of ${experience.type}${experience.last#date("'&lt;br/>&lt;br/>Last used: 'MMMM' of 'yyyy")}</xsl:text>
+				<xsl:text>${experience.duration} of ${experience.type}${experience.last#date("'&lt;br/>&lt;br/>Last used: 'MMMM' of 'yyyy")}${notes}</xsl:text>
 			</xsl:attribute>
 			<!--<xsl:attribute name="title">-->
 			<!--<xsl:value-of select="normalize-space($meta-skill-level)"/>-->
@@ -2547,8 +2630,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xsl:param name="use-original-text" select="false()"/>
 		<xsl:variable name="skill-name">
 			<xsl:choose>
-				<xsl:when test="count($skill-ref/self::*[@name]) > 0">
-					<xsl:value-of select="normalize-space($skill-ref/@name)"/>
+				<xsl:when test="count($skill-ref/self::*[@ref]) > 0">
+					<xsl:value-of select="normalize-space($skill-ref/@ref)"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="normalize-space($skill-ref)"/>
@@ -2559,7 +2642,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xsl:variable name="ref" select="/r:resume/r:skills/r:skill[translate(normalize-space(r:name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-') = $ref-name]"/>
 		<xsl:variable name="skill-text">
 			<xsl:choose>
-				<xsl:when test="$use-original-text or (count($skill-ref/self::*[@name]) = 0 and translate(normalize-space($ref/r:name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-') = $ref-name)">
+				<xsl:when test="$use-original-text or (count($skill-ref/self::*[@ref]) = 0 and translate(normalize-space($ref/r:name), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz-') = $ref-name)">
 					<xsl:value-of select="normalize-space($ref/r:name)"/>
 				</xsl:when>
 				<xsl:otherwise>
