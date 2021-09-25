@@ -50,6 +50,7 @@ export default class ResumeComponent {
             'employer-sort': 'descending',
             'position-sort': 'descending',
             'show-projects': '1',
+            'show-expired-certifications': '0',
             'skills-layout': 'categories',
             'projects-layout': 'list',
             'system-date': systemDate
