@@ -153,7 +153,7 @@ function initResumeComponent(resumeLoader: ResumeLoader): ResumeComponent {
         'author-name': '0',
         'employer-sort': 'descending',
         'position-sort': 'descending',
-        'show-projects': '1',
+        'show-projects': '0',
         'show-expired-certifications': '0',
         'skills-layout': 'categories',
         'projects-layout': 'list',

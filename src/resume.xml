@@ -1184,7 +1184,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<start-date>2001-07-01</start-date>
 						<end-date>2017-12-31</end-date>
 					</timeline>
-					<description hidden="true">
+					<description>
 						<h:ul>
 							<h:li>
 								Integrated Banner&#8482; <h:abbr title="Student Information System" data-expanded="true"><h:span class="text">SIS</h:span></h:abbr> with Barnes &amp; Noble's <skill ref="rest">REST</skill> API to insert web <h:abbr title="User Interface"><h:span class="text">UI</h:span></h:abbr> elements that allow users to navigate to required course material.
