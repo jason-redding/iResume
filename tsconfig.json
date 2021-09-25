@@ -6,12 +6,10 @@
         "declaration": true,
         "sourceMap": true,
         "types": [
-            "highlight.js",
             "jquery",
             "jquerymobile",
             "jqueryui",
-            "requirejs",
-            "luxon"
+            "requirejs"
         ]
     },
     "files": [

@@ -1,13 +1,13 @@
 const gulp = require('gulp');
-const exec = require('gulp-exec');
+// const exec = require('gulp-exec');
 const ts = require('gulp-typescript');
-const sass = require('gulp-sass');
-sass.compiler = require('node-sass');
+const gSass = require('gulp-sass');
+const sass = gSass(require('sass'));
 const useref = require('gulp-useref');
 const del = require('del');
 const browserSync = require('browser-sync').create();
 const preprocess = require('gulp-preprocess');
-const sourcemaps = require('gulp-sourcemaps');
+// const sourcemaps = require('gulp-sourcemaps');
 const os = require('os');
 
 const tsProject = ts.createProject('tsconfig.json');
@@ -22,7 +22,7 @@ const CONTEXT = {
     NODE_ENV: 'development',
     HOMEDIR: os.homedir(),
     HOSTNAME: os.hostname(),
-    NOW: NOW.getFullYear() + '-' + padLeft(NOW.getMonth() + 1, '0', 2) + '-' + padLeft(NOW.getDate(), '0', 2) + 'T' + padLeft(NOW.getHours(), '0', 2) + ':' + padLeft(NOW.getMinutes(), '0', 2) + ':' + padLeft(NOW.getSeconds(), '0', 2) + '.' + NOW.getMilliseconds() + (NOW.getTimezoneOffset() === 0 ? 'Z' : (NOW.getTimezoneOffset() < 0 ? '+' : '-') + (padLeft(Math.floor(NOW.getTimezoneOffset() / 60), '0', 2) + padLeft(NOW.getTimezoneOffset() % 60, '0', 2)))
+    NOW: dateToIso8601(NOW)
 };
 
 function showContext(cb) {
@@ -65,7 +65,8 @@ function browserReload(cb) {
     cb();
 }
 
-function deployLive(cb) {
+function deployLocal(cb) {
+    console.info('Deploy [Local]');
     return gulp.src(CONTEXT.DEST + '/**/*', {
         base: CONTEXT.DEST
     })
@@ -81,6 +82,7 @@ function postBuild(cb) {
 }
 
 function concat() {
+    console.info('Concatenate [preprocess, useref]');
     return gulp.src(CONTEXT.SRC + '/**/*.html', {
         base: CONTEXT.SRC
     })
@@ -141,22 +143,37 @@ function clean() {
 }
 
 function setProduction(cb) {
-    CONTEXT['DEBUG'] = false;
-    CONTEXT['NODE_ENV'] = 'production';
+    let modification = {
+        'DEBUG': false,
+        'NODE_ENV': 'production'
+    };
+    modifyContext(modification);
     cb();
 }
 
-function padLeft(input, char, size) {
-    if (('' + char).length === 0) {
-        char = ' ';
+function modifyContext(modifications) {
+    console.info('Modifying Context: ');
+    console.info(modifications);
+    for (let key in modifications) {
+        CONTEXT[key] = modifications[key];
     }
-    input = ('' + input);
-    var i = input.length;
-    while (i < size) {
-        input = char + input;
-        i += char.length;
-    }
-    return input;
+    return CONTEXT;
+}
+
+function dateToIso8601(date) {
+    let padStart = String.prototype.padStart;
+    let year = date.getFullYear();
+    let month = padStart.call(date.getMonth() + 1, 2, '0');
+    let day = padStart.call(date.getDate(), 2, '0');
+    let hours = padStart.call(date.getHours(), 2, '0');
+    let minutes = padStart.call(date.getMinutes(), 2, '0');
+    let seconds = padStart.call(date.getSeconds(), 2, '0');
+    let milliseconds = date.getMilliseconds();
+    let timezoneOffset = date.getTimezoneOffset();
+    let timezoneOffsetHours = padStart.call(Math.floor(date.getTimezoneOffset() / 60), 2, '0');
+    let timezoneOffsetMinutes = padStart.call(date.getTimezoneOffset() % 60, 2, '0');
+
+    return year + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds + '.' + milliseconds + (timezoneOffset === 0 ? 'Z' : (timezoneOffset < 0 ? '+' : '-') + (timezoneOffsetHours + timezoneOffsetMinutes))
 }
 
 function cleanBuild() {
@@ -172,14 +189,14 @@ exports.default.description = 'Alias for clean-build.';
 
 exports.build = build;
 
-exports.buildProduction = gulp.series(setProduction, showContext, build);
+exports.buildProduction = gulp.series(setProduction, showContext, clean, build);
 exports.buildProduction.displayName = 'build:production';
 
 exports.dev = gulp.series(showContext, clean, build, browserInit, watchFiles);
 exports.dev.description = 'Clean, build, start web-server, and setup watches to reload browser.';
 
-exports.deploy = gulp.series(setProduction, showContext, clean, build, deployLive);
-exports.deploy.description = 'Clean, build, and deploy to live site.';
+exports.deploy = gulp.series(setProduction, showContext, clean, build, deployLocal);
+exports.deploy.description = 'Clean, build, and deploy to local site.';
 
 exports.browser = gulp.series(showContext, browserInit, watchFiles);
 
