@@ -12,7 +12,7 @@ function onReady() {
     initPrintHandler();
     initHashHandling();
     initThemeUI();
-    initExplainUI();
+    // initExplainUI();
 
     initPreferences();
     loadResume();
