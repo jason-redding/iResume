@@ -921,17 +921,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xsl:param name="position" select="."/>
 		<xsl:variable name="location-value">
 			<xsl:choose>
-				<xsl:when test="count($position/r:location) > 0">
+				<xsl:when test="string-length(normalize-space($position/r:location)) > 0">
 					<xsl:value-of select="normalize-space($position/r:location)"/>
 				</xsl:when>
-				<xsl:when test="count(parent::r:positions/preceding-sibling::r:location) > 0">
-					<xsl:value-of
-						select="normalize-space($position/parent::r:positions/preceding-sibling::r:location)"/>
+				<xsl:when test="string-length(normalize-space($position/parent::r:positions/preceding-sibling::r:location)) > 0">
+					<xsl:value-of select="normalize-space($position/parent::r:positions/preceding-sibling::r:location)"/>
 				</xsl:when>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="remote-value">
+			<xsl:choose>
+				<xsl:when test="string-length(normalize-space($position/r:location/@remote)) = 0">
+					<xsl:value-of select="0"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="number(substring-before(normalize-space($position/r:location/@remote), '%'))"/>
+				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:if test="string-length($location-value) > 0">
 			<xsl:value-of select="$location-value"/>
+			<xsl:if test="$remote-value > 0">
+				<xsl:value-of select="' '"/>
+			</xsl:if>
+		</xsl:if>
+		<xsl:if test="$remote-value > 0">
+			<xsl:value-of select="concat('(', $remote-value, '% remote)')"/>
 		</xsl:if>
 	</xsl:template>
 

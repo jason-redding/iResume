@@ -172,9 +172,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																	</xs:simpleType>
 																</xs:element>
 																<xs:element name="location" minOccurs="0">
-																	<xs:simpleType>
-																		<xs:restriction base="xs:string"/>
-																	</xs:simpleType>
+																	<xs:complexType>
+																		<xs:simpleContent>
+																			<xs:extension base="xs:string">
+																				<xs:attribute name="remote" type="type-location-remote" use="optional"/>
+																			</xs:extension>
+																		</xs:simpleContent>
+																	</xs:complexType>
 																</xs:element>
 																<xs:element name="department" minOccurs="0">
 																	<xs:simpleType>
@@ -474,6 +478,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xs:attribute name="start-date-format" default="M/yyyy" use="optional"/>
 		<xs:attribute name="end-date-format" default="M/yyyy" use="optional"/>
 	</xs:attributeGroup>
+	
+	<xs:simpleType name="type-location-remote">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0%"/>
+			<xs:enumeration value="10%"/>
+			<xs:enumeration value="20%"/>
+			<xs:enumeration value="30%"/>
+			<xs:enumeration value="40%"/>
+			<xs:enumeration value="50%"/>
+			<xs:enumeration value="60%"/>
+			<xs:enumeration value="70%"/>
+			<xs:enumeration value="80%"/>
+			<xs:enumeration value="90%"/>
+			<xs:enumeration value="100%"/>
+		</xs:restriction>
+	</xs:simpleType>
 
 	<xs:complexType name="type-experience">
 		<xs:choice>
