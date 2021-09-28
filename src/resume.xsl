@@ -695,7 +695,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						</xsl:element>
 						<div class="position-header">
 							<div class="position-employer">
-								<h3 class="employer-title">
+								<h3 class="employer-name">
 									<xsl:value-of select="normalize-space($employer/r:title)"/>
 								</h3>
 								<div class="position-location">

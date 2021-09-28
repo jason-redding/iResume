@@ -155,7 +155,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							<xs:element name="employer" maxOccurs="unbounded">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="title"/>
+										<xs:element name="name"/>
 										<xs:element name="location" minOccurs="0">
 											<xs:simpleType>
 												<xs:restriction base="xs:string"/>

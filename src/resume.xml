@@ -1067,7 +1067,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</skills>
 	<employers title="Experience Details" break-before="always" start-date-format="MMMM yyyy" end-date-format="MMMM yyyy">
 		<employer id="hc">
-			<title>Highrise Consulting</title>
+			<name>Highrise Consulting</name>
 			<location>Adelphi, MD</location>
 			<positions>
 				<position id="java-dev">
@@ -1106,7 +1106,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</positions>
 		</employer>
 		<employer id="ve">
-			<title>Veracity Engineering</title>
+			<name>Veracity Engineering</name>
 			<location>Washington, DC</location>
 			<positions>
 				<position id="senior-java-dev">
@@ -1147,7 +1147,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</positions>
 		</employer>
 		<employer id="bah">
-			<title>Booz Allen Hamilton</title>
+			<name>Booz Allen Hamilton</name>
 			<location>Laurel, MD</location>
 			<positions>
 				<position id="full-stack-dev">
@@ -1194,7 +1194,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</positions>
 		</employer>
 		<employer id="ccbc" break-before="always">
-			<title>The Community College of Baltimore County</title>
+			<name>The Community College of Baltimore County</name>
 			<location>Baltimore, MD</location>
 			<positions>
 				<position id="dev">
