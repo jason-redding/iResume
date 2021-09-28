@@ -41,6 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xs:all>
 						<xs:element name="split" minOccurs="0" type="type-author-split"/>
 						<xs:element name="name" minOccurs="0" type="type-presentation-author-info"/>
+						<xs:element name="vaccination-status" minOccurs="0" type="type-presentation-author-info"/>
 						<xs:element name="seeking" minOccurs="0" type="type-presentation-author-info"/>
 						<xs:element name="company" minOccurs="0" type="type-presentation-author-info"/>
 						<xs:element name="email" minOccurs="0" type="type-presentation-author-info"/>
@@ -355,6 +356,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xs:all>
 			<xs:element name="split" minOccurs="0" type="type-author-split"/>
 			<xs:element name="name" minOccurs="0" type="type-author-info"/>
+			<xs:element name="vaccination-status" minOccurs="0" type="type-author-info"/>
 			<xs:element name="seeking" minOccurs="0" type="type-author-info"/>
 			<xs:element name="company" minOccurs="0" type="type-author-info"/>
 			<xs:element name="email" minOccurs="0" type="type-author-info"/>
