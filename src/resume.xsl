@@ -667,6 +667,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 							</xsl:when>
 						</xsl:choose>
 					</xsl:variable>
+					<xsl:variable name="position-company">
+						<xsl:choose>
+							<xsl:when test="count(r:company) > 0">
+								<xsl:value-of select="normalize-space(r:company)"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="normalize-space($employer/r:name)"/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
+
 					<div>
 						<xsl:attribute name="class">
 							<xsl:value-of select="'position-container'"/>
@@ -696,7 +707,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						<div class="position-header">
 							<div class="position-employer">
 								<h3 class="employer-name">
-									<xsl:value-of select="normalize-space($employer/r:title)"/>
+									<xsl:value-of select="$position-company"/>
 								</h3>
 								<div class="position-location">
 									<xsl:call-template name="handle-position-location"/>

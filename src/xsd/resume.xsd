@@ -167,6 +167,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 													<xs:element name="position" maxOccurs="unbounded">
 														<xs:complexType>
 															<xs:sequence>
+																<xs:element name="company" minOccurs="0">
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string"/>
+																	</xs:simpleType>
+																</xs:element>
 																<xs:element name="title">
 																	<xs:simpleType>
 																		<xs:restriction base="xs:string"/>
