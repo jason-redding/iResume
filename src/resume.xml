@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jason-redding.com/xsd/resume"
 	xsi:schemaLocation="http://jason-redding.com/xsd/resume xsd/resume.xsd"
-	last-modified="2021-09-27T13:13:13">
+	last-modified="2021-09-28T13:13:13">
 	<xi:include r:name="presentation" href="resume.presentation.xml"/>
 	<meta>
 		<skill>
@@ -1065,20 +1065,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</categories>
 		</skill>
 	</skills>
-	<employers title="Experience Details" break-before="always" start-date-format="MMMM yyyy" end-date-format="MMMM yyyy">
+	<employers title="Experience Details" break-before="always" start-date-format="MMM yyyy" end-date-format="MMM yyyy">
 		<employer id="hc">
 			<name>Highrise Consulting</name>
 			<location>Adelphi, MD</location>
 			<positions>
 				<position id="java-dev">
-					<title>Senior Java Developer</title>
+					<company>Army Research Labs</company>
+					<title>Full Stack Developer</title>
 					<location remote="100%"/>
 					<timeline>
 						<start-date>2020-06-01</start-date>
 					</timeline>
 					<description>
+						<h:p>
+							Lead project developer for the <h:abbr title="Science &amp; Research Investment Planning Tool" data-expanded="true"><h:span class="text">SCRIPT</h:span></h:abbr> web application.
+						</h:p>
 						<h:ul>
-							<h:li>Collaborated with teams to upgrade projects, develop new features, and migrate between systems.</h:li>
+							<h:li>Collaborated with teams to upgrade projects, develop new features, resolve bugs, and migrate between systems.</h:li>
 							<h:li>Trained team developers on various technologies and tools throughout the Full Stack.</h:li>
 						</h:ul>
 					</description>
