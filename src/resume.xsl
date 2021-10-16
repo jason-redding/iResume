@@ -518,21 +518,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xsl:variable name="skill-count" select="count($skills-in-category)"/>
 		<xsl:variable name="is-category-visible" select="0 = count(/r:resume/r:meta/r:skill/r:categories/r:category[@value = $category-code and (translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = '1')])"/>
 		<xsl:if test="$is-category-visible and $skill-count > 0">
-			<span class="skill-category-name">
-				<xsl:value-of select="concat($category-name, ': ')"/>
-			</span>
-			<span class="skills-grouped-by-category">
-				<xsl:for-each select="$skills-in-category">
-					<xsl:sort select="r:name" order="ascending"/>
-					<xsl:sort select="r:experience/@level" data-type="number" order="descending"/>
-					<xsl:sort select="concat(r:experience/r:spanning[1]/@from-date, '_', r:experience/r:spanning[last()]/@to-date, '_', r:experience/r:since)" data-type="text" order="ascending"/>
-					<xsl:variable name="hide-on-print" select="r:experience/@level &lt; $final-skill-level-print-min"/>
-					<xsl:call-template name="list-skill">
-						<xsl:with-param name="show-details" select="$show-details"/>
-						<xsl:with-param name="hide-on-print" select="$hide-on-print"/>
-					</xsl:call-template>
-				</xsl:for-each>
-			</span>
+			<!--<div class="skill-category">-->
+				<span class="skills-grouped-by-category">
+					<span class="skill-category-name">
+						<xsl:value-of select="concat($category-name, ': ')"/>
+					</span>
+					<xsl:for-each select="$skills-in-category">
+						<xsl:sort select="r:name" order="ascending"/>
+						<xsl:sort select="r:experience/@level" data-type="number" order="descending"/>
+						<xsl:sort select="concat(r:experience/r:spanning[1]/@from-date, '_', r:experience/r:spanning[last()]/@to-date, '_', r:experience/r:since)" data-type="text" order="ascending"/>
+						<!--<xsl:variable name="hide-on-print" select="r:experience/@level &lt; $final-skill-level-print-min"/>-->
+						<xsl:call-template name="list-skill">
+							<xsl:with-param name="show-details" select="$show-details"/>
+							<!--<xsl:with-param name="hide-on-print" select="$hide-on-print"/>-->
+						</xsl:call-template>
+						<xsl:if test="last() > position()">
+							<xsl:text>, </xsl:text>
+						</xsl:if>
+					</xsl:for-each>
+				</span>
+			<!--</div>-->
 		</xsl:if>
 	</xsl:template>
 
