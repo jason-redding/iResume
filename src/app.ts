@@ -354,6 +354,84 @@ function initExportUI(resumeComponent: ResumeComponent) {
 
 function initThemeUI() {
     console.debug('Initializing theme UI...');
+    $('#color-scheme-select').on('change', function (event, options) {
+        let $body: any = $('body');
+        let oldPageTheme: string;
+        let newPageTheme: string = '';
+        let targetValue: string;
+        if ($.isPlainObject(options) && ('theme' in options)) {
+            targetValue = options.theme;
+            // oldPageTheme = (targetValue !== 'a' ? 'a' : 'b');
+        } else {
+            // oldPageTheme = ($body.pagecontainer('option', 'theme') !== 'a' ? 'b' : 'a');
+            // newPageTheme = (oldPageTheme !== 'a' ? 'a' : 'b');
+            let $target: any = $(event.target);
+            targetValue = $.trim($target.val());
+        }
+
+        if (targetValue.length === 0) {
+            let prefersLightScheme = window.matchMedia('(prefers-color-scheme: light)').matches;
+            let prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            newPageTheme = (prefersLightScheme ? 'a' : prefersDarkScheme ? 'b' : 'a');
+        } else if (targetValue === 'light') {
+            newPageTheme = 'a';
+        } else if (targetValue === 'dark') {
+            newPageTheme = 'b';
+        }
+        if (newPageTheme.length === 0) {
+            newPageTheme = 'a';
+        }
+
+        oldPageTheme = (newPageTheme === 'a' ? 'b' : 'a');
+
+        savePreference('theme', targetValue);
+
+        $('#highlight-theme').attr('href', '/css/highlight/atom-one-' + (newPageTheme !== 'a' ? 'dark' : 'light') + '.css');
+        $('#jqueryui-theme').attr('href', '/css/jquery-ui.' + (newPageTheme !== 'a' ? 'dark-hive' : 'cupertino') + '.theme.min.css');
+
+        $('*[class], *[data-theme]')
+        .each(function () {
+            let $this: JQuery = $(this);
+            let pageTheme: string = $this.attr('data-theme') || newPageTheme;
+            if ($this.is('[data-theme]') && (pageTheme !== newPageTheme)) {
+                $this.attr('data-theme', newPageTheme);
+            }
+            let classes: string[] = $.trim($this.attr('class')).split(/\s+/);
+            let themeSuffix: RegExp = /^(.+?)((-theme-|-)(a|b))$/;
+            $.each(classes, function (index, className) {
+                let matcher = themeSuffix.exec(className);
+                if (matcher !== null && matcher.length > 0) {
+                    if (/^ui-(block|grid)-/.test(matcher[1])) {
+                        return true;
+                    }
+                    if ($this.is('.ui-loader')) {
+                        if (matcher[4] === oldPageTheme) {
+                            return true;
+                        }
+                        $this.removeClass(matcher[0]);
+                        $this.addClass(matcher[1] + matcher[3] + oldPageTheme);
+                    } else {
+                        if (matcher[4] === newPageTheme) {
+                            return true;
+                        }
+                        $this.removeClass(matcher[0]);
+                        $this.addClass(matcher[1] + matcher[3] + newPageTheme);
+                    }
+                    return true;
+                }
+            });
+        });
+
+        $body.pagecontainer('option', 'theme', newPageTheme);
+
+        if (typeof options !== 'object' || options.simulated !== true) {
+            GA.fireEvent('UX', 'Change Theme: ' + (targetValue === '' ? 'Auto' : targetValue === 'light' ? 'Light' : targetValue === 'dark' ? 'Dark' : targetValue));
+        }
+    });
+}
+
+function initClassicThemeUI() {
+    console.debug('Initializing theme UI (Classic)...');
     $('#theme-toggle-button').on('click', function (event, options) {
         let $body: any = $('body');
         let oldPageTheme: string;
@@ -445,7 +523,9 @@ function initPreferences() {
         } catch (ex) {
         }
         if (theme !== null) {
-            $('#theme-toggle-button').trigger('click', {
+            $('#color-scheme-select')
+            .val(theme)
+            .trigger('change', {
                 theme: theme,
                 simulated: true
             });

@@ -1009,24 +1009,41 @@ div.notes {
   }
 }
 
-.ui-header button.ui-btn.ui-btn-inline {
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  height: auto;
-  margin-top: 0;
-  top: 0;
-  bottom: 0;
-  box-sizing: border-box;
-  width: 2.75em;
-  border-style: none;
-  &.ui-btn-left {
-    left: 0;
-  }
-  &.ui-btn-right {
-    right: 0;
-  }
-  @media print {
-    display: none;
+.ui-header {
+  .ui-btn-inline {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    &.ui-btn-left {
+      left: 0;
+    }
+
+    &.ui-btn-right {
+      right: 0;
+    }
+
+    &.ui-select {
+      margin: 0;
+      display: inline-flex;
+      > .ui-btn {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    &:not(.ui-select) {
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+      height: auto;
+      margin-top: 0;
+      box-sizing: border-box;
+      width: 2.75em;
+      border-style: none;
+    }
+    @media print {
+      display: none;
+    }
   }
 }
 

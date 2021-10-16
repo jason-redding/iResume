@@ -21,15 +21,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta property="og:type" content="website"/>
+    <meta name="color-scheme" content="dark light">
+    <meta property="og:type" content="website">
     <meta property="og:title" content="Jason Redding - Interactive Résumé">
-    <meta property="og:description" content="Jason Redding's Interactive Résumé"/>
-    <meta property="og:url" content="https://jason-redding.com/"/>
-    <meta property="og:image" content="http://jason-redding.com/images/ogp-image-resume.jpg"/>
-    <meta property="og:image:alt" content="iRésumé preview"/>
-    <meta property="og:image:secure_url" content="https://jason-redding.com/images/ogp-image-resume.jpg"/>
-    <meta property="og:image:type" content="image/jpeg"/>
-    <title>Jason Redding - Interactive Résumé</title>
+    <meta property="og:description" content="Jason Redding's Interactive Résumé">
+    <meta property="og:url" content="https://jason-redding.com/">
+    <meta property="og:image" content="https://jason-redding.com/images/ogp-image-resume.jpg">
+    <meta property="og:image:alt" content="iRésumé preview">
+    <meta property="og:image:secure_url" content="https://jason-redding.com/images/ogp-image-resume.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <title>Jason Redding - Résumé</title>
     <!-- @if NODE_ENV='production' -->
 
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
@@ -75,10 +76,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <body>
 <div data-role="page" data-theme="a">
     <header data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1 data-short-text="Interactive Résumé"><span class="text">Jason Redding &ndash; Interactive Résumé</span></h1>
-        <!-- <button id="export-button" class="ui-btn ui-btn-left ui-btn-inline ui-btn-icon-notext ui-icon-action ui-shadow" type="button" title="Export...">Export...</button> -->
+        <!--<button id="export-button" class="ui-btn ui-btn-left ui-btn-inline ui-btn-icon-notext ui-icon-action ui-shadow" type="button" title="Export...">Export...</button>-->
         <!--<button id="explain-button" class="ui-btn ui-btn-left ui-btn-inline ui-btn-icon-notext ui-icon-info ui-shadow" type="button" title="Explain">Explain</button>-->
-        <button id="theme-toggle-button" class="ui-btn ui-btn-right ui-btn-inline ui-btn-icon-notext ui-icon-eye ui-shadow" type="button" title="Toggle light/dark theme">Toggle light/dark theme</button>
+        <h1 data-short-text="Interactive Résumé"><span class="text">Jason Redding &ndash; Interactive Résumé</span></h1>
+        <!--<button id="theme-toggle-button" class="ui-btn ui-btn-right ui-btn-inline ui-btn-icon-notext ui-icon-eye ui-shadow" type="button" title="Toggle light/dark theme">Toggle light/dark theme</button>-->
+        <select id="color-scheme-select" data-inline="true" data-corners="false" class="ui-btn-right">
+            <option value="">Auto</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+        </select>
     </header>
     <main data-role="main" class="ui-content">
         <div class="main-inner">
