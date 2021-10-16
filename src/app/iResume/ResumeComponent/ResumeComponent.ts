@@ -421,7 +421,10 @@ export default class ResumeComponent {
         .closest('.tab-panel')
         .addClass('transform-applied')
         .addClass('final-rendering');
-        this.viewport.html(<any>$('body > .page-wrapper > *', this._transformedDocument));
+
+        let $transformedResume = $('body > .page-wrapper > *', this._transformedDocument);
+
+        this.viewport.html(<any>$transformedResume);
         this.viewportProperties = {
             latestModifiedDate: latestModifiedDate
         };
