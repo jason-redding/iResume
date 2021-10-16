@@ -9,6 +9,8 @@ declare global {
     }
 }
 
+export type TableOrderNulls = 'first' | 'last';
+
 export interface ResumeFieldValue {
     originalValue?: string;
     value?: string;
@@ -360,6 +362,7 @@ export default class ResumeSkillsTable {
             })
             .removeClass('ui-state-default')
             .removeClass('sort-by');
+            const orderNulls: TableOrderNulls = ($.trim($columnHeader.attr('data-order-nulls')) === 'last' ? 'last' : 'first');
             const sortOrder: string = $.trim($columnHeader.attr('data-sort-order'));
             let sorting: string[] = [$.trim($columnHeader.attr('data-order-by'))];
             if (sorting[0].length > 0) {
@@ -370,15 +373,13 @@ export default class ResumeSkillsTable {
             const $rows: JQuery = this._element.find('> tbody > tr');
             if ($rows.length === 0) {
                 this._buildSkillsTable();
-                this._sortTableRows(sortBy, sorting, sortOrder);
-                return;
             }
-            this._sortTableRows(sortBy, sorting, sortOrder);
+            this._sortTableRows(sortBy, sorting, sortOrder, orderNulls);
         }
         return this;
     }
 
-    private _sortTableRows(fieldName: string, sorting: string[], defaultSortOrder: string): ResumeSkillsTable {
+    private _sortTableRows(fieldName: string, sorting: string[], defaultSortOrder: string, orderNulls: TableOrderNulls = 'first'): ResumeSkillsTable {
         const $table: JQuery = this._element;
         const $rows: JQuery = $table.find('> tbody > tr');
         const sortOrder: string = $.trim(defaultSortOrder);
@@ -414,10 +415,10 @@ export default class ResumeSkillsTable {
                 }
                 let aValue: string | number | Array<string | number> = String.format('${' + sortColumn + '}', aRow, ['value', 'originalValue']);
                 let bValue: string | number | Array<string | number> = String.format('${' + sortColumn + '}', bRow, ['value', 'originalValue']);
-                if (typeof aValue === 'undefined') {
+                if (aValue === null || (typeof aValue === 'undefined')) {
                     aValue = '';
                 }
-                if (typeof bValue === 'undefined') {
+                if (bValue === null || (typeof bValue === 'undefined')) {
                     bValue = '';
                 }
                 if (Array.isArray(aValue)) {
@@ -426,6 +427,8 @@ export default class ResumeSkillsTable {
                 if (Array.isArray(bValue)) {
                     bValue = bValue.join('');
                 }
+                let aValueIsEmpty = (aValue.length === 0);
+                let bValueIsEmpty = (bValue.length === 0);
                 if (!isNaN(parseFloat(aValue))) {
                     aValue = parseFloat(aValue);
                 }
@@ -438,7 +441,15 @@ export default class ResumeSkillsTable {
                 if (typeof bValue === 'string') {
                     bValue = bValue.toUpperCase();
                 }
-                if (aValue < bValue) {
+                if (aValueIsEmpty || bValueIsEmpty) {
+                    if (aValueIsEmpty === bValueIsEmpty) {
+                        sortReturn = 0;
+                    } else if (aValueIsEmpty) {
+                        sortReturn = (orderNulls === 'first' ? -1 : 1);
+                    } else if (bValueIsEmpty) {
+                        sortReturn = (orderNulls === 'first' ? 1 : -1);
+                    }
+                } else if (aValue < bValue) {
                     sortReturn = -1;
                 } else if (aValue > bValue) {
                     sortReturn = 1;
@@ -580,21 +591,19 @@ export default class ResumeSkillsTable {
                 .addClass('ui-widget-content')
                 .appendTo($skillRow);
                 let $cellData: JQuery = $('<span/>').addClass('data').appendTo($cell);
-                if (String.format('${' + columnFieldName + '}', props, ['value', 'originalValue']).length > 0) {
-                    $cell.attr('data-value', String.format('${' + columnFieldName + '.value}', props));
-                    $cell.attr('data-original-value', String.format('${' + columnFieldName + '.originalValue}', props));
-                    if (Array.isArray(columnAttrRenderers[columnFieldName])) {
-                        $.each(columnAttrRenderers[columnFieldName], function (renderIndex, render) {
-                            $cell.attr(render.attr, String.format(render.template, renderProps, ['value', 'originalValue']));
-                        });
-                    }
-                    $cell
-                    .attr({
-                        'data-field': columnFieldName,
-                        'data-header': columnHeader
+                $cell.attr('data-value', String.format('${' + columnFieldName + '.value}', props));
+                $cell.attr('data-original-value', String.format('${' + columnFieldName + '.originalValue}', props));
+                if (Array.isArray(columnAttrRenderers[columnFieldName])) {
+                    $.each(columnAttrRenderers[columnFieldName], function (renderIndex, render) {
+                        $cell.attr(render.attr, String.format(render.template, renderProps, ['value', 'originalValue']));
                     });
-                    $cellData.html(String.format(columnFieldRender, renderProps, ['value', 'originalValue']));
                 }
+                $cell
+                .attr({
+                    'data-field': columnFieldName,
+                    'data-header': columnHeader
+                });
+                $cellData.html(String.format(columnFieldRender, renderProps, ['value', 'originalValue']));
             });
         });
 
