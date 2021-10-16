@@ -112,7 +112,6 @@ function compileTypeScript(cb) {
     let tsResult =
     gulp.src(CONTEXT.DEST + '/**/*.ts', {base: CONTEXT.DEST})
     // .pipe(sourcemaps.init())
-    // .pipe(tsProject())
     .pipe(tsProject())
     ;
     return tsResult

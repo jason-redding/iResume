@@ -1,4 +1,4 @@
-@import "_common";
+@import '_common';
 
 @each $break-position in $break-positions {
   @each $break-value in $page-break-values {
@@ -36,7 +36,7 @@ body {
   tab-size: 2;
 }
 
-*[data-role="page"]:not(.ui-page) {
+*[data-role='page']:not(.ui-page) {
   display: none;
 }
 
@@ -86,7 +86,7 @@ html.r-explain .ui-page.ui-page-active::after {
   justify-content: center;
   margin: 0.5em 0 2em;
 
-  label[for="tab-code"] {
+  label[for='tab-code'] {
     font-family: 'Courier New', monospace;
   }
 }
@@ -357,7 +357,7 @@ pre.code-container {
 .separator {
   &::before {
     font-weight: bold;
-    content: "\A0\2022\A0";
+    content: '\A0\2022\A0';
   }
 }
 
@@ -417,6 +417,12 @@ pre.code-container {
   }
 }
 
+main.ui-content {
+    max-width: 120em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 @media (min-width: 28em) {
   main.ui-content {
     > .main-inner {
@@ -439,7 +445,7 @@ pre.code-container {
   .skills-legend-level {
     display: grid;
     grid-template-columns: 5em 3em;
-    grid-template-areas: "skill-name skill-percentage";
+    grid-template-areas: 'skill-name skill-percentage';
     grid-gap: 1em;
 
     .skills-legend-level-percentage {
@@ -473,18 +479,19 @@ ul, ol {
     &.as-categories {
       .skills-grouped-by-category {
         .skill {
-          display: inline-flex;
-          &:not(:last-child) {
-            &::after {
-              content: ', ';
-              .ui-page-theme-a & {
-                color: $textColorLightTheme;
-              }
-              .ui-page-theme-b & {
-                color: $textColorDarkTheme;
-              }
-            }
-          }
+          white-space: nowrap;
+          //display: inline-flex;
+          //&:not(:last-child) {
+          //  &::after {
+          //    content: ', ';
+          //    .ui-page-theme-a & {
+          //      color: $textColorLightTheme;
+          //    }
+          //    .ui-page-theme-b & {
+          //      color: $textColorDarkTheme;
+          //    }
+          //  }
+          //}
         }
       }
     }
@@ -504,6 +511,7 @@ ul, ol {
 
 .skill-category-name {
   font-weight: bold;
+  white-space: pre-wrap;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -606,9 +614,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-content {
-  &[data-section="competencies"],
-  &[data-section="skills"],
-  &[data-section="certifications"] {
+  &[data-section='competencies'],
+  &[data-section='skills'],
+  &[data-section='certifications'] {
     margin-left: 0;
     margin-right: 0;
   }
@@ -915,7 +923,7 @@ div.notes {
 }
 
 @media screen {
-  *[title], *[aria-describedby], span.skill, a, time[datetime^="P"] {
+  *[title], *[aria-describedby], span.skill, a, time[datetime^='P'] {
     &:not(table):not(thead):not(tbody):not(tfoot):not(tr):not(th):not(td):not(button):not(input):not(select):not(.ui-btn):not([data-no-tooltip]) {
       cursor: pointer;
       /*&:hover, &:focus {
@@ -948,7 +956,7 @@ div.notes {
   pointer-events: none;
   padding: 10px 20px;
   border-radius: 20px;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
 
   .ui-overlay-b & {
     color: hsl(0, 0%, 100%);
@@ -984,7 +992,7 @@ div.notes {
     bottom: -16px;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       left: 20px;
       top: -20px;
@@ -1224,7 +1232,7 @@ table.skills {
           }
         }
 
-        &[data-sort-order="desc"] {
+        &[data-sort-order='desc'] {
           &:hover, &:focus, &:active, &.sort-by {
             > .data::after {
               .ui-page & {
@@ -1294,9 +1302,10 @@ table.skills {
     }
   }
 
-  &[data-order-by="name"] tbody tr td.field-name,
-  &[data-order-by="experience.level"] tbody tr td.field-experience-level,
-  &[data-order-by="experience"] tbody tr td.field-experience {
+  &[data-order-by='name'] tbody tr td.field-name,
+  &[data-order-by='experience.level'] tbody tr td.field-experience-level,
+  &[data-order-by='experience'] tbody tr td.field-experience,
+  &[data-order-by='experience.last'] tbody tr td.field-experience-last {
     .ui-page-theme-b & {
       &:not(.ui-state-hover) {
         background-image: none;
@@ -1313,7 +1322,7 @@ table.skills {
       background-color: hsla(0, 0%, 0%, 0.04);
     }
 
-    @include media-width-max(374) {
+    @include media-width-max($tableWidthResponseThreshold) {
       &::after {
         order: 1;
         content: '';
@@ -1340,10 +1349,11 @@ table.skills {
     }
   }
 
-  &[data-sort-order="desc"] {
-    &[data-order-by="name"] tbody tr td.field-name,
-    &[data-order-by="level"] tbody tr td.field-level,
-    &[data-order-by="experience"] tbody tr td.field-experience {
+  &[data-sort-order='desc'] {
+    &[data-order-by='name'] tbody tr td.field-name,
+    &[data-order-by='experience.level'] tbody tr td.field-experience-level,
+    &[data-order-by='experience'] tbody tr td.field-experience,
+    &[data-order-by='experience.last'] tbody tr td.field-experience-last {
       &::after {
         background-position: -65px -16px;
       }
@@ -1351,7 +1361,7 @@ table.skills {
   }
 }
 
-@include media-width-max(374) {
+@include media-width-max($tableWidthResponseThreshold) {
   .tab-panel.final-rendering {
     table.skills {
       display: block;
@@ -1362,6 +1372,9 @@ table.skills {
         tr {
           display: table;
           width: 100%;
+          th {
+            display: block;
+          }
         }
       }
 
@@ -1397,7 +1410,7 @@ table.skills {
 
           &::before {
             order: 2;
-            content: attr(data-header) ":";
+            content: attr(data-header) ':';
             box-sizing: border-box;
             display: inline-block;
             vertical-align: top;
