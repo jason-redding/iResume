@@ -1449,6 +1449,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xsl:param name="skill-text" select="normalize-space($skill/r:name)"/>
 		<xsl:param name="show-details" select="false()"/>
 		<xsl:param name="hide-on-print" select="false()"/>
+		<xsl:variable name="skill-long-name" select="normalize-space($skill/r:long-name)"/>
 		<xsl:variable name="experience-ongoing" select="count($skill/r:experience/r:since) > 0"/>
 		<xsl:variable name="experience-span-count" select="count($skill/r:experience/r:spanning)"/>
 		<xsl:variable name="earliest-span">
@@ -1633,6 +1634,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<!--</xsl:attribute>-->
 			<xsl:attribute name="data-name">
 				<xsl:value-of select="normalize-space($skill/r:name)"/>
+			</xsl:attribute>
+			<xsl:attribute name="data-long-name">
+				<xsl:value-of select="$skill-long-name"/>
 			</xsl:attribute>
 			<xsl:attribute name="data-level-value">
 				<xsl:value-of select="normalize-space($skill-level)"/>

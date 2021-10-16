@@ -284,11 +284,14 @@ function initTooltips(resumeLoader?: ResumeLoader) {
                 let skillVersion: string = $.trim($this.attr('data-version'));
                 let skillVersionHint: string = $.trim($this.attr('data-version-hint'));
                 let skillName: string = $.trim($this.attr('data-name'));
+                let skillLongName: string = $.trim($this.attr('data-long-name'));
                 let skillKey: string = (skillName.length > 0 ? skillName : $.trim($this.text()));
                 let skillProperties: object = (resumeLoader ? resumeLoader.getSkillProperties(skillKey) : {});
                 console.log(skillName, skillProperties);
                 let r: string = '<div class="header" style="font-size: 1.3em; text-align: center;">';
-                if (skillName.length > 0) {
+                if (skillLongName.length > 0) {
+                    r += skillLongName;
+                } else if (skillName.length > 0) {
                     r += skillName;
                 } else {
                     r += $.trim($this.text());

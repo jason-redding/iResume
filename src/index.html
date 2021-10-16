@@ -103,6 +103,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <thead>
                     <tr data-render-title="${experience.level} (${experience.level.percentage#percent})${experience.level.preposition#default(experience.preposition);prepend-if(' ')} ${name} with ${experience.duration} of ${experience.type}${experience.last#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}${notes}"
                         data-render-data-name="${name}"
+                        data-render-data-long-name="${long-name}"
                         data-render-data-level="${experience.level}"
                         data-render-data-level-value="${experience.level.originalValue}"
                         data-render-data-level-percentage="${experience.level.percentage}"
