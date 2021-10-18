@@ -354,7 +354,12 @@ function initExportUI(resumeComponent: ResumeComponent) {
 
 function initThemeUI() {
     console.debug('Initializing theme UI...');
-    $('#color-scheme-select').on('change', function (event, options) {
+    const autoIntervalSeconds = 60;
+    let mediaLightScheme = window.matchMedia('(prefers-color-scheme: light)');
+    let mediaDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    let $colorSchemeSelect = $('#color-scheme-select');
+    $colorSchemeSelect.on('change', function (event, options) {
+        let $this: JQuery = $(this);
         let $body: any = $('body');
         let oldPageTheme: string;
         let newPageTheme: string = '';
@@ -369,9 +374,10 @@ function initThemeUI() {
             targetValue = $.trim($target.val());
         }
 
-        if (targetValue.length === 0) {
-            let prefersLightScheme = window.matchMedia('(prefers-color-scheme: light)').matches;
-            let prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if ((typeof targetValue === 'undefined') || targetValue === null || targetValue.length === 0) {
+            let prefersLightScheme = mediaLightScheme.matches;
+            let prefersDarkScheme = mediaDarkScheme.matches;
+            targetValue = '';
             newPageTheme = (prefersLightScheme ? 'a' : prefersDarkScheme ? 'b' : 'a');
         } else if (targetValue === 'light') {
             newPageTheme = 'a';
@@ -382,7 +388,7 @@ function initThemeUI() {
             newPageTheme = 'a';
         }
 
-        oldPageTheme = (newPageTheme === 'a' ? 'b' : 'a');
+        oldPageTheme = (newPageTheme !== 'b' ? 'b' : 'a');
 
         savePreference('theme', targetValue);
 
@@ -424,9 +430,30 @@ function initThemeUI() {
 
         $body.pagecontainer('option', 'theme', newPageTheme);
 
+        // Activate/Deactivate interval for auto color scheme.
+        let autoInterval = $this.data('auto.interval');
+        if ((typeof autoInterval === 'number')) {
+            clearInterval(autoInterval);
+            autoInterval = null;
+            $this.removeData('auto.interval');
+        }
+        if (targetValue === '') {
+            $this.data('auto.interval', setInterval(function () {
+                $this.trigger('change', {
+                    simulated: true
+                });
+            }, autoIntervalSeconds * 1000));
+        }
+
         if (typeof options !== 'object' || options.simulated !== true) {
             GA.fireEvent('UX', 'Change Theme: ' + (targetValue === '' ? 'Auto' : targetValue === 'light' ? 'Light' : targetValue === 'dark' ? 'Dark' : targetValue));
         }
+    });
+
+    $(mediaDarkScheme).on('change', function (event) {
+        $colorSchemeSelect.trigger('change', {
+            simulated: true
+        });
     });
 }
 
