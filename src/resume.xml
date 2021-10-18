@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jason-redding.com/xsd/resume"
 	xsi:schemaLocation="http://jason-redding.com/xsd/resume xsd/resume.xsd"
-	last-modified="2021-10-08T13:13:13">
+	last-modified="2021-10-18T13:13:13">
 	<xi:include r:name="presentation" href="resume.presentation.xml"/>
 	<meta>
 		<skill>
@@ -1113,10 +1113,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<location remote="100%"/>
 					<timeline>
 						<start-date>2020-06-01</start-date>
+						<end-date>2021-10-15</end-date>
 					</timeline>
 					<description>
 						<h:p>
-							Lead project developer for the <h:abbr title="Science &amp; Research Investment Planning Tool" data-expanded="true"><h:span class="text">SCRIPT</h:span></h:abbr> web application.
+							Lead project developer of web application used for investment planning (<h:abbr title="Science &amp; Research Investment Planning Tool" data-expanded="true"><h:span class="text">SCRIPT</h:span></h:abbr>).
 						</h:p>
 						<h:ul>
 							<h:li>Collaborated with teams to upgrade projects, develop new features, resolve bugs, and migrate between systems.</h:li>
