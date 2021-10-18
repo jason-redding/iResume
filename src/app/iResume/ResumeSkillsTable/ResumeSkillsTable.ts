@@ -9,7 +9,7 @@ declare global {
     }
 }
 
-export type TableOrderNulls = 'first' | 'last';
+export type TableSortNulls = 'first' | 'last';
 
 export interface ResumeFieldValue {
     originalValue?: string;
@@ -36,6 +36,7 @@ export default class ResumeSkillsTable {
 
     private static DEFAULT_SORT_COLUMN = 'level';
     private static PATTERN_DATA_RENDER_PREFIX = /^data-render-(.+)$/i;
+    private static PATTERN_TABLE_SORT_NULLS = /^(first|last)$/i;
 
     constructor(loader: ResumeLoader, element: JQuery | HTMLElement | string, categoriesContainer: JQuery | HTMLElement | string = null, options: object = {}) {
         this._loader = loader;
@@ -362,8 +363,15 @@ export default class ResumeSkillsTable {
             })
             .removeClass('ui-state-default')
             .removeClass('sort-by');
-            const orderNulls: TableOrderNulls = ($.trim($columnHeader.attr('data-order-nulls')) === 'last' ? 'last' : 'first');
             const sortOrder: string = $.trim($columnHeader.attr('data-sort-order'));
+            let sortNulls: TableSortNulls;
+            if (ResumeSkillsTable.PATTERN_TABLE_SORT_NULLS.test($.trim($columnHeader.attr('data-sort-nulls')))) {
+                // @ts-ignore
+                sortNulls = $.trim($columnHeader.attr('data-sort-nulls')).toLowerCase();
+            }
+            if ((typeof sortNulls === 'undefined') || sortNulls === null) {
+                sortNulls = (sortOrder === 'desc' ? 'first' : 'last');
+            }
             let sorting: string[] = [$.trim($columnHeader.attr('data-order-by'))];
             if (sorting[0].length > 0) {
                 sorting = sorting[0].split(/\s*,+\s*/);
@@ -374,16 +382,16 @@ export default class ResumeSkillsTable {
             if ($rows.length === 0) {
                 this._buildSkillsTable();
             }
-            this._sortTableRows(sortBy, sorting, sortOrder, orderNulls);
+            this._sortTableRows(sortBy, sorting, sortOrder, sortNulls);
         }
         return this;
     }
 
-    private _sortTableRows(fieldName: string, sorting: string[], defaultSortOrder: string, orderNulls: TableOrderNulls = 'first'): ResumeSkillsTable {
+    private _sortTableRows(fieldName: string, sorting: string[], defaultSortOrder: string, defaultSortNulls: TableSortNulls): ResumeSkillsTable {
+        defaultSortOrder = $.trim(defaultSortOrder);
         const $table: JQuery = this._element;
         const $rows: JQuery = $table.find('> tbody > tr');
-        const sortOrder: string = $.trim(defaultSortOrder);
-        const sortingProperties: SortingProperties = this._getSortingProperties(fieldName, sorting[0], sortOrder);
+        const sortingProperties: SortingProperties = this._getSortingProperties(fieldName, sorting[0], defaultSortOrder);
         const firstSortBy: string = $.trim($table.find('> thead th[data-field="' + fieldName + '"]').attr('data-header'));
         const $captionAttributeTargets: JQuery = $table
         .children('caption')
@@ -403,15 +411,23 @@ export default class ResumeSkillsTable {
             let bRow = $(b).templateProperties();
             let sortReturn = 0;
             $.each(sorting, function (ruleIndex, rule) {
-                let sortRule = rule.split(':', 2);
+                let sortRule = rule.split(':', 3);
                 let sortColumn = sortRule[0];
+                let sortNulls: TableSortNulls = defaultSortNulls;
                 let sortDirection;
-                if (ruleIndex === 0 && sortOrder.length > 0) {
-                    sortDirection = sortOrder;
+                if (ruleIndex === 0 && defaultSortOrder.length > 0) {
+                    sortDirection = defaultSortOrder;
                 } else if (sortRule.length > 1) {
                     sortDirection = sortRule[1];
                 } else {
                     sortDirection = 'asc';
+                }
+                if (sortRule.length > 2 && ResumeSkillsTable.PATTERN_TABLE_SORT_NULLS.test(sortRule[2])) {
+                    // @ts-ignore
+                    sortNulls = sortRule[2].toLowerCase();
+                }
+                if ((typeof sortNulls === 'undefined')) {
+                    sortNulls = (sortDirection === 'desc' ? 'first' : 'last');
                 }
                 let aValue: string | number | Array<string | number> = String.format('${' + sortColumn + '}', aRow, ['value', 'originalValue']);
                 let bValue: string | number | Array<string | number> = String.format('${' + sortColumn + '}', bRow, ['value', 'originalValue']);
@@ -445,21 +461,24 @@ export default class ResumeSkillsTable {
                     if (aValueIsEmpty === bValueIsEmpty) {
                         sortReturn = 0;
                     } else if (aValueIsEmpty) {
-                        sortReturn = (orderNulls === 'first' ? -1 : 1);
+                        sortReturn = (sortNulls === 'first' ? -1 : 1);
                     } else if (bValueIsEmpty) {
-                        sortReturn = (orderNulls === 'first' ? 1 : -1);
+                        sortReturn = (sortNulls === 'first' ? 1 : -1);
                     }
-                } else if (aValue < bValue) {
-                    sortReturn = -1;
-                } else if (aValue > bValue) {
-                    sortReturn = 1;
                 } else {
-                    sortReturn = 0;
-                }
-                if (sortReturn !== 0) {
+                    if (aValue < bValue) {
+                        sortReturn = -1;
+                    } else if (aValue > bValue) {
+                        sortReturn = 1;
+                    } else {
+                        sortReturn = 0;
+                    }
                     if (sortDirection === 'desc') {
                         sortReturn *= -1;
                     }
+                }
+                if (sortReturn !== 0) {
+                    // If we have an inequality, 'break'. Otherwise, continue to next column for sorting, if any.
                     return false;
                 }
             });

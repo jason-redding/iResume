@@ -149,7 +149,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             title="Years of experience"
                             data-render="${experience.duration}"
                             data-sort-order="desc"
-                            data-order-by="experience.duration.totalMilliseconds, experience.first:desc, experience.level.originalValue:desc, name">
+                            data-order-by="experience.duration.totalMilliseconds, experience.level.originalValue:desc, name">
                             <span class="data">Experience</span>
                         </th>
                         <th class="ui-widget-header"
@@ -157,10 +157,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             data-header="Last Used"
                             data-field="experience.last"
                             title="Last used"
-                            data-render="${experience.last#date('MMMM d{th} \'of\' yyyy');default('Current')}"
-                            data-sort-order="desc"
                             data-order-by="experience.last, experience.level.originalValue:desc, name"
-                            data-order-nulls="last">
+                            data-sort-order="desc"
+                            data-render="${experience.last#date('MMMM d{th} \'of\' yyyy');default('Current')}">
                             <span class="data">Last Used</span>
                         </th>
                     </tr>
