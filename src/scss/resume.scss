@@ -145,6 +145,21 @@ html.r-explain .ui-page.ui-page-active::after {
       background: hsl(0, 0%, 98%);
     }
   }
+  #tab-panel-resume {
+    position: relative;
+    &.final-rendering {
+      &::before {
+        content: 'Press Ctrl+P (or \2318+P) to print this resume to PDF.';
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        font-size: 0.75em;
+      }
+    }
+  }
 }
 
 #tab-panel-resume, #tab-panel-skills {
