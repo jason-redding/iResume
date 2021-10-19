@@ -15,10 +15,47 @@ function onReady() {
     // initExplainUI();
 
     initPreferences();
-    loadResume();
+    const resumeLoader = loadResume();
+    resumeLoader.onLoadComplete(response => {
+        initSkillsTable(resumeLoader);
+        initTooltips(resumeLoader);
+        const resumeComponent: ResumeComponent = initResumeComponent(resumeLoader);
+        // initExportUI(resumeComponent);
+        applyRenderDecorations(resumeComponent);
+        resumeComponent.onRenderComplete(() => {
+            handleUrlParams();
+        });
+    });
     initHighlightThemePicker();
-    initCodeSelector();
+    initCodeViewer();
     initTabs();
+}
+
+function applyRenderDecorations(resumeComponent: ResumeComponent): ResumeComponent {
+    resumeComponent.onRenderComplete(() => {
+        const $viewport = resumeComponent.viewport;
+        const $authorContainer = $viewport.find('.header > .author > .author-contact');
+        let $printButtonContainer = $('<div/>').addClass('resume-print-button-container');
+        let $printButton = $('<button/>').text('Print...')
+        .addClass('resume-print-button')
+        .attr({
+            'data-inline': true,
+            'data-mini': true,
+            'type': 'button'
+        })
+        .on('click', function (event) {
+            setTimeout(function () {
+                window.print();
+            }, 10);
+        })
+        .appendTo($printButtonContainer);
+        if ($authorContainer.is('.author-contact-layout-split')) {
+            $printButtonContainer.prependTo($authorContainer);
+        } else {
+        }
+        $authorContainer.enhanceWithin();
+    });
+    return resumeComponent;
 }
 
 function loadResume(): ResumeLoader {
@@ -35,11 +72,6 @@ function loadResume(): ResumeLoader {
     })
     .onLoadComplete(response => {
         $.mobile.loading('hide');
-
-        initSkillsTable(resumeLoader);
-        initTooltips(resumeLoader);
-        const resumeComponent: ResumeComponent = initResumeComponent(resumeLoader);
-        // initExportUI(resumeComponent);
     })
     .load();
     return resumeLoader;
@@ -54,14 +86,15 @@ function initExplainUI() {
 }
 
 function initHashHandling() {
+    console.debug('Initializing URL hash handler...');
     $(window).on('pagecontainerbeforechange.iresume', function (event, ui) {
         if (typeof ui.toPage === 'string' || ui.toPage instanceof String) {
             const url: ParsedPath = $.mobile.path.parseUrl(ui.toPage);
-            const m: RegExpExecArray = /^#(position-.+)$/.exec(url.hash);
-            if (m !== null && m.length > 0) {
-                let $targetElement: JQuery = $('a[name="' + m[1] + '"]', ui.prevPage);
+            const mPosition: RegExpExecArray = /^#(position-.+)$/.exec(url.hash);
+            if (mPosition !== null && mPosition.length > 0) {
+                let $targetElement: JQuery = $('a[name="' + mPosition[1] + '"]', ui.prevPage);
                 if ($targetElement.length === 0) {
-                    $targetElement = $('[id="' + m[1] + '"]', ui.prevPage);
+                    $targetElement = $('[id="' + mPosition[1] + '"]', ui.prevPage);
                 }
                 if ($targetElement.length > 0) {
                     event.preventDefault();
@@ -124,6 +157,36 @@ function initHashHandling() {
     });
 }
 
+function handleUrlParams() {
+    console.debug('Handling URL parameters...');
+    const location = window.location;
+    const query = location.search.replace(/^\?+/g, '');
+    const paramsList = query.split('&');
+
+    const invokePrint = function invokePrint () {
+        console.debug('Invoking print!');
+        window.print();
+    };
+
+    for (let paramLine of paramsList) {
+        const paramParts = paramLine.split('=', 2);
+        let paramName = paramParts[0];
+        let paramValue = paramParts[1];
+        if (paramName === 'print') {
+            let shouldPrint = true;
+            if ((typeof paramValue !== 'undefined') && paramValue !== null && paramValue !== '') {
+                if (/^(false|no|off|0)$/.test(paramValue)) {
+                    shouldPrint = false;
+                    break;
+                }
+            }
+            if (shouldPrint) {
+                setTimeout(invokePrint, 500);
+            }
+        }
+    }
+}
+
 function initPrintHandler() {
     const mediaQuery: MediaQueryList = window.matchMedia('print');
     const printHandler: Function = (event) => {
@@ -131,7 +194,14 @@ function initPrintHandler() {
             GA.fireEvent('UX', 'print', 'Print Resume');
         }
     };
-    for (let method of [{name: 'addListener', arguments: [printHandler]}, {name: 'addEventListener', arguments: ['change', printHandler]}]) {
+    let methodList = [{
+        name: 'addListener',
+        arguments: [printHandler]
+    }, {
+        name: 'addEventListener',
+        arguments: ['change', printHandler]
+    }];
+    for (let method of methodList) {
         const methodName: string = method.name;
         if ((methodName in mediaQuery)) {
             (<Function>mediaQuery[methodName]).apply(mediaQuery, method.arguments);
@@ -175,8 +245,8 @@ function initResumeComponent(resumeLoader: ResumeLoader): ResumeComponent {
     return resumeComponent;
 }
 
-function initCodeSelector() {
-    console.debug('Initializing code selector...');
+function initCodeViewer() {
+    console.debug('Initializing code viewer...');
 
     const codeViewer: CodeViewer = new CodeViewer('#code-viewer');
     codeViewer
@@ -354,7 +424,6 @@ function initExportUI(resumeComponent: ResumeComponent) {
 
 function initThemeUI() {
     console.debug('Initializing theme UI...');
-    const autoIntervalSeconds = 60;
     let mediaLightScheme = window.matchMedia('(prefers-color-scheme: light)');
     let mediaDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
     let $colorSchemeSelect = $('#color-scheme-select');
@@ -429,21 +498,6 @@ function initThemeUI() {
         });
 
         $body.pagecontainer('option', 'theme', newPageTheme);
-
-        // Activate/Deactivate interval for auto color scheme.
-        let autoInterval = $this.data('auto.interval');
-        if ((typeof autoInterval === 'number')) {
-            clearInterval(autoInterval);
-            autoInterval = null;
-            $this.removeData('auto.interval');
-        }
-        if (targetValue === '') {
-            $this.data('auto.interval', setInterval(function () {
-                $this.trigger('change', {
-                    simulated: true
-                });
-            }, autoIntervalSeconds * 1000));
-        }
 
         if (typeof options !== 'object' || options.simulated !== true) {
             GA.fireEvent('UX', 'Change Theme: ' + (targetValue === '' ? 'Auto' : targetValue === 'light' ? 'Light' : targetValue === 'dark' ? 'Dark' : targetValue));
@@ -615,26 +669,6 @@ function initTabs() {
             $defaultSelected.checkboxradio('refresh');
         }
     }
-}
-
-function loadSourceFile(path: string): JQueryPromise<any> {
-    let dfd: JQueryDeferred<any> = $.Deferred();
-    path = $.trim(path);
-    if (path.length > 0) {
-        $.ajax({
-            dataType: 'text',
-            url: path
-        })
-        .done(function (data, status, xhr) {
-            dfd.resolve(data, status, xhr);
-        })
-        .fail(function (xhr, status, ex) {
-            dfd.reject(xhr, status, ex);
-        });
-    } else {
-        dfd.reject();
-    }
-    return dfd.promise();
 }
 
 function savePreference(name: string, value: string) {
