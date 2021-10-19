@@ -1,10 +1,11 @@
 import * as $ from 'jquery';
 import './app/Env/Env';
+import {addMediaQueryListener} from './app/Env/Env';
 import ResumeSkillsTable from './app/iResume/ResumeSkillsTable/ResumeSkillsTable';
 import ResumeComponent, {ResumeTransformParameters} from './app/iResume/ResumeComponent/ResumeComponent';
 import ResumeLoader from './app/iResume/ResumeLoader/ResumeLoader';
-import CodeViewer from "./app/CodeViewer/CodeViewer";
-import GA from "./app/metrics/GA";
+import CodeViewer from './app/CodeViewer/CodeViewer';
+import GA from './app/metrics/GA';
 
 onReady();
 
@@ -165,7 +166,7 @@ function handleUrlParams() {
     const query = location.search.replace(/^\?+/g, '');
     const paramsList = query.split('&');
 
-    const invokePrint = function invokePrint () {
+    const invokePrint = function invokePrint() {
         console.debug('Invoking print!');
         window.print();
     };
@@ -179,7 +180,6 @@ function handleUrlParams() {
             if ((typeof paramValue !== 'undefined') && paramValue !== null && paramValue !== '') {
                 if (/^(false|no|off|0)$/.test(paramValue)) {
                     shouldPrint = false;
-                    break;
                 }
             }
             if (shouldPrint) {
@@ -190,26 +190,12 @@ function handleUrlParams() {
 }
 
 function initPrintHandler() {
-    const mediaQuery: MediaQueryList = window.matchMedia('print');
     const printHandler: Function = (event) => {
         if (event.matches) {
             GA.fireEvent('UX', 'print', 'Print Resume');
         }
     };
-    let methodList = [{
-        name: 'addListener',
-        arguments: [printHandler]
-    }, {
-        name: 'addEventListener',
-        arguments: ['change', printHandler]
-    }];
-    for (let method of methodList) {
-        const methodName: string = method.name;
-        if ((methodName in mediaQuery)) {
-            (<Function>mediaQuery[methodName]).apply(mediaQuery, method.arguments);
-            break;
-        }
-    }
+    addMediaQueryListener('print', printHandler);
 }
 
 function initSkillsTable(resumeLoader: ResumeLoader): ResumeSkillsTable {
@@ -383,7 +369,7 @@ function initTooltips(resumeLoader?: ResumeLoader) {
                 }
                 r += '</div>';
                 r += '<div style="white-space:pre-wrap; margin-top: 0.8em;">' + String.format(title, skillProperties, ['value', 'originalValue']) + '</div>';
-                
+
                 return r;
             }
             return title;
@@ -413,9 +399,10 @@ function initExportUI(resumeComponent: ResumeComponent) {
     let isBlobSupported = false;
     try {
         isBlobSupported = !!new Blob;
-    } catch (e) {}
+    } catch (e) {
+    }
     if (!isBlobSupported) {
-        console.debug('This browser does not support Blob. Skipping feature.')
+        console.debug('This browser does not support Blob. Skipping feature.');
         return;
     }
     console.debug('Initializing export UI...');
@@ -506,7 +493,7 @@ function initThemeUI() {
         }
     });
 
-    $(mediaDarkScheme).on('change', function (event) {
+    addMediaQueryListener(mediaDarkScheme, (event) => {
         $colorSchemeSelect.trigger('change', {
             simulated: true
         });

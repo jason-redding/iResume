@@ -629,6 +629,35 @@ export const escapeAsAttributeValue = function(value: string): string {
     });
 };
 
+export function addMediaQueryListener(mediaQuery: (string | MediaQueryList), handler: Function): MediaQueryList {
+    let mediaQueryList: MediaQueryList = null;
+    if ((typeof mediaQuery === 'string') || mediaQuery instanceof String) {
+        mediaQuery = mediaQuery.trim();
+        mediaQueryList = window.matchMedia(mediaQuery);
+    } else if (mediaQuery instanceof MediaQueryList) {
+        mediaQueryList = mediaQuery;
+    }
+
+    if ((typeof mediaQueryList !== 'undefined') && mediaQueryList !== null) {
+        let methodList = [{
+            name: 'addListener',
+            arguments: [handler]
+        }, {
+            name: 'addEventListener',
+            arguments: ['change', handler]
+        }];
+        for (let method of methodList) {
+            const methodName: string = method.name;
+            if ((methodName in mediaQueryList)) {
+                (<Function>mediaQueryList[methodName]).apply(mediaQueryList, method.arguments);
+                break;
+            }
+        }
+    }
+
+    return mediaQueryList;
+}
+
 export function escapeAsNodeText(value: string): string {
     return replaceUsingMap(value, /([<>])/g, {
         '<': '&lt;',
