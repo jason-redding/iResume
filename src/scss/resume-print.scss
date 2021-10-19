@@ -163,6 +163,10 @@ $certificationPrintColumns: 2;
           display: flex;
           flex-direction: column;
 
+          > .author-name {
+            display: none;
+          }
+
           div.skills .skill {
             color: inherit;
           }
