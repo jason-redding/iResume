@@ -35,7 +35,9 @@ function applyRenderDecorations(resumeComponent: ResumeComponent): ResumeCompone
     resumeComponent.onRenderComplete(() => {
         const $viewport = resumeComponent.viewport;
         const $authorContainer = $viewport.find('.header > .author > .author-contact');
-        let $printButtonContainer = $('<div/>').addClass('resume-print-button-container');
+        let $printButtonContainer = $('<div/>')
+        .addClass('hide-on-print')
+        .addClass('resume-print-button-container');
         let $printButton = $('<button/>').text('Print...')
         .addClass('resume-print-button')
         .attr({
