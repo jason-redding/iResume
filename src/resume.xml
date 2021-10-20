@@ -59,6 +59,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<willing-to-relocate label="Willing to Relocate">No</willing-to-relocate>
 		<last-updated label="Last Updated" format="M/d/yyyy"/>
 	</author>
+	<blurb>
+		Jason is an experienced, self-taught <skill ref="Java">Java</skill> developer with a successful track record
+		delivering across a Full Stack of development technology within Agile and traditional project frameworks.
+	</blurb>
 	<description title="Experience Summary">
 		Jason is an experienced, self-taught <skill ref="Java">Java</skill> developer with a successful track record
 		delivering across a Full Stack of development technology within Agile and traditional project frameworks.
@@ -1102,7 +1106,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</categories>
 		</skill>
 	</skills>
-	<employers title="Experience Details" break-before="always" start-date-format="MMM yyyy" end-date-format="MMM yyyy">
+	<employers break-before="always" start-date-format="MMM yyyy" end-date-format="MMM yyyy">
 		<employer id="hc">
 			<name>Highrise Consulting</name>
 			<location>Adelphi, MD</location>
