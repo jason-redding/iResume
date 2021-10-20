@@ -89,11 +89,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<main>
 						<div class="main-inner">
 							<xsl:variable name="saved-context" select="."/>
+							<xsl:variable name="presentation-nodes" select="$presentation-xml/*[not(local-name() = 'author' or local-name() = 'meta') and (not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = '1'))]"/>
 							<xsl:choose>
-								<xsl:when test="count($presentation-xml/*[not(local-name() = 'author' or local-name() = 'meta')]) > 0">
-									<xsl:for-each select="$presentation-xml/*[not(local-name() = 'author' or local-name() = 'meta')]">
+								<xsl:when test="count($presentation-nodes) > 0">
+									<xsl:for-each select="$presentation-nodes">
 										<xsl:variable name="current-presentation" select="."/>
-										<xsl:apply-templates select="$saved-context/*[local-name() = local-name($current-presentation) and (not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = '1'))]"/>
+										<xsl:variable name="model-from-presentation" select="$saved-context/*[local-name() = local-name($current-presentation) and (not(translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'true' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'yes' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = 'on' or translate(normalize-space(@hidden), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 'abcdefghijklmnopqrstuvwxyz') = '1'))]"/>
+										<xsl:apply-templates select="$model-from-presentation"/>
 									</xsl:for-each>
 								</xsl:when>
 								<xsl:otherwise>
@@ -332,6 +334,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xsl:for-each select="*|text()">
 			<xsl:call-template name="handle-html"/>
 		</xsl:for-each>
+	</xsl:template>
+
+	<xsl:template name="handle-profile-blurb" match="r:blurb[string-length(normalize-space()) > 0]">
+		<xsl:if test="string-length(normalize-space(@title)) > 0">
+			<xsl:element name="h2">
+				<xsl:attribute name="data-section">
+					<xsl:value-of select="local-name()"/>
+				</xsl:attribute>
+				<xsl:attribute name="class">
+					<xsl:value-of select="'section-heading'"/>
+					<xsl:value-of select="' page-break-after-avoid'"/>
+					<xsl:if test="string-length(normalize-space(@break-before)) > 0">
+						<xsl:value-of select="concat(' page-break-before-', normalize-space(@break-before))"/>
+					</xsl:if>
+				</xsl:attribute>
+				<xsl:value-of select="normalize-space(@title)"/>
+			</xsl:element>
+		</xsl:if>
+		<xsl:element name="div">
+			<xsl:attribute name="data-section">
+				<xsl:value-of select="local-name()"/>
+			</xsl:attribute>
+			<xsl:attribute name="class">
+				<xsl:value-of select="'section-content'"/>
+				<xsl:value-of select="' page-break-before-avoid'"/>
+				<xsl:if test="string-length(normalize-space(@break-after)) > 0">
+					<xsl:value-of select="concat(' page-break-after-', normalize-space(@break-after))"/>
+				</xsl:if>
+			</xsl:attribute>
+			<p>
+				<xsl:apply-templates mode="html"/>
+			</p>
+		</xsl:element>
 	</xsl:template>
 
 	<xsl:template name="handle-profile-description" match="r:resume/r:description">

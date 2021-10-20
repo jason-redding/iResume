@@ -57,6 +57,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xs:attributeGroup ref="group-resume-section-attrs"/>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="blurb" type="type-presentation-element" minOccurs="0"/>
 			<xs:element name="description" type="type-presentation-element" minOccurs="0"/>
 			<xs:element name="competencies" type="type-presentation-element" minOccurs="0"/>
 			<xs:element name="certifications" type="type-presentation-element" minOccurs="0"/>
@@ -99,6 +100,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xs:element name="presentation" type="type-presentation" minOccurs="0"/>
 				<xs:element name="meta" type="type-resume-meta"/>
 				<xs:element name="author" type="type-author"/>
+				<xs:element name="blurb" type="type-profile-blurb" minOccurs="0"/>
 				<xs:element name="description" type="type-profile-description" minOccurs="0"/>
 				<xs:element name="competencies" minOccurs="0">
 					<xs:complexType>
@@ -567,6 +569,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xs:sequence>
 			<xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="type-profile-blurb" mixed="true">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="group-resume-section-attrs"/>
 	</xs:complexType>
 
 	<xs:complexType name="type-profile-description" mixed="true">
