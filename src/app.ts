@@ -34,29 +34,30 @@ function onReady() {
 
 function applyRenderDecorations(resumeComponent: ResumeComponent): ResumeComponent {
     resumeComponent.onRenderComplete(() => {
-        const $viewport = resumeComponent.viewport;
-        const $authorContainer = $viewport.find('.header > .author > .author-contact');
-        let $printButtonContainer = $('<div/>')
-        .addClass('hide-on-print')
-        .addClass('resume-print-button-container');
-        let $printButton = $('<button/>').text('Print...')
-        .addClass('resume-print-button')
-        .attr({
-            'data-inline': true,
-            'data-mini': true,
-            'type': 'button'
-        })
-        .on('click', function (event) {
+        const $viewport: JQuery = resumeComponent.viewport;
+        let $printButton: JQuery = $viewport.closest('body').find('.resume-print-button');
+        if ($printButton.length === 0) {
+            const $authorContainer = $viewport.find('.header > .author > .author-contact');
+            let $printButtonContainer: JQuery = $('<div/>')
+            .addClass('hide-on-print')
+            .addClass('resume-print-button-container');
+
+            $printButton = $('<button/>').text('Print...')
+            .addClass('resume-print-button')
+            .attr({
+                'data-inline': true,
+                'data-mini': true,
+                'type': 'button'
+            });
+            $printButton.appendTo($printButtonContainer);
+            $printButtonContainer.prependTo($authorContainer);
+            $printButtonContainer.enhanceWithin();
+        }
+        $printButton.on('click', function (event) {
             setTimeout(function () {
                 window.print();
             }, 10);
-        })
-        .appendTo($printButtonContainer);
-        if ($authorContainer.is('.author-contact-layout-split')) {
-            $printButtonContainer.prependTo($authorContainer);
-        } else {
-        }
-        $authorContainer.enhanceWithin();
+        });
     });
     return resumeComponent;
 }
