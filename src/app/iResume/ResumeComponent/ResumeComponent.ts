@@ -331,7 +331,7 @@ export default class ResumeComponent {
         });
 
         // Index non-author presentation nodes
-        $.each(xp.presentation.evaluate(pDoc, '/r:presentation/*[not(local-name() = "author")]', 'nodes'), function (index, node) {
+        $.each(xp.presentation.evaluate(pDoc, '/r:presentation/*[not(local-name() = "author" or local-name() = "meta")]', 'nodes'), function (index, node) {
             const $node: JQuery<Node> = $(node);
             const nodeName: string = $node.prop('nodeName');
             sectionOrder.push(nodeName);
@@ -339,10 +339,10 @@ export default class ResumeComponent {
         });
 
         // Gather non-author document nodes
-        $pageWrapper.find('> main > .main-inner > .section-heading').each(function (index, element) {
+        $pageWrapper.find('> main > .main-inner > .section-content').each(function (index, element) {
             const $element: JQuery = $(element);
             const sectionKey: string = $.trim($element.attr('data-section'));
-            dSectionMap[sectionKey] = $element.add($element.next('.section-content[data-section="' + sectionKey + '"]')).detach();
+            dSectionMap[sectionKey] = $element.add($element.prev('.section-heading[data-section="' + sectionKey + '"]')).detach();
         });
 
         // Gather author document nodes
