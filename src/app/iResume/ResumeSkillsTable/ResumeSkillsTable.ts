@@ -129,7 +129,8 @@ export default class ResumeSkillsTable {
             $this.attr('data-sort-order', sortOrder);
             if (fieldName.length > 0) {
                 if (typeof options !== 'object' || options.simulated !== true) {
-                    GA.fireEvent('UX', 'Sort Skills Table: ' + fieldName + ':' + sortOrder);
+                    let eventAction: string = 'Sort Skills Table: ' + fieldName + ':' + sortOrder;
+                    GA.fireEvent('UX', eventAction, eventAction);
                 }
                 self._sortSkills(fieldName);
             }
@@ -320,7 +321,8 @@ export default class ResumeSkillsTable {
                 $captionAttributes.attr('data-filter', categoryName);
             }
             if (typeof options !== 'object' || options.simulated !== true) {
-                GA.fireEvent('UX', 'Filter Skills Table: ' + categoryName);
+                let eventAction: string = 'Filter Skills Table: ' + categoryName;
+                GA.fireEvent('UX', eventAction, eventAction);
             }
             this._refreshTable();
         })

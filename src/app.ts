@@ -48,8 +48,8 @@ function applyRenderDecorations(resumeComponent: ResumeComponent): ResumeCompone
                 'data-inline': true,
                 'data-mini': true,
                 'type': 'button'
-            });
-            $printButton.appendTo($printButtonContainer);
+            })
+            .appendTo($printButtonContainer);
             $printButtonContainer.prependTo($authorContainer);
             $printButtonContainer.enhanceWithin();
         }
@@ -169,6 +169,8 @@ function handleUrlParams() {
 
     const invokePrint = function invokePrint() {
         console.debug('Invoking print!');
+        window.history.replaceState(null, document.title, window.location.pathname);
+        GA.fireEvent('UX', 'print-on-load', 'Print Resume');
         window.print();
     };
 
@@ -489,8 +491,9 @@ function initThemeUI() {
 
         $body.pagecontainer('option', 'theme', newPageTheme);
 
-        if (typeof options !== 'object' || options.simulated !== true) {
-            GA.fireEvent('UX', 'Change Theme: ' + (targetValue === '' ? 'Auto' : targetValue === 'light' ? 'Light' : targetValue === 'dark' ? 'Dark' : targetValue));
+        if ((typeof options !== 'object') || options.simulated !== true) {
+            let eventAction: string = 'Change Theme: ' + (targetValue === '' ? 'Auto' : targetValue === 'light' ? 'Light' : targetValue === 'dark' ? 'Dark' : targetValue);
+            GA.fireEvent('UX', eventAction, eventAction);
         }
     });
 
@@ -498,66 +501,6 @@ function initThemeUI() {
         $colorSchemeSelect.trigger('change', {
             simulated: true
         });
-    });
-}
-
-function initClassicThemeUI() {
-    console.debug('Initializing theme UI (Classic)...');
-    $('#theme-toggle-button').on('click', function (event, options) {
-        let $body: any = $('body');
-        let oldPageTheme: string;
-        let newPageTheme: string;
-        if ($.isPlainObject(options) && ('theme' in options)) {
-            newPageTheme = (options.theme !== 'a' ? 'b' : 'a');
-            oldPageTheme = (newPageTheme !== 'a' ? 'a' : 'b');
-        } else {
-            oldPageTheme = ($body.pagecontainer('option', 'theme') !== 'a' ? 'b' : 'a');
-            newPageTheme = (oldPageTheme !== 'a' ? 'a' : 'b');
-        }
-
-        savePreference('theme', newPageTheme);
-
-        $('#highlight-theme').attr('href', '/css/highlight/atom-one-' + (newPageTheme !== 'a' ? 'dark' : 'light') + '.css');
-        $('#jqueryui-theme').attr('href', '/css/jquery-ui.' + (newPageTheme !== 'a' ? 'dark-hive' : 'cupertino') + '.theme.min.css');
-
-        $('*[class], *[data-theme]')
-        .each(function () {
-            let $this: JQuery = $(this);
-            let pageTheme: string = $this.attr('data-theme') || newPageTheme;
-            if ($this.is('[data-theme]') && (pageTheme !== newPageTheme)) {
-                $this.attr('data-theme', newPageTheme);
-            }
-            let classes: string[] = $.trim($this.attr('class')).split(/\s+/);
-            let themeSuffix: RegExp = /^(.+?)((-theme-|-)(a|b))$/;
-            $.each(classes, function (index, className) {
-                let matcher = themeSuffix.exec(className);
-                if (matcher !== null && matcher.length > 0) {
-                    if (/^ui-(block|grid)-/.test(matcher[1])) {
-                        return true;
-                    }
-                    if ($this.is('.ui-loader')) {
-                        if (matcher[4] === oldPageTheme) {
-                            return true;
-                        }
-                        $this.removeClass(matcher[0]);
-                        $this.addClass(matcher[1] + matcher[3] + oldPageTheme);
-                    } else {
-                        if (matcher[4] === newPageTheme) {
-                            return true;
-                        }
-                        $this.removeClass(matcher[0]);
-                        $this.addClass(matcher[1] + matcher[3] + newPageTheme);
-                    }
-                    return true;
-                }
-            });
-        });
-
-        $body.pagecontainer('option', 'theme', newPageTheme);
-
-        if (typeof options !== 'object' || options.simulated !== true) {
-            GA.fireEvent('UX', 'Change Theme: ' + (newPageTheme === 'a' ? 'Light' : 'Dark'));
-        }
     });
 }
 
@@ -627,7 +570,8 @@ function initTabs() {
         $selectedPanel.removeClass('ui-screen-hidden');
 
         if (typeof options !== 'object' || options.simulated !== true) {
-            GA.fireEvent('UX', 'Change Main Tab: ' + selectedTabText);
+            let eventAction: string = 'Change Main Tab: ' + selectedTabText;
+            GA.fireEvent('UX', eventAction, eventAction);
         }
     });
     $tabsNavRadios.each(function () {
