@@ -371,8 +371,8 @@ pre.code-container {
 
 .ui-header, .ui-footer {
   .ui-title {
-    margin-left: 1em;
-    margin-right: 1em;
+    margin-left: 4.5em;
+    margin-right: 5em;
   }
 }
 
@@ -1029,6 +1029,10 @@ div.notes {
     position: absolute;
     top: 0;
     bottom: 0;
+
+    &.ui-btn-left, &.ui-btn-right {
+      margin: 0;
+    }
 
     &.ui-btn-left {
       left: 0;
