@@ -262,9 +262,83 @@ function initCodeViewer() {
 
 function initTooltips(resumeLoader?: ResumeLoader) {
     console.debug('Initializing tooltips...');
+    const $document: JQuery<Document> = $(document);
 
-    $(document).tooltip({
+    const tooltipShowDuration: number = 400;
+    const tooltipShowDelay: number = 500;
+
+    $document.tooltip({
         items: 'table.skills > tbody *[title]:not([data-no-tooltip]), #tab-panel-resume *[title]:not([data-no-tooltip])',
+        show: {
+            duration: tooltipShowDuration,
+            delay: tooltipShowDelay
+        },
+        open: function (event: any, ui: any) {
+            const now: Date = new Date();
+            $document.data('GA.event.tooltip.last-time', now.getTime());
+        },
+        close: function (event: any, ui: any) {
+            let lastTime: number = $document.data('GA.event.tooltip.last-time');
+            if ((typeof lastTime !== 'number')) {
+                return;
+            }
+            const now: Date = new Date();
+            let elapsedTime: number = (now.getTime() - lastTime);
+            let shownTime: number = (tooltipShowDelay + tooltipShowDuration);
+            if (elapsedTime > shownTime) {
+                let visibleDuration: number = (elapsedTime - shownTime);
+                let target: HTMLElement = event.originalEvent.target;
+                let $target: JQuery = $(target);
+                let triggerType: string = '';
+                let triggerContent: string = '';
+                if ($target.is('span.text')) {
+                    triggerContent = $.trim($target.text());
+                    $target = $target.parent();
+                }
+                if ($target.is('tr')) {
+                    triggerType = 'Skill Table Row';
+                    triggerContent = $target.attr('data-name');
+                } else if ($target.is('abbr')) {
+                    triggerType = 'Abbreviation';
+                    triggerContent = $.trim($target.text());
+                } else if ($target.is('.skill')) {
+                    triggerType = 'Skill';
+                } else if ($target.is('time')) {
+                    let $competencyDuration: JQuery = $target.closest('.competency-duration');
+                    if ($competencyDuration.length > 0) {
+                        let $competency: JQuery = $competencyDuration.closest('.competency');
+                        let competencyName: string = $.trim($competency.children('.competency-name').text());
+                        triggerType = 'Competency Duration';
+                        triggerContent = competencyName;
+                    } else {
+                        let datetime: string = $.trim($target.attr('datetime'));
+                        if (datetime.charAt(0) === 'P') {
+                            triggerType = 'Duration';
+                        } else {
+                            triggerType = 'DateTime';
+                        }
+                    }
+                } else {
+                    triggerContent = $.trim($target.text());
+                }
+
+                const eventLabel: string = triggerType + ': ' + triggerContent;
+                GA.fireEvent('UX', 'Tooltip', eventLabel, visibleDuration);
+            }
+        },
+        position: {
+            my: 'center bottom',
+            at: 'center top-15',
+            collision: 'flipfit',
+            using: function (position, feedback) {
+                $(this).css(position);
+                $('<div>')
+                .addClass('arrow')
+                .addClass(feedback.vertical)
+                .addClass(feedback.horizontal)
+                .appendTo(this);
+            }
+        },
         content: function () {
             let $this: JQuery = $(this);
             let title: string = $.trim($this.attr('title'));
@@ -348,7 +422,6 @@ function initTooltips(resumeLoader?: ResumeLoader) {
                 let skillLongName: string = $.trim($this.attr('data-long-name'));
                 let skillKey: string = (skillName.length > 0 ? skillName : $.trim($this.text()));
                 let skillProperties: object = (resumeLoader ? resumeLoader.getSkillProperties(skillKey) : {});
-                console.log(skillName, skillProperties);
                 let r: string = '<div class="header" style="font-size: 1.3em; text-align: center;">';
                 if (skillLongName.length > 0) {
                     r += skillLongName;
@@ -376,24 +449,6 @@ function initTooltips(resumeLoader?: ResumeLoader) {
                 return r;
             }
             return title;
-        },
-        show: {
-            delay: 500
-        },
-        open: function (event, ui) {
-        },
-        position: {
-            my: 'center bottom',
-            at: 'center top-15',
-            collision: 'flipfit',
-            using: function (position, feedback) {
-                $(this).css(position);
-                $('<div>')
-                .addClass('arrow')
-                .addClass(feedback.vertical)
-                .addClass(feedback.horizontal)
-                .appendTo(this);
-            }
         }
     });
 }
