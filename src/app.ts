@@ -55,6 +55,7 @@ function applyRenderDecorations(resumeComponent: ResumeComponent): ResumeCompone
         }
         $printButton.on('click', function (event) {
             setTimeout(function () {
+                GA.fireEvent('UX', 'Print', 'Print Button');
                 window.print();
             }, 10);
         });
@@ -163,14 +164,14 @@ function initHashHandling() {
 
 function handleUrlParams() {
     console.debug('Handling URL parameters...');
-    const location = window.location;
-    const query = location.search.replace(/^\?+/g, '');
-    const paramsList = query.split('&');
+    const location: Location = window.location;
+    const query: string = location.search.replace(/^\?+/g, '');
+    const paramsList: string[] = query.split('&');
 
-    const invokePrint = function invokePrint() {
+    const invokePrint: Function = () => {
         console.debug('Invoking print!');
         window.history.replaceState(null, document.title, window.location.pathname);
-        GA.fireEvent('UX', 'print-on-load', 'Print Resume');
+        GA.fireEvent('UX', 'Print', 'Print URL');
         window.print();
     };
 
@@ -195,7 +196,7 @@ function handleUrlParams() {
 function initPrintHandler() {
     const printHandler: Function = (event) => {
         if (event.matches) {
-            GA.fireEvent('UX', 'print', 'Print Resume');
+            GA.fireEvent('UX', 'Print', '@media print');
         }
     };
     addMediaQueryListener('print', printHandler);
