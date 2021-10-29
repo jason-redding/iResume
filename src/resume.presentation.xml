@@ -6,7 +6,7 @@
 	xsi:schemaLocation="http://jason-redding.com/xsd/resume xsd/resume.xsd">
 	<author layout="split">
 		<name/>
-		<!--<seeking/>-->
+		<seeking/>
 		<!--<email label="Email"/>-->
 		<!--<phone label="Cell"/>-->
 		<split/>
@@ -16,9 +16,9 @@
 		<willing-to-relocate label="Willing to Relocate"/>
 		<last-updated label="Last Updated" format="M/d/yyyy"/>
 	</author>
-	<!--<blurb/>-->
+	<blurb/>
 	<!--<description/>-->
-	<competencies/>
+	<!--<competencies/>-->
 	<!--<certifications/>-->
 	<skills/>
 	<employers projects="hide"/>

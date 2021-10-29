@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jason-redding.com/xsd/resume"
 	xsi:schemaLocation="http://jason-redding.com/xsd/resume xsd/resume.xsd"
-	last-modified="2021-10-20T13:13:13">
+	last-modified="2021-10-28T13:13:13">
 	<xi:include r:name="presentation" href="resume.presentation.xml"/>
 	<meta>
 		<skill>
@@ -50,7 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</meta>
 	<author name="Jason Redding" layout="split">
 		<name/>
-		<!--<seeking label="Seeking">Commercial positions</seeking>-->
+		<seeking label="Seeking">Mid-level positions</seeking>
 		<email label="Email">jason.redding@gmail.com</email>
 		<split/>
 		<clearance label="Clearance">None</clearance>
@@ -60,12 +60,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<last-updated label="Last Updated" format="M/d/yyyy"/>
 	</author>
 	<blurb>
-		Jason is an experienced, self-taught <skill ref="Java">Java</skill> developer with a successful track record
-		delivering across a Full Stack of development technology within Agile and traditional project frameworks.
+		<h:p>
+			Jason is an experienced, self-taught <skill ref="Java">Java</skill> &amp; Web developer with a successful track record (<h:time datetime="P21Y" data-no-tooltip="true">since 2000</h:time>)
+			delivering across a Full Stack of development technologies within Agile and traditional project frameworks.
+		</h:p>
 	</blurb>
 	<description title="Experience Summary">
 		Jason is an experienced, self-taught <skill ref="Java">Java</skill> developer with a successful track record
-		delivering across a Full Stack of development technology within Agile and traditional project frameworks.
+		delivering across a Full Stack of development technologies within Agile and traditional project frameworks.
 		Prior to joining <h:a href="#position-bah.full-stack-dev">Booz Allen</h:a>, Jason worked at the Community College of Baltimore County.
 		During the first year, he joined as an <h:a href="#position-ccbc.it">IT Computer Technician</h:a> and then transitioned to a
 		<h:a href="#position-ccbc.dev">Developer role</h:a>
@@ -229,7 +231,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</categories>
 		</skill>
 		<skill id="bash">
-			<name>Bash</name>
+			<name>Bash Shell Scripting</name>
 			<experience level="3.5" precision="years">
 				<spanning from-date="2001-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
