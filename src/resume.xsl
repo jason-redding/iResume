@@ -363,9 +363,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xsl:value-of select="concat(' page-break-after-', normalize-space(@break-after))"/>
 				</xsl:if>
 			</xsl:attribute>
-			<p>
-				<xsl:apply-templates mode="html"/>
-			</p>
+			<xsl:choose>
+				<xsl:when test="count(descendant::h:p) > 0">
+					<xsl:apply-templates mode="html"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<p>
+						<xsl:apply-templates mode="html"/>
+					</p>
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:element>
 	</xsl:template>
 
