@@ -16,16 +16,14 @@ function onReady() {
     // initExplainUI();
 
     initPreferences();
-    const resumeLoader = loadResume();
-    resumeLoader.onLoadComplete(response => {
-        initSkillsTable(resumeLoader);
-        initTooltips(resumeLoader);
-        const resumeComponent: ResumeComponent = initResumeComponent(resumeLoader);
-        // initExportUI(resumeComponent);
-        applyRenderDecorations(resumeComponent);
-        resumeComponent.onRenderComplete(() => {
-            handleUrlParams();
-        });
+    const resumeLoader: ResumeLoader = loadResume();
+    initSkillsTable(resumeLoader);
+    initTooltips(resumeLoader);
+    const resumeComponent: ResumeComponent = initResumeComponent(resumeLoader);
+    // initExportUI(resumeComponent);
+    applyRenderDecorations(resumeComponent);
+    resumeComponent.onRenderComplete(() => {
+        handleUrlParams();
     });
     initHighlightThemePicker();
     initCodeViewer();
