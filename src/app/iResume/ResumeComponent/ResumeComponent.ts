@@ -10,6 +10,11 @@ export type SortOrder = 'ascending' | 'descending';
 export type ResumeAuthorLayout = 'split' | 'center' | 'list';
 export type ResumeSkillNoteType = 'technical' | 'personal' | 'clarity';
 
+export enum ResumeMode {
+    DEFAULT = 'default',
+    CUSTOMIZE = 'customize'
+}
+
 export interface ResumeViewportProperties {
     latestModifiedDate: Date;
 }
@@ -37,6 +42,7 @@ export default class ResumeComponent {
     private _transformedDocument: Document = null;
     private _transformProperties: ResumeTransformParameters = null;
     private _xpath: XPath;
+    private _resumeMode: ResumeMode = ResumeMode.DEFAULT;
 
     constructor(loader: ResumeLoader, viewport: JQuery, transformParameters?: ResumeTransformParameters) {
         this.viewport = viewport;
@@ -70,7 +76,19 @@ export default class ResumeComponent {
         });
     }
 
-    get xmlPath() {
+    get resumeMode(): ResumeMode {
+        return this._resumeMode;
+    }
+
+    set resumeMode(value: ResumeMode) {
+        if (value === null) {
+            value = ResumeMode.DEFAULT;
+        }
+        this._resumeMode = value;
+        this._updateResumeMode();
+    }
+
+    get xmlPath(): string {
         return this._loader.getDataPath();
     }
 
@@ -166,6 +184,16 @@ export default class ResumeComponent {
         return this;
     }
 
+    _updateResumeMode(): ResumeComponent {
+        const resumeMode: ResumeMode = this.resumeMode;
+        const $html: JQuery = this.viewport.closest('html');
+        for (let modeKey in ResumeMode) {
+            let mode: ResumeMode = ResumeMode[modeKey];
+            $html[(mode === resumeMode ? 'addClass' : 'removeClass')]('resume-mode-' + mode);
+        }
+        return this;
+    }
+
     exportToDocx(): void {
         // const now: Date = new Date();
         // let output: string = '';
@@ -252,6 +280,11 @@ export default class ResumeComponent {
         // });
     }
 
+    /**
+     * Display resume sections according to referenced Presentation file.
+     *
+     * @private
+     */
     private _applyPresentation() {
         const response: ResumeResponseBundle = this._responseBundle;
         const pDoc: XMLDocument = this.presentationDocument;
@@ -391,6 +424,11 @@ export default class ResumeComponent {
         }
     }
 
+    /**
+     * Applies the actual transform (.xsl) to the resume (.xml) and inserts the resulting DOM into the {@code viewport Viewport}.
+     *
+     * @private
+     */
     private _applyTransform() {
         const response: ResumeResponseBundle = this._responseBundle;
         this._callbacksBefore.fireWith(response, [response]);
@@ -429,37 +467,23 @@ export default class ResumeComponent {
             latestModifiedDate: latestModifiedDate
         };
         this._applyToViewport();
+        this._updateResumeMode();
         if (('enhanceWithin' in $.fn) && typeof $.fn.enhanceWithin === 'function') {
             this.viewport.enhanceWithin();
         }
         this._callbacksAfter.fireWith(this.transformedDocument, [this.transformedDocument, this.xmlDocument, this.xslDocument]);
     }
 
-    private _updateTime(node: JQuery, date: Date, format: string, props?: object) {
-        let $time: JQuery = node.find('time');
-        if (typeof props === 'object') {
-            node.attr(props);
-        }
-        let oldTime: string = null;
-        if ($time.length > 0) {
-            oldTime = $time.attr('datetime');
-            $time.attr('datetime', date.toISOString());
-        } else {
-            $time = node;
-        }
-        if ($time.is('[title]') && oldTime !== null) {
-            let oldTitle: string = $.trim($time.attr('title'));
-            if (Date.format(Date.from(oldTime), 'MMMM d{th} yyyy') === oldTitle) {
-                $time.attr('title', Date.format(date, 'MMMM d{th} yyyy'));
-            }
-        }
-        $time.text(Date.format(date, format));
-    }
-
+    /**
+     * Apply post-render adjustments, such as calculating skill experience durations, and last modified date.
+     *
+     * @param properties
+     * @private
+     */
     private _applyToViewport(properties: Partial<ResumeViewportProperties> = this.viewportProperties) {
         if ($.isXMLDoc(this.transformedDocument)) {
             const latestModifiedDate: Date = properties.latestModifiedDate;
-            const now = new Date();
+            const now: Date = new Date();
             this.viewport.each((viewportIndex, viewportElement) => {
                 const $viewportElement: JQuery = $(viewportElement);
                 if (latestModifiedDate instanceof Date) {
@@ -472,6 +496,7 @@ export default class ResumeComponent {
                         });
                     });
                 }
+
                 $viewportElement.find('.skill').each((skillIndex, skillElement) => {
                     const $skill: JQuery = $(skillElement);
                     const skillName: string = $skill.attr('data-name');
@@ -508,7 +533,28 @@ export default class ResumeComponent {
         }
     }
 
-    private _getLatestModifiedDate(responseBundle: ResumeResponseBundle, includePresentation: boolean = true) {
+    private _updateTime(node: JQuery, date: Date, format: string, props?: object) {
+        let $time: JQuery = node.find('time');
+        if (typeof props === 'object') {
+            node.attr(props);
+        }
+        let oldTime: string = null;
+        if ($time.length > 0) {
+            oldTime = $time.attr('datetime');
+            $time.attr('datetime', date.toISOString());
+        } else {
+            $time = node;
+        }
+        if ($time.is('[title]') && oldTime !== null) {
+            let oldTitle: string = $.trim($time.attr('title'));
+            if (Date.format(Date.from(oldTime), 'MMMM d{th} yyyy') === oldTitle) {
+                $time.attr('title', Date.format(date, 'MMMM d{th} yyyy'));
+            }
+        }
+        $time.text(Date.format(date, format));
+    }
+
+    private _getLatestModifiedDate(responseBundle: ResumeResponseBundle, includePresentation: boolean = true): Date {
         let lastModifiedDate: Date = null;
         for (let responseType in responseBundle) {
             if (responseType === 'presentation.xml' && !includePresentation) {
