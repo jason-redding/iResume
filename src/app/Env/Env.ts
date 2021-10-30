@@ -149,21 +149,29 @@ export class Duration {
         return r;
     }
 
-    static create(from: Date, to:Date): Duration {
+    static create(from: Date): Duration;
+    static create(from: Date, to?: Date): Duration {
+        if (!(to instanceof Date)) {
+            to = new Date();
+        }
         return new Duration(Math.abs(to.getTime() - from.getTime()));
     }
 
     static getDuration(milliseconds: number): DurationResult;
-    static getDuration(from: Date, to: Date): DurationResult;
+    static getDuration(from: Date, to?: Date): DurationResult;
     static getDuration(param1: number | Date, param2?: Date): DurationResult {
         let from: Date;
         let to: Date;
         if (typeof param1 === 'number') {
             to = new Date();
             from = new Date(to.getTime() - param1);
-        } else if (typeof param2 !== 'undefined') {
+        } else {
             from = param1;
-            to = param2;
+            if (typeof param2 !== 'undefined') {
+                to = param2;
+            } else {
+                to = new Date();
+            }
         }
 
         if (from.getTime() > to.getTime()) {
