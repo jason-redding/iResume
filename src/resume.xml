@@ -50,7 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</meta>
 	<author name="Jason Redding" layout="split">
 		<name/>
-		<seeking label="Seeking">Mid-level positions</seeking>
+		<seeking label="Seeking">Transition to senior-level role</seeking>
 		<email label="Email">jason.redding@gmail.com</email>
 		<split/>
 		<clearance label="Clearance">None</clearance>
@@ -945,7 +945,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="swift">
 			<name>Swift</name>
 			<experience level="1">
-				<since date="2021-07"/>
+				<spanning from-date="2021-07" to-date="2021-09"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -954,7 +954,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="swift-ui">
 			<name>SwiftUI</name>
 			<experience level="1">
-				<since date="2021-07"/>
+				<spanning from-date="2021-07" to-date="2021-09"/>
 			</experience>
 			<categories>
 				<category value="dev-language"/>
@@ -964,7 +964,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="thymeleaf">
 			<name>Thymeleaf</name>
-			<experience level="3.5">
+			<experience level="4">
 				<spanning from-date="2020-06-01" to-date="2021-10"/>
 			</experience>
 			<categories>
