@@ -529,6 +529,14 @@ export default class ResumeComponent {
                         $skill.attr('data-experience-duration', skillDuration.iso);
                     }
                 });
+
+                $viewportElement.find('time[data-since-datetime]').each((timeIndex: number, timeElement: HTMLElement) => {
+                    const $time: JQuery = $(timeElement);
+                    const sinceDateTimeAttr: string = $.trim($time.attr('data-since-datetime'));
+                    const sinceDateTime: Date = Date.from(sinceDateTimeAttr);
+                    const duration: DurationResult = Duration.getDuration(sinceDateTime, now);
+                    $time.attr('datetime', duration.iso)
+                });
             });
         }
     }
