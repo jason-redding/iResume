@@ -59,10 +59,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<willing-to-relocate label="Willing to Relocate">No</willing-to-relocate>
 		<last-updated label="Last Updated" format="M/d/yyyy"/>
 	</author>
-	<blurb title="Blurb">
+	<blurb>
 		<h:p>
-			Jason is an experienced, self-taught <skill ref="Java">Java</skill> &amp; Web developer with a successful track record (<h:time datetime="P21Y" data-no-tooltip="true">since 2000</h:time>)
-			delivering across a Full Stack of development technologies within Agile and traditional project frameworks.
+			Jason is an experienced, self-taught <skill ref="Java">Java</skill> &amp; Web developer with a successful track record
+			delivering across a Full Stack of development technologies within Agile and traditional project frameworks <h:time data-since-datetime="2000-07" data-no-tooltip="true">since 2000</h:time>.
 		</h:p>
 	</blurb>
 	<description title="Experience Summary">
@@ -992,6 +992,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="dev-language"/>
 				<category value="relevant"/>
 				<category value="front-end"/>
+			</categories>
+		</skill>
+		<skill id="uikit">
+			<name>UIKit</name>
+			<experience level="1">
+				<since date="2021-11"/>
+			</experience>
+			<categories>
+				<category value="api"/>
+				<category value="dev-language"/>
 			</categories>
 		</skill>
 		<skill id="vba">
