@@ -22,14 +22,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jason-redding.com/xsd/resume"
 	xsi:schemaLocation="http://jason-redding.com/xsd/resume xsd/resume.xsd"
-	last-modified="2021-10-28T13:13:13">
+	last-modified="2021-10-30T13:13:13">
 	<xi:include r:name="presentation" href="resume.presentation.xml"/>
 	<meta>
 		<skill>
 			<experience type="experience" preposition="at" screen-min="1" print-min="2">
 				<level value="-1" preposition="with" type="exposure">No experience</level>
 				<level value="0" preposition="to" type="exposure">Exposure</level>
-				<level value="1" preposition="">Learning</level>
+				<level value="1" preposition="" type="learning">Learning</level>
 				<level value="2">Beginner</level>
 				<level value="3">Skilled</level>
 				<level value="4">Advanced</level>
@@ -798,7 +798,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="react">
 			<name>React</name>
 			<experience level="1">
-				<spanning from-date="2019-08-27" to-date="2020-01" weight="0.5"/>
+				<spanning from-date="2019-08-27" to-date="2019-10" weight="0.5"/>
 			</experience>
 			<categories>
 				<category value="relevant"/>
@@ -1052,6 +1052,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="back-end"/>
 				<category value="front-end"/>
+			</categories>
+		</skill>
+		<skill id="xcode">
+			<name>Xcode</name>
+			<experience level="1">
+				<since date="2021-07"/>
+			</experience>
+			<categories>
+				<category value="dev-tool"/>
 			</categories>
 		</skill>
 		<skill id="xhtml">
