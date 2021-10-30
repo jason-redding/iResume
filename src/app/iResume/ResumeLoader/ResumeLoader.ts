@@ -330,7 +330,7 @@ export default class ResumeLoader {
                 maxSkillLevel = level;
             }
         });
-
+        const inheritedExperienceLevelAttributes: Set<string> = new Set(['type', 'preposition']);
         const props: JQuery.PlainObject = {
             experience: {
                 type: $xmlSkillExperience.attr('type') || 'experience',
@@ -431,6 +431,16 @@ export default class ResumeLoader {
                         }
                         props[skillPropertyName]['level'][attrName] = attrValue;
                     });
+
+                    for (let inheritedAttrName of inheritedExperienceLevelAttributes) {
+                        if ((inheritedAttrName in props[skillPropertyName]['level'])) {
+                            // push up
+                            props[skillPropertyName][inheritedAttrName] = props[skillPropertyName]['level'][inheritedAttrName];
+                        } else {
+                            // pull down
+                            props[skillPropertyName]['level'][inheritedAttrName] = props[skillPropertyName][inheritedAttrName];
+                        }
+                    }
                 });
 
                 $.each(skillChildElement.attributes, function (attrIndex, attr) {

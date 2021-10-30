@@ -1601,6 +1601,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:when test="count(key('level', $skill-level-key)[@type]) > 0">
 					<xsl:value-of select="key('level', $skill-level-key)/@type"/>
 				</xsl:when>
+				<xsl:when test="count(key('level', $skill-level-key)/parent::r:experience[@type]) > 0">
+					<xsl:value-of select="key('level', $skill-level-key)/parent::r:experience/@type"/>
+				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="'experience'"/>
 				</xsl:otherwise>
