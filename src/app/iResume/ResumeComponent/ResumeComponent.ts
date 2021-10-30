@@ -127,7 +127,7 @@ export default class ResumeComponent {
         this._viewport = value;
         if (isChange) {
             if (this._viewport) {
-                this._applyToViewport();
+                this._applyViewportUpdates();
             }
         }
     }
@@ -466,7 +466,7 @@ export default class ResumeComponent {
         this.viewportProperties = {
             latestModifiedDate: latestModifiedDate
         };
-        this._applyToViewport();
+        this._applyViewportUpdates();
         this._updateResumeMode();
         if (('enhanceWithin' in $.fn) && typeof $.fn.enhanceWithin === 'function') {
             this.viewport.enhanceWithin();
@@ -480,7 +480,7 @@ export default class ResumeComponent {
      * @param properties
      * @private
      */
-    private _applyToViewport(properties: Partial<ResumeViewportProperties> = this.viewportProperties) {
+    private _applyViewportUpdates(properties: Partial<ResumeViewportProperties> = this.viewportProperties) {
         if ($.isXMLDoc(this.transformedDocument)) {
             const latestModifiedDate: Date = properties.latestModifiedDate;
             const now: Date = new Date();
