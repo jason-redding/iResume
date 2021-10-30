@@ -342,46 +342,46 @@ function initTooltips(resumeLoader?: ResumeLoader) {
             let $this: JQuery = $(this);
             let title: string = $.trim($this.attr('title'));
             if ($this.is('.certificate')) {
-                let issuer = $.trim($this.attr('data-issuer'));
-                let name = $.trim($this.attr('data-name'));
-                let displayName;
+                let issuer: string = $.trim($this.attr('data-issuer'));
+                let name: string = $.trim($this.attr('data-name'));
+                let displayName: string;
                 if (issuer === name.substring(0, Math.min(name.length, issuer.length))) {
                     displayName = name;
                 } else {
                     displayName = issuer + ' ' + name;
                 }
-                let issueDateRaw = $.trim($this.attr('data-issue-date'));
-                let expireDateRaw = $.trim($this.attr('data-expire-date'));
-                let score = parseFloat($.trim($this.attr('data-score')));
-                let maxScore = parseFloat($.trim($this.attr('data-max-score')));
-                let issueDate = Date.from(issueDateRaw);
-                let expireDate = Date.from(expireDateRaw);
-                let now = new Date();
-                let issueDateKey;
-                let expireDateKey;
-                let issueDatePrecision = 'yyyy-MM';
-                let expireDatePrecision = 'yyyy-MM';
+                let issueDateRaw: string = $.trim($this.attr('data-issue-date'));
+                let expireDateRaw: string = $.trim($this.attr('data-expire-date'));
+                let score: number = parseFloat($.trim($this.attr('data-score')));
+                let maxScore: number = parseFloat($.trim($this.attr('data-max-score')));
+                let issueDate: Date = Date.from(issueDateRaw);
+                let expireDate: Date = Date.from(expireDateRaw);
+                let now: Date = new Date();
+                let issueDateKey: string;
+                let expireDateKey: string;
+                let issueDatePrecision: string = 'yyyy-MM';
+                let expireDatePrecision: string = 'yyyy-MM';
                 if (issueDateRaw.length > 8) {
                     issueDatePrecision = 'yyyy-MM-dd';
                 }
                 if (expireDateRaw.length > 8) {
                     expireDatePrecision = 'yyyy-MM-dd';
                 }
-                let issueDateMasks = {
+                let issueDateMasks: object = {
                     'yyyy-MM': '${issue-date#date(\'MMMM yyyy\')}',
                     'yyyy-MM-dd': '${issue-date#date(\'MMMM d\')}<sup>${issue-day-of-month#suffix}</sup> ${issue-date#date(\'yyyy\')}'
                 };
-                let expireDateMasks = {
+                let expireDateMasks: object = {
                     'yyyy-MM': '${expire-date#date(\'MMMM yyyy\')}',
                     'yyyy-MM-dd': '${expire-date#date(\'MMMM d\')}<sup>${expire-day-of-month#suffix}</sup> ${expire-date#date(\'yyyy\')}'
                 };
-                let props = {
+                let props: object = {
                     'expire-day-of-month': (expireDate !== null ? expireDate.getDate() : ''),
                     'issue-day-of-month': (issueDate !== null ? issueDate.getDate() : ''),
                     'expire-date': expireDate,
                     'issue-date': issueDate
                 };
-                let r = '<div class="header" style="font-size: 1.3em; margin-bottom: 0.5em; text-align: center;">';
+                let r: string = '<div class="header" style="font-size: 1.3em; margin-bottom: 0.5em; text-align: center;">';
 
                 r += '<div>' + displayName + '</div>';
                 if (!isNaN(score)) {
