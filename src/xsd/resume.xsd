@@ -311,15 +311,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 											<xs:simpleContent>
 												<xs:extension base="xs:string">
 													<xs:attribute name="value" type="type-skill-level-value" use="required"/>
-													<xs:attribute name="type" type="type-skill-level-type" default="experience" use="optional"/>
+													<xs:attribute name="type" type="xs:string" use="optional"/>
 													<xs:attribute name="preposition" type="xs:string" use="optional"/>
 												</xs:extension>
 											</xs:simpleContent>
 										</xs:complexType>
 									</xs:element>
 								</xs:sequence>
-								<xs:attribute name="type" type="xs:string" use="optional"/>
-								<xs:attribute name="preposition" type="xs:string" use="optional"/>
+								<xs:attribute name="type" type="xs:string" default="experience" use="optional"/>
+								<xs:attribute name="preposition" type="xs:string" default="at" use="optional"/>
 								<xs:attribute name="print-min" type="xs:decimal" use="optional"/>
 								<xs:attribute name="screen-min" type="xs:decimal" use="optional"/>
 							</xs:complexType>
@@ -349,13 +349,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xs:simpleType name="type-skill-level-value">
 		<xs:restriction base="xs:decimal">
 			<xs:minInclusive value="-1"/>
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="type-skill-level-type">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="exposure"/>
-			<xs:enumeration value="experience"/>
 		</xs:restriction>
 	</xs:simpleType>
 
