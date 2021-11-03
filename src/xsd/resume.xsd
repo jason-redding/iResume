@@ -398,6 +398,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<!--<xs:attribute name="hidden" use="optional" type="type-boolean"/>-->
 	</xs:complexType>
 
+	<xs:complexType name="type-skill-definition-version">
+		<xs:simpleContent>
+			<xs:restriction base="type-skill-version">
+				<xs:minLength value="1"/>
+			</xs:restriction>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="type-skill-definition-name">
+		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
+
+	<xs:simpleType name="type-skill-definition-long-name">
+		<xs:restriction base="xs:normalizedString"/>
+	</xs:simpleType>
+
+	<xs:complexType name="type-skill-definition-notes">
+		<xs:sequence>
+			<xs:element name="note" maxOccurs="unbounded">
+				<xs:complexType mixed="true">
+					<xs:complexContent>
+						<xs:extension base="type-text-with-html">
+							<xs:attribute name="type" type="type-skill-note-type" use="required"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="type-skill-definition-categories">
+		<xs:sequence>
+			<xs:element name="category" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="value" use="required" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
 	<xs:complexType name="type-skill-definition">
 		<xs:annotation>
 			<xs:documentation>
@@ -405,51 +445,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="name">
-				<xs:simpleType>
-					<xs:restriction base="xs:normalizedString"/>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="version" minOccurs="0">
-				<xs:complexType>
-					<xs:simpleContent>
-						<xs:restriction base="type-skill-version">
-							<xs:minLength value="1"/>
-						</xs:restriction>
-					</xs:simpleContent>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="long-name" minOccurs="0">
-				<xs:simpleType>
-					<xs:restriction base="xs:normalizedString"/>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="notes" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="note" maxOccurs="unbounded">
-							<xs:complexType mixed="true">
-								<xs:complexContent>
-									<xs:extension base="type-text-with-html">
-										<xs:attribute name="type" type="type-skill-note-type" use="required"/>
-									</xs:extension>
-								</xs:complexContent>
-							</xs:complexType>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="experience" type="type-experience"/>
-			<xs:element name="categories" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="category" maxOccurs="unbounded">
-							<xs:complexType>
-								<xs:attribute name="value" use="required" type="xs:string"/>
-							</xs:complexType>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
+			<xs:element name="name" type="type-skill-definition-name"/>
+			<xs:element name="version" minOccurs="0" type="type-skill-definition-version"/>
+			<xs:element name="long-name" minOccurs="0" type="type-skill-definition-long-name"/>
+			<xs:element name="notes" minOccurs="0" type="type-skill-definition-notes"/>
+			<xs:element name="experience" type="type-skill-definition-experience"/>
+			<xs:element name="categories" minOccurs="0" type="type-skill-definition-categories">
 				<xs:unique name="unique-category-ref">
 					<xs:selector xpath="r:category"/>
 					<xs:field xpath="@value"/>
@@ -497,7 +498,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:complexType name="type-experience">
+	<xs:complexType name="type-skill-definition-experience">
 		<xs:choice>
 			<xs:sequence>
 				<xs:element name="spanning" type="type-experience-spanning" maxOccurs="unbounded"/>
