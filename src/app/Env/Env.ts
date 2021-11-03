@@ -158,54 +158,96 @@ export class Duration {
     }
 
     static getDuration(milliseconds: number): DurationResult;
+    static getDuration(duration: string): DurationResult;
     static getDuration(from: Date, to?: Date): DurationResult;
-    static getDuration(param1: number | Date, param2?: Date): DurationResult {
-        let from: Date;
-        let to: Date;
-        if (typeof param1 === 'number') {
-            to = new Date();
-            from = new Date(to.getTime() - param1);
-        } else {
-            from = param1;
-            if (typeof param2 !== 'undefined') {
-                to = param2;
-            } else {
-                to = new Date();
+    static getDuration(param1: number | Date | string, param2?: Date): DurationResult {
+        let iso: string;
+        let totalMilliseconds: number = 0;
+        let years: number;
+        let months: number;
+        let days: number;
+        let totalYears: number;
+        let totalMonths: number;
+        let totalDays: number;
+        if ((typeof param1 === 'string')) {
+            let mDuration: RegExpExecArray = PATTERN_DURATION.exec(param1);
+            if (mDuration === null || mDuration.length === 0) {
+                return null;
             }
+            years = parseInt(mDuration[1]) || 0;
+            months = parseInt(mDuration[2]) || 0;
+            let weeks: number = parseInt(mDuration[3]) || 0;
+            days = parseInt(mDuration[4]) || 0;
+            let hours: number = parseInt(mDuration[5]) || 0;
+            let minutes: number = parseInt(mDuration[6]) || 0;
+            let seconds: number = parseInt(mDuration[7]) || 0;
+
+            totalMilliseconds = (1000 * 60 * 60 * 24 * 365.25 * years);
+            totalMilliseconds += ((1000 * 60 * 60 * 24 * 365.25 / 12) * months);
+            totalMilliseconds += (1000 * 60 * 60 * 24 * 7 * weeks);
+            totalMilliseconds += (1000 * 60 * 60 * 24 * days);
+            totalMilliseconds += (1000 * 60 * 60 * hours);
+            totalMilliseconds += (1000 * 60 * minutes);
+            totalMilliseconds += (1000 * seconds);
+
+            totalDays = totalMilliseconds / 1000 / 60 / 60 / 24;
+            totalMonths = totalDays / (365.25 / 12);
+            totalYears = totalMilliseconds / 1000 / 60 / 60 / 24 / 365.25;
+
+            iso = 'P' + (years > 0 ? years + 'Y' : '') + (months > 0 ? months + 'M' : '') + (weeks > 0 ? weeks + 'W' : '') + (days > 0 ? days + 'D' : '');
+            if ((hours + minutes + seconds) > 0) {
+                iso += 'T' + (hours > 0 ? hours + 'H' : '') + (minutes > 0 ? minutes + 'M' : '') + (seconds > 0 ? seconds + 'S' : '');
+            }
+        } else {
+            let from: Date;
+            let to: Date;
+            if (typeof param1 === 'number') {
+                to = new Date();
+                from = new Date(to.getTime() - param1);
+            } else if (param1 instanceof Date) {
+                from = param1;
+                if (typeof param2 !== 'undefined') {
+                    to = param2;
+                } else {
+                    to = new Date();
+                }
+            }
+            if (from.getTime() > to.getTime()) {
+                [from, to] = [to, from];
+            }
+
+            let [fromYear, fromMonth, fromDay] = [parseInt(Date.format(from, 'yyyy')), parseInt(Date.format(from, 'M')), parseInt(Date.format(from, 'd'))];
+            let [toYear, toMonth, toDay] = [parseInt(Date.format(to, 'yyyy')), parseInt(Date.format(to, 'M')), parseInt(Date.format(to, 'd'))];
+
+            totalMilliseconds = Math.abs(from.getTime() - to.getTime());
+            const targetMonthKey: string = Date.format(to, 'yyyy-MM');
+            let monthPointer: Date = new Date(from.getTime());
+            let monthKey: string;
+            let monthSpan: number = 0;
+            while ((monthKey = Date.format(monthPointer, 'yyyy-MM')) < targetMonthKey) {
+                monthPointer = monthPointer.getNextMonth();
+                monthSpan++;
+            }
+            let dayCount: number = (toDay - fromDay);
+            years = Math.floor(monthSpan / 12);
+            months = (monthSpan % 12);
+            days = (dayCount > 0 ? dayCount : 0);
+            totalYears = monthSpan / 12;
+            totalMonths = monthSpan;
+            totalDays = totalMilliseconds / 1000 / 60 / 60 / 24;
+
+            iso = 'P' + (years > 0 ? years + 'Y' : '') + (months > 0 ? months + 'M' : '') + (days > 0 ? days + 'D' : '');
         }
-
-        if (from.getTime() > to.getTime()) {
-            [from, to] = [to, from];
-        }
-
-        let [fromYear, fromMonth, fromDay] = [parseInt(Date.format(from, 'yyyy')), parseInt(Date.format(from, 'M')), parseInt(Date.format(from, 'd'))];
-        let [toYear, toMonth, toDay] = [parseInt(Date.format(to, 'yyyy')), parseInt(Date.format(to, 'M')), parseInt(Date.format(to, 'd'))];
-
-        let diffMilliseconds: number = Math.abs(from.getTime() - to.getTime());
-        let diffDays: number = diffMilliseconds / 1000 / 60 / 60 / 24;
-
-        const targetMonthKey: string = Date.format(to, 'yyyy-MM');
-        let monthPointer: Date = new Date(from.getTime());
-        let monthKey: string;
-        let monthSpan: number = 0;
-        while ((monthKey = Date.format(monthPointer, 'yyyy-MM')) < targetMonthKey) {
-            monthPointer = monthPointer.getNextMonth();
-            monthSpan++;
-        }
-        let dayCount: number = (toDay - fromDay);
-        let years: number = Math.floor(monthSpan / 12);
-        let months: number = (monthSpan % 12);
-        let days: number = (dayCount > 0 ? dayCount : 0);
 
         const rv: DurationResult = {
             years: years,
             months: months,
             days: days,
-            totalYears: monthSpan / 12,
-            totalMonths: monthSpan,
-            totalDays: diffDays,
-            totalMilliseconds: diffMilliseconds,
-            iso: 'P' + (years > 0 ? years + 'Y' : '') + (months > 0 ? months + 'M' : '') + (days > 0 ? days + 'D' : '')
+            totalYears: totalYears,
+            totalMonths: totalMonths,
+            totalDays: totalDays,
+            totalMilliseconds: totalMilliseconds,
+            iso: iso
         };
 
         return rv;
@@ -699,12 +741,13 @@ function replaceUsingMap(value: string, pattern: RegExp, map: {[key: string]: st
     return value;
 }
 
-const calendar_days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-const calendar_month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const calendar_day_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-const calendar_day_names_compact = ['S', 'M', 'T', 'W', 'R', 'F', 'S'];
-const PATTERN_ISO8601 = /((\d{4})-(\d{1,2})-(\d{1,2}))T((\d{1,2}):(\d{1,2}):((\d{1,2})(\.(\d+))?))Z?/;
-const PATTERN_DATETIME = /^(0*(\d{4})-0*(\d{1,2})(?:-0*(\d{1,2}))?|(0*(\d{4})-0*(\d{1,2})-0*(\d{1,2}))[T ](0*(\d{1,2}):0*(\d{1,2})(?::(0*(\d{1,2})(\.0*(\d+))?))?)Z?)$/;
+const calendar_days_in_month: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const calendar_month_names: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const calendar_day_names: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const calendar_day_names_compact: string[] = ['S', 'M', 'T', 'W', 'R', 'F', 'S'];
+const PATTERN_ISO8601: RegExp = /((\d{4})-(\d{1,2})-(\d{1,2}))T((\d{1,2}):(\d{1,2}):((\d{1,2})(\.(\d+))?))Z?/;
+const PATTERN_DATETIME: RegExp = /^(0*(\d{4})-0*(\d{1,2})(?:-0*(\d{1,2}))?|(0*(\d{4})-0*(\d{1,2})-0*(\d{1,2}))[T ](0*(\d{1,2}):0*(\d{1,2})(?::(0*(\d{1,2})(\.0*(\d+))?))?)Z?)$/;
+const PATTERN_DURATION: RegExp = /^P(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)W)?(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/;
 
 Object.isPlainObject = function (obj: any): boolean {
     if (obj !== null && typeof obj === 'object') {
@@ -717,7 +760,7 @@ Object.isPlainObject = function (obj: any): boolean {
     return false;
 };
 Date.from = function(text: string): Date {
-    let m = PATTERN_DATETIME.exec(text);
+    let m: RegExpExecArray = PATTERN_DATETIME.exec(text);
     if (m !== null && m.length > 0) {
         let year, month, day, hour, minute, second, millisecond;
         if (typeof m[2] !== 'undefined') {

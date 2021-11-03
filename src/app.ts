@@ -1,6 +1,6 @@
 import * as $ from 'jquery';
 import './app/Env/Env';
-import {addMediaQueryListener} from './app/Env/Env';
+import {addMediaQueryListener, Duration, DurationResult} from './app/Env/Env';
 import ResumeSkillsTable from './app/iResume/ResumeSkillsTable/ResumeSkillsTable';
 import ResumeComponent, {ResumeTransformParameters} from './app/iResume/ResumeComponent/ResumeComponent';
 import ResumeLoader from './app/iResume/ResumeLoader/ResumeLoader';
@@ -267,7 +267,7 @@ function initTooltips(resumeLoader?: ResumeLoader) {
     const tooltipShowDelay: number = 500;
 
     $document.tooltip({
-        items: 'table.skills > tbody *[title]:not([data-no-tooltip]), #tab-panel-resume *[title]:not([data-no-tooltip])',
+        items: 'table.skills > tbody *[title]:not([data-no-tooltip]), #tab-panel-resume *[title]:not([data-no-tooltip]), #tab-panel-resume time[datetime^="P"]',
         show: {
             duration: tooltipShowDuration,
             delay: tooltipShowDelay
@@ -446,6 +446,11 @@ function initTooltips(resumeLoader?: ResumeLoader) {
                 r += '<div style="white-space:pre-wrap; margin-top: 0.8em;">' + String.format(title, skillProperties, ['value', 'originalValue']) + '</div>';
 
                 return r;
+            } else if ($this.is('time[datetime^="P"]') && title.length === 0) {
+                let datetimeAttr: string = $this.attr('datetime');
+                let duration: DurationResult = Duration.getDuration(datetimeAttr);
+                let durationText: string[] = Duration.text(duration);
+                title = durationText.join(', ');
             }
             return title;
         }
