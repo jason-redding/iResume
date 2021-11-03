@@ -62,7 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<blurb>
 		<h:p>
 			Jason is an experienced, self-taught <skill ref="Java">Java</skill> &amp; Web developer with a successful track record
-			delivering across a Full Stack of development technologies within Agile and traditional project frameworks <h:time data-since-datetime="2000-07" data-no-tooltip="true">since 2000</h:time>.
+			delivering across a Full Stack of development technologies within Agile and traditional project frameworks <h:time data-since-datetime="2000-07">since 2000</h:time>.
 		</h:p>
 	</blurb>
 	<description title="Experience Summary">
@@ -944,6 +944,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="swift">
 			<name>Swift</name>
+			<version>5</version>
 			<experience level="1">
 				<spanning from-date="2021-07" to-date="2021-09"/>
 			</experience>
