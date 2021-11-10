@@ -658,7 +658,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="macos">
 			<name>macOS</name>
-			<experience level="3">
+			<experience level="3" precision="years">
 				<spanning from-date="1993-01" to-date="1996-01" weight="0.5"/>
 				<spanning from-date="2016-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
