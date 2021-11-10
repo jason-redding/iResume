@@ -19,7 +19,7 @@ $linkColorLightHover: scale-color($linkColorLight, $saturation: 100%, $lightness
 /*$linkColorDark: hsl(212, 56%, 49%);*/
 $linkColorDark: hsl(196, 73%, 50%);
 /*$linkColorDarkHover: hsl(196, 100%, 37%);*/
-$linkColorDarkHover: scale-color($linkColorDark, $saturation: -4%, $lightness: 60%);
+$linkColorDarkHover: scale-color($linkColorDark, $lightness: 60%);
 
 @mixin prefix($name, $values...) {
 	-webkit-#{$name}: $values;
