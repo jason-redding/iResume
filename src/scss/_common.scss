@@ -11,10 +11,15 @@ $textColorLightTheme: hsl(0, 0%, 0%);
 $textColorDarkTheme: hsl(0, 0%, 100%);
 
 $linkColorLight: hsl(207, 60%, 50%);
+/*$linkColorLightHover: hsl(207, 100%, 30%);*/
+$linkColorLightHover: scale-color($linkColorLight, $saturation: 100%, $lightness: -40%);
+/*$linkColorLightHover: hsl(207, 100%, 30%);*/
 /*$linkColorDark: hsl(196, 73%, 50%);*/
-$linkColorDark: hsl(181, 100%, 61%);
-$linkColorLightHover: hsl(207, 100%, 30%);
-$linkColorDarkHover: hsl(196, 100%, 37%);
+/*$linkColorDark: hsl(181, 100%, 61%);*/
+/*$linkColorDark: hsl(212, 56%, 49%);*/
+$linkColorDark: hsl(196, 73%, 50%);
+/*$linkColorDarkHover: hsl(196, 100%, 37%);*/
+$linkColorDarkHover: scale-color($linkColorDark, $saturation: -4%, $lightness: 60%);
 
 @mixin prefix($name, $values...) {
 	-webkit-#{$name}: $values;
