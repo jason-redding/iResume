@@ -363,6 +363,13 @@ pre.code-container {
 
 .section-content {
   margin: 0.5em 1em 1em;
+  &[data-section='blurb'],
+  &[data-section='competencies'],
+  &[data-section='skills'],
+  &[data-section='certifications'] {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 .header {
@@ -419,8 +426,10 @@ main.ui-content {
 @media (min-width: 28em) {
   main.ui-content {
     > .main-inner {
-      > .author-name {
-        display: none;
+      & > h1, &> h2, & > h3, & > h4, & > h5, & > h6 {
+        &:first-child {
+          display: none;
+        }
       }
 
       #tabs-nav {
@@ -508,13 +517,14 @@ ul, ol {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  main.ui-content > .main-inner > & {
+    text-align: center;
+    margin-top: 0.5em;
+  }
+
   &.projects-heading {
     margin-top: 0.33em;
     margin-bottom: 0.33em;
-  }
-  &.author-name {
-    text-align: center;
-    margin-top: 0.5em;
   }
 }
 
@@ -617,15 +627,6 @@ h1, h2, h3, h4, h5, h6 {
   }
   &[data-issue-year][data-expire-year]::after {
     content: '(' attr(data-issue-year) ' - ' attr(data-expire-year) ')';
-  }
-}
-
-.section-content {
-  &[data-section='competencies'],
-  &[data-section='skills'],
-  &[data-section='certifications'] {
-    margin-left: 0;
-    margin-right: 0;
   }
 }
 
