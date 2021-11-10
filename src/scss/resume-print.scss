@@ -1,4 +1,4 @@
-@import "_common";
+@import '_common';
 
 $competencyPrintColumns: 2;
 $skillPrintColumns: 2;
@@ -109,7 +109,7 @@ $certificationPrintColumns: 2;
     }
   }
   * {
-    &[role="log"], body > &.ui-loader {
+    &[role='log'], body > &.ui-loader {
       display: none !important;
     }
     &, &::before, &::after {
@@ -163,8 +163,10 @@ $certificationPrintColumns: 2;
           display: flex;
           flex-direction: column;
 
-          > .author-name {
-            display: none;
+          > h1, > h2, > h3, > h4, > h5, > h6 {
+            &:first-child {
+              display: none;
+            }
           }
 
           div.skills .skill {
