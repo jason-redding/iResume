@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jason-redding.com/xsd/resume"
 	xsi:schemaLocation="http://jason-redding.com/xsd/resume xsd/resume.xsd"
-	last-modified="2021-10-30T13:13:13">
+	last-modified="2021-11-09T13:13:13">
 	<xi:include r:name="presentation" href="resume.presentation.xml"/>
 	<meta>
 		<skill>
@@ -50,19 +50,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</meta>
 	<author name="Jason Redding" layout="split">
 		<name/>
-		<seeking label="Seeking">Transition into senior-level role</seeking>
+		<seeking label="Seeking">Mid-level position</seeking>
 		<email label="Email">jason.redding@gmail.com</email>
 		<split/>
 		<clearance label="Clearance">None</clearance>
 		<address label="Location">Denver, CO</address>
-		<willing-to-travel label="% Willing to Travel">2%</willing-to-travel>
+		<!--<willing-to-travel label="% Willing to Travel">2%</willing-to-travel>-->
 		<willing-to-relocate label="Willing to Relocate">No</willing-to-relocate>
 		<last-updated label="Last Updated" format="M/d/yyyy"/>
 	</author>
 	<blurb>
 		<h:p>
-			Jason is an experienced, self-taught <skill ref="Java">Java</skill> &amp; Web developer with a successful track record
-			delivering across a Full Stack of development technologies within Agile and traditional project frameworks <h:time data-since-datetime="2000-07">since 2000</h:time>.
+			Jason is an experienced, self-taught <skill ref="Java">Java</skill> &amp; Web developer, inspired at age 10 with ResEdit for Mac OS 7,
+			then quickly making his way to accumulating a deep knowledge and understanding of Windows 95, 98, the Windows Registry, <skill ref="HTML">HTML</skill>,
+			<skill ref="JavaScript">JavaScript</skill>, <skill ref="Visual Basic">Visual Basic</skill>, and even reverse engineering an application network protocol&#8212;just for fun.
+			All of this was before he ever took his first Java Programming course in <h:time datetime="2000-07">2000</h:time>.
+			Since then he has sought to learn more languages and demystify more technologies and frameworks, making him the competent Full Stack developer he is today.
 		</h:p>
 	</blurb>
 	<description title="Experience Summary">
