@@ -227,7 +227,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<experience level="4" precision="years">
 				<spanning from-date="2003-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2020-06" to-date="2021-10"/>
-				<since date="2021-11" weight="0.5"/>
 			</experience>
 			<categories>
 				<category value="app-server"/>
@@ -631,7 +630,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>JSP</name>
 			<experience level="3" precision="years">
 				<spanning from-date="2010-01" to-date="2018-01" weight="0.5"/>
-				<since date="2019-09"/>
+				<spanning from-date="2019-09" to-date="2021-10"/>
 			</experience>
 			<categories>
 				<category value="relevant"/>
