@@ -117,7 +117,7 @@ html.r-explain .ui-page.ui-page-active::after {
 
     .ui-page-theme-b & {
       &.final-rendering {
-        background-color: $tableBackgroundColorLighter;
+        background-color: $resumeBackgroundColorDark;
         border-color: $textColorLightTheme;
       }
     }
