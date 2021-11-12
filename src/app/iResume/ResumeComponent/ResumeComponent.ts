@@ -419,8 +419,15 @@ export default class ResumeComponent {
 
         // Now repopulate non-author document nodes using presentation.xml for guidance
         for (let key of sectionOrder) {
-            let nodeName: string = pSectionMap[key].prop('nodeName');
-            $mainInner.append(dSectionMap[nodeName]);
+            const pSection: JQuery<Node> = pSectionMap[key];
+            const nodeName: string = pSection.prop('nodeName');
+            const $sectionPanels: JQuery = dSectionMap[nodeName];
+            const title: string = (pSection.is('[title]') ? pSection.attr('title') : null);
+            if (title !== null && title.length > 0) {
+                const $heading: JQuery = $sectionPanels.filter('.section-heading');
+                $heading.text(title);
+            }
+            $mainInner.append($sectionPanels);
         }
     }
 
