@@ -652,7 +652,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<xsl:param name="employer-sort" select="$employer-sort"/>
 		<xsl:param name="position-sort" select="$position-sort"/>
 		<xsl:param name="show-projects" select="$show-projects"/>
+		<xsl:variable name="section-title">
+			<xsl:choose>
+				<xsl:when test="string-length(normalize-space($presentation-xml/r:employers/@title)) > 0">
+					<xsl:value-of select="normalize-space($presentation-xml/r:employers/@title)"/>
+				</xsl:when>
+				<xsl:when test="string-length(normalize-space(@title)) > 0">
+					<xsl:value-of select="normalize-space(@title)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:text>Employers</xsl:text>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
 		<h2>
+			<xsl:attribute name="data-title">
+				<xsl:value-of select="$section-title"/>
+			</xsl:attribute>
 			<xsl:attribute name="data-section">
 				<xsl:value-of select="local-name()"/>
 			</xsl:attribute>
@@ -663,14 +679,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					<xsl:value-of select="concat(' page-break-before-', normalize-space(@break-before))"/>
 				</xsl:if>
 			</xsl:attribute>
-			<xsl:choose>
-				<xsl:when test="string-length(normalize-space(@title)) > 0">
-					<xsl:value-of select="@title"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:text>Employers</xsl:text>
-				</xsl:otherwise>
-			</xsl:choose>
+			<xsl:value-of select="$section-title"/>
 		</h2>
 		<div>
 			<xsl:attribute name="data-section">
