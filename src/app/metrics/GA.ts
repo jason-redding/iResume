@@ -18,12 +18,15 @@ export default class GA {
         const eventProperties: object = {
             'event_category': category
         };
-        if (typeof label !== 'undefined' && label.length > 0) {
+        if ((typeof label !== 'undefined') && label.length > 0) {
+            if (!label.startsWith(action + ': ')) {
+                label = action + ': ' + label;
+            }
             $.extend(true, eventProperties, {
                 'event_label': label
             });
         }
-        if (typeof value === 'number' && value >= 0) {
+        if ((typeof value === 'number') && value >= 0) {
             $.extend(true, eventProperties, {
                 'value': value
             });
