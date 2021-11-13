@@ -131,7 +131,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             data-field="name"
                             title="Skill name"
                             data-sort-order="asc"
-                            data-order-by="name, experience.level.originalValue:desc">
+                            data-order-by="name, experience.level.originalValue:desc, experience.last:desc, experience.duration.totalMilliseconds:desc">
                             <span class="data">Name</span>
                         </th>
                         <th class="ui-widget-header"
@@ -141,7 +141,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             title="Self-assessment"
                             data-render="${experience.level} (${experience.level.percentage#percent})"
                             data-sort-order="desc"
-                            data-order-by="experience.level.originalValue, name">
+                            data-order-by="experience.level.originalValue, experience.last:desc, experience.duration.totalMilliseconds:desc, name">
                             <span class="data">Level</span>
                         </th>
                         <th class="ui-widget-header"
@@ -151,7 +151,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             title="Years of experience"
                             data-render="${experience.duration}"
                             data-sort-order="desc"
-                            data-order-by="experience.duration.totalMilliseconds, experience.level.originalValue:desc, name">
+                            data-order-by="experience.duration.totalMilliseconds, experience.last:desc, experience.level.originalValue:desc, name">
                             <span class="data">Experience</span>
                         </th>
                         <th class="ui-widget-header"
@@ -159,7 +159,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             data-header="Last Used"
                             data-field="experience.last"
                             title="Last used"
-                            data-order-by="experience.last, experience.level.originalValue:desc, name"
+                            data-order-by="experience.last, experience.level.originalValue:desc, experience.duration.totalMilliseconds:desc, name"
                             data-sort-order="desc"
                             data-render="${experience.last#date('MMM yyyy');default('Current')}">
                             <span class="data">Last Used</span>
