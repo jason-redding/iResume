@@ -1324,7 +1324,7 @@ table.skills {
         background-image: none;
       }
 
-      background-color: adjust-color($tableBackgroundColorLighter, $lightness: -5%);
+      background-color: $tableBackgroundColorDarker;
     }
 
     .ui-page-theme-a & {
