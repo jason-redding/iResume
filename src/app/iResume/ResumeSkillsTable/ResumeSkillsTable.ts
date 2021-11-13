@@ -129,10 +129,10 @@ export default class ResumeSkillsTable {
             $this.attr('data-sort-order', sortOrder);
             if (fieldName.length > 0) {
                 if (typeof options !== 'object' || options.simulated !== true) {
-                    let eventAction: string = 'Sort Skills Table: ' + fieldName + ':' + sortOrder;
-                    GA.fireEvent('UX', eventAction, eventAction);
+                    const columnInfo: string = fieldName + ':' + sortOrder;
+                    GA.fireEvent('UX', 'Sort Skills Table', columnInfo);
                 }
-                self._sortSkills(fieldName);
+                self.sortSkills(fieldName);
             }
         });
         this._loader.then(response => {
@@ -321,8 +321,7 @@ export default class ResumeSkillsTable {
                 $captionAttributes.attr('data-filter', categoryName);
             }
             if (typeof options !== 'object' || options.simulated !== true) {
-                let eventAction: string = 'Filter Skills Table: ' + categoryName;
-                GA.fireEvent('UX', eventAction, eventAction);
+                GA.fireEvent('UX', 'Filter Skills Table', categoryName);
             }
             this._refreshTable();
         })
@@ -344,8 +343,11 @@ export default class ResumeSkillsTable {
         return this;
     }
 
-    private _sortSkills(sortBy: string): ResumeSkillsTable {
-        const $columnHeader: JQuery = this._element.find('> thead > tr > th[data-field="' + sortBy + '"]');
+    sortSkills(sortBy: string): ResumeSkillsTable {
+        const sortByParts: string[] = sortBy.split(/\s*:+\s*/g);
+        const fieldName: string = sortByParts[0];
+        const initialOrder: string = (sortByParts.length > 1 ? sortByParts[1] === 'desc' ? 'desc' : 'asc' : null);
+        const $columnHeader: JQuery = this._element.find('> thead > tr > th[data-field="' + fieldName + '"]');
         if ($columnHeader.length > 0) {
             $columnHeader
             .addClass('sort-by')
@@ -365,7 +367,7 @@ export default class ResumeSkillsTable {
             })
             .removeClass('ui-state-default')
             .removeClass('sort-by');
-            const sortOrder: string = $.trim($columnHeader.attr('data-sort-order'));
+            const sortOrder: string = (initialOrder || $.trim($columnHeader.attr('data-sort-order')));
             let sortNulls: TableSortNulls;
             if (ResumeSkillsTable.PATTERN_TABLE_SORT_NULLS.test($.trim($columnHeader.attr('data-sort-nulls')))) {
                 // @ts-ignore
@@ -378,13 +380,13 @@ export default class ResumeSkillsTable {
             if (sorting[0].length > 0) {
                 sorting = sorting[0].split(/\s*,+\s*/);
             } else {
-                sorting = [sortBy];
+                sorting = [fieldName];
             }
             const $rows: JQuery = this._element.find('> tbody > tr');
             if ($rows.length === 0) {
                 this._buildSkillsTable();
             }
-            this._sortTableRows(sortBy, sorting, sortOrder, sortNulls);
+            this._sortTableRows(fieldName, sorting, sortOrder, sortNulls);
         }
         return this;
     }

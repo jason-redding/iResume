@@ -17,13 +17,13 @@ function onReady() {
 
     initPreferences();
     const resumeLoader: ResumeLoader = loadResume();
-    initSkillsTable(resumeLoader);
+    const resumeSkillsTable: ResumeSkillsTable = initSkillsTable(resumeLoader);
     initTooltips(resumeLoader);
     const resumeComponent: ResumeComponent = initResumeComponent(resumeLoader);
     // initExportUI(resumeComponent);
     applyRenderDecorations(resumeComponent);
     resumeComponent.onRenderComplete(() => {
-        handleUrlParams();
+        handleUrlParams(resumeSkillsTable);
     });
     initHighlightThemePicker();
     initCodeViewer();
@@ -53,7 +53,7 @@ function applyRenderDecorations(resumeComponent: ResumeComponent): ResumeCompone
         }
         $printButton.on('click', function (event) {
             setTimeout(function () {
-                GA.fireEvent('UX', 'Print', 'Print Button');
+                GA.fireEvent('UX', 'Print', 'Button');
                 window.print();
             }, 10);
         });
@@ -160,7 +160,20 @@ function initHashHandling() {
     });
 }
 
-function handleUrlParams() {
+function forEachParam(query: string, consumer: (name: string, value: string, index: number) => boolean) {
+    const paramsList: string[] = query.replace(/^\?+/g, '').split('&');
+    for (let paramIndex = 0; paramIndex < paramsList.length; paramIndex++) {
+        const paramLine: string = paramsList[paramIndex];
+        const paramParts: string[] = paramLine.split('=', 2);
+        const paramName: string = paramParts[0];
+        const paramValue: string = paramParts[1];
+        if (false === consumer(paramName, paramValue, paramIndex)) {
+            break;
+        }
+    }
+}
+
+function handleUrlParams(resumeSkillsTable: ResumeSkillsTable) {
     console.debug('Handling URL parameters...');
     const location: Location = window.location;
     const query: string = location.search.replace(/^\?+/g, '');
@@ -168,31 +181,158 @@ function handleUrlParams() {
 
     const invokePrint: Function = () => {
         console.debug('Invoking print!');
-        window.history.replaceState(null, document.title, window.location.pathname);
-        GA.fireEvent('UX', 'Print', 'Print URL');
+        let query: string = '';
+        forEachParam(window.location.search.replace(/^\?+/g, ''), (paramName, paramValue, paramIndex) => {
+            if (paramName === 'print') {
+                return true;
+            }
+            if (query.length > 0) {
+                query += '&';
+            }
+            query += paramName + ((typeof paramValue !== 'undefined') ? '=' + paramValue : '');
+        });
+        window.history.replaceState(null, document.title, window.location.pathname + (query.length > 0 ? '?' + query : ''));
+        GA.fireEvent('UX', 'Print', 'URL');
         window.print();
     };
 
+    const invokeChangeTab: Function = (tab: number | string) => {
+        console.debug('Invoking select-tab!');
+        const $tabNav: JQuery = $('#tabs-nav');
+        const $tabs: JQuery = $tabNav.find('input:radio[name="tabs"]');
+        let $selectedTab: JQuery;
+        if ((typeof tab === 'number')) {
+            $selectedTab = $tabs.eq(tab);
+        } else if ((typeof tab === 'string')) {
+            $selectedTab = $tabs.filter('[value="' + tab + '"]');
+        }
+        if ($selectedTab.length === 0) {
+            return;
+        }
+
+        $selectedTab.trigger('click', {simulated: true});
+        if (('checkboxradio' in $selectedTab)) {
+            $selectedTab.checkboxradio('refresh');
+        }
+
+        const tabLabel: string = $.trim($selectedTab.closest('.ui-radio').find('label[for="' + $selectedTab.attr('id') + '"]').text());
+
+        GA.fireEvent('UX', 'Init Main Tab', tabLabel);
+    };
+
+    const invokeViewRelevantSkills: Function = (value: boolean = true) => {
+        console.debug('Invoking view-relevant-skills!');
+        const $isRelevantCategory: JQuery = $('#is-relevant-category');
+        const $categorySelect: JQuery = $('select#categories');
+        $isRelevantCategory.trigger('change', {
+            simulated: true,
+            checked: value
+        });
+        const categoryKey: string = <string>$categorySelect.val();
+        const categoryName: string = $.trim($categorySelect.find('option[value="' + categoryKey + '"]').text());
+        GA.fireEvent('UX', 'Init Skills Table Filter', categoryName);
+    };
+
+    const invokeSetColorScheme: Function = (scheme: string) => {
+        if (!/^(|auto|light|dark)$/.test(scheme)) {
+            return;
+        }
+        console.debug('Invoking set-color-scheme!');
+        const $selectColorScheme: JQuery = $('#color-scheme-select');
+        if (scheme === 'auto') {
+            scheme = '';
+        }
+        $selectColorScheme.val(scheme)
+        .trigger('change', {simulated: true})
+        .selectmenu('refresh');
+    };
+
+    const invokeSortSkillsTable: Function = (sortBy: string) => {
+        const sortByColumnParts: string[] = sortBy.split(/\s*:+\s*/g);
+        const sortByColumn: string = sortByColumnParts[0];
+        let sortColumnOrder: string = (sortByColumnParts.length > 1 ? sortByColumnParts[1] === 'desc' ? 'desc' : 'asc' : null);
+        if (sortColumnOrder !== null) {
+            const $skillsTable: JQuery = $('#skills-table');
+            const $column: JQuery = $skillsTable.find('> thead > tr > th[data-field="' + sortByColumn + '"]');
+            $column.attr('data-sort-order', sortColumnOrder);
+        }
+
+        resumeSkillsTable.sortSkills(sortBy);
+    };
+
+    const invokeViewSkillCategory: Function = (category?: string) => {
+        if ((typeof category ===  'undefined') || category === null || category === '') {
+            category = '*';
+        }
+        if (category === 'relevant') {
+            invokeViewRelevantSkills(true);
+            return;
+        }
+        const $categorySelect: JQuery = $('select#categories');
+        if ($categorySelect.find('option[value="' + category + '"]').length === 0) {
+            return;
+        }
+        $categorySelect.val(category).trigger('change', {simulated: true});
+        if (('selectmenu' in $categorySelect)) {
+            $categorySelect.selectmenu('refresh');
+        }
+
+        const categoryName: string = $.trim($categorySelect.find('option[value="' + category + '"]').text());
+        GA.fireEvent('UX', 'Init Skills Table Filter', categoryName);
+    };
+
+    const seenParams: Set<string> = new Set<string>();
+    let lastTabChange: string | number;
+    let shouldPrint: boolean = false;
     for (let paramLine of paramsList) {
-        const paramParts = paramLine.split('=', 2);
-        let paramName = paramParts[0];
-        let paramValue = paramParts[1];
+        const paramParts: string[] = paramLine.split('=', 2);
+        let paramName: string = paramParts[0];
+        let paramValue: string = paramParts[1];
+        if (seenParams.has(paramName)) {
+            continue;
+        }
+        seenParams.add(paramName);
         if (paramName === 'print') {
-            let shouldPrint = true;
-            if ((typeof paramValue !== 'undefined') && paramValue !== null && paramValue !== '') {
-                if (/^(false|no|off|0)$/.test(paramValue)) {
-                    shouldPrint = false;
+            shouldPrint = true;
+        } else if (paramName === 'tab') {
+            if ((typeof paramValue !== 'undefined') && paramValue !== null && paramValue.length > 0) {
+                let tabValue: number | string = (!isNaN(parseInt(paramValue)) ? (parseInt(paramValue) - 1) : paramValue);
+                lastTabChange = tabValue;
+            }
+        } else if (/^(resume|skills|code)$/.test(paramName)) {
+            if (!seenParams.has('tab')) {
+                lastTabChange = paramName;
+            }
+
+            if (paramName === 'skills') {
+                if ((typeof paramValue !== 'undefined') && paramValue !== null && paramValue.length > 0) {
+                    invokeSortSkillsTable(paramValue);
                 }
             }
-            if (shouldPrint) {
-                setTimeout(invokePrint, 500);
+        } else if (paramName === 'relevant') {
+            invokeViewRelevantSkills(true);
+        } else if (paramName === 'category') {
+            invokeViewSkillCategory(paramValue);
+        } else if (paramName === 'scheme') {
+            if ((typeof paramValue !== 'undefined') && paramValue !== null) {
+                if (/^(|auto|light|dark)$/.test(paramValue)) {
+                    invokeSetColorScheme(paramValue);
+                }
             }
         }
+    }
+
+    if ((typeof lastTabChange !== 'undefined') && lastTabChange !== null) {
+        invokeChangeTab(lastTabChange);
+    }
+
+    if (shouldPrint) {
+        setTimeout(invokePrint, 500);
     }
 }
 
 function initPrintHandler() {
-    const printHandler: Function = (event) => {
+    const printHandler: Function = (event: MediaQueryListEvent) => {
         if (event.matches) {
             GA.fireEvent('UX', 'Print', '@media print');
         }
@@ -321,8 +461,8 @@ function initTooltips(resumeLoader?: ResumeLoader) {
                     triggerContent = $.trim($target.text());
                 }
 
-                const eventLabel: string = triggerType + ': ' + triggerContent;
-                GA.fireEvent('UX', 'Tooltip', eventLabel, visibleDuration);
+                const tooltipInfo: string = triggerType + ': ' + triggerContent;
+                GA.fireEvent('UX', 'Tooltip', tooltipInfo, visibleDuration);
             }
         },
         position: {
@@ -517,15 +657,15 @@ function initThemeUI() {
 
         $('*[class], *[data-theme]')
         .each(function () {
-            let $this: JQuery = $(this);
-            let pageTheme: string = $this.attr('data-theme') || newPageTheme;
+            const $this: JQuery = $(this);
+            const pageTheme: string = $this.attr('data-theme') || newPageTheme;
             if ($this.is('[data-theme]') && (pageTheme !== newPageTheme)) {
                 $this.attr('data-theme', newPageTheme);
             }
-            let classes: string[] = $.trim($this.attr('class')).split(/\s+/);
-            let themeSuffix: RegExp = /^(.+?)((-theme-|-)(a|b))$/;
+            const classes: string[] = $.trim($this.attr('class')).split(/\s+/);
+            const themeSuffix: RegExp = /^(.+?)((-theme-|-)(a|b))$/;
             $.each(classes, function (index, className) {
-                let matcher = themeSuffix.exec(className);
+                const matcher: RegExpExecArray = themeSuffix.exec(className);
                 if (matcher !== null && matcher.length > 0) {
                     if (/^ui-(block|grid)-/.test(matcher[1])) {
                         return true;
@@ -551,8 +691,8 @@ function initThemeUI() {
         $body.pagecontainer('option', 'theme', newPageTheme);
 
         if ((typeof options !== 'object') || options.simulated !== true) {
-            let eventAction: string = 'Change Theme: ' + (targetValue === '' ? 'Auto' : targetValue === 'light' ? 'Light' : targetValue === 'dark' ? 'Dark' : targetValue);
-            GA.fireEvent('UX', eventAction, eventAction);
+            const themeName: string = (targetValue === '' ? 'Auto' : targetValue === 'light' ? 'Light' : targetValue === 'dark' ? 'Dark' : targetValue);
+            GA.fireEvent('UX', 'Change Theme', themeName);
         }
     });
 
@@ -629,8 +769,7 @@ function initTabs() {
         $selectedPanel.removeClass('ui-screen-hidden');
 
         if (typeof options !== 'object' || options.simulated !== true) {
-            let eventAction: string = 'Change Main Tab: ' + selectedTabText;
-            GA.fireEvent('UX', eventAction, eventAction);
+            GA.fireEvent('UX', 'Change Main Tab', selectedTabText);
         }
     });
     $tabsNavRadios.each(function () {
