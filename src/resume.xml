@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jason-redding.com/xsd/resume"
 	xsi:schemaLocation="http://jason-redding.com/xsd/resume xsd/resume.xsd"
-	last-modified="2021-11-10T13:13:13">
+	last-modified="2021-11-13T13:13:13">
 	<xi:include r:name="presentation" href="resume.presentation.xml"/>
 	<meta>
 		<skill>
@@ -509,6 +509,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="back-end"/>
 			</categories>
 		</skill>
+		<skill id="java-debugging">
+			<name>Java Debugging</name>
+			<notes>
+				<note type="clarity">Local/Remote debugging, stepping through code, conditional breakpoints, etc.</note>
+			</notes>
+			<experience level="4">
+				<spanning from-date="2002-01" to-date="2017-12" weight="0.5"/>
+				<spanning from-date="2018-01" to-date="2019-05"/>
+				<spanning from-date="2019-05" to-date="2019-09" weight="0.5"/>
+				<spanning from-date="2019-09" to-date="2020-05"/>
+				<spanning from-date="2020-06" to-date="2021-10"/>
+				<since date="2021-11" weight="0.5"/>
+			</experience>
+			<categories>
+				<category value="dev-tool"/>
+			</categories>
+		</skill>
 		<skill id="javascript">
 			<name>JavaScript</name>
 			<experience level="4" precision="years">
@@ -527,7 +544,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<name>JBoss</name>
 			<experience level="2">
 				<spanning from-date="2018-01" to-date="2019-05"/>
-				<since date="2019-09"/>
 			</experience>
 			<categories>
 				<category value="relevant"/>
@@ -781,6 +797,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="front-end"/>
 			</categories>
 		</skill>
+		<skill id="postresql">
+			<name>PostgreSQL</name>
+			<experience level="2.5">
+				<spanning from-date="2019-09" to-date="2020-05"/>
+			</experience>
+			<categories>
+				<category value="db"/>
+			</categories>
+		</skill>
 		<skill id="pro-c">
 			<name>Pro*C</name>
 			<experience level="0.5">
@@ -824,7 +849,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="responsive-design">
 			<name>Responsive Design</name>
-			<experience level="3.75" precision="years">
+			<experience level="4" precision="years">
 				<spanning from-date="2012-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2019-09" weight="0.5"/>
