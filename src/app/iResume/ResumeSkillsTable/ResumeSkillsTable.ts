@@ -63,6 +63,10 @@ export default class ResumeSkillsTable {
         return this._element;
     }
 
+    getLoader(): ResumeLoader {
+        return this._loader;
+    }
+
     private _initElement(): ResumeSkillsTable {
         const self: ResumeSkillsTable = this;
         let $element: JQuery = this._element;
