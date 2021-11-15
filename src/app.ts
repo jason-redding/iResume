@@ -1,6 +1,6 @@
 import * as $ from 'jquery';
 import './app/Env/Env';
-import {addMediaQueryListener, Duration, DurationResult} from './app/Env/Env';
+import {addMediaQueryListener, Duration, DurationResult, Param} from './app/Env/Env';
 import ResumeSkillsTable from './app/iResume/ResumeSkillsTable/ResumeSkillsTable';
 import ResumeComponent, {ResumeTransformParameters} from './app/iResume/ResumeComponent/ResumeComponent';
 import ResumeLoader from './app/iResume/ResumeLoader/ResumeLoader';
@@ -173,7 +173,40 @@ function forEachParam(query: string, consumer: (name: string, value: string, ind
     }
 }
 
-function handleUrlParams(resumeSkillsTable: ResumeSkillsTable) {
+function paramIterator(query: string): Iterable<Param> {
+    const pi: any = new String(query);
+    pi[Symbol.iterator] = () => {
+        return {
+            next(args: any): IteratorResult<Param> {
+                const isDone: boolean = !(this._paramIndex < this._paramList.length);
+                let item: Param;
+                if (!isDone) {
+                    const line: string[] = this._paramList[this._paramIndex].split('=', 2);
+                    const value: string = line[1];
+                    const hasValue: boolean = (typeof value !== 'undefined' && value !== null);
+                    const hasText: boolean = (hasValue && value.trim().length > 0);
+                    item = {
+                        name: line[0],
+                        value: decodeURIComponent(value),
+                        index: this._paramIndex++,
+                        hasText: hasText,
+                        hasValue: hasValue
+                    };
+                }
+                const iterator: IteratorResult<Param> = {
+                    value: item,
+                    done: isDone
+                };
+                return iterator;
+            },
+            _paramList: query.replace(/^\?+/g, '').split('&'),
+            _paramIndex: 0
+        };
+    };
+    return pi;
+}
+
+function handleUrlParams(resumeComponent: ResumeComponent, resumeSkillsTable: ResumeSkillsTable) {
     console.debug('Handling URL parameters...');
     const location: Location = window.location;
     const query: string = location.search.replace(/^\?+/g, '');
