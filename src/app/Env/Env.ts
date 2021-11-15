@@ -683,6 +683,55 @@ export class StringFormatter {
     }
 }
 
+export function forEachParam(query: string, consumer: (name: string, value: string, index: number) => boolean | undefined) {
+    const paramsList: string[] = query.replace(/^\?+/g, '').split('&');
+    for (let paramIndex = 0; paramIndex < paramsList.length; paramIndex++) {
+        const paramLine: string = paramsList[paramIndex];
+        const paramParts: string[] = paramLine.split('=', 2);
+        if (false === consumer(paramParts[0], paramParts[1], paramIndex)) {
+            break;
+        }
+    }
+}
+
+export function paramIterator(query: string): Iterable<Param> {
+    const result: any = new String(query);
+    result[Symbol.iterator] = () => {
+        return {
+            next(args: any): IteratorResult<Param> {
+                const isDone: boolean = !(this._paramIndex < this._paramList.length);
+                let item: Param;
+                if (!isDone) {
+                    const line: string[] = this._paramList[this._paramIndex].split('=', 2);
+                    let value: string = line[1];
+                    const hasValue: boolean = (typeof value !== 'undefined' && value !== null);
+                    value = decodeURIComponent(value);
+                    const hasText: boolean = (hasValue && value.trim().length > 0);
+                    item = {
+                        name: line[0],
+                        value: value,
+                        index: this._paramIndex++,
+                        hasText: hasText,
+                        hasValue: hasValue
+                    };
+                }
+                const iterator: IteratorResult<Param> = {
+                    value: item,
+                    done: isDone
+                };
+                return iterator;
+            },
+            _paramList: query.replace(/^\?+/g, '').split('&'),
+            _paramIndex: 0
+        };
+    };
+    return result;
+}
+
+export function quoteRegExp(string: string): string {
+    return string.replace(/[.*+?^${}()|\][\\]/g, '\\$&');
+}
+
 export const escapeAsAttributeValue = function(value: string): string {
     return replaceUsingMap(value, /("+|\s+)/g, {
         '"': '&quot;',

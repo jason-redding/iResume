@@ -1,6 +1,6 @@
 import * as $ from 'jquery';
 import './app/Env/Env';
-import {addMediaQueryListener, Duration, DurationResult, Param} from './app/Env/Env';
+import {addMediaQueryListener, Duration, DurationResult, paramIterator, quoteRegExp} from './app/Env/Env';
 import ResumeSkillsTable from './app/iResume/ResumeSkillsTable/ResumeSkillsTable';
 import ResumeComponent, {ResumeTransformParameters} from './app/iResume/ResumeComponent/ResumeComponent';
 import ResumeLoader from './app/iResume/ResumeLoader/ResumeLoader';
@@ -22,12 +22,12 @@ function onReady() {
     const resumeComponent: ResumeComponent = initResumeComponent(resumeLoader);
     // initExportUI(resumeComponent);
     applyRenderDecorations(resumeComponent);
-    resumeComponent.onRenderComplete(() => {
-        handleUrlParams(resumeComponent, resumeSkillsTable);
-    });
     initHighlightThemePicker();
     initCodeViewer();
     initTabs();
+    resumeComponent.onRenderComplete(() => {
+        handleUrlParams(resumeComponent, resumeSkillsTable);
+    });
 }
 
 function applyRenderDecorations(resumeComponent: ResumeComponent): ResumeComponent {
@@ -160,52 +160,6 @@ function initHashHandling() {
     });
 }
 
-function forEachParam(query: string, consumer: (name: string, value: string, index: number) => boolean | undefined) {
-    const paramsList: string[] = query.replace(/^\?+/g, '').split('&');
-    for (let paramIndex = 0; paramIndex < paramsList.length; paramIndex++) {
-        const paramLine: string = paramsList[paramIndex];
-        const paramParts: string[] = paramLine.split('=', 2);
-        const paramName: string = paramParts[0];
-        const paramValue: string = paramParts[1];
-        if (false === consumer(paramName, paramValue, paramIndex)) {
-            break;
-        }
-    }
-}
-
-function paramIterator(query: string): Iterable<Param> {
-    const pi: any = new String(query);
-    pi[Symbol.iterator] = () => {
-        return {
-            next(args: any): IteratorResult<Param> {
-                const isDone: boolean = !(this._paramIndex < this._paramList.length);
-                let item: Param;
-                if (!isDone) {
-                    const line: string[] = this._paramList[this._paramIndex].split('=', 2);
-                    const value: string = line[1];
-                    const hasValue: boolean = (typeof value !== 'undefined' && value !== null);
-                    const hasText: boolean = (hasValue && value.trim().length > 0);
-                    item = {
-                        name: line[0],
-                        value: decodeURIComponent(value),
-                        index: this._paramIndex++,
-                        hasText: hasText,
-                        hasValue: hasValue
-                    };
-                }
-                const iterator: IteratorResult<Param> = {
-                    value: item,
-                    done: isDone
-                };
-                return iterator;
-            },
-            _paramList: query.replace(/^\?+/g, '').split('&'),
-            _paramIndex: 0
-        };
-    };
-    return pi;
-}
-
 function handleUrlParams(resumeComponent: ResumeComponent, resumeSkillsTable: ResumeSkillsTable) {
     console.debug('Handling URL parameters...');
 
@@ -218,9 +172,9 @@ function handleUrlParams(resumeComponent: ResumeComponent, resumeSkillsTable: Re
         const $node: JQuery<Node> = $(node);
         const categoryKey: string = $node.attr('value');
         if (categoryPattern.length > 0) {
-            categoryPattern += '|'
+            categoryPattern += '|';
         }
-        categoryPattern += categoryKey;
+        categoryPattern += quoteRegExp(categoryKey);
     });
     categoryPattern = '^(' + categoryPattern;
     categoryPattern += ')$';
@@ -310,7 +264,7 @@ function handleUrlParams(resumeComponent: ResumeComponent, resumeSkillsTable: Re
     };
 
     const invokeViewSkillCategory: Function = (category?: string) => {
-        if ((typeof category ===  'undefined') || category === null || category === '') {
+        if ((typeof category === 'undefined') || category === null || category === '') {
             category = '*';
         }
         if (category === 'relevant') {
@@ -446,7 +400,7 @@ function initResumeComponent(resumeLoader: ResumeLoader): ResumeComponent {
         'projects-layout': 'list',
         'skill-level-print-min': 2,
         'skill-level-screen-min': 1,
-        'system-date': Date.format(new Date(), "yyyy-MM-dd'T'HH:mm:ss")
+        'system-date': Date.format(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss')
     };
     const resumeComponent: ResumeComponent = new ResumeComponent(resumeLoader, $('.resume-xslt'), transformParameters);
     resumeComponent
