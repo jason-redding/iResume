@@ -75,6 +75,17 @@ export enum TemporalUnit {
     MILLISECONDS = 'milliseconds'
 }
 
+export interface NameValue<N, V> {
+    name: N;
+    value: V;
+}
+
+export interface Param extends NameValue<string, string> {
+    index: number;
+    hasValue: boolean;
+    hasText: boolean;
+}
+
 interface DepthMap {
     string: number;
     array: number;
