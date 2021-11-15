@@ -23,7 +23,7 @@ function onReady() {
     // initExportUI(resumeComponent);
     applyRenderDecorations(resumeComponent);
     resumeComponent.onRenderComplete(() => {
-        handleUrlParams(resumeSkillsTable);
+        handleUrlParams(resumeComponent, resumeSkillsTable);
     });
     initHighlightThemePicker();
     initCodeViewer();
@@ -160,7 +160,7 @@ function initHashHandling() {
     });
 }
 
-function forEachParam(query: string, consumer: (name: string, value: string, index: number) => boolean) {
+function forEachParam(query: string, consumer: (name: string, value: string, index: number) => boolean | undefined) {
     const paramsList: string[] = query.replace(/^\?+/g, '').split('&');
     for (let paramIndex = 0; paramIndex < paramsList.length; paramIndex++) {
         const paramLine: string = paramsList[paramIndex];
@@ -208,22 +208,38 @@ function paramIterator(query: string): Iterable<Param> {
 
 function handleUrlParams(resumeComponent: ResumeComponent, resumeSkillsTable: ResumeSkillsTable) {
     console.debug('Handling URL parameters...');
-    const location: Location = window.location;
-    const query: string = location.search.replace(/^\?+/g, '');
-    const paramsList: string[] = query.split('&');
+
+    const loader: ResumeLoader = resumeSkillsTable.getLoader();
+    const xml: XMLDocument = loader.getDataDocument();
+    const $categories: JQuery<Node> = loader.xpath(xml, '/r:resume/r:meta/r:skill/r:categories/r:category', 'nodeset');
+
+    let categoryPattern: string = 'category';
+    $categories.each((index, node) => {
+        const $node: JQuery<Node> = $(node);
+        const categoryKey: string = $node.attr('value');
+        if (categoryPattern.length > 0) {
+            categoryPattern += '|'
+        }
+        categoryPattern += categoryKey;
+    });
+    categoryPattern = '^(' + categoryPattern;
+    categoryPattern += ')$';
+    const categoryParamPattern: RegExp = new RegExp(categoryPattern);
 
     const invokePrint: Function = () => {
         console.debug('Invoking print!');
         let query: string = '';
-        forEachParam(window.location.search.replace(/^\?+/g, ''), (paramName, paramValue, paramIndex) => {
-            if (paramName === 'print') {
-                return true;
+
+        for (let param of paramIterator(window.location.search)) {
+            if (param.name === 'print') {
+                continue;
             }
             if (query.length > 0) {
                 query += '&';
             }
-            query += paramName + ((typeof paramValue !== 'undefined') ? '=' + paramValue : '');
-        });
+            query += param.name + (param.hasValue ? ('=' + param.value) : '');
+        }
+
         window.history.replaceState(null, document.title, window.location.pathname + (query.length > 0 ? '?' + query : ''));
         GA.fireEvent('UX', 'Print', 'URL');
         window.print();
@@ -314,49 +330,87 @@ function handleUrlParams(resumeComponent: ResumeComponent, resumeSkillsTable: Re
         GA.fireEvent('UX', 'Init Skills Table Filter', categoryName);
     };
 
+    const invokeViewCodePath: Function = (path: string) => {
+        const $codeSelector: JQuery = $('.select-code-container select');
+        const $pathOption: JQuery = $codeSelector.find('option[value$="' + (path.startsWith('/') ? '' : '/') + path + '"]');
+        const fullPath: string = <string>$pathOption.val();
+
+        if ($pathOption.length > 0) {
+            $codeSelector.val(fullPath).trigger('change', {simulated: true});
+            if (('selectmenu' in $codeSelector)) {
+                $codeSelector.selectmenu('refresh');
+            }
+        }
+    };
+
     const seenParams: Set<string> = new Set<string>();
-    let lastTabChange: string | number;
+    let newTab: string | number;
+    let newSkillCategory: string;
+    let newSkillSort: string;
+    let newColorScheme: string;
+    let newCodePath: string;
     let shouldPrint: boolean = false;
-    for (let paramLine of paramsList) {
-        const paramParts: string[] = paramLine.split('=', 2);
-        let paramName: string = paramParts[0];
-        let paramValue: string = paramParts[1];
+    for (let param of paramIterator(window.location.search)) {
+        let paramName: string = param.name;
+        let paramValue: string = param.value;
         if (seenParams.has(paramName)) {
             continue;
         }
         seenParams.add(paramName);
         if (paramName === 'print') {
             shouldPrint = true;
-        } else if (paramName === 'tab') {
-            if ((typeof paramValue !== 'undefined') && paramValue !== null && paramValue.length > 0) {
-                let tabValue: number | string = (!isNaN(parseInt(paramValue)) ? (parseInt(paramValue) - 1) : paramValue);
-                lastTabChange = tabValue;
-            }
-        } else if (/^(resume|skills|code)$/.test(paramName)) {
-            if (!seenParams.has('tab')) {
-                lastTabChange = paramName;
-            }
-
-            if (paramName === 'skills') {
-                if ((typeof paramValue !== 'undefined') && paramValue !== null && paramValue.length > 0) {
-                    invokeSortSkillsTable(paramValue);
+        } else if (/^(tab|resume|skills|code)$/.test(paramName)) {
+            if (paramName === 'tab') {
+                if (param.hasText) {
+                    newTab = (!isNaN(parseInt(paramValue)) ? (parseInt(paramValue) - 1) : paramValue);
+                }
+            } else {
+                if ((typeof newTab === 'undefined')) {
+                    newTab = paramName;
+                }
+                if (paramName === 'skills') {
+                    if (param.hasText && (typeof newSkillSort === 'undefined')) {
+                        newSkillSort = paramValue;
+                    }
+                } else if (paramName === 'code') {
+                    if (param.hasText && (typeof newCodePath === 'undefined')) {
+                        newCodePath = paramValue;
+                    }
                 }
             }
-        } else if (paramName === 'relevant') {
-            invokeViewRelevantSkills(true);
-        } else if (paramName === 'category') {
-            invokeViewSkillCategory(paramValue);
-        } else if (paramName === 'scheme') {
-            if ((typeof paramValue !== 'undefined') && paramValue !== null) {
+        } else if (categoryParamPattern.test(paramName) && (typeof newSkillCategory === 'undefined')) {
+            if (paramName === 'category') {
+                newSkillCategory = paramValue;
+            } else {
+                newSkillCategory = paramName;
+            }
+        } else if (paramName === 'scheme' && (typeof newColorScheme === 'undefined')) {
+            if (param.hasValue) {
                 if (/^(|auto|light|dark)$/.test(paramValue)) {
-                    invokeSetColorScheme(paramValue);
+                    newColorScheme = paramValue;
                 }
             }
         }
     }
 
-    if ((typeof lastTabChange !== 'undefined') && lastTabChange !== null) {
-        invokeChangeTab(lastTabChange);
+    if ((typeof newColorScheme !== 'undefined') && newColorScheme !== null) {
+        invokeSetColorScheme(newColorScheme);
+    }
+
+    if ((typeof newTab !== 'undefined') && newTab !== null) {
+        invokeChangeTab(newTab);
+    }
+
+    if ((typeof newSkillCategory !== 'undefined') && newSkillCategory !== null) {
+        invokeViewSkillCategory(newSkillCategory);
+    }
+
+    if ((typeof newSkillSort !== 'undefined') && newSkillSort !== null) {
+        invokeSortSkillsTable(newSkillSort);
+    }
+
+    if ((typeof newCodePath !== 'undefined') && newCodePath !== null) {
+        invokeViewCodePath(newCodePath);
     }
 
     if (shouldPrint) {
