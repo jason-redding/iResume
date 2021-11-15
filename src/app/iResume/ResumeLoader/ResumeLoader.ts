@@ -305,7 +305,7 @@ export default class ResumeLoader {
     }
 
     xpath<T extends 'string' | 'number' | 'boolean' | 'node' | 'nodeset' | 'nodes' | 'any'>(context: Node | Node[] | JQuery<Node>, expression: string, type: T): XPathResultValue<T> {
-        return this.xpath(context, expression, type);
+        return this._xpath.evaluate(context, expression, type);
     }
 
     getSkillProperties(skillNode: JQuery<Node>): object;
