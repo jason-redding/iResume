@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '_common';
 
 @each $break-position in $break-positions {
@@ -369,6 +370,57 @@ pre.code-container {
   &[data-section='certifications'] {
     margin-left: 0;
     margin-right: 0;
+  }
+  &[data-section='blurb'] {
+    @media screen and (max-width: 736px) {
+      font-style: italic;
+      &.outline {
+        $barSize: 1em;
+        $barRadius: $barSize * math.div(2, 3);
+        $barLedgeSize: (1 - $barRadius);
+        text-align: justify;
+        position: relative;
+        padding: $barLedgeSize $barRadius;
+        &::before, &::after {
+          border-color: $resumeBackgroundColorDark;
+          .ui-page-theme-b & {
+            border-color: $resumeBackgroundColorLight;
+          }
+          border-top: 1px solid;
+          border-bottom: 1px solid;
+          content: '';
+          display: block;
+          position: absolute;
+          top: -1px;
+          bottom: -1px;
+          width: $barSize;
+        }
+
+        &::before {
+          left: 0;
+          border-left: 1px solid;
+          border-top-left-radius: $barRadius;
+          border-bottom-left-radius: $barRadius;
+        }
+
+        &::after {
+          right: 0;
+          border-right: 1px solid;
+          border-top-right-radius: $barRadius;
+          border-bottom-right-radius: $barRadius;
+        }
+
+        > p {
+          &:first-of-type {
+            margin-top: 0;
+          }
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
   }
 }
 
