@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<xi:include r:name="presentation" href="resume.presentation.xml"/>
 	<meta>
 		<skill>
-			<experience type="experience" preposition="at" screen-min="1" print-min="2">
+			<experience type="experience" preposition="at" screen-min="1" print-min="2" precision="years">
 				<level value="-1" preposition="with" type="exposure">No experience</level>
 				<level value="0" preposition="to" type="exposure">Exposure</level>
 				<level value="1" preposition="" type="learning">Learning</level>
@@ -116,7 +116,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<skills title="Skills, Tools &amp; Technologies" layout="categories">
 		<skill id="active-directory">
 			<name>Active Directory</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2010-01" to-date="2017-12" weight="0.5"/>
 			</experience>
 			<categories>
@@ -125,7 +125,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="activemq">
 			<name>ActiveMQ</name>
-			<experience level="1.5">
+			<experience level="1.5" precision="months">
 				<spanning from-date="2019-09-16" to-date="2020-05-15"/>
 			</experience>
 			<categories>
@@ -134,7 +134,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="ajax">
 			<name>AJAX</name>
-			<experience level="4.5" precision="years">
+			<experience level="4.5">
 				<spanning from-date="2008-01" to-date="2017-12" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2020-06" weight="0.5"/>
@@ -149,7 +149,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="angularjs">
 			<name>AngularJS</name>
 			<version hint="not 2+">1.x</version>
-			<experience level="3">
+			<experience level="3" precision="months">
 				<spanning from-date="2016-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
@@ -162,7 +162,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="angular-materials">
 			<name>Angular Materials</name>
 			<version>1.x</version>
-			<experience level="3">
+			<experience level="3" precision="months">
 				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
 			<categories>
@@ -173,7 +173,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="apache-commons" hidden="true">
 			<name>Apache Commons</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2005-01" to-date="2020-06" weight="0.5"/>
 				<spanning from-date="2020-06" to-date="2021-10"/>
 			</experience>
@@ -184,7 +184,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="apache-derby">
 			<name>Apache Derby</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2013-01" to-date="2015-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -194,7 +194,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="apache-httpd">
 			<name>Apache HTTP Server</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<since date="2003-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -206,7 +206,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="apache-maven">
 			<name>Apache Maven</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2014-01" to-date="2017-12" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-09" to-date="2020-05"/>
@@ -220,7 +220,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="apache-storm">
 			<name>Apache Storm</name>
-			<experience level="2">
+			<experience level="2" precision="months">
 				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
 			<categories>
@@ -229,7 +229,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="apache-tomcat">
 			<name>Apache Tomcat</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2003-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2020-06" to-date="2021-10"/>
 			</experience>
@@ -242,7 +242,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="bash">
 			<name>Bash Shell Scripting</name>
-			<experience level="3.5" precision="years">
+			<experience level="3.5">
 				<spanning from-date="2001-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2019-09" weight="0.5"/>
@@ -256,7 +256,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="bootstrap">
 			<name>Bootstrap</name>
 			<version>v3.x</version>
-			<experience level="3">
+			<experience level="3" precision="months">
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2020-06" to-date="2021-10"/>
 			</experience>
@@ -268,7 +268,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="c-sharp">
 			<name>C#</name>
-			<experience level="2.25">
+			<experience level="2.25" precision="months">
 				<spanning from-date="2010-01" to-date="2011-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -279,7 +279,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="cent-os">
 			<name>CentOS</name>
-			<experience level="3">
+			<experience level="3" precision="months">
 				<spanning from-date="2014-01" to-date="2017-01" weight="0.5"/>
 				<spanning from-date="2019-09" to-date="2020-05"/>
 			</experience>
@@ -290,7 +290,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="chrome-dev-tools">
 			<name>Chrome Developer Tools</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<since date="2008-01"/>
 			</experience>
 			<categories>
@@ -301,7 +301,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="cli">
 			<name>Command-line Interface</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="1999-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2019-09" weight="0.5"/>
@@ -314,7 +314,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="css">
 			<name>CSS</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2002-01" to-date="2017-12" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2020-06" to-date="2021-10"/>
@@ -329,7 +329,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="css3">
 			<name>CSS3</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2004-01" to-date="2017-12" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2020-06" to-date="2021-10"/>
@@ -344,7 +344,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="cygwin">
 			<name>Cygwin</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2005-01" to-date="2018-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -358,7 +358,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<note type="technical">Frequently breaks programmer flow, buggy, and prone to workspace corruption.</note>
 				<note type="personal">Worst IDE I've ever used.</note>
 			</notes>
-			<experience level="3">
+			<experience level="3" precision="months">
 				<spanning from-date="2019-09-16" to-date="2020-05-15"/>
 			</experience>
 			<categories>
@@ -367,7 +367,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="facebook-sdk" hidden="1">
 			<name>Facebook SDK (XFBML)</name>
-			<experience level="3">
+			<experience level="3" precision="months">
 				<spanning from-date="2014-01" to-date="2015-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -378,7 +378,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="firebug" hidden="1">
 			<name>Firebug (for Firefox)</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2005-01" to-date="2017-01"/>
 			</experience>
 			<categories>
@@ -389,7 +389,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="firefox-dev-tools">
 			<name>Firefox Developer Tools</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<since date="2005-01"/>
 			</experience>
 			<categories>
@@ -400,7 +400,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="git">
 			<name>Git</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2014-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2020-06" weight="0.5"/>
@@ -414,7 +414,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="git-bash">
 			<name>Git-Bash</name>
-			<experience level="3">
+			<experience level="3" precision="months">
 				<spanning from-date="2020-06" to-date="2021-10"/>
 			</experience>
 			<categories>
@@ -425,7 +425,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="google-maps-js-api">
 			<name>Google Maps JavaScript API</name>
 			<version>V3</version>
-			<experience level="3.5">
+			<experience level="3.5" precision="months">
 				<spanning from-date="2013-01" to-date="2015-06" weight="0.5"/>
 			</experience>
 			<categories>
@@ -436,7 +436,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="gulp">
 			<name>Gulp</name>
-			<experience level="3">
+			<experience level="3" precision="months">
 				<since date="2017-08" weight="0.5"/>
 			</experience>
 			<categories>
@@ -446,7 +446,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="hibernate">
 			<name>Hibernate</name>
-			<experience level="2">
+			<experience level="2" precision="months">
 				<spanning from-date="2020-06-01" to-date="2021-10"/>
 			</experience>
 			<categories>
@@ -459,7 +459,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="html">
 			<name>HTML</name>
 			<version>5</version>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2011-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2019-09" weight="0.5"/>
@@ -475,7 +475,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="hql">
 			<name>HQL</name>
 			<long-name>Hibernate Query Language</long-name>
-			<experience level="1.5">
+			<experience level="1.5" precision="months">
 				<spanning from-date="2020-06-01" to-date="2021-10"/>
 			</experience>
 			<categories>
@@ -489,7 +489,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<notes>
 				<note type="personal">My most favorite IDE by far!</note>
 			</notes>
-			<experience level="3.75">
+			<experience level="3.75" precision="months">
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2020-06" weight="0.5"/>
 				<spanning from-date="2020-06" to-date="2021-10"/>
@@ -501,7 +501,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="ios">
 			<name>iOS</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<since date="2009-07"/>
 			</experience>
 			<categories>
@@ -510,7 +510,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="java">
 			<name>Java</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2002-01" to-date="2017-12" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2019-09" weight="0.5"/>
@@ -543,7 +543,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="javascript">
 			<name>JavaScript</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2000-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2019-09" weight="0.5"/>
@@ -558,7 +558,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="jboss">
 			<name>JBoss</name>
-			<experience level="2">
+			<experience level="2" precision="months">
 				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
 			<categories>
@@ -570,7 +570,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="jdbc">
 			<name>JDBC</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2007-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-09" to-date="2021-10"/>
@@ -583,7 +583,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="jndi" hidden="1">
 			<name>JNDI</name>
 			<long-name>Java Naming and Directory Interface</long-name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2007-01" to-date="2018-01" weight="0.5"/>
 				<since date="2019-09"/>
 			</experience>
@@ -595,7 +595,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="jpa" hidden="true">
 			<name>JPA</name>
 			<long-name>Java Persistence API</long-name>
-			<experience level="2">
+			<experience level="2" precision="months">
 				<spanning from-date="2020-06" to-date="2021-10"/>
 			</experience>
 			<categories>
@@ -605,7 +605,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="jquery">
 			<name>jQuery</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2008-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2020-06" weight="0.5"/>
@@ -621,7 +621,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="jquery-mobile">
 			<name>jQuery Mobile</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2011-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2019-05" to-date="2020-06" weight="0.5"/>
 				<since date="2021-11" weight="0.5"/>
@@ -635,7 +635,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="jquery-ui">
 			<name>jQuery UI</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2008-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2020-06" weight="0.5"/>
@@ -650,7 +650,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="json">
 			<name>JSON</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2008-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2020-06" weight="0.5"/>
@@ -665,7 +665,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="jsp">
 			<name>JSP</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2010-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2019-09" to-date="2021-10"/>
 			</experience>
@@ -677,7 +677,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="jstl">
 			<name>JSTL</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2014-01" to-date="2016-06" weight="0.5"/>
 			</experience>
 			<categories>
@@ -687,7 +687,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="linux">
 			<name>Linux</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2001-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2019-09" weight="0.5"/>
@@ -700,7 +700,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="macos">
 			<name>macOS</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="1993-01" to-date="1996-01" weight="0.5"/>
 				<spanning from-date="2016-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
@@ -712,7 +712,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="mac-os-7" hidden="1">
 			<name>Mac OS 7</name>
-			<experience level="3.5">
+			<experience level="3.5" precision="months">
 				<spanning from-date="1992-01" to-date="1997-07" weight="0.5"/>
 			</experience>
 			<categories>
@@ -721,7 +721,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="ms-sql-server">
 			<name>Microsoft SQL Server</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2013-01" to-date="2018-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -734,7 +734,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<notes>
 				<note type="personal">I respect this OS the least.</note>
 			</notes>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="1999-01" to-date="2016-07" weight="0.5"/>
 				<since date="2019-09"/>
 			</experience>
@@ -744,7 +744,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="mysql">
 			<name>MySQL</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2013-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
@@ -758,7 +758,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<notes>
 				<note type="personal">First IDE ever used.</note>
 			</notes>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2001-01" to-date="2019-04" weight="0.5"/>
 			</experience>
 			<categories>
@@ -768,7 +768,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="nsis">
 			<name>NSIS</name>
 			<long-name>Nullsoft Scriptable Install System</long-name>
-			<experience level="3.75" precision="years">
+			<experience level="3.75">
 				<spanning from-date="2004-01-01" to-date="2012-01-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -780,7 +780,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="openmap">
 			<name>OpenMap</name>
 			<version>5.1</version>
-			<experience level="1.5">
+			<experience level="1.5" precision="months">
 				<spanning from-date="2019-09-16" to-date="2020-05-15"/>
 			</experience>
 			<categories>
@@ -789,7 +789,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="oracle-dbms">
 			<name>Oracle DBMS</name>
-			<experience level="3.5" precision="years">
+			<experience level="3.5">
 				<spanning from-date="2003-01" to-date="2017-12" weight="0.5"/>
 				<spanning from-date="2020-06" to-date="2021-10"/>
 			</experience>
@@ -800,7 +800,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="oracle-pl-sql">
 			<name>Oracle PL/SQL</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2003-01" to-date="2017-12" weight="0.5"/>
 			</experience>
 			<categories>
@@ -810,7 +810,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="perl">
 			<name>Perl</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2005-01" to-date="2007-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -820,7 +820,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="php" hidden="true">
 			<name>PHP</name>
-			<experience level="2" precision="years">
+			<experience level="2">
 				<spanning from-date="2016-06" to-date="2016-07" weight="0.5"/>
 			</experience>
 			<categories>
@@ -832,7 +832,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="postresql">
 			<name>PostgreSQL</name>
-			<experience level="2.5">
+			<experience level="2.5" precision="months">
 				<spanning from-date="2019-09" to-date="2020-05"/>
 			</experience>
 			<categories>
@@ -841,7 +841,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="pro-c">
 			<name>Pro*C</name>
-			<experience level="0.5">
+			<experience level="0.5" precision="months">
 				<spanning from-date="2017-07" to-date="2017-08" weight="0.5"/>
 			</experience>
 			<categories>
@@ -850,7 +850,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="python">
 			<name>Python</name>
-			<experience level="3">
+			<experience level="3" precision="months">
 				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
 			<categories>
@@ -861,7 +861,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="react">
 			<name>React</name>
-			<experience level="1">
+			<experience level="1" precision="months">
 				<spanning from-date="2019-08-27" to-date="2019-10" weight="0.5"/>
 			</experience>
 			<categories>
@@ -872,7 +872,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="regular-expressions">
 			<name>Regular Expressions</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2001-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<since date="2019-05" weight="0.5"/>
@@ -883,7 +883,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="responsive-design">
 			<name>Responsive Design</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2012-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2019-09" weight="0.5"/>
@@ -898,7 +898,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="rest">
 			<name>REST</name>
-			<experience level="3.5" precision="years">
+			<experience level="3.5">
 				<spanning from-date="2010-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2019-09" weight="0.5"/>
@@ -912,7 +912,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="safari-web-inspector">
 			<name>Safari Web Inspector</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<since date="2017-01"/>
 			</experience>
 			<categories>
@@ -923,7 +923,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="saltstack">
 			<name>SaltStack</name>
-			<experience level="1.5">
+			<experience level="1.5" precision="months">
 				<spanning from-date="2018-01" to-date="2019-05"/>
 			</experience>
 			<categories>
@@ -932,7 +932,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="scss">
 			<name>SCSS</name>
-			<experience level="4.5" precision="years">
+			<experience level="4.5">
 				<spanning from-date="2014-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<since date="2019-05" weight="0.5"/>
@@ -946,7 +946,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="spring">
 			<name>Spring Framework</name>
-			<experience level="3">
+			<experience level="3" precision="months">
 				<spanning from-date="2020-06-01" to-date="2021-10"/>
 			</experience>
 			<categories>
@@ -957,7 +957,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="spring-boot">
 			<name>Spring Boot</name>
-			<experience level="3">
+			<experience level="3" precision="months">
 				<spanning from-date="2020-06-01" to-date="2021-10"/>
 			</experience>
 			<categories>
@@ -969,7 +969,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="sql">
 			<name>SQL</name>
 			<long-name>Structured Query Language</long-name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2004-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-09" to-date="2021-10"/>
@@ -981,7 +981,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="sql-developer">
 			<name>SQL Developer</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2013-01" to-date="2017-12" weight="0.5"/>
 			</experience>
 			<categories>
@@ -990,7 +990,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="sqlite">
 			<name>SQLite</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2011-01" to-date="2014-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -1000,7 +1000,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="ssh">
 			<name>SSH</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2001-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<spanning from-date="2019-05" to-date="2019-09" weight="0.5"/>
@@ -1014,7 +1014,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="swift">
 			<name>Swift</name>
 			<version>5</version>
-			<experience level="1">
+			<experience level="1" precision="months">
 				<spanning from-date="2021-07" to-date="2021-09"/>
 			</experience>
 			<categories>
@@ -1023,7 +1023,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="swift-ui">
 			<name>SwiftUI</name>
-			<experience level="1">
+			<experience level="1" precision="months">
 				<spanning from-date="2021-07" to-date="2021-09"/>
 			</experience>
 			<categories>
@@ -1034,7 +1034,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="thymeleaf">
 			<name>Thymeleaf</name>
-			<experience level="4">
+			<experience level="4" precision="months">
 				<spanning from-date="2020-06-01" to-date="2021-10"/>
 			</experience>
 			<categories>
@@ -1045,7 +1045,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="toad">
 			<name>Toad for Oracle</name>
-			<experience level="3">
+			<experience level="3" precision="months">
 				<spanning from-date="2011-01" to-date="2017-12" weight="0.5"/>
 				<spanning from-date="2020-06" to-date="2021-10"/>
 			</experience>
@@ -1056,7 +1056,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="typescript">
 			<name>TypeScript</name>
 			<version>3.5.3</version>
-			<experience level="3.5">
+			<experience level="3.5" precision="months">
 				<since date="2019-08" weight="0.5"/>
 			</experience>
 			<categories>
@@ -1068,7 +1068,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="uikit">
 			<name>UIKit</name>
-			<experience level="1">
+			<experience level="1" precision="months">
 				<since date="2021-11"/>
 			</experience>
 			<categories>
@@ -1079,7 +1079,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="vba">
 			<name>VBA</name>
 			<long-name>Visual Basic for Applications</long-name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2001-01" to-date="2006-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -1088,7 +1088,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="vb">
 			<name>Visual Basic</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2000-01" to-date="2010-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -1097,7 +1097,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="vb.net" hidden="1">
 			<name>Visual Basic .Net</name>
-			<experience level="3" precision="years">
+			<experience level="3">
 				<spanning from-date="2010-01" to-date="2012-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -1107,7 +1107,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="vim">
 			<name>Vim</name>
 			<long-name>Vi IMproved</long-name>
-			<experience level="3.95" precision="years">
+			<experience level="3.95">
 				<spanning from-date="2001-01" to-date="2009-01" weight="0.5"/>
 				<since date="2018-01"/>
 			</experience>
@@ -1117,7 +1117,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="wildfly">
 			<name>WildFly</name>
-			<experience level="2">
+			<experience level="2" precision="months">
 				<spanning from-date="2019-09-16" to-date="2020-05-15"/>
 			</experience>
 			<categories>
@@ -1129,7 +1129,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="wordpress" hidden="true">
 			<name>WordPress</name>
-			<experience level="2">
+			<experience level="2" precision="months">
 				<spanning from-date="2015-01" to-date="2016-07" weight="0.5"/>
 			</experience>
 			<categories>
@@ -1140,7 +1140,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="xcode">
 			<name>Xcode</name>
-			<experience level="1">
+			<experience level="1" precision="months">
 				<since date="2021-07"/>
 			</experience>
 			<categories>
@@ -1149,7 +1149,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="xhtml">
 			<name>XHTML</name>
-			<experience level="4.25" precision="years">
+			<experience level="4.25">
 				<since date="2004-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -1160,7 +1160,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="xml">
 			<name>XML</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<since date="2004-01" weight="0.5"/>
 			</experience>
 			<categories>
@@ -1170,7 +1170,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="xpath">
 			<name>XPath</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2004-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<since date="2019-05" weight="0.5"/>
@@ -1183,7 +1183,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<skill id="xsd">
 			<name>XSD</name>
 			<long-name>XML Schema Definition</long-name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2014-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<since date="2019-05" weight="0.5"/>
@@ -1195,7 +1195,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		</skill>
 		<skill id="xslt">
 			<name>XSLT</name>
-			<experience level="4" precision="years">
+			<experience level="4">
 				<spanning from-date="2004-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<since date="2019-05" weight="0.5"/>
