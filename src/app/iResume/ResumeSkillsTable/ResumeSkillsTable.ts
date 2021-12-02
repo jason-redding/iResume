@@ -180,12 +180,18 @@ export default class ResumeSkillsTable {
     private _initCategories($categories: JQuery, $xml: JQuery<Node>): ResumeSkillsTable {
         $categories.html('');
         const relevantKey: string = 'relevant';
-        const $xmlCategories: JQuery<Node> = this._xpath.evaluate($xml, 'r:meta/r:skill/r:categories/r:category', 'nodeset')
-        .filter((nodeIndex, node) => {
+        const isVisibleFunc: ((this: Node, index: number, element: Node) => boolean) = (nodeIndex, node) => {
             const $node: JQuery<Node> = $(node);
-            const isVisible: boolean = !/^true|yes|on|1$/.test($.trim($node.attr('hidden')));
+            const isVisible: boolean = !/^(true|yes|on|1)$/.test($.trim($node.attr('hidden')));
             return isVisible;
-        });
+        };
+        const isRelevantNodeFunc: ((this: Node, index: number, element: Node) => boolean) = (nodeIndex, node) => {
+            const $node: JQuery<Node> = $(node);
+            const isRelevantNode: boolean = ($node.attr('value') === relevantKey);
+            return isRelevantNode;
+        };
+
+        const $xmlCategories: JQuery<Node> = this._xpath.evaluate($xml, 'r:meta/r:skill/r:categories/r:category', 'nodeset');
         // Array.prototype.sort.call($xmlCategories, function (a, b) {
         //     const $a: JQuery = $(a);
         //     const $b: JQuery = $(b);
@@ -204,80 +210,83 @@ export default class ResumeSkillsTable {
         //     return 0;
         // });
 
-        const relevantText: string = $.trim(this._xpath.evaluate($xmlCategories, 'self::*[@value = "' + relevantKey + '"]', 'node').text());
+        const $relevantNode: JQuery<Node> = this._xpath.evaluate($xmlCategories, 'self::*[@value = "' + relevantKey + '"]', 'node').filter(isVisibleFunc);
+        if ($relevantNode.length > 0) {
+            const relevantText: string = $.trim($relevantNode.text());
 
-        const $isRelevantLabel: JQuery = $('<label/>').attr({
-            'for': 'is-relevant-category'
-        })
-        .addClass('ui-shadow')
-        .text('Relevant')
-        .appendTo($categories);
-        const $isRelevant: JQuery = $('<input type="checkbox"/>')
-        .attr({
-            'data-wrapper-class': 'relevant-checkbox',
-            'data-iconpos': 'right',
-            value: '1',
-            id: 'is-relevant-category'
-        })
-        .on('change', function (event, options) {
-            let $this: JQuery = $(this);
-            if ($.isPlainObject(options)) {
-                if ('checked' in options) {
-                    $this.prop('checked', options.checked === true);
+            const $isRelevantLabel: JQuery = $('<label/>').attr({
+                'for': 'is-relevant-category'
+            })
+            .addClass('ui-shadow')
+            .text('Relevant')
+            .appendTo($categories);
+            const $isRelevant: JQuery = $('<input type="checkbox"/>')
+            .attr({
+                'data-wrapper-class': 'relevant-checkbox',
+                'data-iconpos': 'right',
+                value: '1',
+                id: 'is-relevant-category'
+            })
+            .on('change', function (event, options) {
+                let $this: JQuery = $(this);
+                if ($.isPlainObject(options)) {
+                    if ('checked' in options) {
+                        $this.prop('checked', options.checked === true);
+                        try {
+                            $this.checkboxradio('refresh');
+                        } catch (ex) {
+                            console.error(ex);
+                        }
+                    }
+                }
+                let $select: JQuery = $('select#categories');
+                let isChecked: boolean = $this.is(':checked');
+                if (isChecked) {
+                    if (!$select.is('[data-last-value]')) {
+                        $select.attr('data-last-value', $.trim(('' + $select.find('option:selected').val())));
+                    }
+                    let $relevant: JQuery = $select.find('option[value="' + relevantKey + '"]');
+                    if ($relevant.length === 0) {
+                        $relevant = $('<option/>').attr('value', relevantKey)
+                        .text(relevantText)
+                        .insertAfter($select.find('option[value="*"]'));
+                    }
+                    $relevant.prop('selected', true);
+                    $select.prop('disabled', true);
                     try {
-                        $this.checkboxradio('refresh');
+                        $select.selectmenu('disable');
+                    } catch (ex) {
+                        console.error(ex);
+                    }
+                } else {
+                    let lastValue: string = $.trim($select.attr('data-last-value'));
+                    $select.removeAttr('data-last-value');
+                    $select.prop('disabled', false);
+                    if (lastValue.length === 0 || lastValue === 'relevant') {
+                        lastValue = '*';
+                    }
+                    if (lastValue.length > 0) {
+                        $select.find('option[value="' + lastValue + '"]').prop('selected', true);
+                    }
+                    $select.find('option[value="' + relevantKey + '"]').remove();
+                    try {
+                        $select.selectmenu('enable');
                     } catch (ex) {
                         console.error(ex);
                     }
                 }
-            }
-            let $select: JQuery = $('select#categories');
-            let isChecked: boolean = $this.is(':checked');
-            if (isChecked) {
-                if (!$select.is('[data-last-value]')) {
-                    $select.attr('data-last-value', $.trim(('' + $select.find('option:selected').val())));
-                }
-                let $relevant: JQuery = $select.find('option[value="' + relevantKey + '"]');
-                if ($relevant.length === 0) {
-                    $relevant = $('<option/>').attr('value', relevantKey)
-                    .text(relevantText)
-                    .insertAfter($select.find('option[value="*"]'));
-                }
-                $relevant.prop('selected', true);
-                $select.prop('disabled', true);
                 try {
-                    $select.selectmenu('disable');
+                    $select.selectmenu('refresh');
                 } catch (ex) {
                     console.error(ex);
                 }
-            } else {
-                let lastValue: string = $.trim($select.attr('data-last-value'));
-                $select.removeAttr('data-last-value');
-                $select.prop('disabled', false);
-                if (lastValue.length === 0 || lastValue === 'relevant') {
-                    lastValue = '*';
-                }
-                if (lastValue.length > 0) {
-                    $select.find('option[value="' + lastValue + '"]').prop('selected', true);
-                }
-                $select.find('option[value="' + relevantKey + '"]').remove();
-                try {
-                    $select.selectmenu('enable');
-                } catch (ex) {
-                    console.error(ex);
-                }
-            }
-            try {
-                $select.selectmenu('refresh');
-            } catch (ex) {
-                console.error(ex);
-            }
-            const selectChangeEventOptions: object = {
-                simulated: (options && options.simulated)
-            };
-            $select.trigger('change', selectChangeEventOptions);
-        })
-        .appendTo($categories);
+                const selectChangeEventOptions: object = {
+                    simulated: (options && options.simulated)
+                };
+                $select.trigger('change', selectChangeEventOptions);
+            })
+            .appendTo($categories);
+        }
 
         const $categoriesSelectContainer: JQuery = $('<div/>')
         .addClass('select-category-container')
@@ -295,7 +304,9 @@ export default class ResumeSkillsTable {
             id: 'categories'
         });
         $('<option/>').val('*').text('All Categories').prependTo($select);
-        $xmlCategories.each(function () {
+        $xmlCategories
+        .not(isRelevantNodeFunc)
+        .each(function () {
             const $category: JQuery<Node> = $(this);
             const id: string = $.trim($category.attr('value'));
             const name: string = $.trim($category.text());
