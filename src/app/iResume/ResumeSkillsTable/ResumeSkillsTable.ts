@@ -153,6 +153,11 @@ export default class ResumeSkillsTable {
             if (this._categoriesContainer !== null && this._categoriesContainer.length > 0) {
                 this._initCategories(this._categoriesContainer, $xmlRoot);
                 const defaultCategory: string = $.trim(this._categoriesContainer.attr('data-default-category'));
+
+                const $skillCountContainer: JQuery = $('<div/>')
+                .addClass('skill-count-container')
+                .insertAfter(this._categoriesContainer);
+
                 $('#is-relevant-category').trigger('change', {
                     simulated: true,
                     checked: (defaultCategory === 'relevant')
@@ -326,15 +331,19 @@ export default class ResumeSkillsTable {
             .children('caption')
             .children('.text')
             .addBack();
+            let skillCount: number = 0;
             if (categoryKey === '*') {
                 $rows.removeClass('ui-screen-hidden');
                 $captionAttributes.removeAttr('data-filter');
+                skillCount = $rows.length;
             } else {
                 let $filteredRows: JQuery = $rows.filter('.category-' + categoryKey);
                 $filteredRows.removeClass('ui-screen-hidden');
                 $rows.not($filteredRows).addClass('ui-screen-hidden');
                 $captionAttributes.attr('data-filter', categoryName);
+                skillCount = $filteredRows.length;
             }
+            this._updateSkillCount(skillCount, $rows.length);
             if (typeof options !== 'object' || options.simulated !== true) {
                 GA.fireEvent('UX', 'Filter Skills Table', categoryName);
             }
@@ -345,6 +354,21 @@ export default class ResumeSkillsTable {
             $categories.enhanceWithin();
         }
         return this;
+    }
+
+    private _updateSkillCount(visibleCount: number = -1, totalCount: number = -1): void {
+        if (totalCount < 0 || visibleCount < 0) {
+            const $skills: JQuery = this._element.find('> tbody > tr');
+            totalCount = $skills.length;
+            if (visibleCount < 0) {
+                const $visibleSkills: JQuery = $skills.not('.ui-screen-hidden');
+                visibleCount = $visibleSkills.length;
+            }
+        }
+        const $skillCountContainer: JQuery = this._categoriesContainer.siblings('.skill-count-container');
+
+        const skillCountText: string = (visibleCount !== totalCount ? 'Displaying ' + visibleCount + ' of ' : '') + totalCount + ' total skill' + (totalCount === 1 ? '' : 's');
+        $skillCountContainer.text(skillCountText);
     }
 
     private _refreshTable(): ResumeSkillsTable {
