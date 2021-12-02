@@ -37,6 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="front-end">Front End</category>
+				<category value="web" hidden="true">Web</category>
 				<category value="back-end">Back End</category>
 				<category value="dev-language">Language</category>
 				<category value="dev-tool">Development Tool</category>
@@ -44,13 +45,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="app-server" hidden="false">Application Server</category>
 				<category value="db">Database</category>
 				<category value="os">Operating System</category>
-				<category value="relevant">Relevant Skill</category>
+				<category value="relevant" hidden="true">Relevant Skill</category>
 			</categories>
 		</skill>
 	</meta>
 	<author name="Jason Redding" layout="split">
 		<name/>
-		<seeking label="Seeking">Mid-level position</seeking>
+		<seeking label="Seeking">Mid-Senior level position</seeking>
 		<email label="Email">jason.redding@gmail.com</email>
 		<split/>
 		<clearance label="Clearance">None</clearance>
@@ -61,10 +62,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</author>
 	<blurb>
 		<h:p>
-			Jason is an experienced, self-taught <skill ref="Java">Java</skill> &amp; Web developer, inspired at age 8 with ResEdit for Mac OS 7,
-			then quickly making his way to accumulating a deep knowledge and understanding of Windows 95, 98, the Windows Registry, <skill ref="HTML">HTML</skill>,
+			Jason is an experienced, self-taught <skill ref="Java">Java</skill> &amp; Web developer, inspired at age 8 with <h:a href="https://en.wikipedia.org/wiki/ResEdit" target="_blank">ResEdit</h:a> for <skill ref="mac-os-7">Mac OS 7</skill>,
+			then quickly making his way to accumulating a deep knowledge and understanding of Windows 95, 98, the <h:a href="https://en.wikipedia.org/wiki/Windows_Registry" target="_blank">Windows Registry</h:a>, <skill ref="HTML">HTML</skill>,
 			<skill ref="JavaScript">JavaScript</skill>, <skill ref="Visual Basic">Visual Basic</skill>, and reverse engineering an application network protocol&#8212;just for fun.
-			All of this was before he ever took his first Java Programming course in 2000.
+			All of that was before he ever took his first Java Programming course in 2000.
 			Since then he has continued to learn more technologies, languages, and frameworks to make him the competent Full Stack developer he is today.
 		</h:p>
 	</blurb>
@@ -142,6 +143,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="angularjs">
@@ -154,6 +156,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="angular-materials">
@@ -165,6 +168,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="apache-commons" hidden="true">
@@ -197,6 +201,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="app-server"/>
 				<category value="relevant"/>
 				<category value="back-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="apache-maven">
@@ -232,6 +237,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="app-server"/>
 				<category value="relevant"/>
 				<category value="back-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="bash">
@@ -257,6 +263,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="api"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="c-sharp">
@@ -289,6 +296,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="dev-tool"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="cli">
@@ -316,6 +324,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="dev-language"/>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="css3">
@@ -330,6 +339,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="dev-language"/>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="cygwin">
@@ -363,6 +373,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="api"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="firebug" hidden="1">
@@ -373,6 +384,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="dev-tool"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="firefox-dev-tools">
@@ -383,6 +395,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="dev-tool"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="git">
@@ -418,6 +431,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="api"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="gulp">
@@ -455,6 +469,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="dev-language"/>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="hql">
@@ -538,6 +553,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="dev-language"/>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="jboss">
@@ -549,6 +565,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="relevant"/>
 				<category value="back-end"/>
 				<category value="app-server"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="jdbc">
@@ -599,6 +616,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="api"/>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="jquery-mobile">
@@ -612,6 +630,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="api"/>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="jquery-ui">
@@ -626,6 +645,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="api"/>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="json">
@@ -640,6 +660,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="dev-language"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="jsp">
@@ -651,6 +672,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="jstl">
@@ -660,6 +682,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="linux">
@@ -682,6 +705,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<spanning from-date="2016-01" to-date="2018-01" weight="0.5"/>
 				<spanning from-date="2018-01" to-date="2019-05"/>
 				<since date="2019-05" weight="0.5"/>
+			</experience>
+			<categories>
+				<category value="os"/>
+			</categories>
+		</skill>
+		<skill id="mac-os-7" hidden="1">
+			<name>Mac OS 7</name>
+			<experience level="3.5">
+				<spanning from-date="1992-01" to-date="1997-07" weight="0.5"/>
 			</experience>
 			<categories>
 				<category value="os"/>
@@ -795,6 +827,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="dev-language"/>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="postresql">
@@ -834,6 +867,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="regular-expressions">
@@ -859,6 +893,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="rest">
@@ -872,6 +907,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="safari-web-inspector">
@@ -882,6 +918,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="dev-tool"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="saltstack">
@@ -904,6 +941,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="dev-language"/>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="spring">
@@ -1002,6 +1040,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="dev-language"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="toad">
@@ -1024,6 +1063,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="dev-language"/>
 				<category value="relevant"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="uikit">
@@ -1084,6 +1124,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<category value="app-server"/>
 				<category value="relevant"/>
 				<category value="back-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="wordpress" hidden="true">
@@ -1094,6 +1135,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="back-end"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="xcode">
@@ -1113,6 +1155,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			<categories>
 				<category value="dev-language"/>
 				<category value="front-end"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="xml">
@@ -1122,6 +1165,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="dev-language"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="xpath">
@@ -1133,6 +1177,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="dev-language"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="xsd">
@@ -1145,6 +1190,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="dev-language"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 		<skill id="xslt">
@@ -1156,6 +1202,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			</experience>
 			<categories>
 				<category value="dev-language"/>
+				<category value="web"/>
 			</categories>
 		</skill>
 	</skills>
