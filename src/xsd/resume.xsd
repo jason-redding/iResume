@@ -320,6 +320,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 								</xs:sequence>
 								<xs:attribute name="type" type="xs:string" default="experience" use="optional"/>
 								<xs:attribute name="preposition" type="xs:string" default="at" use="optional"/>
+								<xs:attribute name="precision" type="type-experience-precision" default="months" use="optional"/>
 								<xs:attribute name="print-min" type="xs:decimal" use="optional"/>
 								<xs:attribute name="screen-min" type="xs:decimal" use="optional"/>
 							</xs:complexType>

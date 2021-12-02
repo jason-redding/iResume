@@ -334,7 +334,8 @@ export default class ResumeLoader {
         const props: JQuery.PlainObject = {
             experience: {
                 type: $xmlSkillExperience.attr('type') || 'experience',
-                preposition: $xmlSkillExperience.attr('preposition') || 'at'
+                preposition: $xmlSkillExperience.attr('preposition') || 'at',
+                precision: $xmlSkillExperience.attr('precision') || TemporalUnit.MONTHS
             }
         };
 
@@ -365,7 +366,7 @@ export default class ResumeLoader {
                 let foundSince: boolean = false;
                 let firstExperience: Date = null;
                 let lastExperience: Date = null;
-                props[skillPropertyName].precision = $skillProperty.attr('precision') || TemporalUnit.MONTHS;
+                props[skillPropertyName].precision = $skillProperty.attr('precision') || $xmlSkillExperience.attr('precision') || TemporalUnit.MONTHS;
                 $.each($items, (experienceChildIndex, experienceChild) => {
                     const $experienceChild: JQuery<Node> = $(experienceChild);
                     const experienceType: string = $experienceChild.prop('nodeName');
