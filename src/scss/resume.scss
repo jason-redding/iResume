@@ -188,6 +188,12 @@ html.r-explain .ui-page.ui-page-active::after {
   display: inline-block;
 }
 
+.constrained-width {
+  max-width: 30em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 span.github-link {
   font-size: 0.75em;
   margin-top: 0.5em;
