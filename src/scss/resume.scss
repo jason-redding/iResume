@@ -436,12 +436,16 @@ pre.code-container {
 
 .ui-header, .ui-footer {
   .ui-title {
-    margin-left: 4.5em;
-    margin-right: 5em;
+    margin-left: 4em;
+    margin-right: 4em;
   }
 }
 
 .ui-header {
+  .ui-title {
+    margin-left: 3.7em;
+    margin-right: 5em;
+  }
   &.ui-header-fixed {
     @include supports(backdrop-filter, blur(5px)) {
       .ui-page-theme-a &, .ui-page-theme-b & {
