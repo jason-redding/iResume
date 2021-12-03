@@ -22,14 +22,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:r="http://jason-redding.com/xsd/resume"
 	xsi:schemaLocation="http://jason-redding.com/xsd/resume xsd/resume.xsd"
-	last-modified="2021-12-02T13:13:13">
+	last-modified="2021-12-03T13:13:13">
 	<xi:include r:name="presentation" href="resume.presentation.xml"/>
 	<meta>
 		<skill>
-			<experience type="experience" preposition="at" screen-min="1" print-min="2" precision="years">
-				<level value="-1" preposition="with" type="exposure">No experience</level>
-				<level value="0" preposition="to" type="exposure">Exposure</level>
-				<level value="1" preposition="" type="learning">Learning</level>
+			<experience precision="years" type="experience" preposition="at" screen-min="1" print-min="2">
+				<level value="-1" type="exposure" preposition="with">No experience</level>
+				<level value="0" type="exposure" preposition="to">Exposure</level>
+				<level value="1" type="learning" preposition="">Learning</level>
 				<level value="2">Beginner</level>
 				<level value="3">Skilled</level>
 				<level value="4">Advanced</level>
