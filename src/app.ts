@@ -40,7 +40,7 @@ function applyRenderDecorations(resumeComponent: ResumeComponent): ResumeCompone
             .addClass('hide-on-print')
             .addClass('resume-print-button-container');
 
-            $printButton = $('<button/>').text('Print...')
+            $printButton = $('<button/>').text('Print')
             .addClass('resume-print-button')
             .attr({
                 'data-inline': true,
