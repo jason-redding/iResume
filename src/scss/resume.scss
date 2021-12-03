@@ -377,6 +377,7 @@ pre.code-container {
     margin-right: 0;
   }
   &[data-section='blurb'] {
+    margin-top: 1em;
     @media screen and (max-width: 736px) {
       font-style: italic;
       &.outline {
