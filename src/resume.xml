@@ -51,13 +51,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	</meta>
 	<author name="Jason Redding" layout="split">
 		<name/>
-		<seeking label="Seeking">Mid-Senior level position</seeking>
-		<email label="Email">jason.redding@gmail.com</email>
 		<split/>
-		<clearance label="Clearance">None</clearance>
-		<address label="Location">Denver, CO</address>
-		<!--<willing-to-travel label="% Willing to Travel">2%</willing-to-travel>-->
-		<willing-to-relocate label="Willing to Relocate">No</willing-to-relocate>
+		<address label="Residence">Denver, CO</address>
 		<last-updated label="Last Updated" format="M/d/yyyy"/>
 	</author>
 	<blurb>
