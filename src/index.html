@@ -109,7 +109,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div class="text">Full List of Skills</div>
                     </caption>
                     <thead>
-                    <tr data-render-title="${experience.level} (${experience.level.percentage#percent})${experience.level.preposition#default(experience.preposition);prepend-if(' ')} ${name} with ${experience.duration} of ${experience.type}${experience.last#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}${notes}"
+                    <tr data-render-title="${experience.level}${experience.level.preposition#default(experience.preposition);prepend-if(' ')} ${name} with ${experience.duration} of ${experience.type}${experience.last#date('\'<br/><br/>Last used: \'MMMM \'of\' yyyy')}${notes}"
                         data-render-data-name="${name}"
                         data-render-data-long-name="${long-name}"
                         data-render-data-level="${experience.level}"
@@ -139,7 +139,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             data-header="Level"
                             data-field="experience.level"
                             title="Self-assessment"
-                            data-render="${experience.level} (${experience.level.percentage#percent})"
+                            data-render="${experience.level}"
                             data-sort-order="desc"
                             data-order-by="experience.level.originalValue, experience.last:desc, experience.duration.totalMilliseconds:desc, name">
                             <span class="data">Level</span>
