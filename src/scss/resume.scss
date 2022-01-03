@@ -386,6 +386,30 @@ pre.code-container {
     margin-top: 1em;
     @media screen and (max-width: 736px) {
       font-style: italic;
+      &.bar {
+        $barSize: 0.25em;
+        position: relative;
+        text-align: justify;
+        padding: 0 0.6em;
+        &::before, &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: -1px;
+          bottom: -1px;
+          width: $barSize;
+          background-color: $resumeBackgroundColorDark;
+          .ui-page-theme-b & {
+            background-color: $resumeBackgroundColorLight;
+          }
+        }
+        &::before {
+          left: 0;
+        }
+        &::after {
+          right: 0;
+        }
+      }
       &.outline {
         $barSize: 1em;
         $barRadius: $barSize * math.div(2, 3);

@@ -357,7 +357,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<xsl:value-of select="local-name()"/>
 			</xsl:attribute>
 			<xsl:attribute name="class">
-				<xsl:value-of select="'section-content outline'"/>
+				<xsl:value-of select="'section-content bar'"/>
 				<xsl:value-of select="' page-break-before-avoid'"/>
 				<xsl:if test="string-length(normalize-space(@break-after)) > 0">
 					<xsl:value-of select="concat(' page-break-after-', normalize-space(@break-after))"/>
