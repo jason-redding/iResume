@@ -25,7 +25,7 @@
     "@types/jquerymobile": "^1.4.31",
     "@types/jqueryui": "^1.12.16",
     "@types/requirejs": "^2.1.33",
-    "browser-sync": "^2.27.5",
+    "browser-sync": "^2.29.1",
     "del": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-exec": "^5.0.0",
